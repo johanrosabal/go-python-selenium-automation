@@ -1,0 +1,16 @@
+# Standard Configuration File - DEV
+name: Orange HRM Open Source HR Management
+tms: https://tms.example.com/project/cases/
+web:
+  base_url: https://dev-demo.orangehrmlive.com
+  
+default:
+  browser: chrome
+
+user:
+  username: DevAdmin
+  password: dev_password123
+
+invalid_user:
+  username: dev_admin
+  password: dev_password

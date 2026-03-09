@@ -1,0 +1,23 @@
+{
+    "tests": {
+        "id": "CT-LOGIN-002",
+        "testCaseName": "test_locked_out_user",
+        "title": "Locked Out User Login",
+        "description": "Verify that a locked out user cannot access the system and sees the correct message.",
+        "tag": [
+            "LOGIN",
+            "LOCKED_OUT"
+        ],
+        "feature": "Authentication",
+        "severity": "Critical",
+        "link": {
+            "url": "https://opensource-demo.orangehrmlive.com",
+            "name": "SauceDemo"
+        },
+        "data": {
+            "username": "locked_out_user",
+            "password": "secret_sauce",
+            "error_key": "messages.error_locked"
+        }
+    }
+}

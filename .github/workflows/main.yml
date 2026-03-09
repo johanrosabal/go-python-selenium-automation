@@ -1,0 +1,48 @@
+name: Framework CI/CD
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: List installed packages
+      run: pip list
+
+    - name: Run Tests (Parallel & Headless)
+      env:
+        PYTHONPATH: .
+      run: |
+        # Using pytest.ini defaults (-n auto --alluredir=reports)
+        # Forcing headless mode via env var if the framework supports it, 
+        # but our DriverManager uses config.yaml. In CI we should ideally 
+        # override browser to headless.
+        pytest -v
+
+    - name: Upload Allure Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-results
+        path: reports/
+        retention-days: 1

@@ -1,0 +1,38 @@
+# Standard Configuration File - QA (SauceDemo)
+name: SauceDemo - Swag Labs
+tms: https://tms.example.com/project/cases/
+web:
+  base_url: https://www.saucedemo.com/
+  
+# Additional configurations for restricted networks
+browser:
+  edge_path: "C:/ai/go-python-selenium-automation/resources/drivers/msedgedriver.exe"
+
+default:
+  browser: chrome
+
+# Video recording (Option B - Local OpenCV)
+video:
+  enable_local: true
+  fps: 10
+  monitor_index: 1
+
+user:
+  username: standard_user
+  password: secret_sauce
+
+invalid_user:
+  username: invalid_user
+  password: invalid_password
+
+locked_user:
+  username: locked_out_user
+  password: secret_sauce
+
+messages:
+  error_invalid: "Epic sadface: Username and password do not match any user in this service"
+  error_locked: "Epic sadface: Sorry, this user has been locked out."
+
+# Database Connection (Example)
+database:
+  url: "sqlite:///resources/data/test.db"  # Example SQLite path

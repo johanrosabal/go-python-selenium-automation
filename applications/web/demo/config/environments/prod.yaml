@@ -1,0 +1,16 @@
+# Standard Configuration File - PROD
+name: Orange HRM Open Source HR Management
+tms: https://tms.example.com/project/cases/
+web:
+  base_url: https://opensource-demo.orangehrmlive.com
+  
+default:
+  browser: chrome
+
+user:
+  username: Admin
+  password: admin123
+
+invalid_user:
+  username: admin
+  password: admin

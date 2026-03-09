@@ -1,0 +1,16 @@
+# Standard Configuration File - UAT
+name: Orange HRM Open Source HR Management
+tms: https://tms.example.com/project/cases/
+web:
+  base_url: https://uat-demo.orangehrmlive.com
+  
+default:
+  browser: chrome
+
+user:
+  username: UatAdmin
+  password: uat_password123
+
+invalid_user:
+  username: uat_admin
+  password: uat_password

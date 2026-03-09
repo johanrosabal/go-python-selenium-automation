@@ -1,0 +1,12 @@
+selenium
+pytest
+allure-pytest
+pytest-xdist
+webdriver-manager
+pytest-xdist
+pyyaml
+opencv-python
+mss
+Pillow
+axe-selenium-python
+sqlalchemy

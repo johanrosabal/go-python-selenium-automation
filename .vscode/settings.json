@@ -1,0 +1,20 @@
+{
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+        "applications/web/demo/tests",
+        "--alluredir=reports"
+    ],
+    "python.testing.autoTestDiscoverOnSaveEnabled": true,
+    "python.analysis.extraPaths": [
+        "./"
+    ],
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "${workspaceFolder}"
+    },
+    "python.analysis.typeCheckingMode": "basic",
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.pytest_cache": true,
+        "**/reports": false
+    }
+}

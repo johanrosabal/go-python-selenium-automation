@@ -1,0 +1,23 @@
+{
+    "tests": {
+        "id": "CT-LOGIN-001",
+        "testCaseName": "test_invalid_login",
+        "title": "Invalid Login Attempt",
+        "description": "Verify that the system displays an error message when providing invalid credentials.",
+        "tag": [
+            "LOGIN",
+            "NEGATIVE"
+        ],
+        "feature": "Authentication",
+        "severity": "High",
+        "link": {
+            "url": "https://opensource-demo.orangehrmlive.com",
+            "name": "SauceDemo"
+        },
+        "data": {
+            "username": "invalid_user",
+            "password": "wrong_password",
+            "error_key": "messages.error_invalid"
+        }
+    }
+}

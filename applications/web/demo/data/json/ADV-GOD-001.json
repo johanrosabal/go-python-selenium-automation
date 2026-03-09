@@ -1,0 +1,16 @@
+{
+    "tests": {
+        "id": "ADV-GOD-001",
+        "title": "Verificación de Funciones Avanzadas (God Tier)",
+        "description": "Prueba completa de Regresión Visual, Accesibilidad, Performance y Auto-healing.",
+        "severity": "CRITICAL",
+        "feature": "Core Features",
+        "tag": [
+            "GOD-TIER",
+            "SMOKE"
+        ],
+        "data": {
+            "note": "Este test usa datos dinámicos inyectados por el framework."
+        }
+    }
+}
