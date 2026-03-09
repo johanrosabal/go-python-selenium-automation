@@ -909,11 +909,47 @@ Para ejecutar con configuraciones específicas (Ambiente, Browser, Headless), us
 > [!NOTE]
 > Todos estos perfiles inyectan automáticamente el `PYTHONPATH` necesario para que no haya errores de importación al depurar.
 
-### Paralelismo Nativo
-El framework detecta tus núcleos y ejecuta tests simultáneamente de forma automática gracias a `pytest-xdist`.
+### 5. Paralelismo Nativo (pytest-xdist)
+El framework aprovecha todos los núcleos de tu procesador para ejecutar pruebas simultáneamente, reduciendo drásticamente el tiempo total de ejecución.
 
-### 4. Pipeline GitHub Actions
-Configurado para ejecución Headless y generación de reportes Allure automáticos en cada Push.
+#### ⚙️ Cómo Funciona
+Utilizamos el plugin `pytest-xdist`. Por defecto, el framework estaba configurado para usar `-n auto` (detectar todos los cores), pero para mantener la compatibilidad con el entorno de Visual Studio Code (que se rompe con xdist activo por defecto), la ejecución paralela se lanza **bajo demanda**.
+
+#### 🚀 Ejecución en Paralelo
+Para lanzar tus pruebas utilizando múltiples hilos de ejecución, pasa el flag `-n` seguido del número de workers (hilos) o `auto`:
+
+```powershell
+# Ejecutar usando todos los núcleos disponibles de tu CPU
+pytest applications/web/demo/tests -n auto
+
+# Ejecutar usando exactamente 3 hilos simultáneos
+pytest applications/web/demo/tests -n 3
+```
+
+> [!WARNING]
+> **Precaución con los Datos**: Cuando ejecutas en paralelo, los tests no se ejecutan secuencialmente. Asegúrate de que tus pruebas sean totalmente **aisladas e independientes** (no compartan el mismo usuario o modifiquen el mismo registro en la misma milésima de segundo) para evitar colisiones en la base de datos o el sistema.
+
+---
+
+### 6. Pipeline GitHub Actions (CI/CD)
+El proyecto incluye un flujo de trabajo preconfigurado para Integración Continua (CI) usando GitHub Actions. Esto asegura que tu código se prueba automáticamente cada vez que haces un cambio.
+
+#### 📁 Archivo de Configuración
+La definición del pipeline se encuentra en `.github/workflows/python-app.yml` (o un nombre similar).
+
+#### 🛠️ Características del Pipeline
+1.  **Ejecución Automática**: Se dispara en cada `push` o Pull Request hacia la rama `main`.
+2.  **Entorno Controlado**: Instala Python, las dependencias (`requirements.txt`) y configura el entorno.
+3.  **Headless Mode**: Ejecuta los tests en modo Headless (`$env:HEADLESS="true"` o su equivalente en Linux) ya que los servidores de GitHub no tienen interfaz gráfica.
+4.  **Generación de Allure Report**: Al finalizar los tests, el pipeline compila los resultados crudos (`alluredir`) en un reporte web interactivo.
+5.  **GitHub Pages / Artefactos**: Sube el reporte compilado como un artefacto descargable o lo despliega directamente en GitHub Pages para que todo el equipo pueda verlo con un solo clic.
+
+#### 🚀 Ejecución Local vs CI
+Recuerda que en el servidor CI, las rutas y los permisos pueden variar respecto a tu máquina local. Para depurar fallos en el pipeline:
+```bash
+# Simula la ejecución del CI en tu máquina
+$env:ENV="qa"; $env:HEADLESS="true"; pytest applications/web/demo/tests --alluredir=reports
+```
 
 ---
 *Diseñado por Antigravity para una automatización de excelencia.*
