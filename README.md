@@ -835,6 +835,25 @@ El resumen enviado contiene:
 > [!NOTE]
 > Las notificaciones solo se envían si la propiedad `webhook_url` está presente en el archivo de configuración. Esto evita spam durante el desarrollo local si no se desea.
 
+### 6. Test Runner GUI (Web Interface)
+El framework incluye una **Interfaz Gráfica de Usuario (GUI)** personalizada basada en web, diseñada para ofrecer una experiencia similar a Cypress o Playwright directamente en tu navegador, sin necesidad de dependencias pesadas.
+
+#### 🌟 Características Principales
+*   **Visualización de Árbol de Pruebas**: Explora todos tus casos de prueba (`pytest`) organizados de forma jerárquica con sus IDs y descripciones extraídas directamente de los decoradores `@test_case`.
+*   **Ejecución y Logs en Tiempo Real**: Lanza casos individuales o "Test Plans" y observa la consola de ejecución en vivo (SSE) con formato de colores (éxitos en verde, errores en rojo, y separadores claros).
+*   **Test Plans (Planes de Prueba)**: Selecciona múltiples casos de prueba, combina configuraciones (Navegador, Ambiente, Headless) y guárdalos como un Plan de Prueba reutilizable. Edita o elimina planes fácilmente desde la barra lateral.
+*   **Media Gallery Integrada**: Visualiza todos los videos y capturas de pantalla generados por las pruebas que fallaron directamente desde la UI. La galería clasifica los videos mostrando el Nombre de la Prueba, ID y duración (usando métricas reales de OpenCV).
+*   **Gestión de Reportes Allure**: Genera y visualiza tu reporte oficial Allure HTML con un solo clic desde la barra superior.
+*   **Copiar Logs al Portapapeles**: Extrae fácilmente la salida de tu consola de pruebas para compartirla con tu equipo o adjuntarla a tickets de bugs.
+
+#### 🚀 Cómo Iniciarlo
+El Test Runner es una aplicación Flask ligera que sirve el dashboard y se comunica con el framework:
+```bash
+# Inicia el servidor local
+$env:PYTHONPATH = "."; python tools/test_runner/app.py
+```
+Abre tu navegador en `http://localhost:5000` y comienza a orquestar tus pruebas visualmente.
+
 ## 🚀 Ejecución y CI/CD
 
 ### 1. Comandos Básicos (PowerShell)
@@ -952,4 +971,4 @@ $env:ENV="qa"; $env:HEADLESS="true"; pytest applications/web/demo/tests --allure
 ```
 
 ---
-*Diseñado por Antigravity para una automatización de excelencia.*
+*Diseñado por Johan Rosabal para una automatización de excelencia.*
