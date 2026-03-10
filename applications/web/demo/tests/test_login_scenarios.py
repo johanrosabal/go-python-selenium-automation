@@ -13,7 +13,6 @@ class TestLoginScenarios(BaseTest):
     @test_case(id="CT-LOGIN-003")
     def test_valid_login_and_logout(self):
         """Valid login followed by a logout."""
-        self.logger.info("Test: Valid Login and Logout")
         
         # 1. Login using config defaults
         login_page = LoginPage().open() \
@@ -34,7 +33,6 @@ class TestLoginScenarios(BaseTest):
     @test_case(id="CT-LOGIN-001")
     def test_invalid_login(self):
         """Attempt login with incorrect credentials."""
-        self.logger.info("Test: Invalid Login")
         
         # Load data automatically from decorator cache
         test_data = self.get_data_for_test()
@@ -51,7 +49,6 @@ class TestLoginScenarios(BaseTest):
     @test_case(id="CT-LOGIN-002")
     def test_locked_out_user(self):
         """Attempt login with a locked out user."""
-        self.logger.info("Test: Locked Out User")
         
         # Load data automatically from decorator cache
         test_data = self.get_data_for_test()

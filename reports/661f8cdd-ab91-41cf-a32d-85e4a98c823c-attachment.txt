@@ -1,0 +1,190 @@
+2026-03-09 17:26:52,961 [INFO] TestAppWrapper - ================================================================================
+2026-03-09 17:26:52,962 [INFO] TestAppWrapper - 🚀 STARTING TEST: CT-LOGIN-001 - Invalid Login Attempt
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\logging\__init__.py", line 1153, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f680' in position 48: character maps to <undefined>
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Scripts\pytest.exe\__main__.py", line 5, in <module>
+    sys.exit(console_main())
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\config\__init__.py", line 223, in console_main
+    code = main()
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\config\__init__.py", line 199, in main
+    ret: ExitCode | int = config.hook.pytest_cmdline_main(config=config)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\main.py", line 365, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\main.py", line 318, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\main.py", line 372, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\main.py", line 396, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\runner.py", line 118, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\runner.py", line 131, in runtestprotocol
+    rep = call_and_report(item, "setup", log)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\runner.py", line 244, in call_and_report
+    call = CallInfo.from_call(
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\runner.py", line 353, in from_call
+    result: TResult | None = func()
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\runner.py", line 245, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\runner.py", line 165, in pytest_runtest_setup
+    item.session._setupstate.setup(item)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\runner.py", line 523, in setup
+    col.setup()
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\python.py", line 1723, in setup
+    self._request._fillfixtures()
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\fixtures.py", line 707, in _fillfixtures
+    item.funcargs[argname] = self.getfixturevalue(argname)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\fixtures.py", line 539, in getfixturevalue
+    fixturedef = self._get_active_fixturedef(argname)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\fixtures.py", line 627, in _get_active_fixturedef
+    fixturedef.execute(request=subrequest)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\fixtures.py", line 1110, in execute
+    result: FixtureValue = ihook.pytest_fixture_setup(
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\fixtures.py", line 1202, in pytest_fixture_setup
+    result = call_fixture_func(fixturefunc, request, kwargs)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\fixtures.py", line 908, in call_fixture_func
+    fixture_result = next(generator)
+  File "c:\ai\go-python-selenium-automation\core\ui\common\base_test.py", line 104, in setup
+    self.logger.info(f"🚀 STARTING TEST: {test_id} - {test_title}")
+Message: '🚀 STARTING TEST: CT-LOGIN-001 - Invalid Login Attempt'
+Arguments: ()
+2026-03-09 17:26:52,983 [INFO] TestAppWrapper - Context: App=demo | Env=qa | Browser=chrome (Headless: True)
+2026-03-09 17:26:52,983 [INFO] TestAppWrapper - ================================================================================
+2026-03-09 17:26:58,236 [INFO] VideoRecorder - Video recording started: C:\ai\go-python-selenium-automation\reports\videos\test_login_flow_with_app_wrapper_20260309_172658.mp4
+2026-03-09 17:26:58,247 [INFO] VideoRecorder - Recording monitor 1 (All Displays): {'left': 0, 'top': 0, 'width': 1366, 'height': 768}
+2026-03-09 17:26:58,250 [INFO] LoginPage - Navigating to URL: https://www.saucedemo.com/
+2026-03-09 17:26:58,251 [DEBUG] NavigationActions - Go to: https://www.saucedemo.com/
+2026-03-09 17:26:59,151 [INFO] LoginPage - Logging in with user: standard_user
+2026-03-09 17:26:59,153 [INFO] UIElement - LoginPage - Typing 'standard_user' into on element: USERNAME_FIELD ('id', 'user-name')
+2026-03-09 17:26:59,153 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-03-09 17:26:59,184 [INFO] SendKeysActions - Clearing text from element.
+2026-03-09 17:26:59,447 [INFO] SendKeysActions - Send Keys [standard_user]
+2026-03-09 17:26:59,555 [INFO] UIElement - LoginPage - Typing 'secret_sauce' into on element: PASSWORD_FIELD ('id', 'password')
+2026-03-09 17:26:59,555 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-03-09 17:26:59,581 [INFO] SendKeysActions - Clearing text from element.
+2026-03-09 17:26:59,750 [INFO] SendKeysActions - Send Keys [secret_sauce]
+2026-03-09 17:26:59,829 [INFO] UIElement - LoginPage - Clicking on element: LOGIN_BUTTON ('id', 'login-button')
+2026-03-09 17:26:59,829 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-03-09 17:27:00,070 [DEBUG] ElementsActions - Setting temporary timeout to 10s
+2026-03-09 17:27:00,114 [INFO] InventoryPage - Adding backpack to cart
+2026-03-09 17:27:00,114 [INFO] UIElement - InventoryPage - Clicking on element: BACKPACK_ADD_BUTTON ('id', 'add-to-cart-sauce-labs-backpack')
+2026-03-09 17:27:00,115 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-03-09 17:27:00,314 [INFO] TestAppWrapper - ================================================================================
+2026-03-09 17:27:00,314 [INFO] TestAppWrapper - 🏁 FINISHED TEST: CT-LOGIN-001
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\logging\__init__.py", line 1153, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f3c1' in position 48: character maps to <undefined>
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Scripts\pytest.exe\__main__.py", line 5, in <module>
+    sys.exit(console_main())
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\config\__init__.py", line 223, in console_main
+    code = main()
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\config\__init__.py", line 199, in main
+    ret: ExitCode | int = config.hook.pytest_cmdline_main(config=config)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\main.py", line 365, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\main.py", line 318, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\main.py", line 372, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\main.py", line 396, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\runner.py", line 118, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\runner.py", line 142, in runtestprotocol
+    reports.append(call_and_report(item, "teardown", log, nextitem=nextitem))
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\runner.py", line 244, in call_and_report
+    call = CallInfo.from_call(
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\runner.py", line 353, in from_call
+    result: TResult | None = func()
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\runner.py", line 245, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\pluggy\_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\runner.py", line 194, in pytest_runtest_teardown
+    item.session._setupstate.teardown_exact(nextitem)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\runner.py", line 555, in teardown_exact
+    fin()
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\fixtures.py", line 1042, in finish
+    fin()
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\allure_commons\_allure.py", line 231, in __call__
+    return self._fixture_function(*args, **kwargs)
+  File "C:\Users\Usuario\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\fixtures.py", line 924, in _teardown_yield_fixture
+    next(it)
+  File "c:\ai\go-python-selenium-automation\core\ui\common\base_test.py", line 131, in setup
+    self.logger.info(f"🏁 FINISHED TEST: {test_id}")
+Message: '🏁 FINISHED TEST: CT-LOGIN-001'
+Arguments: ()
+2026-03-09 17:27:00,321 [INFO] TestAppWrapper - ================================================================================
+2026-03-09 17:27:00,322 [INFO] VideoRecorder - Video recording stopped and saved to: C:\ai\go-python-selenium-automation\reports\videos\test_login_flow_with_app_wrapper_20260309_172658.mp4
+2026-03-09 17:27:00,322 [INFO] TestAppWrapper - Closing WebDriver session

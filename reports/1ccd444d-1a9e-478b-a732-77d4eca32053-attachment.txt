@@ -1,0 +1,34 @@
+2026-03-09 18:29:40,425 [INFO] TestLoginScenarios - ================================================================================
+2026-03-09 18:29:40,425 [INFO] TestLoginScenarios - 🚀 STARTING TEST: CT-LOGIN-001 - Invalid Login Attempt
+2026-03-09 18:29:40,426 [INFO] TestLoginScenarios - Context: App=demo | Env=qa | Browser=chrome (Headless: False)
+2026-03-09 18:29:40,426 [INFO] TestLoginScenarios - ================================================================================
+2026-03-09 18:29:45,726 [INFO] VideoRecorder - Video recording started: C:\ai\go-python-selenium-automation\reports\videos\test_invalid_login_20260309_182945.mp4
+2026-03-09 18:29:45,729 [INFO] TestLoginScenarios - Test: Invalid Login
+2026-03-09 18:29:45,732 [INFO] VideoRecorder - Context: Recording monitor 1 (logical: 1366x768)
+2026-03-09 18:29:45,736 [INFO] LoginPage - Navigating to URL: https://www.saucedemo.com/
+2026-03-09 18:29:45,737 [DEBUG] NavigationActions - Go to: https://www.saucedemo.com/
+2026-03-09 18:29:45,772 [INFO] VideoRecorder - Video resolution: 1366x768 pixels
+[libopenh264 @ 000002948703e680] Incorrect library version loaded
+[ERROR:1@16.912] global cap_ffmpeg_impl.hpp:3514 open Could not open codec libopenh264, error: Unspecified error (-22)
+[ERROR:1@16.913] global cap_ffmpeg_impl.hpp:3531 open VIDEOIO/FFMPEG: Failed to initialize VideoWriter
+2026-03-09 18:29:46,804 [INFO] VideoRecorder - Initialized VideoWriter with codec: 'avc1'
+2026-03-09 18:29:47,115 [INFO] LoginPage - Logging in with user: invalid_user
+2026-03-09 18:29:47,117 [INFO] UIElement - LoginPage - Typing 'invalid_user' into on element: USERNAME_FIELD ('id', 'user-name')
+2026-03-09 18:29:47,117 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-03-09 18:29:47,265 [INFO] SendKeysActions - Clearing text from element.
+2026-03-09 18:29:47,798 [INFO] SendKeysActions - Send Keys [invalid_user]
+2026-03-09 18:29:47,902 [INFO] UIElement - LoginPage - Typing 'wrong_password' into on element: PASSWORD_FIELD ('id', 'password')
+2026-03-09 18:29:47,902 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-03-09 18:29:47,943 [INFO] SendKeysActions - Clearing text from element.
+2026-03-09 18:29:48,114 [INFO] SendKeysActions - Send Keys [wrong_password]
+2026-03-09 18:29:48,210 [INFO] UIElement - LoginPage - Clicking on element: LOGIN_BUTTON ('id', 'login-button')
+2026-03-09 18:29:48,211 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-03-09 18:29:48,405 [INFO] UIElement - LoginPage - Waiting for visibility of on element: ERROR_MESSAGE ('css selector', "[data-test='error']")
+2026-03-09 18:29:48,406 [DEBUG] ElementsActions - Setting temporary timeout to 10s
+2026-03-09 18:29:48,447 [DEBUG] GetTextActions - Setting temporary timeout to 10s
+2026-03-09 18:29:48,483 [INFO] TestLoginScenarios - ================================================================================
+2026-03-09 18:29:48,483 [INFO] TestLoginScenarios - 🏁 FINISHED TEST: CT-LOGIN-001
+2026-03-09 18:29:48,484 [INFO] TestLoginScenarios - ================================================================================
+2026-03-09 18:29:48,535 [INFO] VideoRecorder - Recording Finished. Total frames: 16. Avg Capture Speed: 20.40 FPS
+2026-03-09 18:29:48,541 [INFO] VideoRecorder - Video recording stopped and saved to: C:\ai\go-python-selenium-automation\reports\videos\test_invalid_login_20260309_182945.mp4
+2026-03-09 18:29:48,542 [INFO] TestLoginScenarios - Closing WebDriver session

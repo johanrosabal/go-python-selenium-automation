@@ -35,7 +35,7 @@ def setup_logger(name):
     # Configure Shared File Handler: Opened in 'w' mode only once per process
     if _shared_file_handler is None:
         file_name = "logs/automation.log"
-        _shared_file_handler = logging.FileHandler(file_name, mode='w')
+        _shared_file_handler = logging.FileHandler(file_name, mode='a', encoding='utf-8')
         _shared_file_handler.setFormatter(log_format)
 
     logger.addHandler(_shared_file_handler)

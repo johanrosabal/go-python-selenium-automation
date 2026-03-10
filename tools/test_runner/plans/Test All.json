@@ -1,0 +1,17 @@
+{
+    "name": "Test All",
+    "tests": [
+        "applications/web/demo/tests/test_advanced_features.py::TestAdvancedFeatures::test_god_tier_suite",
+        "applications/web/demo/tests/test_app_wrapper.py::TestAppWrapper::test_login_flow_with_app_wrapper",
+        "applications/web/demo/tests/test_db_integration.py::TestDatabaseIntegration::test_database_connection",
+        "applications/web/demo/tests/test_login.py::TestLogin::test_valid_login",
+        "applications/web/demo/tests/test_login_scenarios.py::TestLoginScenarios::test_valid_login_and_logout",
+        "applications/web/demo/tests/test_login_scenarios.py::TestLoginScenarios::test_invalid_login",
+        "applications/web/demo/tests/test_login_scenarios.py::TestLoginScenarios::test_locked_out_user"
+    ],
+    "config": {
+        "browser": "chrome",
+        "env": "qa",
+        "headless": false
+    }
+}

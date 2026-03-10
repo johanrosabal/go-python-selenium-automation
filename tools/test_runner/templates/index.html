@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Tier Test Runner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f111a;
+            --bg-sidebar: #1a1c25;
+            --bg-panel: #232634;
+            --text-main: #e2e4f0;
+            --text-muted: #9499b0;
+            --accent-green: #50fa7b;
+            --accent-red: #ff5555;
+            --accent-blue: #8be9fd;
+            --accent-purple: #bd93f9;
+            --border: rgba(255, 255, 255, 0.08);
+            --radius: 8px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar container */
+        .sidebar {
+            width: 500px;
+            min-width: 400px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            padding: 25px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .sidebar-header .framework-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--accent-purple);
+            font-weight: 800;
+            opacity: 0.8;
+        }
+
+        .sidebar-header .runner-title {
+            font-size: 1.6rem;
+            margin: 0;
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .test-tree {
+            padding: 10px 0;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .file-group {
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(137, 180, 250, 0.08);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-top: 10px;
+        }
+
+        .file-group:first-child {
+            margin-top: 0;
+        }
+
+        .file-group:hover {
+            background-color: rgba(137, 180, 250, 0.15);
+        }
+
+        .test-item {
+            padding: 8px 15px 8px 35px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .test-item:hover,
+        .test-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            border-left-color: var(--accent-blue);
+        }
+
+        /* Main Content Container */
+        .plan-item {
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .plan-item:hover {
+            background: rgba(137, 180, 250, 0.1);
+            border-color: var(--accent-blue);
+        }
+
+        .plan-actions {
+            display: flex;
+            gap: 10px;
+            opacity: 0.3;
+            transition: opacity 0.2s;
+        }
+
+        .plan-item:hover .plan-actions {
+            opacity: 1;
+        }
+
+        .plan-action {
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .plan-action:hover {
+            color: var(--accent-blue);
+        }
+
+        .plan-action.delete:hover {
+            color: var(--accent-red);
+        }
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-dark);
+        }
+
+        /* Top Control Bar */
+        .toolbar {
+            padding: 12px 25px;
+            background-color: var(--bg-panel);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .toolbar-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .test-selection-info {
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        /* Custom Dropdown Styles */
+        .custom-select {
+            position: relative;
+            width: 100%;
+            user-select: none;
+        }
+
+        .select-trigger {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            border-radius: var(--radius);
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .select-trigger:hover {
+            border-color: var(--accent-blue);
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .select-trigger::after {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-right: 2px solid var(--text-muted);
+            border-bottom: 2px solid var(--text-muted);
+            transform: rotate(45deg);
+            margin-bottom: 4px;
+            transition: transform 0.3s;
+        }
+
+        .custom-select.open .select-trigger::after {
+            transform: rotate(-135deg);
+            margin-bottom: -4px;
+        }
+
+        .options-list {
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            right: 0;
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+            max-height: 250px;
+            overflow-y: auto;
+            animation: slideDown 0.2s ease;
+        }
+
+        .custom-select.open .options-list {
+            display: block;
+        }
+
+        .option-item {
+            padding: 10px 15px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+        }
+
+        .option-item.selected {
+            color: var(--accent-blue);
+            background-color: rgba(139, 233, 253, 0.05);
+            font-weight: 600;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Custom Checkbox Styling */
+        input[type="checkbox"] {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            background-color: transparent;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        input[type="checkbox"]:checked {
+            background-color: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        input[type="checkbox"]:checked::after {
+            content: "✓";
+            position: absolute;
+            color: #000;
+            font-weight: bold;
+            font-size: 12px;
+            left: 2px;
+            top: -1px;
+        }
+
+        .run-btn {
+            background: linear-gradient(135deg, var(--accent-green), #40c057);
+            color: #000;
+            border: none;
+            padding: 10px 24px;
+            border-radius: var(--radius);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(80, 250, 123, 0.2);
+        }
+
+        .run-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(80, 250, 123, 0.3);
+        }
+
+        .run-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .run-btn:disabled {
+            filter: grayscale(1);
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .allure-btn {
+            background-color: transparent;
+            color: var(--accent-blue);
+            border: 1px solid var(--accent-blue);
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .allure-btn:hover {
+            background-color: rgba(139, 233, 253, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .allure-btn:active {
+            transform: translateY(0);
+        }
+
+        .test-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--accent-blue);
+        }
+
+        /* Console and Media Area */
+        .workspace-container {
+            flex-grow: 1;
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+            overflow: hidden;
+        }
+
+        .console-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .media-container {
+            display: none;
+            /* Removed from inline layout */
+        }
+
+        /* Modal Styles */
+        #media-modal {
+            background: var(--bg-sidebar);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-main);
+            width: 80%;
+            max-width: 1000px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+        }
+
+        #media-modal::backdrop {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: var(--accent-red);
+        }
+
+        .test-description {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: normal;
+            margin-top: 4px;
+            display: block;
+            line-height: 1.3;
+        }
+
+        .console-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .terminal {
+            flex-grow: 1;
+            background-color: #11111b;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+            line-height: 1.5;
+        }
+
+        /* Log Colors */
+        .log-info {
+            color: var(--accent-blue);
+        }
+
+        .log-success {
+            color: var(--accent-green);
+        }
+
+        .log-error {
+            color: var(--accent-red);
+        }
+
+        .log-warning {
+            color: #f9e2af;
+        }
+
+        .log-meta {
+            color: #8be9fd;
+            opacity: 0.7;
+        }
+
+        .log-header {
+            color: #fff;
+            background-color: rgba(139, 233, 253, 0.1);
+            font-weight: 800;
+            padding: 8px 10px;
+            display: block;
+            border-top: 1px dashed var(--accent-blue);
+            border-bottom: 1px dashed var(--accent-blue);
+            margin: 10px 0;
+            text-shadow: 0 0 5px rgba(139, 233, 253, 0.5);
+        }
+
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            border-top-color: #000;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        /* Hero Welcome Section */
+        .hero-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+            background: radial-gradient(circle at center, rgba(139, 233, 253, 0.05) 0%, transparent 70%);
+        }
+
+        .hero-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 20px rgba(137, 180, 250, 0.3));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: -1.5px;
+            background: linear-gradient(to bottom, #fff, #9499b0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin: 15px 0 40px;
+            max-width: 500px;
+            line-height: 1.6;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .hero-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .hero-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+        }
+
+        .hero-card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .hero-card-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .hero-card-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Media Gallery Button & Badge */
+        .media-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .media-btn:hover {
+            border-color: var(--accent-blue);
+            background: rgba(137, 180, 250, 0.05);
+        }
+
+        .media-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--accent-red);
+            color: white;
+            font-size: 10px;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(243, 139, 168, 0.4);
+            display: none;
+            /* Hidden by default if 0 */
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .gallery-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-blue);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .gallery-item img,
+        .gallery-item video {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .gallery-item-info {
+            padding: 12px;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: left;
+            position: relative;
+            flex-grow: 1;
+        }
+
+        .duration-badge {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.75);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            backdrop-filter: blur(4px);
+        }
+
+        .gallery-delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 85, 85, 0.2);
+            color: var(--accent-red);
+            border: 1px solid rgba(255, 85, 85, 0.3);
+            border-radius: 4px;
+            font-size: 10px;
+            padding: 2px 5px;
+            cursor: pointer;
+            z-index: 5;
+            transition: all 0.2s;
+        }
+
+        .gallery-delete-btn:hover {
+            background: var(--accent-red);
+            color: #fff;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .test-id-badge {
+            background: rgba(137, 180, 250, 0.15);
+            color: var(--accent-blue);
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar with Tests -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <span class="framework-label">Automation Framework</span>
+            <h2 class="runner-title">Go Python Runner</h2>
+        </div>
+
+        <!-- App Custom Dropdown -->
+        <div style="padding: 15px; border-bottom: 1px solid var(--border);">
+            <div class="custom-select" id="app-dropdown">
+                <div class="select-trigger" id="app-trigger">Loading apps...</div>
+                <div class="options-list" id="app-options"></div>
+            </div>
+            <input type="hidden" id="app-selector" value="applications/web/demo/tests">
+        </div>
+
+        <div style="padding: 15px; border-bottom: 1px solid var(--border); background: rgba(137, 180, 250, 0.05);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 id="plan-section-title" style="margin: 0; font-size: 0.8rem; color: var(--accent-blue);">📋 SAVED
+                    PLANS</h3>
+                <div id="plan-buttons-container">
+                    <button id="save-plan-btn" onclick="saveTestPlan()"
+                        style="padding: 4px 8px; font-size: 11px; background: var(--accent-blue); border: none; border-radius: 4px; color: #111; cursor: pointer; font-weight: bold;">Save
+                        New</button>
+                </div>
+            </div>
+            <div id="plans-list"
+                style="display: flex; flex-direction: column; gap: 5px; max-height: 150px; overflow-y: auto;">
+                <!-- Plans will be loaded here -->
+                <div style="font-size: 0.8rem; color: var(--text-muted);">No plans saved yet.</div>
+            </div>
+        </div>
+
+        <!-- Tests Tree -->
+        <div class="test-tree" id="test-tree">
+            <div style="padding: 20px; color: var(--text-muted); text-align: center;">Scanning project for tests...
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Execution Area -->
+    <div class="main-content">
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="toolbar-top">
+                <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">CONFIGURACIÓN</div>
+                <div class="controls">
+                    <label style="color: var(--text-muted); font-size: 0.85rem;">Env</label>
+                    <div class="custom-select" style="width: 100px;">
+                        <div class="select-trigger" id="env-trigger">QA</div>
+                        <div class="options-list">
+                            <div class="option-item selected" data-value="qa">QA</div>
+                            <div class="option-item" data-value="dev">DEV</div>
+                            <div class="option-item" data-value="prod">PROD</div>
+                        </div>
+                        <input type="hidden" id="config-env" value="qa">
+                    </div>
+
+                    <label style="color: var(--text-muted); font-size: 0.85rem; margin-left: 10px;">Browser</label>
+                    <div class="custom-select" style="width: 130px;">
+                        <div class="select-trigger" id="browser-trigger">Chrome</div>
+                        <div class="options-list">
+                            <div class="option-item selected" data-value="chrome">Chrome</div>
+                            <div class="option-item" data-value="edge">Edge</div>
+                            <div class="option-item" data-value="firefox">Firefox</div>
+                        </div>
+                        <input type="hidden" id="config-browser" value="chrome">
+                    </div>
+
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" id="config-headless"> Headless
+                    </label>
+
+                    <button class="allure-btn" id="allure-btn" onclick="generateAllureReport()">📊 Allure
+                        Report</button>
+
+                    <button class="media-btn" id="media-gallery-btn" onclick="openMediaGallery()">
+                        🎬 Media Gallery
+                        <span class="media-badge" id="media-badge">0</span>
+                    </button>
+
+                    <button class="run-btn" id="run-btn" disabled onclick="runSelectedTest()">
+                        <span id="run-icon">▶</span> RUN
+                    </button>
+                </div>
+            </div>
+
+            <div class="test-selection-info">
+                <span style="color: var(--text-muted); font-size: 0.8rem;">Prueba seleccionada:</span>
+                <div class="test-title" id="selected-test-name">Select a test to run...</div>
+            </div>
+        </div>
+
+        <!-- Terminal & Media Console -->
+        <div class="workspace-container" id="terminal-container">
+            <div class="console-container">
+                <div id="terminal-hero" class="hero-container">
+                    <div class="hero-icon">🚀</div>
+                    <h1 class="hero-title">Ready for Takeoff</h1>
+                    <p class="hero-subtitle">Your Go Python automation framework is primed and ready. Select your tests
+                        from the explorer and launch the execution.</p>
+
+                    <div class="hero-grid">
+                        <div class="hero-card">
+                            <span class="hero-card-icon">📁</span>
+                            <span class="hero-card-title">Select App</span>
+                            <span class="hero-card-text">Pick your project target from the sidebar.</span>
+                        </div>
+                        <div class="hero-card">
+                            <span class="hero-card-icon">🧪</span>
+                            <span class="hero-card-title">Pick Tests</span>
+                            <span class="hero-card-text">Choose specific cases or run a saved plan.</span>
+                        </div>
+                        <div class="hero-card">
+                            <span class="hero-card-icon">⚡</span>
+                            <span class="hero-card-title">Execute</span>
+                            <span class="hero-card-text">Stream logs and capture results in real-time.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="terminal-live" style="display: none; flex: 1; flex-direction: column; overflow: hidden;">
+                    <div class="console-header">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span>Execution Logs</span>
+                            <button onclick="copyLogToClipboard()"
+                                style="background: none; border: 1px solid var(--border); color: var(--text-muted); border-radius: 4px; cursor: pointer; padding: 2px 8px; font-size: 0.8rem; transition: 0.2s;"
+                                onmouseover="this.style.color='var(--accent-blue)'; this.style.borderColor='var(--accent-blue)'"
+                                onmouseout="this.style.color='var(--text-muted)'; this.style.borderColor='var(--border)'">
+                                📋 Copy
+                            </button>
+                        </div>
+                        <span id="exec-status"></span>
+                    </div>
+                    <div class="terminal" id="terminal"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Media Modal -->
+    <dialog id="media-modal"
+        style="width: 80%; max-width: 1000px; padding: 0; border: 1px solid var(--border); background: var(--bg-main); border-radius: 12px;">
+        <div class="modal-header"
+            style="background: var(--bg-sidebar); padding: 15px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+            <h3 id="modal-title" style="margin:0; color:var(--accent-blue)">Captures Gallery</h3>
+            <button class="close-modal" onclick="document.getElementById('media-modal').close()"
+                style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;">&times;</button>
+        </div>
+        <div id="modal-body" style="padding: 20px; max-height: 70vh; overflow-y: auto;">
+            <!-- Gallery content injected here -->
+        </div>
+    </dialog>
+
+    <script>
+        let currentTestId = null;
+        let mediaGallery = []; // Store captured media
+
+        // Load tests when the page opens
+        document.addEventListener('DOMContentLoaded', async () => {
+            initCustomSelects(); // Global setup for dropdowns
+            await fetchApps();
+            await fetchTests();
+            await fetchPlans(); // Load saved plans
+        });
+
+        async function fetchPlans() {
+            try {
+                const response = await fetch('/api/plans');
+                const data = await response.json();
+                if (data.status === 'success') renderPlans(data.plans);
+            } catch (e) { console.error("Plans load error", e); }
+        }
+
+        function renderPlans(plans) {
+            const list = document.getElementById('plans-list');
+            if (plans.length === 0) {
+                list.innerHTML = '<div style="font-size: 0.8rem; color: var(--text-muted);">No plans saved yet.</div>';
+                return;
+            }
+            list.innerHTML = '';
+            plans.forEach(plan => {
+                const item = document.createElement('div');
+                item.className = 'plan-item';
+                item.innerHTML = `
+            <div style="flex: 1;" onclick="applyPlan(${JSON.stringify(plan).replace(/"/g, '&quot;')})">
+                <span>📂 ${plan.name}</span>
+                <div style="font-size: 10px; opacity: 0.6; margin-top: 2px;">${plan.tests.length} tests</div>
+            </div>
+            <div class="plan-actions">
+                <span class="plan-action" title="Apply & Edit" onclick="editPlan(${JSON.stringify(plan).replace(/"/g, '&quot;')})">✏️</span>
+                <span class="plan-action delete" title="Delete Plan" onclick="deletePlan('${plan.name}')">🗑️</span>
+            </div>
+            `;
+                list.appendChild(item);
+            });
+        }
+
+        function editPlan(plan) {
+            applyPlan(plan);
+
+            // Visual feedback that we are in "edit" mode
+            const container = document.getElementById('plan-buttons-container');
+            const title = document.getElementById('plan-section-title');
+
+            title.innerText = `✏️ EDITING: ${plan.name}`;
+            title.style.color = "var(--accent-purple)";
+
+            container.innerHTML = `
+            <button onclick="saveTestPlan()"
+                style="padding: 4px 8px; font-size: 11px; background: var(--accent-purple); border: none; border-radius: 4px; color: #fff; cursor: pointer; font-weight: bold; margin-right: 5px;">Save
+                Changes</button>
+            <button onclick="cancelEditPlan()"
+                style="padding: 4px 8px; font-size: 11px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); cursor: pointer; font-weight: bold;">Cancel</button>
+            `;
+
+            window._currentPlanName = plan.name;
+        }
+
+        function cancelEditPlan() {
+            const container = document.getElementById('plan-buttons-container');
+            const title = document.getElementById('plan-section-title');
+
+            title.innerText = "📋 SAVED PLANS";
+            title.style.color = "var(--accent-blue)";
+
+            container.innerHTML = `
+            <button id="save-plan-btn" onclick="saveTestPlan()"
+                style="padding: 4px 8px; font-size: 11px; background: var(--accent-blue); border: none; border-radius: 4px; color: #111; cursor: pointer; font-weight: bold;">Save
+                New</button>
+            `;
+
+            window._currentPlanName = null;
+        }
+
+        async function deletePlan(name) {
+            if (!confirm(`Are you sure you want to delete the plan '${name}'?`)) return;
+
+            try {
+                const res = await fetch(`/api/plans?name=${encodeURIComponent(name)}`, { method: 'DELETE' });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    fetchPlans();
+                } else {
+                    alert("Error: " + data.message);
+                }
+            } catch (e) { alert("Delete failed"); }
+        }
+
+        function applyPlan(plan) {
+            // Set config
+            if (plan.config) {
+                document.getElementById('config-browser').value = plan.config.browser;
+                document.getElementById('config-env').value = plan.config.env;
+                document.getElementById('config-headless').checked = plan.config.headless;
+            }
+            // Clear all checkboxes
+            document.querySelectorAll('.test-checkbox').forEach(cb => cb.checked = false);
+            // Check plan tests
+            plan.tests.forEach(testId => {
+                const cb = document.querySelector(`.test-checkbox[value="${testId}"]`);
+                if (cb) cb.checked = true;
+            });
+            updateSelectedCount();
+        }
+
+        async function saveTestPlan() {
+            const selected = getSelectedTestIds();
+            if (selected.length === 0) {
+                alert("Select at least one test to create a plan.");
+                return;
+            }
+
+            const defaultName = window._currentPlanName || "";
+            const name = prompt("Enter a name for this Test Plan:", defaultName);
+            if (!name) return;
+
+            const plan = {
+                name: name,
+                tests: selected,
+                config: {
+                    browser: document.getElementById('config-browser').value,
+                    env: document.getElementById('config-env').value,
+                    headless: document.getElementById('config-headless').checked
+                }
+            };
+
+            const res = await fetch('/api/plans', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(plan)
+            });
+            const data = await res.json();
+            if (data.status === 'success') {
+                fetchPlans();
+                alert("Plan updated successfully!");
+                cancelEditPlan();
+            }
+        }
+
+        async function fetchApps() {
+            try {
+                const response = await fetch('/api/apps');
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    const optionsList = document.getElementById('app-options');
+                    const trigger = document.getElementById('app-trigger');
+                    const hiddenInput = document.getElementById('app-selector');
+
+                    optionsList.innerHTML = '';
+
+                    data.apps.forEach((app, index) => {
+                        const option = document.createElement('div');
+                        option.className = 'option-item';
+                        if (index === 0) {
+                            option.classList.add('selected');
+                            trigger.innerText = app.name;
+                            hiddenInput.value = app.path;
+                        }
+                        option.innerText = app.name;
+                        option.onclick = () => {
+                            optionsList.querySelectorAll('.option-item').forEach(opt => opt.classList.remove('selected'));
+                            option.classList.add('selected');
+                            trigger.innerText = app.name;
+                            hiddenInput.value = app.path;
+                            document.getElementById('app-dropdown').classList.remove('open');
+                            fetchTests();
+                        };
+                        optionsList.appendChild(option);
+                    });
+                }
+            } catch (e) {
+                console.error("Failed to fetch apps", e);
+                document.getElementById('app-trigger').innerText = "Error loading apps";
+            }
+        }
+
+        async function fetchTests() {
+            const appPath = document.getElementById('app-selector').value;
+            const tree = document.getElementById('test-tree');
+            tree.innerHTML = `<div style="padding: 20px; color: var(--text-muted); text-align: center;">
+                <div class="spinner" style="display:inline-block"></div> Scanning project...
+            </div>`;
+
+            try {
+                const response = await fetch(`/api/tests?app_path=${encodeURIComponent(appPath)}`);
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    renderTestTree(data.files);
+                } else {
+                    tree.innerHTML = `<div style="padding: 20px; color: var(--accent-red); text-align: center;">Error:
+                ${data.message}</div>`;
+                }
+            } catch (e) {
+                tree.innerHTML = `<div style="padding: 20px; color: var(--accent-red); text-align: center;">Connection
+                failed.</div>`;
+            }
+        }
+
+        function initCustomSelects() {
+            // Setup generic behavior for Env and Browser dropdowns
+            document.querySelectorAll('.custom-select').forEach(container => {
+                const trigger = container.querySelector('.select-trigger');
+                const options = container.querySelectorAll('.option-item');
+                const hiddenInput = container.querySelector('input[type="hidden"]');
+
+                if (trigger) {
+                    trigger.onclick = (e) => {
+                        e.stopPropagation();
+                        const wasOpen = container.classList.contains('open');
+                        // Close all others
+                        document.querySelectorAll('.custom-select').forEach(c => c.classList.remove('open'));
+                        if (!wasOpen) container.classList.add('open');
+                    };
+                }
+
+                options.forEach(opt => {
+                    opt.onclick = () => {
+                        const val = opt.dataset.value;
+                        const label = opt.innerText;
+
+                        options.forEach(o => o.classList.remove('selected'));
+                        opt.classList.add('selected');
+                        if (trigger) trigger.innerText = label;
+                        if (hiddenInput) {
+                            hiddenInput.value = val;
+                            hiddenInput.dispatchEvent(new Event('change'));
+                        }
+                        container.classList.remove('open');
+                    };
+                });
+            });
+
+            // Close on outside click
+            window.onclick = () => {
+                document.querySelectorAll('.custom-select').forEach(c => c.classList.remove('open'));
+            };
+        }
+
+        function renderTestTree(files) {
+            const tree = document.getElementById('test-tree');
+            tree.innerHTML = '';
+
+            for (const [filename, tests] of Object.entries(files)) {
+                const fileGroup = document.createElement('div');
+                fileGroup.className = 'file-group';
+                fileGroup.innerHTML = `📄 ${filename}`;
+                tree.appendChild(fileGroup);
+
+                tests.forEach(test => {
+                    const testEl = document.createElement('div');
+                    testEl.className = 'test-item';
+                    testEl.style.display = 'flex';
+                    testEl.style.alignItems = 'flex-start';
+                    testEl.style.gap = '10px';
+
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.className = 'test-checkbox';
+                    checkbox.style.marginTop = '4px';
+                    checkbox.value = test.id;
+                    checkbox.onclick = (e) => e.stopPropagation();
+                    checkbox.onchange = () => updateSelectedCount();
+
+                    const label = document.createElement('div');
+                    label.style.flex = '1';
+
+                    let inner = '<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">';
+                    if (test.test_id) {
+                        inner += `<span class="test-id-badge">${test.test_id}</span> `;
+                    }
+                    inner += `<span style="font-size: 0.85rem; font-weight: 500;">${test.title || test.name}</span></div>`;
+
+                    if (test.description) {
+                        inner += `<span class="test-description">${test.description}</span>`;
+                    }
+                    label.innerHTML = inner;
+
+                    testEl.appendChild(checkbox);
+                    testEl.appendChild(label);
+                    testEl.dataset.id = test.id;
+
+                    testEl.onclick = () => {
+                        checkbox.checked = !checkbox.checked;
+                        updateSelectedCount();
+                    };
+                    tree.appendChild(testEl);
+                });
+            }
+        }
+
+        function updateSelectedCount() {
+            const selected = getSelectedTestIds();
+            const btn = document.getElementById('run-btn');
+            const title = document.getElementById('selected-test-name');
+
+            if (selected.length === 0) {
+                title.innerText = "Select test(s) to run...";
+                btn.disabled = true;
+            } else if (selected.length === 1) {
+                title.innerText = selected[0].split('::').pop();
+                btn.disabled = false;
+            } else {
+                title.innerText = `${selected.length} Tests Selected`;
+                btn.disabled = false;
+            }
+        }
+
+        function getSelectedTestIds() {
+            return Array.from(document.querySelectorAll('.test-checkbox:checked')).map(cb => cb.value);
+        }
+
+        async function runSelectedTest() {
+            const selectedTests = getSelectedTestIds();
+            const appPath = document.getElementById('app-selector').value;
+            const env = document.getElementById('config-env').value;
+            const browser = document.getElementById('config-browser').value;
+            const headless = document.getElementById('config-headless').checked;
+
+            const term = document.getElementById('terminal');
+            const runBtn = document.getElementById('run-btn');
+            const runIcon = document.getElementById('run-icon');
+            const statusLabel = document.getElementById('exec-status');
+
+            // Toggle visibility: Hero -> Live
+            document.getElementById('terminal-hero').style.display = 'none';
+            document.getElementById('terminal-live').style.display = 'flex';
+
+            // Prepare UI for running state
+            term.innerHTML = ''; // Clear console
+
+            runBtn.disabled = true;
+            runIcon.className = 'spinner';
+            runIcon.innerText = '';
+            statusLabel.innerText = "Running...";
+            statusLabel.style.color = "var(--text-muted)";
+
+            try {
+                const response = await fetch('/api/run', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        test_id: selectedTests, // Sending array now
+                        browser: browser,
+                        env: env,
+                        headless: headless
+                    })
+                });
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder('utf-8');
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const chunk = decoder.decode(value);
+                    const lines = chunk.split('\n\n');
+
+                    for (const line of lines) {
+                        if (line.startsWith('data: ')) {
+                            try {
+                                const data = JSON.parse(line.replace('data: ', ''));
+                                appendLog(data, term);
+                            } catch (e) { }
+                        }
+                    }
+                }
+            } catch (error) {
+                appendLog({ type: 'error', message: `Runner Error: ${error.message}` }, term);
+            } finally {
+                runBtn.disabled = false;
+                runIcon.className = '';
+                runIcon.innerText = '▶';
+            }
+        }
+        // end of runSelectedTest
+
+        async function generateAllureReport() {
+            const btn = document.getElementById('allure-btn');
+            btn.innerText = "⏳ Generating...";
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/report/generate', { method: 'POST' });
+                const data = await res.json();
+
+                if (data.status === 'success') {
+                    // Open Allure in new tab
+                    window.open(data.url, '_blank');
+                } else {
+                    alert("Failed to generate report: " + data.message);
+                }
+            } catch (error) {
+                alert("Error: " + error);
+            } finally {
+                btn.innerText = "📊 Allure Report";
+                btn.disabled = false;
+            }
+        }
+
+        function extractMediaPath(message) {
+            // New format: [MEDIA] Video saved: reports/videos/test_...mp4 | Duration: 00:05
+            if (message.includes('saved') || message.includes('Saved')) {
+                const pathMatch = message.match(/reports[\\/](screenshots|videos)[\\/][^ |]+/i);
+                if (pathMatch) {
+                    const fullPath = pathMatch[0].replace(/\\/g, '/');
+                    const name = fullPath.split('/').pop();
+                    const type = fullPath.includes('videos/') ? 'video' : 'screenshot';
+
+                    // Capture duration if present in the message
+                    let duration = "00:00";
+                    const durationMatch = message.match(/Duration: (\d+:\d+)/);
+                    if (durationMatch) {
+                        duration = durationMatch[1];
+                    }
+
+                    return { type, path: fullPath, name, duration };
+                }
+            }
+            return null;
+        }
+
+
+        function displayMedia(data) {
+            if (!data) return;
+
+            // De-duplication
+            if (mediaGallery.some(item => item.path === data.path)) {
+                return;
+            }
+
+            // PRIORITY FOR TEST NAME:
+            // 1. Try to guess from the filename (most reliable as it's set in Python's base_test)
+            let parsedName = "";
+            let parsedId = "";
+            const nameMatch = data.name.split('_20')[0]; // Remove timestamp
+            if (nameMatch && !nameMatch.includes("Tests Selected")) {
+                if (nameMatch.includes("_TC")) {
+                    const parts = nameMatch.split("_TC");
+                    parsedName = parts[0].replace(/_/g, " ");
+                    parsedId = "TC" + parts[1];
+                } else {
+                    parsedName = nameMatch.replace(/_/g, " ");
+                }
+                // Title Case
+                parsedName = parsedName.replace(/\b\w/g, l => l.toUpperCase());
+            }
+
+            // 2. Fallback to global tracker or UI label
+            const currentName = parsedName || window._currentExecutingTestName || document.getElementById('selected-test-name').innerText;
+            const currentId = parsedId || window._currentExecutingTestId || "";
+
+            const item = {
+                type: data.type,
+                path: data.path,
+                name: data.name || "Capture",
+                testName: currentName,
+                testId: currentId,
+                timestamp: new Date().toLocaleTimeString(),
+                duration: data.duration || "00:00"
+            };
+
+            mediaGallery.push(item);
+            updateMediaBadge();
+
+            const term = document.getElementById('terminal');
+            if (term) {
+                const notice = document.createElement('div');
+                notice.style.margin = "8px 0";
+                notice.innerHTML = `<span style="color:var(--accent-blue)">[MEDIA]</span> New ${item.type} saved: <span style="color:#fff">${item.name}</span> ${item.duration !== "00:00" ? `(${item.duration})` : ''}`;
+                term.appendChild(notice);
+                term.scrollTop = term.scrollHeight;
+            }
+        }
+
+        function updateMediaBadge() {
+            const badge = document.getElementById('media-badge');
+            if (badge) {
+                if (mediaGallery.length > 0) {
+                    badge.innerText = mediaGallery.length;
+                    badge.style.display = 'flex';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+        }
+
+        function openMediaGallery() {
+            const modal = document.getElementById('media-modal');
+            const body = document.getElementById('modal-body');
+            const title = document.getElementById('modal-title');
+
+            title.innerText = "Captures Gallery";
+            body.innerHTML = '';
+
+            // Ensure vertical scrolling by resetting body styles
+            body.style.overflowY = "auto";
+            body.style.maxHeight = "70vh";
+
+            if (mediaGallery.length === 0) {
+                body.innerHTML = `<div style="text-align:center; padding: 60px; color: var(--text-muted);">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">🔍</div>
+                    No media captured in this session yet.
+                </div>`;
+            } else {
+                const grid = document.createElement('div');
+                grid.className = 'gallery-grid';
+
+                mediaGallery.forEach((item, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'gallery-item';
+                    card.onclick = () => viewSingleMedia(item);
+
+                    const idBadge = item.testId ? `<span class="test-id-badge" style="margin-bottom:4px; display:inline-block;">${item.testId}</span><br>` : '';
+                    const durationTag = (item.type === 'video' && item.duration) ? `<div class="duration-badge">${item.duration}</div>` : '';
+
+                    if (item.type === 'video') {
+                        card.innerHTML = `
+                            <div style="height:140px; background:#000; display:flex; align-items:center; justify-content:center; font-size:2.5rem; position:relative;">
+                                🎬 ${durationTag}
+                            </div>
+                            <div class="gallery-item-info">
+                                ${idBadge}
+                                <strong style="color:var(--accent-blue); font-size: 12px; display:block; margin-bottom:4px;">${item.testName}</strong>
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span>Video • ${item.timestamp}</span>
+                                    <button class="gallery-delete-btn" title="Delete"
+                                        onclick="event.stopPropagation(); deleteMediaItem(${index}, '${item.path.replace(/'/g, "\\'")}')">🗑️</button>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        card.innerHTML = `
+                            <div style="position:relative; height:140px;">
+                                <img src="/${item.path}" style="height:140px; object-fit:cover; width:100%;">
+                            </div>
+                            <div class="gallery-item-info">
+                                ${idBadge}
+                                <strong style="color:var(--accent-blue); font-size: 12px; display:block; margin-bottom:4px;">${item.testName}</strong>
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span>Screenshot • ${item.timestamp}</span>
+                                    <button class="gallery-delete-btn" title="Delete"
+                                        onclick="event.stopPropagation(); deleteMediaItem(${index}, '${item.path.replace(/'/g, "\\'")}')">🗑️</button>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    grid.appendChild(card);
+                });
+                body.appendChild(grid);
+            }
+            modal.showModal();
+        }
+
+        async function deleteMediaItem(index, path) {
+            if (!confirm("Are you sure you want to delete this media file?")) return;
+
+            try {
+                const res = await fetch(`/api/media?path=${encodeURIComponent(path)}`, { method: 'DELETE' });
+                const data = await res.json();
+
+                if (data.status === 'success') {
+                    mediaGallery.splice(index, 1);
+                    updateMediaBadge();
+                    openMediaGallery();
+                } else {
+                    alert("Delete failed: " + data.message);
+                }
+            } catch (e) {
+                alert("Error deleting file: " + e.message);
+            }
+        }
+
+        function viewSingleMedia(item) {
+            const body = document.getElementById('modal-body');
+            const title = document.getElementById('modal-title');
+
+            title.innerText = `Viewing: ${item.name}`;
+            body.innerHTML = `
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; text-align:center;">
+                <div style="padding: 10px; border-bottom: 1px solid var(--border); width: 100%;">
+                    ${item.testId ? `<span class="test-id-badge">${item.testId}</span>` : ''}
+                    <h2 style="margin:8px 0; color:var(--accent-blue); font-size:1.4rem;">${item.testName}</h2>
+                    <span style="font-size: 0.9rem; color: var(--text-muted);">
+                        Captured on ${item.timestamp} • TYPE: ${item.type.toUpperCase()} 
+                        ${item.duration ? `• DURATION: ${item.duration}` : ''}
+                    </span>
+                </div>
+                ${item.type === 'video'
+                    ? `<video src="/${item.path}" controls autoplay
+                    style="max-width: 100%; max-height: 55vh; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5);"></video>`
+                    : `<img src="/${item.path}"
+                    style="max-width: 100%; max-height: 55vh; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">`
+                }
+                <div style="display:flex; gap:10px; margin-top: 10px;">
+                    <button onclick="openMediaGallery()"
+                        style="padding: 10px 20px; background: var(--bg-sidebar); border: 1px solid var(--border); color: #fff; border-radius: 8px; cursor: pointer; font-weight: 600;">Back
+                        to Gallery</button>
+                    <a href="/${item.path}" target="_blank"
+                        style="padding: 10px 20px; background: var(--accent-blue); color: #111; border-radius: 8px; text-decoration: none; font-weight: 800;">Open
+                        Original ↗</a>
+                </div>
+            </div>
+            `;
+        }
+
+        async function loadExistingMedia() {
+            try {
+                console.log("Discovery: Scanning server for existing media...");
+                const res = await fetch('/api/reports/list');
+                const data = await res.json();
+                if (data.status === 'success') {
+                    console.log(`Discovery: Found ${data.media.length} files on server.`);
+                    let added = false;
+                    // Populate gallery without duplicates
+                    data.media.forEach(item => {
+                        if (!mediaGallery.some(existing => existing.path === item.path)) {
+                            mediaGallery.push(item);
+                            added = true;
+                        }
+                    });
+
+                    if (added) {
+                        updateMediaBadge();
+                        // If the modal is currently open, refresh its content
+                        const modal = document.getElementById('media-modal');
+                        if (modal.open) {
+                            openMediaGallery();
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error("Discovery Error:", error);
+            }
+        }
+
+        function appendLog(data, terminal) {
+            const span = document.createElement('span');
+
+            // Metadata capture: Pytest log lines often contain the test node name
+            // Format: applications/layer/app/tests/file.py::ClassName::test_function
+            if (data.message.includes('::') && !data.message.includes('collected')) {
+                const parts = data.message.split('::');
+                const rawName = parts[parts.length - 1].split(' ')[0].trim();
+
+                // Track ID if mentioned (e.g. TC001)
+                const idMatch = data.message.match(/TC\d+/i);
+                if (idMatch) {
+                    window._currentExecutingTestId = idMatch[0].toUpperCase();
+                } else {
+                    window._currentExecutingTestId = "";
+                }
+
+                // Format name: test_my_flow -> Test My Flow
+                window._currentExecutingTestName = rawName.replace(/_/g, ' ')
+                    .replace(/\b\w/g, l => l.toUpperCase());
+            }
+
+            if (data.type === 'end') {
+                span.innerText = `\n[FINISH] Executed with Return Code ${data.code} (${data.status}) \n`;
+                span.className = data.status === 'PASSED' ? 'log-success' : 'log-error';
+                document.getElementById('exec-status').innerText = data.status;
+                document.getElementById('exec-status').style.color = data.status === 'PASSED' ? 'var(--accent-green)' :
+                    'var(--accent-red)';
+
+                // Refresh gallery after execution ends to pick up everything
+                setTimeout(loadExistingMedia, 2000);
+            } else {
+                // Hide noisy internal logs (pytest sections, video recorder engine details)
+                if (
+                    data.message.includes('--- live log') ||
+                    data.message.includes('--- Captured log') ||
+                    data.message.includes('[INFO] VideoRecorder - ')
+                ) {
+                    return; // Skip rendering
+                }
+
+                // Process message to unescape Python's log_cli escaping
+                let htmlMessage = data.message
+                    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); // XSS basic
+
+
+                // Unescape literal \n
+                htmlMessage = htmlMessage.replace(/\\n/g, '\n');
+
+                // Unescape unicode \U0001f680 and \uXXXX
+                htmlMessage = htmlMessage.replace(/\\U([0-9a-fA-F]{8})/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)));
+                htmlMessage = htmlMessage.replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)));
+                htmlMessage = htmlMessage.replace(/\\x([0-9a-fA-F]{2})/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)));
+
+                span.innerText = htmlMessage + '\n';
+
+                // Colorize common pytest patterns
+                if (htmlMessage.includes('PASSED')) span.className = 'log-success';
+                else if (htmlMessage.includes('FAILED')) span.className = 'log-error';
+                else if (htmlMessage.includes('[INFO]')) span.className = 'log-info';
+                else if (htmlMessage.includes('[STEP]')) span.className = 'log-purple';
+                else if (htmlMessage.includes('[WARNING]')) span.className = 'log-warning';
+
+                // Emphasize Test boundaries and headers
+                if (htmlMessage.includes('=======')) {
+                    span.className = 'log-meta';
+                }
+                if (htmlMessage.includes('STARTING TEST:') || htmlMessage.includes('FINISHED TEST:')) {
+                    span.className = 'log-header';
+                }
+
+                // Removed: else if (data.type === 'start' || data.type === 'env') span.className = 'log-meta';
+
+                // Parse media from streaming logs
+                const mediaData = extractMediaPath(data.message);
+                if (mediaData) {
+                    // Small delay to ensure file write finishes OS-side before browser requests it
+                    setTimeout(() => displayMedia(mediaData), 2000);
+                }
+            }
+
+            terminal.appendChild(span);
+            // Auto-scroll to bottom
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function copyLogToClipboard() {
+            const terminal = document.getElementById('terminal');
+            if (!terminal || !terminal.innerText.trim()) {
+                alert("Nothing to copy.");
+                return;
+            }
+
+            navigator.clipboard.writeText(terminal.innerText).then(() => {
+                alert("Log copied to clipboard!");
+            }).catch(err => {
+                console.error("Failed to copy log: ", err);
+                alert("Failed to copy log. See console for details.");
+            });
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Give the browser a moment to settle elements
+            setTimeout(loadExistingMedia, 500);
+        });
+    </script>
+</body>
+
+</html>

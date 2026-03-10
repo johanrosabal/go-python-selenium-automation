@@ -1,0 +1,38 @@
+2026-03-09 18:36:00,488 [INFO] TestAppWrapper - ================================================================================
+2026-03-09 18:36:00,489 [INFO] TestAppWrapper - 🚀 STARTING TEST: CT-LOGIN-001 - Invalid Login Attempt
+2026-03-09 18:36:00,492 [INFO] TestAppWrapper - Context: App=demo | Env=qa | Browser=chrome (Headless: False)
+2026-03-09 18:36:00,492 [INFO] TestAppWrapper - ================================================================================
+2026-03-09 18:36:05,845 [INFO] VideoRecorder - Video recording started: C:\ai\go-python-selenium-automation\reports\videos\test_login_flow_with_app_wrapper_20260309_183605.mp4
+2026-03-09 18:36:05,856 [INFO] VideoRecorder - Context: Recording monitor 1 (logical: 1366x768)
+2026-03-09 18:36:05,864 [INFO] LoginPage - Navigating to URL: https://www.saucedemo.com/
+2026-03-09 18:36:05,865 [DEBUG] NavigationActions - Go to: https://www.saucedemo.com/
+2026-03-09 18:36:05,975 [INFO] VideoRecorder - Video resolution: 1366x768 pixels
+
+Failed to load OpenH264 library: openh264-1.8.0-win64.dll
+	Please check environment and/or download library: https://github.com/cisco/openh264/releases
+
+[libopenh264 @ 0000015f27abb180] Incorrect library version loaded
+[ERROR:0@0.011] global cap_ffmpeg_impl.hpp:3514 open Could not open codec libopenh264, error: Unspecified error (-22)
+[ERROR:0@0.012] global cap_ffmpeg_impl.hpp:3531 open VIDEOIO/FFMPEG: Failed to initialize VideoWriter
+2026-03-09 18:36:06,643 [INFO] VideoRecorder - Initialized VideoWriter with codec: 'avc1'
+2026-03-09 18:36:07,216 [INFO] LoginPage - Logging in with user: standard_user
+2026-03-09 18:36:07,219 [INFO] UIElement - LoginPage - Typing 'standard_user' into on element: USERNAME_FIELD ('id', 'user-name')
+2026-03-09 18:36:07,220 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-03-09 18:36:07,349 [INFO] SendKeysActions - Clearing text from element.
+2026-03-09 18:36:07,956 [INFO] SendKeysActions - Send Keys [standard_user]
+2026-03-09 18:36:08,083 [INFO] UIElement - LoginPage - Typing 'secret_sauce' into on element: PASSWORD_FIELD ('id', 'password')
+2026-03-09 18:36:08,084 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-03-09 18:36:08,112 [INFO] SendKeysActions - Clearing text from element.
+2026-03-09 18:36:08,318 [INFO] SendKeysActions - Send Keys [secret_sauce]
+2026-03-09 18:36:08,394 [INFO] UIElement - LoginPage - Clicking on element: LOGIN_BUTTON ('id', 'login-button')
+2026-03-09 18:36:08,394 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-03-09 18:36:08,671 [DEBUG] ElementsActions - Setting temporary timeout to 10s
+2026-03-09 18:36:08,714 [INFO] InventoryPage - Adding backpack to cart
+2026-03-09 18:36:08,715 [INFO] UIElement - InventoryPage - Clicking on element: BACKPACK_ADD_BUTTON ('id', 'add-to-cart-sauce-labs-backpack')
+2026-03-09 18:36:08,716 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-03-09 18:36:08,873 [INFO] TestAppWrapper - ================================================================================
+2026-03-09 18:36:08,873 [INFO] TestAppWrapper - 🏁 FINISHED TEST: CT-LOGIN-001
+2026-03-09 18:36:08,874 [INFO] TestAppWrapper - ================================================================================
+2026-03-09 18:36:08,937 [INFO] VideoRecorder - Recording Finished. Total frames: 22. Avg Capture Speed: 24.73 FPS
+2026-03-09 18:36:09,021 [INFO] VideoRecorder - Video saved: C:\ai\go-python-selenium-automation\reports\videos\test_login_flow_with_app_wrapper_20260309_183605.mp4 | Duration: 00:02
+2026-03-09 18:36:09,022 [INFO] TestAppWrapper - Closing WebDriver session

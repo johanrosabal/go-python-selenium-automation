@@ -1,0 +1,12 @@
+INFO     TestDatabaseIntegration:base_test.py:105 🚀 STARTING TEST: DB-VERIFY-001 - test_database_connection
+Test: test_database_connection
+Context: App=demo | Env=qa | Browser=edge (Headless: False)
+INFO     VideoRecorder:video_recorder.py:41 Video recording started: C:\ai\go-python-selenium-automation\reports\videos\test_database_connection_20260309_192443.mp4
+INFO     VideoRecorder:video_recorder.py:52 Context: Recording monitor 1 (logical: 1366x768)
+INFO     VideoRecorder:video_recorder.py:61 Video resolution: 1366x768 pixels
+INFO     DBClient[database.url]:db_client.py:33 Database engine initialized for: database.url
+INFO     VideoRecorder:video_recorder.py:81 Initialized VideoWriter with codec: 'avc1'
+INFO     VideoRecorder:video_recorder.py:125 Recording Finished. Total frames: 0. Avg Capture Speed: 0.00 FPS
+INFO     VideoRecorder:video_recorder.py:152 Video saved: C:\ai\go-python-selenium-automation\reports\videos\test_database_connection_20260309_192443.mp4 | Duration: 00:00
+INFO     TestDatabaseIntegration:base_test.py:142 🏁 FINISHED TEST: DB-VERIFY-001
+INFO     TestDatabaseIntegration:base_test.py:145 Closing WebDriver session

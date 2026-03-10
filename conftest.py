@@ -2,9 +2,11 @@ from core.utils.cleaner import Cleaner
 
 def pytest_sessionstart(session):
     """
-    Hooks into the start of the pytest session to perform cleanup.
+    Hooks into the start of the pytest session.
+    Cleanup is now handled once at the UI server startup (app.py) 
+    to allow the Media Gallery to persist across individual runs.
     """
-    Cleaner.clean_reports()
+    # Cleaner.clean_reports() # Removed to prevent wiping the gallery on every run
 
 def pytest_sessionfinish(session, exitstatus):
     """

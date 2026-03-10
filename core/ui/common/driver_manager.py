@@ -1,6 +1,9 @@
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+import logging
+logging.getLogger("WDM").setLevel(logging.WARNING)
+
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
@@ -85,7 +88,6 @@ class DriverManager:
             options = webdriver.FirefoxOptions()
             # Stealth and automation flags
             options.set_preference("dom.webdriver.enabled", False)
-            options.set_preference("useAutomationExtension", False)
             options.set_preference("signon.rememberSignons", False)
 
             if headless:

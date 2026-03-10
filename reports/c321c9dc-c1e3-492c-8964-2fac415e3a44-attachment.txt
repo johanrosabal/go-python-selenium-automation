@@ -1,0 +1,35 @@
+2026-03-09 19:25:05,048 [INFO] TestLoginScenarios - 🚀 STARTING TEST: CT-LOGIN-003 - test_valid_login_and_logout
+Test: test_valid_login_and_logout
+Context: App=demo | Env=qa | Browser=edge (Headless: False)
+2026-03-09 19:25:07,633 [INFO] VideoRecorder - Video recording started: C:\ai\go-python-selenium-automation\reports\videos\test_valid_login_and_logout_20260309_192507.mp4
+2026-03-09 19:25:07,641 [INFO] VideoRecorder - Context: Recording monitor 1 (logical: 1366x768)
+2026-03-09 19:25:07,648 [INFO] LoginPage - Navigating to URL: https://www.saucedemo.com/
+2026-03-09 19:25:07,648 [DEBUG] NavigationActions - Go to: https://www.saucedemo.com/
+2026-03-09 19:25:07,704 [INFO] VideoRecorder - Video resolution: 1366x768 pixels
+[libopenh264 @ 000001935b1f9680] Incorrect library version loaded
+[ERROR:4@57.399] global cap_ffmpeg_impl.hpp:3514 open Could not open codec libopenh264, error: Unspecified error (-22)
+[ERROR:4@57.399] global cap_ffmpeg_impl.hpp:3531 open VIDEOIO/FFMPEG: Failed to initialize VideoWriter
+2026-03-09 19:25:08,348 [INFO] VideoRecorder - Initialized VideoWriter with codec: 'avc1'
+2026-03-09 19:25:09,526 [INFO] LoginPage - Logging in with user: standard_user
+2026-03-09 19:25:09,527 [INFO] UIElement - LoginPage - Typing 'standard_user' into on element: USERNAME_FIELD ('id', 'user-name')
+2026-03-09 19:25:09,527 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-03-09 19:25:09,658 [INFO] SendKeysActions - Clearing text from element.
+2026-03-09 19:25:10,096 [INFO] SendKeysActions - Send Keys [standard_user]
+2026-03-09 19:25:10,232 [INFO] UIElement - LoginPage - Typing 'secret_sauce' into on element: PASSWORD_FIELD ('id', 'password')
+2026-03-09 19:25:10,232 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-03-09 19:25:10,262 [INFO] SendKeysActions - Clearing text from element.
+2026-03-09 19:25:10,522 [INFO] SendKeysActions - Send Keys [secret_sauce]
+2026-03-09 19:25:10,628 [INFO] UIElement - LoginPage - Clicking on element: LOGIN_BUTTON ('id', 'login-button')
+2026-03-09 19:25:10,629 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-03-09 19:25:10,968 [INFO] InventoryPage - Performing logout
+2026-03-09 19:25:10,969 [INFO] UIElement - InventoryPage - Clicking on element: SIDE_MENU_BUTTON ('id', 'react-burger-menu-btn')
+2026-03-09 19:25:10,971 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-03-09 19:25:11,946 [INFO] UIElement - InventoryPage - Waiting for element to be clickable on element: LOGOUT_LINK ('id', 'logout_sidebar_link')
+2026-03-09 19:25:11,947 [DEBUG] ElementsActions - Setting temporary timeout to 10s
+2026-03-09 19:25:12,010 [INFO] UIElement - InventoryPage - Clicking on element: LOGOUT_LINK ('id', 'logout_sidebar_link')
+2026-03-09 19:25:12,011 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-03-09 19:25:12,256 [INFO] TestLoginScenarios - Actual URL after logout: https://www.saucedemo.com/
+2026-03-09 19:25:12,334 [INFO] VideoRecorder - Recording Finished. Total frames: 36. Avg Capture Speed: 24.98 FPS
+2026-03-09 19:25:12,386 [INFO] VideoRecorder - Video saved: C:\ai\go-python-selenium-automation\reports\videos\test_valid_login_and_logout_20260309_192507.mp4 | Duration: 00:03
+2026-03-09 19:25:12,388 [INFO] TestLoginScenarios - 🏁 FINISHED TEST: CT-LOGIN-003
+2026-03-09 19:25:12,389 [INFO] TestLoginScenarios - Closing WebDriver session

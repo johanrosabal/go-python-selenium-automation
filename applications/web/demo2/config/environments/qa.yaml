@@ -1,0 +1,17 @@
+target_environment: qa
+name: The Free Encyclopedia
+
+web:
+  base_url: https://www.wikipedia.org
+  timeout: 10
+
+default:
+  browser: chrome
+
+video:
+  enable_local: true
+  fps: 10
+  monitor_index: 1
+
+browser:
+  edge_path: "C:/ai/go-python-selenium-automation/resources/drivers/msedgedriver.exe"

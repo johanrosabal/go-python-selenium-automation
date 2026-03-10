@@ -1,0 +1,18 @@
+2026-03-09 18:43:50,514 [INFO] TestAdvancedFeatures - ================================================================================
+2026-03-09 18:43:50,515 [INFO] TestAdvancedFeatures - 🚀 STARTING TEST: ADV-GOD-001 - Verificación de Funciones Avanzadas (God Tier)
+2026-03-09 18:43:50,517 [INFO] TestAdvancedFeatures - Context: App=demo | Env=qa | Browser=firefox (Headless: False)
+2026-03-09 18:43:50,518 [INFO] TestAdvancedFeatures - ================================================================================
+2026-03-09 18:44:15,734 [ERROR] TestAdvancedFeatures - Failed to initialize WebDriver: Message: Browsing context has been discarded
+Stacktrace:
+RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
+WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:202:5
+NoSuchWindowError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:782:5
+assert.that/<@chrome://remote/content/shared/webdriver/Assert.sys.mjs:581:13
+assert.open@chrome://remote/content/shared/webdriver/Assert.sys.mjs:169:4
+GeckoDriver.prototype.maximizeWindow@chrome://remote/content/marionette/driver.sys.mjs:3154:15
+dispatch@chrome://remote/content/marionette/server.sys.mjs:318:40
+execute@chrome://remote/content/marionette/server.sys.mjs:289:16
+onPacket/<@chrome://remote/content/marionette/server.sys.mjs:262:20
+onPacket@chrome://remote/content/marionette/server.sys.mjs:263:9
+_onJSONObjectReady/<@chrome://remote/content/marionette/transport.sys.mjs:494:20
+

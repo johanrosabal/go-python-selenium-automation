@@ -1,0 +1,34 @@
+2026-03-09 18:04:42,021 [INFO] TestLoginScenarios - ================================================================================
+2026-03-09 18:04:42,022 [INFO] TestLoginScenarios - 🚀 STARTING TEST: CT-LOGIN-002 - Locked Out User Login
+2026-03-09 18:04:42,022 [INFO] TestLoginScenarios - Context: App=demo | Env=qa | Browser=chrome (Headless: False)
+2026-03-09 18:04:42,023 [INFO] TestLoginScenarios - ================================================================================
+2026-03-09 18:04:52,884 [INFO] VideoRecorder - Video recording started: C:\ai\go-python-selenium-automation\reports\videos\test_locked_out_user_20260309_180452.mp4
+2026-03-09 18:04:52,887 [INFO] TestLoginScenarios - Test: Locked Out User
+2026-03-09 18:04:52,892 [INFO] VideoRecorder - Context: Recording monitor 1 (logical: 1366x768)
+2026-03-09 18:04:52,946 [INFO] VideoRecorder - Video resolution: 1366x768 pixels
+[libopenh264 @ 000001f0057a4000] Incorrect library version loaded
+[ERROR:2@28.828] global cap_ffmpeg_impl.hpp:3514 open Could not open codec libopenh264, error: Unspecified error (-22)
+[ERROR:2@28.828] global cap_ffmpeg_impl.hpp:3531 open VIDEOIO/FFMPEG: Failed to initialize VideoWriter
+2026-03-09 18:04:52,965 [INFO] LoginPage - Navigating to URL: https://www.saucedemo.com/
+2026-03-09 18:04:52,966 [DEBUG] NavigationActions - Go to: https://www.saucedemo.com/
+2026-03-09 18:04:53,195 [INFO] LoginPage - Logging in with user: locked_out_user
+2026-03-09 18:04:53,196 [INFO] UIElement - LoginPage - Typing 'locked_out_user' into on element: USERNAME_FIELD ('id', 'user-name')
+2026-03-09 18:04:53,197 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-03-09 18:04:53,507 [INFO] VideoRecorder - Initialized VideoWriter with codec: 'avc1'
+2026-03-09 18:04:54,253 [INFO] SendKeysActions - Clearing text from element.
+2026-03-09 18:04:54,568 [INFO] SendKeysActions - Send Keys [locked_out_user]
+2026-03-09 18:04:54,795 [INFO] UIElement - LoginPage - Typing 'secret_sauce' into on element: PASSWORD_FIELD ('id', 'password')
+2026-03-09 18:04:54,796 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-03-09 18:04:54,837 [INFO] SendKeysActions - Clearing text from element.
+2026-03-09 18:04:55,047 [INFO] SendKeysActions - Send Keys [secret_sauce]
+2026-03-09 18:04:55,146 [INFO] UIElement - LoginPage - Clicking on element: LOGIN_BUTTON ('id', 'login-button')
+2026-03-09 18:04:55,147 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-03-09 18:04:55,323 [INFO] UIElement - LoginPage - Waiting for visibility of on element: ERROR_MESSAGE ('css selector', "[data-test='error']")
+2026-03-09 18:04:55,324 [DEBUG] ElementsActions - Setting temporary timeout to 10s
+2026-03-09 18:04:55,363 [DEBUG] GetTextActions - Setting temporary timeout to 10s
+2026-03-09 18:04:55,400 [INFO] TestLoginScenarios - ================================================================================
+2026-03-09 18:04:55,401 [INFO] TestLoginScenarios - 🏁 FINISHED TEST: CT-LOGIN-002
+2026-03-09 18:04:55,401 [INFO] TestLoginScenarios - ================================================================================
+2026-03-09 18:04:55,462 [INFO] VideoRecorder - Recording Finished. Total frames: 18. Avg Capture Speed: 21.63 FPS
+2026-03-09 18:04:55,466 [INFO] VideoRecorder - Video recording stopped and saved to: C:\ai\go-python-selenium-automation\reports\videos\test_locked_out_user_20260309_180452.mp4
+2026-03-09 18:04:55,467 [INFO] TestLoginScenarios - Closing WebDriver session

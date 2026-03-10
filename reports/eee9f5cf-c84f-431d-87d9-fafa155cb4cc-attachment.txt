@@ -1,0 +1,15 @@
+2026-03-09 19:24:37,464 [INFO] TestDatabaseIntegration - 🚀 STARTING TEST: DB-VERIFY-001 - test_database_connection
+Test: test_database_connection
+Context: App=demo | Env=qa | Browser=edge (Headless: False)
+2026-03-09 19:24:43,840 [INFO] VideoRecorder - Video recording started: C:\ai\go-python-selenium-automation\reports\videos\test_database_connection_20260309_192443.mp4
+2026-03-09 19:24:43,846 [INFO] VideoRecorder - Context: Recording monitor 1 (logical: 1366x768)
+2026-03-09 19:24:43,890 [INFO] VideoRecorder - Video resolution: 1366x768 pixels
+[libopenh264 @ 000001934ec7ac00] Incorrect library version loaded
+[ERROR:2@33.583] global cap_ffmpeg_impl.hpp:3514 open Could not open codec libopenh264, error: Unspecified error (-22)
+[ERROR:2@33.583] global cap_ffmpeg_impl.hpp:3531 open VIDEOIO/FFMPEG: Failed to initialize VideoWriter
+2026-03-09 19:24:44,077 [INFO] DBClient[database.url] - Database engine initialized for: database.url
+2026-03-09 19:24:44,297 [INFO] VideoRecorder - Initialized VideoWriter with codec: 'avc1'
+2026-03-09 19:24:44,330 [INFO] VideoRecorder - Recording Finished. Total frames: 0. Avg Capture Speed: 0.00 FPS
+2026-03-09 19:24:44,652 [INFO] VideoRecorder - Video saved: C:\ai\go-python-selenium-automation\reports\videos\test_database_connection_20260309_192443.mp4 | Duration: 00:00
+2026-03-09 19:24:44,652 [INFO] TestDatabaseIntegration - 🏁 FINISHED TEST: DB-VERIFY-001
+2026-03-09 19:24:44,653 [INFO] TestDatabaseIntegration - Closing WebDriver session

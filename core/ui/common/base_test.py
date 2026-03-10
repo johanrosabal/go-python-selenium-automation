@@ -99,16 +99,20 @@ class BaseTest(BaseApp):
         test_id = getattr(func, '_test_id', 'N/A')
         test_title = getattr(func, '_test_title', request.node.name)
         
-        separator = "=" * 80
-        self.logger.info(separator)
-        self.logger.info(f"🚀 STARTING TEST: {test_id} - {test_title}")
-        self.logger.info(f"Context: App={app_name} | Env={env} | Browser={browser} (Headless: {headless})")
-        self.logger.info(separator)
+        # Combine test title, context, and name into a single log string so the UI rendering logic
+        # visually groups them inside the same .log-header CSS block.
+        header_text = f"🚀 STARTING TEST: {test_id} - {func.__name__}\nTest: {test_title}\nContext: App={app_name} | Env={env} | Browser={browser} (Headless: {headless})"
+        self.logger.info(header_text)
         
         try:
             # Initialize and configure the driver instance
             driver_instance = DriverManager.get_driver(browser, headless)
-            driver_instance.maximize_window()
+            
+            try:
+                # Firefox can sometimes throw 'Browsing context has been discarded' on immediate maximize
+                driver_instance.maximize_window()
+            except Exception as e:
+                self.logger.warning(f"Could not maximize window (likely Firefox quirk): {e}")
             
             # Set global driver context
             BaseApp.set_driver(driver_instance)
@@ -126,14 +130,17 @@ class BaseTest(BaseApp):
         
         yield
         
-        # --- ROBUST LOG FOOTER ---
-        self.logger.info(separator)
-        self.logger.info(f"🏁 FINISHED TEST: {test_id}")
-        self.logger.info(separator)
-
         # Cleanup routine
         if self.recorder:
             self.recorder.stop()
+
+        # --- ROBUST LOG FOOTER ---
+        # Provide a clean reference to the video URL for the front-end before finalizing
+        if hasattr(self, 'recorder') and self.recorder and getattr(self.recorder, 'video_path', None):
+            self.logger.info(f"🎥 Video URL: {self.recorder.video_path}")
+            
+        self.logger.info(f"🏁 FINISHED TEST: {test_id}")
+
 
         self.logger.info("Closing WebDriver session")
         if hasattr(self, 'driver') and self.driver:

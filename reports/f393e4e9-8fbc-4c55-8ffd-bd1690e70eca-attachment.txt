@@ -1,0 +1,32 @@
+INFO     TestAppWrapper:base_test.py:103 ================================================================================
+INFO     TestAppWrapper:base_test.py:104 🚀 STARTING TEST: CT-LOGIN-001 - Invalid Login Attempt
+INFO     TestAppWrapper:base_test.py:105 Context: App=demo | Env=qa | Browser=chrome (Headless: True)
+INFO     TestAppWrapper:base_test.py:106 ================================================================================
+INFO     WDM:logger.py:11 ====== WebDriver manager ======
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Driver [C:\Users\Usuario\.wdm\drivers\chromedriver\win64\145.0.7632.117\chromedriver-win32/chromedriver.exe] found in cache
+INFO     VideoRecorder:video_recorder.py:41 Video recording started: C:\ai\go-python-selenium-automation\reports\videos\test_login_flow_with_app_wrapper_20260309_172153.mp4
+INFO     VideoRecorder:video_recorder.py:52 Recording monitor 1 (All Displays): {'left': 0, 'top': 0, 'width': 1366, 'height': 768}
+INFO     LoginPage:base_page.py:85 Navigating to URL: https://www.saucedemo.com/
+DEBUG    NavigationActions:navigation_actions.py:53 Go to: https://www.saucedemo.com/
+INFO     LoginPage:login_page.py:77 Logging in with user: standard_user
+INFO     UIElement:ui_element.py:81 LoginPage - Typing 'standard_user' into on element: USERNAME_FIELD ('id', 'user-name')
+DEBUG    SendKeysActions:base_action.py:44 Setting temporary timeout to 10s
+INFO     SendKeysActions:send_keys_actions.py:149 Clearing text from element.
+INFO     SendKeysActions:send_keys_actions.py:56 Send Keys [standard_user]
+INFO     UIElement:ui_element.py:81 LoginPage - Typing 'secret_sauce' into on element: PASSWORD_FIELD ('id', 'password')
+DEBUG    SendKeysActions:base_action.py:44 Setting temporary timeout to 10s
+INFO     SendKeysActions:send_keys_actions.py:149 Clearing text from element.
+INFO     SendKeysActions:send_keys_actions.py:56 Send Keys [secret_sauce]
+INFO     UIElement:ui_element.py:81 LoginPage - Clicking on element: LOGIN_BUTTON ('id', 'login-button')
+DEBUG    ClickActions:base_action.py:44 Setting temporary timeout to 10s
+DEBUG    ElementsActions:base_action.py:44 Setting temporary timeout to 10s
+INFO     InventoryPage:inventory_page.py:25 Adding backpack to cart
+INFO     UIElement:ui_element.py:81 InventoryPage - Clicking on element: BACKPACK_ADD_BUTTON ('id', 'add-to-cart-sauce-labs-backpack')
+DEBUG    ClickActions:base_action.py:44 Setting temporary timeout to 10s
+INFO     TestAppWrapper:base_test.py:130 ================================================================================
+INFO     TestAppWrapper:base_test.py:131 🏁 FINISHED TEST: CT-LOGIN-001
+INFO     TestAppWrapper:base_test.py:132 ================================================================================
+INFO     VideoRecorder:video_recorder.py:113 Video recording stopped and saved to: C:\ai\go-python-selenium-automation\reports\videos\test_login_flow_with_app_wrapper_20260309_172153.mp4
+INFO     TestAppWrapper:base_test.py:138 Closing WebDriver session
