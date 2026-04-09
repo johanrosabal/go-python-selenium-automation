@@ -3,38 +3,47 @@ import allure
 from core.utils.json_loader import JSONLoader
 from core.utils.config_manager import ConfigManager
 
-def test_case(id: str):
+import os
+
+def test_case(id: str, json_file: str = None, title: str = None, description: str = None, feature: str = None, story: str = None, severity: str = None):
     """
     Custom decorator to link a test method with its JSON metadata and Allure report.
-    Loads metadata at decoration time to make it available for fixtures.
+    Resolves metadata dynamically using execution variables (app_name, app_type).
     """
-    # 1. Resolve Application Path (for now demo)
-    app_path = 'applications/web/demo' 
-    
-    # 2. Pre-load Metadata (Decoration time)
-    metadata = {}
-    try:
-        content = JSONLoader.load_test_data(app_path, id)
-        metadata = content.get("tests", {})
-    except Exception as e:
-        print(f"Warning: Could not load metadata for @test_case(id='{id}') at decoration time: {e}")
-
     def decorator(func):
-        # Attach metadata for early access (e.g., fixtures)
+        # Attach basic metadata for early access by Pytest setup fixtures
         func._test_id = id
-        func._test_title = metadata.get("title", func.__name__)
-        func._test_metadata = metadata
-
+        func._test_json_file = json_file
+        func._test_arg_title = title
+        func._test_arg_description = description
+        
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
             # args[0] is 'self' (the test class instance)
             test_instance = args[0]
             
+            # Consume the dynamically loaded metadata pre-attached by BaseTest setup
+            metadata = getattr(func, '_test_metadata', {})
+            
+            # Use the resolved values from BaseTest (Priority: JSON -> Args -> Default)
+            _title = getattr(func, '_test_title', title or func.__name__)
+            _desc = getattr(func, '_test_description', description or "")
+
             # Apply Allure Metadata Dynamically
-            allure.dynamic.title(func._test_title)
-            allure.dynamic.description(metadata.get("description", ""))
-            allure.dynamic.severity(metadata.get("severity", "normal").lower())
-            allure.dynamic.feature(metadata.get("feature", "Default Feature"))
+            allure.dynamic.title(_title)
+            
+            if _desc:
+                allure.dynamic.description(_desc)
+                
+            _sev = severity or metadata.get("severity", "normal")
+            allure.dynamic.severity(_sev.lower())
+            
+            _feat = feature or metadata.get("feature", "Default Feature")
+            allure.dynamic.feature(_feat)
+            
+            _story = story or metadata.get("story")
+            if _story:
+                allure.dynamic.story(_story)
             
             # Link TMS (Dynamic)
             tms_base_url = ConfigManager.get("tms")
@@ -48,14 +57,14 @@ def test_case(id: str):
                 allure.dynamic.link(link.get("url"), name=link.get("name", id))
             
             # Tags
-            tags = metadata.get("tag", [])
-            for tag in tags:
+            _tags = metadata.get("tag", [])
+            for tag in _tags:
                 allure.dynamic.tag(tag)
             
             # Attach Data to 'self' for easy access
             test_instance._current_test_data = metadata.get("data", {})
             test_instance._current_test_id = id
-            test_instance._current_test_title = func._test_title
+            test_instance._current_test_title = _title
 
             return func(*args, **kwargs)
         

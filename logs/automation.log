@@ -896,3 +896,2004 @@ Context: App=demo | Env=qa | Browser=edge (Headless: False)
 2026-03-09 19:25:37,280 [INFO] TestLoginScenarios - 🏁 FINISHED TEST: CT-LOGIN-002
 2026-03-09 19:25:37,283 [INFO] TestLoginScenarios - Closing WebDriver session
 2026-03-09 19:25:39,542 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 10:17:18,189 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 10:17:26,213 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 10:17:53,474 [INFO] TestLogin - 🚀 STARTING TEST: N/A - test_successful_login
+Test: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 10:18:08,774 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 10:18:08,775 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: EMAIL_FIELD ('id', 'email')
+2026-04-09 10:18:08,776 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 10:18:19,048 [WARNING] SendKeysActions - [AUTO-HEALING] Primary locator ('id', 'email') failed. Attempting recovery...
+2026-04-09 10:18:19,084 [WARNING] SendKeysActions - [AUTO-HEALING] Successfully recovered element using fuzzy matching!
+2026-04-09 10:18:19,084 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 10:18:29,633 [WARNING] SendKeysActions - [AUTO-HEALING] Primary locator ('id', 'email') failed. Attempting recovery...
+2026-04-09 10:18:29,667 [WARNING] SendKeysActions - [AUTO-HEALING] Successfully recovered element using fuzzy matching!
+2026-04-09 10:18:29,668 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 10:18:30,281 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: PASSWORD_FIELD ('id', 'password')
+2026-04-09 10:18:30,282 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 10:18:40,309 [WARNING] SendKeysActions - [AUTO-HEALING] Primary locator ('id', 'password') failed. Attempting recovery...
+2026-04-09 10:18:40,345 [WARNING] SendKeysActions - [AUTO-HEALING] Successfully recovered element using fuzzy matching!
+2026-04-09 10:18:40,346 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 10:18:50,992 [WARNING] SendKeysActions - [AUTO-HEALING] Primary locator ('id', 'password') failed. Attempting recovery...
+2026-04-09 10:18:51,018 [WARNING] SendKeysActions - [AUTO-HEALING] Successfully recovered element using fuzzy matching!
+2026-04-09 10:18:51,018 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 10:18:51,100 [INFO] UIElement - LoginPage - Clicking on element: LOGIN_BUTTON ('css selector', "button[type='submit'], #login-button, #submit")
+2026-04-09 10:18:51,101 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 10:18:51,783 [INFO] TestLogin - 🏁 FINISHED TEST: N/A
+2026-04-09 10:18:51,783 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 10:18:54,174 [INFO] TestLogin - 🚀 STARTING TEST: N/A - test_failed_login_invalid_password
+Test: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 10:19:02,436 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 10:19:02,437 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: EMAIL_FIELD ('id', 'email')
+2026-04-09 10:19:02,438 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 10:19:12,701 [WARNING] SendKeysActions - [AUTO-HEALING] Primary locator ('id', 'email') failed. Attempting recovery...
+2026-04-09 10:19:12,747 [WARNING] SendKeysActions - [AUTO-HEALING] Successfully recovered element using fuzzy matching!
+2026-04-09 10:19:12,747 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 10:19:23,569 [WARNING] SendKeysActions - [AUTO-HEALING] Primary locator ('id', 'email') failed. Attempting recovery...
+2026-04-09 10:19:23,596 [WARNING] SendKeysActions - [AUTO-HEALING] Successfully recovered element using fuzzy matching!
+2026-04-09 10:19:23,597 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 10:19:23,771 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: PASSWORD_FIELD ('id', 'password')
+2026-04-09 10:19:23,771 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 10:19:34,208 [WARNING] SendKeysActions - [AUTO-HEALING] Primary locator ('id', 'password') failed. Attempting recovery...
+2026-04-09 10:19:34,248 [WARNING] SendKeysActions - [AUTO-HEALING] Successfully recovered element using fuzzy matching!
+2026-04-09 10:19:34,249 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 10:30:05,438 [INFO] TestLogin - 🚀 STARTING TEST: N/A - test_successful_login
+Test: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 10:30:15,682 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 10:30:15,684 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: EMAIL_FIELD ('css selector', "[data-testid='email']")
+2026-04-09 10:30:15,684 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 10:30:26,159 [WARNING] SendKeysActions - [AUTO-HEALING] Primary locator ('css selector', "[data-testid='email']") failed. Attempting recovery...
+2026-04-09 10:30:26,159 [ERROR] SendKeysActions - Error in 'clear' for element ('css selector', "[data-testid='email']"): Timeout reached.
+2026-04-09 10:30:26,166 [ERROR] SendKeysActions - Error in 'set_text' for element ('css selector', "[data-testid='email']"): Timeout reached.
+2026-04-09 10:30:26,770 [INFO] TestLogin - 🏁 FINISHED TEST: N/A
+2026-04-09 10:30:26,770 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 10:30:30,809 [INFO] TestLogin - 🚀 STARTING TEST: N/A - test_failed_login_invalid_password
+Test: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 10:30:37,296 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 10:30:37,297 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: EMAIL_FIELD ('css selector', "[data-testid='email']")
+2026-04-09 10:30:37,297 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 12:48:14,350 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 12:49:56,526 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 12:58:53,256 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 12:59:09,848 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 12:59:28,978 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:06:10,028 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:06:56,404 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:09:58,172 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:10:04,783 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:10:10,938 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:10:15,812 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:10:36,394 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:10:39,750 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:11:29,105 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:11:42,445 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:15:00,684 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:15:06,458 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:16:07,307 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:17:03,914 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:17:18,993 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 13:17:30,849 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 13:17:30,851 [INFO] UIElement - LoginPage - Clearing on element: EMAIL_FIELD ('xpath', "//input[@name='email']")
+2026-04-09 13:17:30,851 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:17:32,258 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:17:32,904 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: EMAIL_FIELD ('xpath', "//input[@name='email']")
+2026-04-09 13:17:32,904 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:17:32,924 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:17:33,138 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 13:17:33,366 [INFO] UIElement - LoginPage - Clearing on element: PASSWORD_FIELD ('xpath', "//input[@name='password']")
+2026-04-09 13:17:33,366 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:17:33,395 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:17:33,622 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: PASSWORD_FIELD ('xpath', "//input[@name='password']")
+2026-04-09 13:17:33,622 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:17:33,682 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:17:33,894 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 13:17:33,982 [INFO] UIElement - LoginPage - Clicking on element: LOGIN_BUTTON ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 13:17:33,982 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 13:17:34,679 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 13:17:34,679 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 13:17:37,378 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Test: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 13:17:48,022 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 13:17:48,022 [INFO] UIElement - LoginPage - Clearing on element: EMAIL_FIELD ('xpath', "//input[@name='email']")
+2026-04-09 13:17:48,023 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:17:49,065 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:17:49,752 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: EMAIL_FIELD ('xpath', "//input[@name='email']")
+2026-04-09 13:17:49,753 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:17:49,776 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:17:49,923 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 13:17:50,102 [INFO] UIElement - LoginPage - Clearing on element: PASSWORD_FIELD ('xpath', "//input[@name='password']")
+2026-04-09 13:17:50,102 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:17:50,125 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:17:50,309 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: PASSWORD_FIELD ('xpath', "//input[@name='password']")
+2026-04-09 13:17:50,310 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:17:50,330 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:17:50,491 [INFO] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 13:17:50,614 [INFO] UIElement - LoginPage - Clicking on element: LOGIN_BUTTON ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 13:17:50,614 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 13:17:50,858 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 13:17:50,859 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 13:17:53,487 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:18:13,038 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:18:22,290 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:18:30,473 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:24:28,965 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 13:24:35,549 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 13:24:35,551 [INFO] UIElement - LoginPage - Clearing on element: EMAIL_FIELD ('xpath', "//input[@name='email']")
+2026-04-09 13:24:35,552 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:24:36,161 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:24:36,565 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: EMAIL_FIELD ('xpath', "//input[@name='email']")
+2026-04-09 13:24:36,565 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:24:36,638 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:24:36,852 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 13:24:37,028 [INFO] UIElement - LoginPage - Clearing on element: PASSWORD_FIELD ('xpath', "//input[@name='password']")
+2026-04-09 13:24:37,028 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:24:37,048 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:24:37,178 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: PASSWORD_FIELD ('xpath', "//input[@name='password']")
+2026-04-09 13:24:37,178 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:24:37,190 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:24:37,334 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 13:24:37,413 [INFO] UIElement - LoginPage - Clicking on element: LOGIN_BUTTON ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 13:24:37,414 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 13:24:37,936 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 13:24:37,937 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 13:24:40,286 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:31:55,707 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:34:33,788 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:34:50,779 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:36:35,034 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:36:41,810 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 13:36:47,219 [INFO] LoginPage - Navigating to URL: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 13:36:47,221 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 13:36:51,969 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 13:36:51,972 [INFO] UIElement - LoginPage - Clearing on element: EMAIL_FIELD ('xpath', "//input[@name='email']")
+2026-04-09 13:36:51,973 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:36:52,517 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:36:52,918 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: EMAIL_FIELD ('xpath', "//input[@name='email']")
+2026-04-09 13:36:52,918 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:36:52,943 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:36:53,091 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 13:36:53,235 [INFO] UIElement - LoginPage - Clearing on element: PASSWORD_FIELD ('xpath', "//input[@name='password']")
+2026-04-09 13:36:53,235 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:36:53,258 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:36:53,392 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: PASSWORD_FIELD ('xpath', "//input[@name='password']")
+2026-04-09 13:36:53,392 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:36:53,407 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:36:53,556 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 13:36:53,624 [INFO] UIElement - LoginPage - Clicking on element: LOGIN_BUTTON ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 13:36:53,624 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 13:36:54,142 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 13:36:54,143 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 13:36:56,528 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:38:05,651 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:40:52,346 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:41:02,509 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:43:04,321 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:43:06,467 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:43:15,807 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:43:21,226 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: Successful Login with Valid Credentials
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 13:43:28,349 [INFO] LoginPage - Navigating to URL: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 13:43:28,350 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 13:43:30,300 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 13:43:30,302 [INFO] UIElement - LoginPage - Clearing on element: EMAIL_FIELD ('xpath', "//input[@name='email']")
+2026-04-09 13:43:30,302 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:43:30,957 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:43:31,318 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: EMAIL_FIELD ('xpath', "//input[@name='email']")
+2026-04-09 13:43:31,318 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:43:31,341 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:43:31,484 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 13:43:31,633 [INFO] UIElement - LoginPage - Clearing on element: PASSWORD_FIELD ('xpath', "//input[@name='password']")
+2026-04-09 13:43:31,633 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:43:31,653 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:43:31,797 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: PASSWORD_FIELD ('xpath', "//input[@name='password']")
+2026-04-09 13:43:31,797 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:43:31,810 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:43:31,962 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 13:43:32,035 [INFO] UIElement - LoginPage - Clicking on element: LOGIN_BUTTON ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 13:43:32,035 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 13:43:32,191 [INFO] LoginPage - Pausing for 2 second(s)...
+2026-04-09 13:43:34,201 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 13:43:34,203 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 13:43:34,204 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 13:43:36,584 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:46:36,761 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:47:07,511 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:47:30,183 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:48:20,850 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: Successful Login with Valid Credentials
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 13:48:31,361 [INFO] LoginPage - Navigating to URL: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 13:48:31,363 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 13:48:32,618 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 13:48:32,619 [INFO] UIElement - LoginPage - Clearing on element: EMAIL_FIELD ('xpath', "//input[@name='email']")
+2026-04-09 13:48:32,619 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:48:32,765 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:48:33,300 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: EMAIL_FIELD ('xpath', "//input[@name='email']")
+2026-04-09 13:48:33,301 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:48:33,328 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:48:33,496 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 13:48:33,651 [INFO] UIElement - LoginPage - Clearing on element: PASSWORD_FIELD ('xpath', "//input[@name='password']")
+2026-04-09 13:48:33,652 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:48:33,686 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:48:33,822 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: PASSWORD_FIELD ('xpath', "//input[@name='password']")
+2026-04-09 13:48:33,822 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:48:33,837 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:48:33,988 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 13:48:34,052 [INFO] UIElement - LoginPage - Clicking on element: LOGIN_BUTTON ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 13:48:34,052 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 13:48:34,330 [INFO] LoginPage - Pausing for 2 second(s)...
+2026-04-09 13:48:36,339 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 13:48:36,341 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 13:48:36,343 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 13:48:38,983 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Test: Failed Login with Invalid password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 13:48:44,417 [INFO] LoginPage - Navigating to URL: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 13:48:44,418 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 13:48:46,011 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 13:48:46,012 [INFO] UIElement - LoginPage - Clearing on element: EMAIL_FIELD ('xpath', "//input[@name='email']")
+2026-04-09 13:48:46,013 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:48:46,054 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:48:46,486 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: EMAIL_FIELD ('xpath', "//input[@name='email']")
+2026-04-09 13:48:46,486 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:48:46,501 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:48:46,658 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 13:48:46,798 [INFO] UIElement - LoginPage - Clearing on element: PASSWORD_FIELD ('xpath', "//input[@name='password']")
+2026-04-09 13:48:46,799 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:48:46,816 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:48:46,954 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: PASSWORD_FIELD ('xpath', "//input[@name='password']")
+2026-04-09 13:48:46,954 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:48:46,968 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:48:47,110 [INFO] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 13:48:47,201 [INFO] UIElement - LoginPage - Clicking on element: LOGIN_BUTTON ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 13:48:47,202 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 13:48:47,366 [INFO] LoginPage - Pausing for 2 second(s)...
+2026-04-09 13:48:49,374 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 13:48:49,376 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 13:48:49,377 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 13:48:51,870 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:54:38,197 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: Successful Login with Valid Credentials
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 13:54:43,795 [INFO] LoginPage - Navigating to URL: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 13:54:43,796 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 13:54:48,205 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 13:54:48,207 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 13:54:48,207 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:54:48,896 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:54:49,283 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 13:54:49,284 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:54:49,297 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:54:49,468 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 13:54:49,619 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 13:54:49,619 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:54:49,645 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:54:49,815 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 13:54:49,816 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:54:49,830 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:54:50,036 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 13:54:50,129 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 13:54:50,130 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 13:54:50,354 [INFO] LoginPage - Pausing for 2 second(s)...
+2026-04-09 13:54:52,363 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 13:54:52,365 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 13:54:52,365 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 13:54:54,968 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Test: Failed Login with Invalid password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 13:55:00,718 [INFO] LoginPage - Navigating to URL: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 13:55:00,719 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 13:55:01,604 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 13:55:01,607 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 13:55:01,607 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:55:02,151 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:55:02,961 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 13:55:02,961 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:55:02,984 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:55:03,196 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 13:55:03,429 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 13:55:03,429 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:55:03,468 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:55:03,629 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 13:55:03,629 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:55:03,642 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:55:03,816 [INFO] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 13:55:03,927 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 13:55:03,927 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 13:55:04,129 [INFO] LoginPage - Pausing for 2 second(s)...
+2026-04-09 13:55:06,139 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 13:55:06,141 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 13:55:06,141 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 13:55:08,545 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 13:55:33,317 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: Successful Login with Valid Credentials
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 13:55:38,634 [INFO] LoginPage - Navigating to URL: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 13:55:38,636 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 13:55:39,538 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 13:55:39,541 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 13:55:39,541 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:55:39,715 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:55:40,176 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 13:55:40,177 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:55:40,198 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:55:40,374 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 13:55:40,539 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 13:55:40,540 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:55:40,563 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:55:40,694 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 13:55:40,694 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 13:55:40,714 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 13:55:40,862 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 13:55:40,931 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 13:55:40,931 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 13:55:41,079 [INFO] LoginPage - Pausing for 2 second(s)...
+2026-04-09 13:55:43,092 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 13:55:43,094 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 13:55:43,095 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 13:55:45,449 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:02:12,137 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:13:53,785 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:14:18,736 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:15:10,703 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:18:32,342 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:20:14,303 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:21:09,413 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: Successful Login with Valid Credentials
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 14:21:15,575 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 14:21:15,576 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 14:21:17,885 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:24:15,160 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: Successful Login with Valid Credentials
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 14:24:25,444 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 14:24:25,445 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 14:24:28,045 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Test: Failed Login with Invalid password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 14:24:33,644 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 14:24:33,644 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 14:24:37,126 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:24:54,069 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:24:58,850 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:25:00,193 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: Successful Login with Valid Credentials
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 14:25:05,828 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 14:25:05,828 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 14:25:08,280 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Test: Failed Login with Invalid password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 14:25:14,098 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 14:25:14,098 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 14:25:16,748 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:27:35,594 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:33:27,101 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:34:06,213 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:37:06,686 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: Successful Login with Valid Credentials
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 14:37:12,617 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 14:37:13,920 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 14:37:13,922 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:37:13,922 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:37:14,475 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:37:14,846 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:37:14,847 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:37:14,859 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:37:15,039 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 14:37:15,193 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:37:15,194 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:37:15,213 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:37:15,350 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:37:15,350 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:37:15,364 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:37:15,535 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 14:37:15,601 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 14:37:15,601 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 14:37:15,757 [INFO] LoginPage - Pausing for 2 second(s)...
+2026-04-09 14:37:17,767 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 14:37:18,010 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 14:37:18,012 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 14:37:20,657 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Test: Failed Login with Invalid password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 14:37:30,478 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 14:37:31,541 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 14:37:31,541 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:37:31,542 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:37:32,220 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:37:32,596 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:37:32,596 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:37:32,613 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:37:32,795 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 14:37:32,978 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:37:32,978 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:37:33,017 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:37:33,214 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:37:33,215 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:37:33,228 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:37:33,410 [INFO] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 14:37:33,523 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 14:37:33,523 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 14:37:33,713 [INFO] LoginPage - Pausing for 2 second(s)...
+2026-04-09 14:37:35,736 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 14:37:35,739 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 14:37:35,740 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 14:37:38,252 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:39:21,221 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:39:23,659 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: Successful Login with Valid Credentials
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 14:39:33,988 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 14:39:35,618 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 14:39:35,619 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:39:35,619 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:39:35,675 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:39:36,281 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:39:36,286 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:39:36,312 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:39:36,568 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 14:39:36,751 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:39:36,751 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:39:36,780 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:39:36,957 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:39:36,958 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:39:36,973 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:39:37,127 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 14:39:37,194 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 14:39:37,195 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 14:39:37,358 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 14:39:42,368 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 14:39:42,370 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 14:39:42,371 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 14:39:45,356 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Test: Failed Login with Invalid password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 14:39:51,144 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 14:39:52,142 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 14:39:52,142 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:39:52,143 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:39:52,419 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:39:52,967 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:39:52,967 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:39:52,983 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:39:53,146 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 14:39:53,287 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:39:53,288 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:39:53,309 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:39:53,445 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:39:53,445 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:39:53,460 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:39:53,609 [INFO] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 14:39:53,707 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 14:39:53,707 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 14:39:53,907 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 14:39:58,921 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 14:39:58,923 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 14:39:58,924 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 14:40:01,653 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:44:19,300 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:44:27,863 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:44:49,408 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 14:44:59,652 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 14:45:00,811 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 14:45:00,813 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:45:00,813 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:45:00,962 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:45:02,065 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:45:02,065 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:45:02,079 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:45:02,240 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 14:45:02,388 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:45:02,388 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:45:02,417 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:45:02,584 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:45:02,584 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:45:02,598 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:45:02,771 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 14:45:02,845 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 14:45:02,845 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 14:45:03,064 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 14:45:08,079 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 14:45:08,081 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 14:45:08,081 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 14:45:12,090 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Test: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 14:45:18,366 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 14:45:20,058 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 14:45:20,059 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:45:20,059 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:45:20,130 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:45:20,664 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:45:20,664 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:45:20,680 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:45:20,863 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 14:45:21,048 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:45:21,048 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:45:21,099 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:45:21,297 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:45:21,297 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:45:21,316 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:45:21,519 [INFO] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 14:45:21,650 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 14:45:21,650 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 14:45:21,887 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 14:45:26,897 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 14:45:26,898 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 14:45:26,899 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 14:45:30,345 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:52:38,052 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 14:52:43,558 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 14:52:45,199 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 14:52:45,200 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:52:45,201 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:52:45,422 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:52:45,961 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:52:45,962 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:52:45,978 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:52:46,161 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 14:52:46,345 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:52:46,345 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:52:46,366 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:52:46,535 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:52:46,535 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:52:46,548 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:52:46,726 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 14:52:46,797 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 14:52:46,797 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 14:52:46,977 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 14:52:51,984 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 14:52:51,985 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 14:52:51,986 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 14:52:54,648 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Test: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 14:52:59,960 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 14:53:00,973 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 14:53:00,974 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:53:00,974 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:53:01,189 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:53:01,716 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:53:01,716 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:53:01,750 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:53:01,943 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 14:53:02,129 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:53:02,129 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:53:02,149 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:53:02,317 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:53:02,317 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:53:02,339 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:53:02,524 [INFO] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 14:53:02,635 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 14:53:02,635 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 14:53:02,810 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 14:53:07,819 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 14:53:07,820 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 14:53:07,821 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 14:53:10,178 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:56:14,376 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:58:58,008 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 14:59:00,438 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 14:59:06,596 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 14:59:07,630 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 14:59:07,631 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:59:07,631 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:59:07,740 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:59:08,327 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 14:59:08,333 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:59:08,349 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:59:08,522 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 14:59:08,699 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:59:08,699 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:59:08,729 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:59:08,906 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 14:59:08,907 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 14:59:08,922 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 14:59:09,114 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 14:59:09,199 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 14:59:09,199 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 14:59:09,426 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 14:59:14,435 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 14:59:14,439 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 14:59:14,439 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 14:59:17,160 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:00:27,608 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:00:37,145 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:00:38,153 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:00:38,156 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:00:38,156 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:00:38,337 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:00:38,913 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:00:38,914 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:00:38,940 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:00:39,100 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:00:39,264 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:00:39,265 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:00:39,294 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:00:39,455 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:00:39,455 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:00:39,522 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:00:39,982 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 15:00:40,063 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:00:40,063 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:00:40,282 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:00:45,291 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 15:00:45,292 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 15:00:45,292 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:00:47,922 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Test: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:00:53,725 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:00:55,007 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:00:55,008 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:00:55,009 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:00:55,082 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:00:55,593 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:00:55,593 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:00:55,607 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:00:55,780 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:00:55,949 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:00:55,949 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:00:55,977 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:00:56,127 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:00:56,127 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:00:56,140 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:00:56,331 [INFO] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 15:00:56,437 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:00:56,437 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:00:56,653 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:01:01,665 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 15:01:01,666 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 15:01:01,667 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:01:04,232 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:02:37,280 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: Successful Login with Valid Credentials (Driven by DEV JSON)
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:02:47,253 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:02:48,661 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:02:48,663 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:02:48,664 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:02:48,716 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:02:49,373 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:02:49,373 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:02:49,388 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:02:49,579 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:02:49,732 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:02:49,732 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:02:49,750 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:02:49,922 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:02:49,923 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:02:49,940 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:02:50,109 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 15:02:50,202 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:02:50,202 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:02:50,410 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:02:55,420 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 15:02:55,421 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 15:02:55,422 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:02:57,785 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Test: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:03:03,380 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:03:04,879 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:03:04,880 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:03:04,880 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:03:04,910 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:03:05,307 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:03:05,307 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:03:05,322 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:03:05,467 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:03:05,613 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:03:05,613 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:03:05,630 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:03:05,782 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:03:05,782 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:03:05,799 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:03:06,056 [INFO] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 15:03:06,238 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:03:06,238 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:03:06,628 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:03:11,638 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 15:03:11,639 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 15:03:11,639 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:03:14,142 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:03:37,719 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Test: Successful Login with Valid Credentials (Driven by DEV JSON)
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:03:42,853 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:03:43,908 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:03:43,910 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:03:43,910 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:03:43,961 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:03:44,505 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:03:44,511 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:03:44,528 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:03:44,669 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:03:44,810 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:03:44,810 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:03:44,833 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:03:44,978 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:03:44,979 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:03:45,000 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:03:45,167 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 15:03:45,236 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:03:45,236 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:03:45,420 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:03:50,428 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 15:03:50,430 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 15:03:50,430 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:03:52,844 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:05:22,357 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials (Driven by DEV JSON)
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:05:27,971 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:05:29,019 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:05:29,021 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:05:29,022 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:05:29,051 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:05:29,530 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:05:29,530 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:05:29,546 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:05:29,814 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:05:29,995 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:05:29,995 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:05:30,014 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:05:30,158 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:05:30,158 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:05:30,185 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:05:30,368 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 15:05:30,452 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:05:30,452 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:05:30,647 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:05:35,657 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 15:05:35,658 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 15:05:35,658 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:05:38,235 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:05:43,531 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:05:44,381 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:05:44,382 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:05:44,382 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:05:44,589 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:05:45,067 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:05:45,067 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:05:45,081 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:05:45,226 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:05:45,384 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:05:45,385 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:05:45,411 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:05:45,563 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:05:45,563 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:05:45,582 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:05:45,750 [INFO] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 15:05:45,888 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:05:45,888 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:05:46,107 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:05:51,116 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 15:05:51,117 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 15:05:51,117 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:05:53,537 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:06:04,606 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials (Driven by DEV JSON)
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:06:09,999 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:06:11,060 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:06:11,065 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:06:11,065 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:06:11,121 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:06:11,686 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:06:11,687 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:06:11,704 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:06:11,851 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:06:12,020 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:06:12,020 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:06:12,040 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:06:12,182 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:06:12,183 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:06:12,197 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:06:12,364 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 15:06:12,435 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:06:12,435 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:06:12,614 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:06:17,626 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 15:06:17,628 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 15:06:17,628 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:06:20,011 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:06:55,109 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:07:02,521 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials (Driven by DEV JSON)
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:07:12,126 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:07:13,031 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:07:13,034 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:07:13,035 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:07:13,146 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:07:14,082 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:07:14,083 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:07:14,109 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:07:14,254 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:07:14,429 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:07:14,429 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:07:14,451 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:07:14,604 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:07:14,605 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:07:14,618 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:07:14,792 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 15:07:14,867 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:07:14,867 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:07:15,344 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:07:20,353 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 15:07:20,356 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 15:07:20,356 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:07:22,623 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:07:36,251 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:07:41,888 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:07:42,952 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:07:42,954 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:07:42,954 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:07:43,035 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:07:43,521 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:07:43,522 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:07:43,536 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:07:43,672 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:07:43,814 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:07:43,814 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:07:43,840 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:07:43,975 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:07:43,976 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:07:43,990 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:07:44,140 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 15:07:44,205 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:07:44,205 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:07:44,370 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:07:49,381 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 15:07:49,383 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 15:07:49,384 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:07:51,779 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:10:05,992 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials (ARGs)
+Description: Verifies that a user can successfully log in using data sourced exclusively from the dev environment JSON file.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:10:16,403 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:10:17,310 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:10:17,313 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:10:17,314 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:10:17,547 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:10:18,139 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:10:18,139 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:10:18,221 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:10:18,386 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:10:18,549 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:10:18,549 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:10:18,573 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:10:18,726 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:10:18,726 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:10:18,741 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:10:18,918 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 15:10:19,001 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:10:19,001 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:10:19,187 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:10:24,195 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 15:10:24,196 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 15:10:24,196 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:10:26,781 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Description: No description provided.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:10:36,320 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:10:37,538 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:10:37,538 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:10:37,539 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:10:37,598 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:10:38,151 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:10:38,151 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:10:38,166 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:10:38,319 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:10:38,474 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:10:38,475 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:10:38,497 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:10:38,646 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:10:38,646 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:10:38,660 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:10:38,838 [INFO] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 15:10:38,952 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:10:38,953 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:10:39,137 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:10:44,147 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 15:10:44,148 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 15:10:44,149 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:10:48,262 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:11:33,899 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials (ARGs)
+Description: Verifies that a user can successfully log in using data sourced exclusively from the dev environment JSON file.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:11:39,167 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:11:40,999 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:11:41,000 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:11:41,001 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:11:41,032 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:11:41,442 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:11:41,448 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:11:41,463 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:11:41,612 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:11:41,730 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:11:41,730 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:11:41,750 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:11:41,883 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:11:41,883 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:11:41,894 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:11:42,028 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 15:11:42,082 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:11:42,082 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:11:42,339 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:11:47,349 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 15:11:47,351 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 15:11:47,351 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:11:49,869 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:11:49,896 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:12:25,542 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - test_successful_login
+Description: Verifies that a user can successfully log in using data sourced exclusively from the dev environment JSON file.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:12:30,877 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:12:31,905 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:12:31,907 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:12:31,910 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:12:31,985 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:12:32,500 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:12:32,506 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:12:32,531 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:12:32,675 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:12:32,827 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:12:32,827 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:12:32,845 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:12:32,973 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:12:32,973 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:12:32,994 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:12:33,137 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 15:12:33,204 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:12:33,204 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:12:33,364 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:12:38,373 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 15:12:38,375 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 15:12:38,375 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:12:40,759 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:29:17,099 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using data sourced exclusively from the dev environment JSON file.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:29:27,531 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:29:28,662 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:29:28,663 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:29:28,664 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:29:28,799 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:29:29,330 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:29:29,336 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:29:29,352 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:29:29,497 [INFO] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:29:29,648 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:29:29,648 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:29:29,669 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:29:29,801 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:29:29,802 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:29:29,816 [INFO] SendKeysActions - Clearing text from element.
+2026-04-09 15:29:29,971 [INFO] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 15:29:30,034 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:29:30,036 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:29:30,193 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:29:35,202 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 15:29:35,205 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 15:29:35,206 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:29:37,633 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:33:59,749 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using data sourced exclusively from the dev environment JSON file.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:34:05,111 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:34:06,690 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:34:06,692 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:34:06,692 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:34:06,738 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:34:07,259 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:34:07,259 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:34:07,278 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:34:07,441 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:34:07,612 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:34:07,613 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:34:07,633 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:34:07,817 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:34:07,818 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:34:07,833 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:34:08,010 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 15:34:08,084 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:34:08,084 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:34:08,264 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:34:13,341 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 15:34:13,343 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 15:34:13,343 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:34:16,036 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Description: No description provided.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:34:21,439 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:34:22,708 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:34:22,709 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:34:22,709 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:34:23,038 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:34:23,697 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:34:23,698 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:34:23,714 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:34:23,884 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:34:24,067 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:34:24,067 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:34:24,094 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:34:24,265 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:34:24,265 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:34:24,286 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:34:24,462 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 15:34:24,569 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:34:24,569 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:34:24,746 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:34:29,756 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 15:34:29,757 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 15:34:29,757 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:34:33,161 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:36:44,789 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using data sourced exclusively from the dev environment JSON file.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:36:50,092 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:36:51,207 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:36:51,209 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:36:51,209 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:36:51,259 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:36:51,732 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:36:51,734 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:36:51,748 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:36:51,925 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:36:52,065 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:36:52,066 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:36:52,095 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:36:52,231 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:36:52,231 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:36:52,255 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:36:52,406 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 15:36:52,474 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:36:52,475 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:36:52,629 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:36:57,638 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 15:36:57,640 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 15:36:57,641 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:37:00,031 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:44:43,827 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using data sourced exclusively from the dev environment JSON file.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:44:49,048 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:44:50,552 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:44:50,554 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:44:50,554 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:44:50,619 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:44:51,259 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:44:51,259 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:44:51,270 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:44:51,425 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:44:51,587 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:44:51,587 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:44:51,613 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:44:51,772 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:44:51,772 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:44:51,785 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:44:51,961 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 15:44:52,036 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:44:52,036 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:44:52,229 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:44:57,241 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 15:44:57,242 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 15:44:57,242 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:44:59,738 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Description: No description provided.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:45:04,847 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:45:06,122 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:45:06,122 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:45:06,123 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:45:06,185 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:45:06,937 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:45:06,937 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:45:06,950 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:45:07,116 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:45:07,274 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:45:07,274 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:45:07,296 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:45:07,468 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:45:07,468 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:45:07,483 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:45:07,658 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 15:45:07,754 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:45:07,755 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:45:07,913 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:45:12,923 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 15:45:12,924 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 15:45:12,924 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:45:15,297 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:45:46,489 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using data sourced exclusively from the dev environment JSON file.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:45:56,073 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:45:57,332 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:45:57,337 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:45:57,338 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:45:57,382 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:45:57,949 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:45:57,955 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:45:57,973 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:45:58,153 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:45:58,294 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:45:58,294 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:45:58,317 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:45:58,458 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:45:58,458 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:45:58,472 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:45:58,640 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 15:45:58,712 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:45:58,712 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:45:58,916 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:46:03,928 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 15:46:03,930 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 15:46:03,931 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:46:06,183 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:55:17,507 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using data sourced exclusively from the dev environment JSON file.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:55:26,986 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:55:28,202 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:55:28,203 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:55:28,204 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:55:28,356 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:55:28,807 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:55:28,807 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:55:28,869 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:55:29,021 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:55:29,164 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:55:29,164 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:55:29,190 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:55:29,322 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:55:29,323 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:55:29,337 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:55:29,474 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 15:55:29,533 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:55:29,533 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:55:29,686 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:55:34,694 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 15:55:34,965 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 15:55:34,966 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:55:37,306 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Description: No description provided.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:55:42,557 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:55:43,434 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:55:43,435 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:55:43,436 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:55:43,681 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:55:44,347 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:55:44,347 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:55:44,365 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:55:44,528 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:55:44,677 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:55:44,677 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:55:44,700 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:55:44,838 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:55:44,839 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:55:44,850 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:55:45,005 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 15:55:45,093 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:55:45,093 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:55:45,258 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:55:50,268 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 15:55:50,270 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 15:55:50,271 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:55:52,613 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 15:55:56,538 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using data sourced exclusively from the dev environment JSON file.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:56:02,635 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:56:03,729 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:56:03,731 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:56:03,732 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:56:03,796 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:56:04,270 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:56:04,271 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:56:04,287 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:56:04,453 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:56:04,593 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:56:04,594 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:56:04,628 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:56:04,784 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:56:04,784 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:56:04,798 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:56:04,935 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 15:56:04,999 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:56:05,000 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:56:05,170 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:56:10,180 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 15:56:10,183 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 15:56:10,183 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:56:12,553 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Description: No description provided.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 15:56:17,738 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 15:56:18,971 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 15:56:18,972 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:56:18,973 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:56:19,020 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:56:19,619 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 15:56:19,619 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:56:19,637 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:56:19,793 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 15:56:19,950 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:56:19,950 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:56:19,973 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:56:20,120 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 15:56:20,120 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 15:56:20,134 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 15:56:20,299 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 15:56:20,386 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 15:56:20,387 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 15:56:20,554 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 15:56:25,564 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 15:56:25,567 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 15:56:25,568 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 15:56:29,128 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:01:14,125 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:01:19,759 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using data sourced exclusively from the dev environment JSON file.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:01:25,158 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:01:26,911 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 16:01:26,912 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:01:29,262 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Description: No description provided.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:01:38,792 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:01:40,003 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 16:01:40,004 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:01:42,364 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:02:38,072 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:03:22,248 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:04:09,541 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:04:12,032 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using data sourced exclusively from the dev environment JSON file.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:04:22,015 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:04:23,195 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:04:23,235 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:04:23,237 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:04:23,237 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:04:23,302 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:04:23,780 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:04:23,780 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:04:23,803 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:04:23,963 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:04:24,105 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:04:24,106 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:04:24,133 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:04:24,256 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:04:24,256 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:04:24,269 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:04:24,420 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 16:04:24,476 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:04:24,476 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:04:24,614 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 16:04:29,626 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 16:04:29,631 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 16:04:29,632 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:04:33,739 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Description: No description provided.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:04:38,985 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:04:40,021 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:04:40,120 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:04:40,121 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:04:40,122 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:04:40,203 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:04:40,758 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:04:40,759 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:04:40,805 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:04:40,993 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:04:41,166 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:04:41,166 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:04:41,187 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:04:41,322 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:04:41,323 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:04:41,335 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:04:41,491 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 16:04:41,583 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:04:41,583 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:04:41,732 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 16:04:46,740 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 16:04:46,742 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 16:04:46,743 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:04:49,045 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:05:17,273 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using data sourced exclusively from the dev environment JSON file.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:05:22,347 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:05:23,284 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:05:23,304 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:05:23,306 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:05:23,306 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:05:23,533 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:05:23,953 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:05:23,954 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:05:23,971 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:05:24,118 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:05:24,255 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:05:24,255 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:05:24,273 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:05:24,409 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:05:24,410 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:05:24,424 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:05:24,573 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 16:05:24,636 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:05:24,637 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:05:24,782 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 16:05:29,791 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 16:05:29,793 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 16:05:29,794 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:05:32,142 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - test_failed_login_invalid_password
+Description: No description provided.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:05:37,389 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:05:38,973 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:05:38,993 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:05:38,994 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:05:38,995 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:05:39,156 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:05:39,990 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:05:39,991 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:05:40,005 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:05:40,143 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:05:40,277 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:05:40,277 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:05:40,299 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:05:40,439 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:05:40,439 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:05:40,453 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:05:40,607 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 16:05:40,692 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:05:40,692 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:05:40,844 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 16:05:45,853 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 16:05:45,855 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 16:05:45,856 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:05:48,162 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:14:02,768 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:18:34,367 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:18:58,479 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:19:05,101 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - Successful Login with Invalid Credentials
+Description: Verifies that a user can not successfully log in using incorrect password.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:21:28,918 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 16:21:28,921 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:21:31,325 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:21:43,265 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - Successful Login with Invalid Credentials
+Description: Verifies that a user can not successfully log in using incorrect password.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:21:49,257 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 16:21:49,258 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:21:51,625 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:22:53,053 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - Successful Login with Invalid Credentials
+Description: Verifies that a user can not successfully log in using incorrect password.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:23:02,820 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 16:23:02,821 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:23:05,157 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:25:29,239 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:25:38,903 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:25:40,314 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:25:40,354 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:25:40,358 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:25:40,358 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:25:40,485 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:25:40,961 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:25:40,961 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:25:40,980 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:25:41,529 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:25:41,716 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:25:41,716 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:25:41,736 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:25:41,912 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:25:41,913 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:25:41,926 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:25:42,091 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 16:25:42,169 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:25:42,170 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:25:42,341 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 16:25:47,350 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 16:25:47,755 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 16:25:47,755 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:25:50,121 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - Successful Login with Invalid Credentials
+Description: Verifies that a user can not successfully log in using incorrect password.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:26:00,878 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:26:01,810 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:26:02,031 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:26:02,032 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:26:02,032 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:26:02,127 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:26:02,631 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:26:02,632 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:26:02,644 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:26:02,786 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:26:02,939 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:26:02,939 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:26:02,969 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:26:03,128 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:26:03,128 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:26:03,141 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:26:03,290 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 16:26:03,390 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:26:03,391 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:26:03,563 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 16:26:08,570 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 16:26:08,572 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 16:26:08,572 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:26:12,626 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:28:46,226 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:34:09,922 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - Successful Login with Invalid Credentials
+Description: Verifies that a user can not successfully log in using incorrect password.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:34:16,676 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:34:19,456 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:34:19,471 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:34:19,472 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:34:19,473 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:34:19,556 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:34:20,544 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:34:20,544 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:34:20,567 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:34:20,887 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:34:21,143 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:34:21,144 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:34:21,173 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:34:21,694 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:34:21,694 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:34:21,711 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:34:21,886 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 16:34:22,043 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:34:22,043 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:34:22,255 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 16:34:27,262 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 16:34:27,264 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 16:34:27,265 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:34:29,600 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:34:38,372 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - Successful Login with Invalid Credentials
+Description: Verifies that a user can not successfully log in using incorrect password.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:36:08,973 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:36:10,115 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:36:42,067 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:36:42,072 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:36:42,073 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:36:42,143 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:36:42,503 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:36:42,508 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:36:42,522 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:36:42,648 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:36:42,781 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:36:42,781 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:36:42,800 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:36:42,933 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:36:42,933 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:36:42,952 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:36:43,097 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 16:36:43,182 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:36:43,182 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:37:04,935 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:37:57,323 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:39:35,849 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:39:42,362 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:39:44,156 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:39:44,167 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:39:44,169 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:39:44,169 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:39:44,838 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:39:45,228 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:39:45,228 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:39:45,244 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:39:45,414 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:39:45,598 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:39:45,598 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:39:45,621 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:39:45,783 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:39:45,783 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:39:45,807 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:39:46,032 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 16:39:46,109 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:39:46,109 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:39:46,292 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 16:39:51,641 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 16:39:51,643 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 16:39:51,643 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:39:54,504 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - Successful Login with Invalid Credentials
+Description: Verifies that a user can not successfully log in using incorrect password.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:39:59,855 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:40:01,460 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:40:01,475 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:40:01,476 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:40:01,476 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:40:02,058 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:40:03,199 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:40:03,199 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:40:03,215 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:40:03,414 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:40:03,565 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:40:03,565 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:40:03,588 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:40:03,764 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:40:03,764 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:40:03,779 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:40:03,977 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 16:40:04,070 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:40:04,070 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:40:04,219 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 16:40:09,229 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 16:40:09,230 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 16:40:09,230 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:40:11,620 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:40:47,708 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:41:15,498 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:41:20,877 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:41:21,770 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:41:21,967 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:41:21,969 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:41:21,969 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:41:22,029 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:41:22,519 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:41:22,522 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:41:22,542 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:41:22,674 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:41:22,811 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:41:22,812 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:41:22,836 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:41:22,975 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:41:22,976 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:41:22,986 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:41:23,121 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 16:41:23,178 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:41:23,178 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:41:23,318 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 16:41:28,330 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 16:41:28,330 [INFO] GoHotelApp - Capturing screenshot: Successful Login
+2026-04-09 16:41:28,496 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 16:41:28,496 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:41:30,905 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - Successful Login with Invalid Credentials
+Description: Verifies that a user can not successfully log in using incorrect password.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:41:36,106 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:41:37,639 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:41:37,735 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:41:37,736 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:41:37,736 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:41:37,818 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:41:38,159 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:41:38,160 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:41:38,176 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:41:38,339 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:41:38,471 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:41:38,472 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:41:38,499 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:41:38,673 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:41:38,674 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:41:38,691 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:41:38,893 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 16:41:38,991 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:41:38,992 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:41:39,150 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 16:41:44,160 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 16:41:44,160 [INFO] GoHotelApp - Capturing screenshot: Failed Login
+2026-04-09 16:41:44,638 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 16:41:44,638 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:41:46,941 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:49:36,564 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:49:46,922 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:49:48,635 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:49:48,652 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:49:48,654 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:49:48,654 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:49:48,725 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:49:49,198 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:49:49,203 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:49:49,221 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:49:49,371 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:49:49,519 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:49:49,520 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:49:49,547 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:49:49,688 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:49:49,688 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:49:49,702 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:49:49,848 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 16:49:49,907 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:49:49,908 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:49:50,042 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 16:49:55,150 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 16:49:55,151 [INFO] GoHotelApp - Capturing screenshot: Successful Login
+2026-04-09 16:49:55,326 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 16:49:55,326 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:49:57,743 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - Successful Login with Invalid Credentials
+Description: Verifies that a user can not successfully log in using incorrect password.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:50:07,391 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:50:08,541 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:50:08,591 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:50:08,593 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:50:08,594 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:50:08,710 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:50:09,170 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:50:09,171 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:50:09,187 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:50:09,349 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:50:09,491 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:50:09,492 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:50:09,512 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:50:09,656 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:50:09,657 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:50:09,670 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:50:09,823 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 16:50:09,907 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:50:09,908 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:50:10,058 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 16:50:15,067 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 16:50:15,068 [INFO] GoHotelApp - Capturing screenshot: Failed Login
+2026-04-09 16:50:15,577 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 16:50:15,578 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:50:19,650 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:54:36,218 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:54:45,937 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:54:47,202 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:54:47,226 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:54:47,229 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:54:47,229 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:54:47,272 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:54:48,069 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:54:48,069 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:54:48,081 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:54:48,224 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:54:48,405 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:54:48,406 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:54:48,427 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:54:48,589 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:54:48,589 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:54:48,607 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:54:48,806 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 16:54:48,905 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:54:48,905 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:54:49,091 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 16:54:54,101 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 16:54:54,102 [INFO] GoHotelApp - Capturing screenshot: Successful Login (Full Page: True)
+2026-04-09 16:54:55,344 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 16:54:55,344 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:55:00,345 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - Successful Login with Invalid Credentials
+Description: Verifies that a user can not successfully log in using incorrect password.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:55:10,333 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:55:11,315 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:55:11,506 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:55:11,506 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:55:11,507 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:55:11,544 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:55:12,067 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:55:12,068 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:55:12,083 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:55:12,234 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:55:12,384 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:55:12,384 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:55:12,408 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:55:12,558 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:55:12,558 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:55:12,572 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:55:12,745 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 16:55:12,847 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:55:12,848 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:55:13,011 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 16:55:18,174 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 16:55:18,175 [INFO] GoHotelApp - Capturing screenshot: Failed Login (Full Page: True)
+2026-04-09 16:55:20,823 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 16:55:20,824 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:55:23,397 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:56:18,407 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:56:26,267 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 16:57:01,587 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:57:07,021 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:57:08,788 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:57:08,843 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:57:08,845 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:57:08,845 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:57:08,991 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:57:09,329 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:57:09,334 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:57:09,351 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:57:09,495 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:57:09,633 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:57:09,633 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:57:09,654 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:57:09,796 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:57:09,796 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:57:09,811 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:57:09,950 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 16:57:10,011 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:57:10,012 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:57:10,147 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 16:57:15,155 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 16:57:15,156 [INFO] GoHotelApp - Capturing screenshot: Successful Login (Full Page: True)
+2026-04-09 16:57:16,041 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 16:57:16,042 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:57:18,474 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - Successful Login with Invalid Credentials
+Description: Verifies that a user can not successfully log in using incorrect password.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 16:57:24,049 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 16:57:25,447 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 16:57:25,458 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 16:57:25,459 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:57:25,459 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:57:25,553 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:57:25,912 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 16:57:25,912 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:57:25,928 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:57:26,096 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 16:57:26,251 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:57:26,251 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:57:26,276 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:57:26,441 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 16:57:26,442 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 16:57:26,459 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 16:57:26,652 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 16:57:26,743 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 16:57:26,744 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 16:57:26,922 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 16:57:31,932 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 16:57:31,932 [INFO] GoHotelApp - Capturing screenshot: Failed Login (Full Page: True)
+2026-04-09 16:57:32,992 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 16:57:32,993 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 16:57:35,382 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 17:01:47,147 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 17:01:57,207 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 17:01:58,425 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 17:01:58,727 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 17:01:58,729 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 17:01:58,729 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:01:58,884 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:01:59,688 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 17:01:59,689 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:01:59,702 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:01:59,864 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 17:02:00,080 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 17:02:00,080 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:02:00,125 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:02:00,334 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 17:02:00,335 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:02:00,350 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:02:00,514 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 17:02:00,589 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 17:02:00,590 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 17:02:00,742 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 17:02:05,788 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 17:02:05,788 [INFO] GoHotelApp - Capturing screenshot: Successful Login (Full Page: True)
+2026-04-09 17:02:06,786 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 17:02:06,786 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 17:02:11,220 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - Successful Login with Invalid Credentials
+Description: Verifies that a user can not successfully log in using incorrect password.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 17:02:16,449 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 17:02:21,036 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 17:02:21,093 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 17:02:21,094 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 17:02:21,094 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:02:21,247 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:02:22,052 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 17:02:22,052 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:02:22,066 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:02:22,243 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 17:02:22,395 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 17:02:22,395 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:02:22,421 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:02:22,578 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 17:02:22,579 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:02:22,595 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:02:22,766 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 17:02:22,894 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 17:02:22,894 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 17:02:23,087 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 17:02:28,106 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 17:02:28,106 [INFO] GoHotelApp - Capturing screenshot: Failed Login (Full Page: True)
+2026-04-09 17:02:29,630 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 17:02:29,630 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 17:02:33,976 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 17:06:15,870 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 17:06:21,488 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 17:06:22,560 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 17:06:22,618 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 17:06:22,621 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 17:06:22,621 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:06:22,686 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:06:23,245 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 17:06:23,247 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:06:23,259 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:06:23,404 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 17:06:23,552 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 17:06:23,552 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:06:23,582 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:06:23,709 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 17:06:23,709 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:06:23,721 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:06:23,863 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 17:06:23,922 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 17:06:23,922 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 17:06:24,067 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 17:06:29,159 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 17:06:29,160 [INFO] GoHotelApp - Capturing screenshot: Successful Login (Full Page: True)
+2026-04-09 17:06:30,133 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 17:06:30,134 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 17:06:32,545 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - Successful Login with Invalid Credentials
+Description: Verifies that a user can not successfully log in using incorrect password.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 17:06:37,999 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 17:06:39,097 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-09 17:06:39,147 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 17:06:39,149 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 17:06:39,150 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:06:39,356 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:06:39,944 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 17:06:39,944 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:06:39,964 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:06:40,122 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 17:06:40,267 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 17:06:40,267 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:06:40,293 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:06:40,426 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 17:06:40,427 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:06:40,440 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:06:40,589 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 17:06:40,678 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 17:06:40,678 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 17:06:40,830 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 17:06:45,841 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 17:06:45,842 [INFO] GoHotelApp - Capturing screenshot: Failed Login (Full Page: True)
+2026-04-09 17:06:46,924 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 17:06:46,925 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 17:06:49,269 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 17:08:11,233 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-09 17:08:13,348 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 17:08:19,693 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 17:08:20,758 [INFO] SwitchWindowsActions - Setting page zoom to 100%
+2026-04-09 17:08:20,817 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 17:08:20,820 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 17:08:20,821 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:08:20,873 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:08:21,552 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 17:08:21,554 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:08:21,569 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:08:21,738 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 17:08:21,905 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 17:08:21,906 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:08:21,927 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:08:22,059 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 17:08:22,059 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:08:22,070 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:08:22,206 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-09 17:08:22,272 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 17:08:22,272 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 17:08:22,424 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 17:08:27,432 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-09 17:08:27,433 [INFO] GoHotelApp - Capturing screenshot: Successful Login (Full Page: True)
+2026-04-09 17:08:28,275 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-09 17:08:28,276 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 17:08:30,731 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - Successful Login with Invalid Credentials
+Description: Verifies that a user can not successfully log in using incorrect password.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-09 17:08:35,991 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-09 17:08:37,129 [INFO] SwitchWindowsActions - Setting page zoom to 100%
+2026-04-09 17:08:37,226 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-09 17:08:37,227 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 17:08:37,228 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:08:37,312 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:08:42,849 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-09 17:08:42,849 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:08:42,864 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:08:43,038 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-09 17:08:43,268 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 17:08:43,269 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:08:43,295 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:08:43,438 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-09 17:08:43,438 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-09 17:08:43,453 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-09 17:08:43,602 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-09 17:08:43,689 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-09 17:08:43,690 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-09 17:08:43,874 [INFO] LoginPage - Pausing for 5 second(s)...
+2026-04-09 17:08:48,883 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-09 17:08:48,883 [INFO] GoHotelApp - Capturing screenshot: Failed Login (Full Page: True)
+2026-04-09 17:08:49,986 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-09 17:08:49,987 [INFO] TestLogin - Closing WebDriver session
+2026-04-09 17:08:54,040 [WARNING] Notifier - No webhook URL configured. Skipping notification.

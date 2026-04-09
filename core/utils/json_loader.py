@@ -34,6 +34,29 @@ class JSONLoader:
         return data
 
     @staticmethod
+    def load_environment_data(app_path: str, env: str, test_id: str) -> dict:
+        """
+        Loads a JSON file specific to a test ID and the active environment.
+        Looks in 'data/{env}/{test_id}.json'
+        
+        Args:
+            app_path (str): The absolute path to the application directory.
+            env (str): The active environment string (e.g., 'dev', 'qa').
+            test_id (str): The test ID used as the filename (e.g., 'HOTEL-001').
+            
+        Returns:
+            dict: The parsed JSON content, or None if the file doesn't exist.
+        """
+        filename = test_id if test_id.endswith(".json") else f"{test_id}.json"
+        full_path = os.path.join(app_path, "data", env, filename)
+        
+        if not os.path.exists(full_path):
+            return None
+            
+        with open(full_path, 'r', encoding='utf-8') as f:
+            return json.load(f)
+
+    @staticmethod
     def get_test_case_data(json_content: dict) -> dict:
         """
         Extracts the 'data' object from the structured JSON content.

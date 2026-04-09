@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug: Current Test",
+            "name": "Debug: Current Test (Decorator Default)",
             "type": "debugpy",
             "request": "launch",
             "module": "pytest",
@@ -10,13 +10,29 @@
                 "${file}"
             ],
             "env": {
-                "ENV": "qa",
+                "ENV": "",
                 "BROWSER": "chrome",
                 "HEADLESS": "false",
                 "PYTHONPATH": "${workspaceFolder}"
             },
             "console": "integratedTerminal",
             "justMyCode": true
+        },
+        {
+            "name": "Run: DEV - Chrome (UI)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "${file}"
+            ],
+            "env": {
+                "ENV": "dev",
+                "BROWSER": "chrome",
+                "HEADLESS": "false",
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "console": "integratedTerminal"
         },
         {
             "name": "Run: QA - Chrome (Headless)",

@@ -10,38 +10,39 @@ class NavigationActions(BaseAction):
     page refreshing, and URL-based synchronization.
     """
 
-    def go(self, base_url: str, url: str):
+    def go(self, url: str, base_url: str = None):
         """
         Navigates to a concatenated URL and waits for the page to load completely.
 
         Args:
-            base_url (str): The base domain or path.
             url (str): The relative path to append.
+            base_url (str, optional): The base domain or path. If None, retrieves from config.
 
         Returns:
             NavigationActions: The current instance for method chaining.
         """
         try:
+            if base_url is None:
+                from core.utils.config_manager import ConfigManager
+                base_url = ConfigManager.get("web.base_url", "")
+                
             full_url = str(base_url).rstrip('/') + '/' + str(url).lstrip('/')
-            self.logger.debug(f"Go to: {full_url}")
-            self.driver.get(full_url)
-            self._get_wait().until(
-                lambda d: d.execute_script("return document.readyState") == "complete"
-            )
+            
+            # Using step dynamically to log the fully resolved URL
+            with allure.step(f"Navigating to URL: {full_url}"):
+                self.logger.debug(f"Go to: {full_url}")
+                self.driver.get(full_url)
+                self._get_wait().until(
+                    lambda d: d.execute_script("return document.readyState") == "complete"
+                )
             return self
         except Exception as e:
-            self._handle_exception(e, "go", (base_url, url))
+            self._handle_exception(e, "go", (url, base_url))
 
     @allure.step("Navigating to URL: {url}")
-    def to_url(self, url: str):
+    def open(self, url: str):
         """
-        Alias for go_to_url to support BasePage.open().
-        """
-        return self.go_to_url(url)
-
-    def go_to_url(self, url: str):
-        """
-        Directly navigates to the provided URL. Alias for to_url with explicit logging.
+        Directly navigates to the provided URL.
 
         Args:
             url (str): The target URL.

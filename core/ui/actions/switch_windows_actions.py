@@ -160,6 +160,27 @@ class SwitchWindowsActions(BaseAction):
         """
         return self.tab(0)
 
+    @allure.step("Setting page zoom to {percentage}%")
+    def set_zoom_level(self, percentage: int):
+        """
+        Adjusts the zoom level of the current web page using JavaScript.
+
+        Args:
+            percentage (int): The target zoom percentage (e.g., 75, 100, 150).
+
+        Returns:
+            SwitchWindowsActions: The current instance for method chaining.
+        """
+        if self.driver:
+            try:
+                self.logger.info(f"Setting page zoom to {percentage}%")
+                self.driver.execute_script(f"document.body.style.zoom='{percentage}%'")
+            except Exception as e:
+                self._handle_exception(e, "set_zoom_level")
+        else:
+            self.logger.error("Unable to set zoom level. WebDriver is None.")
+        return self
+
     def get_handles(self) -> list:
         """
         Retrieves all active window handles.

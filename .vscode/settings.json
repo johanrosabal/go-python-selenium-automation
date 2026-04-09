@@ -1,7 +1,7 @@
 {
     "python.testing.pytestEnabled": true,
     "python.testing.pytestArgs": [
-        "applications/web/demo/tests",
+        "applications",
         "--alluredir=reports"
     ],
     "python.testing.autoTestDiscoverOnSaveEnabled": true,

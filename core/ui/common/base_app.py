@@ -118,3 +118,64 @@ class BaseApp:
         import time
         self.logger.info(f"Pausing for {seconds} second(s)...")
         time.sleep(seconds)
+
+    def screenshot(self, name: str = "Screenshot", full_page: bool = True):
+        """
+        Takes a screenshot of the current browser state and attaches it to the Allure report.
+
+        Args:
+            name (str): The name to display in the Allure report for this screenshot.
+            full_page (bool): If True, captures the entire page height. Defaults to True.
+        """
+        if self._driver:
+            import allure
+            try:
+                self.logger.info(f"Capturing screenshot: {name} (Full Page: {full_page})")
+                
+                if full_page:
+                    # Attempt CDP (Chrome DevTools Protocol) for robust full-page capture if available (Chrome/Edge)
+                    if hasattr(self._driver, "execute_cdp_cmd"):
+                        import base64
+                        # 1. Get total dimensions via JS
+                        width = self._driver.execute_script("return Math.max(document.body.parentNode.scrollWidth, document.body.scrollWidth, document.documentElement.scrollWidth, document.documentElement.clientWidth);")
+                        height = self._driver.execute_script("return Math.max(document.body.parentNode.scrollHeight, document.body.scrollHeight, document.documentElement.scrollHeight, document.documentElement.clientHeight);")
+                        
+                        # 2. Set virtual device metrics to encompass the whole page
+                        self._driver.execute_cdp_cmd("Emulation.setDeviceMetricsOverride", {
+                            "mobile": False,
+                            "width": width,
+                            "height": height,
+                            "deviceScaleFactor": 1,
+                            "fitWindow": False
+                        })
+                        
+                        # 3. Capture screenshot via CDP
+                        res = self._driver.execute_cdp_cmd("Page.captureScreenshot", {
+                            "format": "png",
+                            "fromSurface": True,
+                            "captureBeyondViewport": True
+                        })
+                        
+                        # 4. Reset device metrics to return to normal
+                        self._driver.execute_cdp_cmd("Emulation.clearDeviceMetricsOverride", {})
+                        png_bytes = base64.b64decode(res['data'])
+                    else:
+                        # Fallback for non-chromium browsers (Firefox/Safari)
+                        original_size = self._driver.get_window_size()
+                        width = self._driver.execute_script("return Math.max(document.body.scrollWidth, document.documentElement.scrollWidth);")
+                        height = self._driver.execute_script("return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);")
+                        self._driver.set_window_size(width, height)
+                        png_bytes = self._driver.get_screenshot_as_png()
+                        self._driver.set_window_size(original_size['width'], original_size['height'])
+                else:
+                    png_bytes = self._driver.get_screenshot_as_png()
+
+                allure.attach(
+                    png_bytes,
+                    name=name,
+                    attachment_type=allure.attachment_type.PNG
+                )
+            except Exception as e:
+                self.logger.error(f"Failed to capture screenshot '{name}': {e}")
+        else:
+            self.logger.warning("WebDriver is not initialized. Cannot take screenshot.")

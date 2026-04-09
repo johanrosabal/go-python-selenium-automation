@@ -187,6 +187,7 @@ class ElementsActions(BaseAction):
             WebDriverWait(self.driver, timeout).until(
                 lambda d: d.execute_script("return document.readyState") == "complete"
             )
+            return self
         except TimeoutException:
             self.logger.error("Timeout waiting for page load")
         return self

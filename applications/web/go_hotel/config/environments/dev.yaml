@@ -1,0 +1,11 @@
+# Go Hotel Configuration - DEV
+name: Go Hotel Automation
+web:
+  base_url: https://studio--studio-860739249-376ef.us-central1.hosted.app
+
+default:
+  browser: chrome
+
+user:
+  username: johan.manuel.rosabal@gmail.com
+  password: Snap1234!

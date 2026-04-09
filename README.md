@@ -240,7 +240,7 @@ El framework utiliza archivos JSON para inyectar datos dinámicos en los tests. 
 
 #### 📁 Ubicación y Naming
 Los archivos deben guardarse en:
-`applications/web/demo/data/json/{test_id}.json`
+`applications/web/{app_name}/data/environments/{env_name}/{test_id}.json`
 
 > [!IMPORTANT]
 > **Convención de Naming**: El nombre del archivo debe coincidir con el `id` que uses en el decorador `@test_case(id="...")`. Por ejemplo, si el ID es `CT-LOGIN-001`, el archivo debe llamarse `CT-LOGIN-001.json`.
@@ -253,11 +253,15 @@ El framework espera una raíz `tests` que contenga un objeto `data`. Dentro de `
   "tests": {
     "id": "CT-LOGIN-001",
     "title": "Login con credenciales válidas",
+    "description": "Login con credenciales válidas",
+    "feature": "Authentication",
+    "story": "Login",
     "severity": "CRITICAL",
+    "tag": ["smoke", "p1"],
     "data": {
       "user": "standard_user",
       "pass": "secret_sauce",
-      "expected_url": "/inventory.html"
+      "expected_url": "/dashboard"
     }
   }
 }
@@ -898,6 +902,47 @@ class TestLogin(BaseTest):
 1.  **Variables de Entorno** (Terminal): `$env:BROWSER="chrome"` (Máxima prioridad)
 2.  **Decorador de Clase**: `@demo` fija el default local.
 3.  **Config YAML / Base**: Valores globales del framework.
+
+## 📊 Reportes de Ejecución (Allure)
+
+El framework utiliza **Allure Reports** para generar informes visuales de alta calidad que incluyen pasos de ejecución, capturas de pantalla, severidad y metadatos vinculados a archivos JSON.
+
+### 1. Generación Automática
+Cada vez que ejecutas tus pruebas con `pytest`, los resultados crudos se guardan automáticamente en la carpeta `/reports`. 
+
+> [!TIP]
+> El framework está configurado para limpiar automáticamente los resultados de ejecuciones anteriores antes de cada nueva corrida (`--clean-alluredir`).
+
+### 2. Visualización del Reporte
+Para levantar el servidor visual y ver tus resultados en el navegador, tienes dos opciones:
+
+#### Opción A: Script Rápido (Recomendado)
+Ejecuta el archivo batch creado para Windows desde tu terminal:
+```powershell
+.\serve-report.bat
+```
+
+#### Opción B: Usando NPX (Node.js)
+Si no deseas usar el script anterior:
+```bash
+npx allure-commandline serve reports
+```
+
+### 3. Evidencia Visual (Screenshots)
+El framework permite capturar evidencia en formato PNG y adjuntarla automáticamente al reporte de Allure.
+
+#### 📸 Captura de Pantalla Completa (Full Page)
+Por defecto, el método `screenshot` captura **todo el alto de la página** (útil para auditorías de formularios largos o dashboards).
+
+```python
+# Captura toda la página (Comportamiento por defecto)
+self.app.screenshot("Evidencia Final")
+
+# Captura solo lo que es visible en el viewport
+self.app.screenshot("Error Visible", full_page=False)
+```
+
+---
 
 ## 💻 Integración con Visual Studio Code
 

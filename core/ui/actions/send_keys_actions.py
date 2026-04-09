@@ -53,7 +53,7 @@ class SendKeysActions(BaseAction):
             self._find_element()
             
             log_text = encode_base64(text) if self._encrypt else text
-            self.logger.info(f"Send Keys [{log_text}]")
+            self.logger.debug(f"Send Keys [{log_text}]")
 
             self._element.send_keys(text)
             self._encrypt = False
@@ -104,10 +104,10 @@ class SendKeysActions(BaseAction):
 
             self._find_element()
             log_text = encode_base64(text) if self._encrypt else text
-            self.logger.info(f"Sending text '{log_text}' by character.")
+            self.logger.debug(f"Sending text '{log_text}' by character.")
 
             for letter in text:
-                self.logger.info(f"Sending character: '{letter}'")
+                self.logger.debug(f"Sending character: '{letter}'")
                 self._element.send_keys(letter)
             
             self._encrypt = False
@@ -125,7 +125,7 @@ class SendKeysActions(BaseAction):
         try:
             self._find_element()
             input_value = self._element.get_attribute('value')
-            self.logger.info(f"Retrieved Element Value: {input_value}")
+            self.logger.debug(f"Retrieved Element Value: {input_value}")
             return input_value
         except Exception as e:
             self._handle_exception(e, "get_text_value")
@@ -146,7 +146,7 @@ class SendKeysActions(BaseAction):
             
         try:
             self._find_element()
-            self.logger.info("Clearing text from element.")
+            self.logger.debug("Clearing text from element.")
             self._element.click()
             self._element.clear()
             return self
@@ -197,7 +197,7 @@ class SendKeysActions(BaseAction):
         """Internal helper to press a key on the element."""
         try:
             self._find_element()
-            self.logger.info(f"Pressing [{key_name}] key.")
+            self.logger.debug(f"Pressing [{key_name}] key.")
             self._element.send_keys(key)
             return self
         except Exception as e:
