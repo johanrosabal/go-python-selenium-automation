@@ -1,0 +1,18 @@
+from core.ui.common.base_test import BaseTest
+from core.utils.decorators import test_case, go_hotel
+
+
+@go_hotel
+class Test{{ class_name }}(BaseTest):
+    """
+    Test Suite for {{ class_name }}.
+    """
+
+    @test_case(id="{{ test_id }}")
+    def test_{{ feature_name }}(self):
+        # Load test data from JSON ({{ test_id }}.json)
+        data = self.get_data_for_test()
+        
+        # Test steps using Fluent API
+        # self.app.{{ page_property }}.open().login()
+        pass

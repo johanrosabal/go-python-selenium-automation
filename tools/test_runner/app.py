@@ -98,7 +98,7 @@ def generate_report():
         if not os.path.exists(allure_results):
             return jsonify({"status": "error", "message": "No allure results found. Run tests first."}), 400
 
-        cmd = ["allure", "generate", allure_results, "-o", allure_report, "--clean"]
+        cmd = ["npx", "allure-commandline", "generate", allure_results, "-o", allure_report, "--clean"]
         
         # We use shell=True on Windows because 'allure' is usually a .bat or .cmd script
         result = subprocess.run(cmd, cwd=PROJECT_ROOT, shell=True, capture_output=True, text=True)
@@ -345,12 +345,14 @@ def run_test():
     browser = data.get("browser", "chrome")
     env_name = data.get("env", "qa")
     headless = data.get("headless", True)
+    video = data.get("video", False)
     
     def generate_output():
         env_vars = os.environ.copy()
         env_vars["BROWSER"] = browser
         env_vars["ENV"] = env_name
         env_vars["HEADLESS"] = "true" if headless else "false"
+        env_vars["VIDEO_ENABLED"] = "true" if video else "false"
         env_vars["PYTHONPATH"] = PROJECT_ROOT
         env_vars["PYTHONIOENCODING"] = "utf-8"
 
@@ -360,6 +362,8 @@ def run_test():
             "pytest", 
             "-v", 
             "--no-header",
+            "--alluredir=reports/allure-results",
+            "--clean-alluredir",
             "-o", "log_cli=true",
             "-o", "log_cli_level=INFO"
         ]

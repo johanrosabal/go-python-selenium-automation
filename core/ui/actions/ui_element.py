@@ -90,7 +90,7 @@ class UIElement(BaseAction):
             UIElement: Self instance for method chaining.
         """
         self._log_action("Clicking")
-        self._click.at(self._get_current_timeout()).element()
+        self._click.at(self._get_current_timeout()).click()
         return self
 
     def double_click(self):
@@ -117,13 +117,13 @@ class UIElement(BaseAction):
 
     def hover(self):
         """
-        Moves the mouse pointer over the element.
+        Moves the mouse pointer over the element (Hover).
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._log_action("Moving mouse to")
-        self._click.at(self._get_current_timeout()).move_to_element()
+        self._log_action("Hovering over")
+        self._click.at(self._get_current_timeout()).hover()
         return self
 
     def js_click(self):
@@ -150,13 +150,13 @@ class UIElement(BaseAction):
 
     def release_mouse(self):
         """
-        Releases the mouse button.
+        Releases the mouse button if it was being held.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._log_action("Releasing mouse")
-        self._click.at(self._get_current_timeout()).release()
+        self._log_action("Releasing mouse on")
+        self._click.at(self._get_current_timeout()).release_mouse()
         return self
 
     def release(self):
@@ -183,17 +183,17 @@ class UIElement(BaseAction):
 
     def type(self, text: str, clear: bool = True):
         """
-        Enters text into the element (input/textarea).
+        Enters text into the field.
 
         Args:
             text (str): The string to type.
-            clear (bool, optional): Whether to clear the field first. Defaults to True.
+            clear (bool): Whether to clear the field first. Defaults to True.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
         self._log_action(f"Typing '{text}' into")
-        self._send_keys.at(self._get_current_timeout()).set_text(text, clear=clear)
+        self._send_keys.at(self._get_current_timeout()).type(text, clear)
         return self
 
     def type_encrypted(self, text: str, clear: bool = True):
@@ -228,16 +228,16 @@ class UIElement(BaseAction):
 
     def type_by_character(self, text: str):
         """
-        Simulates human typing by sending one character at a time.
+        Types text character by character to simulate human typing.
 
         Args:
-            text (str): The text to type.
+            text (str): Input text.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._log_action(f"Typing '{text}' character by character into")
-        self._send_keys.at(self._get_current_timeout()).set_text_by_character(text)
+        self._log_action(f"Typing character by character '{text}' into")
+        self._send_keys.at(self._get_current_timeout()).type_by_character(text)
         return self
 
     def clear(self, use_js: bool = False):
@@ -267,16 +267,21 @@ class UIElement(BaseAction):
 
     def press(self, key: str):
         """
-        Sends a specific keyboard key stroke to the element.
+        Sends a specific keyboard key stroke.
 
         Args:
-            key (str): The key to press (e.g., Keys.ENTER).
+            key (str): The key name (e.g., 'ENTER', 'TAB').
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._log_action(f"Pressing key '{key}' on")
-        self._send_keys.at(self._get_current_timeout()).press_key(key)
+        from selenium.webdriver.common.keys import Keys
+        key_val = getattr(Keys, key.upper(), None)
+        if not key_val:
+            raise ValueError(f"Invalid key name: {key}")
+        
+        self._log_action(f"Pressing {key} on")
+        self._send_keys.at(self._get_current_timeout()).press(key_val, key)
         return self
 
     def press_enter(self):
@@ -336,109 +341,109 @@ class UIElement(BaseAction):
 
     # --- Scroll Actions ---
 
-    def scroll_to(self, pixels: int = 0):
+    def scroll_to(self, offset: int = 0):
         """
-        Scrolls the page until this element is centered in the viewport.
+        Scrolls the viewport to this element.
 
         Args:
-            pixels (int, optional): Additional vertical offset. Defaults to 0.
+            offset (int): Vertical offset. Defaults to 0.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._log_action(f"Scrolling to (offset: {pixels})")
-        self._scroll.at(self._get_current_timeout()).to_element(pixels)
+        self._log_action("Scrolling to")
+        self._scroll.at(self._get_current_timeout()).scroll_to(offset)
         return self
 
     def scroll_to_center(self):
         """
-        Scrolls the element to the exact center of the page.
+        Scrolls to this element and aligns it to the center of viewport.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._log_action("Scrolling to exact center")
-        self._scroll.at(self._get_current_timeout()).to_center()
+        self._log_action("Scrolling to center of")
+        self._scroll.at(self._get_current_timeout()).scroll_to_center()
         return self
 
     def scroll_to_top(self):
         """
-        Scrolls to the absolute top of the page.
+        Scrolls to the top of the page.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._log_action("Scrolling to top of page")
-        self._scroll.at(self._get_current_timeout()).to_top()
+        self._log_action("Scrolling to page top")
+        self._scroll.at(self._get_current_timeout()).scroll_to_top()
         return self
 
     def scroll_to_bottom(self):
         """
-        Scrolls to the absolute bottom of the page.
+        Scrolls to the bottom of the page.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._log_action("Scrolling to bottom of page")
-        self._scroll.at(self._get_current_timeout()).to_bottom()
+        self._log_action("Scrolling to page bottom")
+        self._scroll.at(self._get_current_timeout()).scroll_to_bottom()
         return self
 
     # --- Select Actions ---
 
     def select_by_text(self, text: str):
         """
-        Selects an option from a dropdown element by visible text.
+        Selects a dropdown option by visible text.
 
         Args:
-            text (str): The text of the option to select.
+            text (str): Visible text of the option.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._log_action(f"Selecting '{text}' from dropdown")
-        self._select.at(self._get_current_timeout()).text(text)
+        self._log_action(f"Selecting option '{text}' from")
+        self._dropdown.at(self._get_current_timeout()).select_by_text(text)
         return self
 
     def select_by_partial_text(self, text: str):
         """
-        Selects an option containing the specified partial text.
+        Selects a dropdown option containing the provided partial text.
 
         Args:
-            text (str): Partial text to look for.
+            text (str): Partial visible text.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._log_action(f"Selecting option containing '{text}' from dropdown")
-        self._select.at(self._get_current_timeout()).partial_text(text)
+        self._log_action(f"Selecting partial text '{text}' from")
+        self._dropdown.at(self._get_current_timeout()).select_by_partial_text(text)
         return self
 
     def select_by_value(self, value: str):
         """
-        Selects an option by its value attribute.
+        Selects a dropdown option by its 'value' attribute.
 
         Args:
-            value (str): The value to select.
+            value (str): Value attribute of the option.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._log_action(f"Selecting value '{value}' from dropdown")
-        self._select.at(self._get_current_timeout()).value(value)
+        self._log_action(f"Selecting value '{value}' from")
+        self._dropdown.at(self._get_current_timeout()).select_by_value(value)
         return self
 
     def select_by_index(self, index: int):
         """
-        Selects an option by its zero-based index.
+        Selects a dropdown option by its index.
 
         Args:
-            index (int): The index to select.
+            index (int): Zero-based index.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._log_action(f"Selecting index {index} from dropdown")
-        self._select.at(self._get_current_timeout()).index(index)
+        self._log_action(f"Selecting index {index} from")
+        self._dropdown.at(self._get_current_timeout()).select_by_index(index)
         return self
 
     def deselect_all(self):
@@ -449,28 +454,31 @@ class UIElement(BaseAction):
             UIElement: Self instance for method chaining.
         """
         self._log_action("Deselecting all from")
-        self._select.at(self._get_current_timeout()).deselect_all()
+        self._dropdown.at(self._get_current_timeout()).deselect_all()
+        return self
+
     def get_dropdown_options(self) -> list[str]:
         """
-        Retrieves all available options from a dropdown element.
+        Retrieves the list of all available options in the dropdown.
 
         Returns:
-            list[str]: List of option texts.
+            list[str]: Collection of option texts.
         """
-        return self._select.at(self._get_current_timeout()).get_options()
+        self._log_action("Getting options from")
+        return self._dropdown.at(self._get_current_timeout()).get_dropdown_options()
 
     def check(self, state: bool = True):
         """
-        Ensures a checkbox reaches the specified toggle state.
+        Sets the state of a checkbox.
 
         Args:
-            state (bool): True to check, False to uncheck. Defaults to True.
+            state (bool): Desired state (True for checked). Defaults to True.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._log_action(f"Setting checkbox state to {state} for")
-        self._check.at(self._get_current_timeout()).set_state(state)
+        self._log_action(f"Checking (state={state})")
+        self._check.at(self._get_current_timeout()).check(state)
         return self
 
     def is_checked(self) -> bool:
@@ -486,13 +494,13 @@ class UIElement(BaseAction):
 
     def select_radio(self):
         """
-        Ensures the radio button is selected.
+        Selects a radio button.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._log_action("Selecting radio button")
-        self._radio.at(self._get_current_timeout()).select()
+        self._log_action("Selecting radio")
+        self._radio.at(self._get_current_timeout()).select_radio()
         return self
 
     def is_selected(self) -> bool:
@@ -534,9 +542,10 @@ class UIElement(BaseAction):
         Retrieves all header texts from a table.
 
         Returns:
-            list[str]: Header titles.
+            list[str]: Headers list.
         """
-        return self._table.at(self._get_current_timeout()).get_headers()
+        self._log_action("Getting headers of")
+        return self._table.at(self._get_current_timeout()).get_table_headers()
 
     def click_table_header(self, text: str = None, index: int = None):
         """
@@ -554,132 +563,145 @@ class UIElement(BaseAction):
 
     def get_table_data(self) -> list[dict]:
         """
-        Extracts the entire table content into a structured list of dictionaries.
+        Parses whole table into a list of dictionaries.
 
         Returns:
-            list[dict]: Table data.
+            list[dict]: Records list.
         """
-        return self._table.at(self._get_current_timeout()).get_all_data()
+        self._log_action("Getting full data of")
+        return self._table.at(self._get_current_timeout()).get_table_data()
 
     def table_check_all(self, column: Union[int, str] = 1):
         """
-        Clicks the global selection checkbox in the table.
+        Checks 'select all' check in a table.
 
         Args:
-            column (Union[int, str], optional): The 1-based column identifier. Defaults to 1.
+            column (Union[int, str]): Target column.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._table.at(self._get_current_timeout()).check_all(column)
+        self._log_action(f"Checking all rows in table")
+        self._table.at(self._get_current_timeout()).table_check_all(column)
         return self
 
     def table_check_row(self, index: int, column: Union[int, str] = 1):
         """
-        Clicks the selection checkbox for a specific row and column.
+        Checks a specific row in a table.
 
         Args:
-            index (int): 1-based row index.
-            column (Union[int, str], optional): The 1-based column identifier. Defaults to 1.
+            index (int): Row index.
+            column (Union[int, str]): Column index/name.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._table.at(self._get_current_timeout()).check_row(index, column)
+        self._log_action(f"Checking row {index} in table")
+        self._table.at(self._get_current_timeout()).table_check_row(index, column)
         return self
 
     def table_click_button(self, row: int, col: Union[int, str], text: str = None):
         """
-        Clicks a button within a specific table cell.
+        Clicks a button inside a specific cell.
 
         Args:
-            row (int): 1-based row index.
-            col (Union[int, str]): 1-based column identifier.
-            text (str, optional): Filter text for the button.
+            row (int): Row index.
+            col (Union[int, str]): Column index/name.
+            text (str): Optional button text filter.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._table.at(self._get_current_timeout()).click_button_in_cell(row, col, text)
+        self._log_action(f"Clicking button in table row {row}")
+        self._table.at(self._get_current_timeout()).table_click_button(row, col, text)
         return self
 
     def table_click_link(self, row: int, col: Union[int, str], text: str = None):
         """
-        Clicks a link within a specific table cell.
+        Clicks a link inside a specific cell.
 
         Args:
-            row (int): 1-based row index.
-            col (Union[int, str]): 1-based column identifier.
-            text (str, optional): Filter text for the link.
+            row (int): Row index.
+            col (Union[int, str]): Column index/name.
+            text (str): Optional link text filter.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._table.at(self._get_current_timeout()).click_link_in_cell(row, col, text)
+        self._log_action(f"Clicking link in table row {row}")
+        self._table.at(self._get_current_timeout()).table_click_link(row, col, text)
         return self
 
     def table_wait_for_rows(self, expected_count: int, timeout: int = None):
         """
-        Waits until the table has a specific number of rows.
+        Waits until table has exact row count.
 
         Args:
-            expected_count (int): Row count to wait for.
-            timeout (int, optional): Custom timeout.
+            expected_count (int): Row count.
+            timeout (int): Custom timeout.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._table.at(timeout if timeout else self._get_current_timeout()).wait_for_rows(expected_count)
+        self._log_action(f"Waiting for table to have {expected_count} rows")
+        self._table.at(self._get_current_timeout()).table_wait_for_rows(expected_count, timeout)
         return self
 
     def table_wait_not_empty(self, timeout: int = None):
         """
-        Waits until the table is no longer empty.
+        Waits until table is not empty.
+
+        Args:
+            timeout (int): Custom timeout.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._table.at(timeout if timeout else self._get_current_timeout()).wait_not_empty()
+        self._log_action("Waiting for table not empty")
+        self._table.at(self._get_current_timeout()).table_wait_not_empty(timeout)
         return self
 
     # --- Upload Actions ---
 
     def upload_file(self, file_path: str):
         """
-        Uploads a file using this element as the file input.
+        Uploads a file.
 
         Args:
-            file_path (str): Path to the file.
+            file_path (str): File system path.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
-        self._log_action(f"Uploading file '{file_path}' to")
-        self._upload.at(self._get_current_timeout()).file(file_path)
+        self._log_action(f"Uploading file '{file_path}' through")
+        self._upload.at(self._get_current_timeout()).upload_file(file_path)
         return self
 
     # --- Elements/State Actions ---
 
-    def wait_visible(self):
+    def wait_visible(self, timeout: int = None):
         """
-        Explicitly waits for the element to become visible.
+        Explicitly waits for the element to become visible on the page.
+
+        Args:
+            timeout (int, optional): Custom timeout for this wait.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
         self._log_action("Waiting for visibility of")
-        self._elements.at(self._get_current_timeout()).is_visible()
+        self._elements.wait_visible(timeout)
         return self
 
     def wait_present(self):
         """
-        Explicitly waits for the element to be present in the DOM.
+        Waits until element is present in the DOM.
 
         Returns:
             UIElement: Self instance for method chaining.
         """
         self._log_action("Waiting for presence of")
-        self._elements.at(self._get_current_timeout()).is_present()
+        self._elements.at(self._get_current_timeout()).wait_present()
         return self
 
     def wait_clickable(self):
@@ -772,22 +794,23 @@ class UIElement(BaseAction):
 
     def get_text(self) -> str:
         """
-        Retrieves the visible text of the element.
+        Retrieves the element's visible text.
 
         Returns:
-            str: The element text.
+            str: The text content.
         """
-        # self._log_action("Getting text from") # Removed log for getter to reduce noise
-        return self._get_text.at(self._get_current_timeout()).text()
+        self._log_action("Getting text of")
+        return self._get_text.at(self._get_current_timeout()).get_text()
 
     def get_trimmed_text(self) -> str:
         """
-        Retrieves the element text with whitespace removed.
+        Retrieves element's text with stripped whitespace.
 
         Returns:
-            str: The cleaned text.
+            str: The cleaned text content.
         """
-        return self._get_text.at(self._get_current_timeout()).trimmed()
+        self._log_action("Getting trimmed text of")
+        return self._get_text.at(self._get_current_timeout()).get_trimmed_text()
 
     def get_attribute(self, attribute: str) -> str:
         """
@@ -944,7 +967,7 @@ class UIElement(BaseAction):
             UIElement: Self instance for method chaining.
         """
         self._log_action(f"Taking screenshot '{name}' of")
-        self._screenshot.at(self._get_current_timeout()).element(name)
+        self._screenshot.at(self._get_current_timeout()).screenshot(name)
         return self
 
     def is_visible(self) -> bool:

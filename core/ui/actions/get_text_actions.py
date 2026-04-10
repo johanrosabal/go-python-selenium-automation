@@ -13,29 +13,34 @@ class GetTextActions(BaseAction):
     """
     
     @allure.step("Getting text from element")
-    def text(self) -> str:
+    def get_text(self) -> str:
         """
         Retrieves the visible text of the element.
 
         Returns:
-            str: The visible text of the element.
+            str: The text content.
         """
         try:
             self._find_element()
-            return self._element.text
+            text_value = self._element.text
+            self.logger.debug(f"Retrieved text: '{text_value}'")
+            return text_value
         except Exception as e:
-            self._handle_exception(e, "text")
+            self._handle_exception(e, "get_text")
 
     @allure.step("Getting trimmed text from element")
-    def trimmed(self) -> str:
+    def get_trimmed_text(self) -> str:
         """
-        Retrieves the visible text of an element and removes leading/trailing whitespace.
+        Retrieves the element's text and removes leading/trailing whitespace.
 
         Returns:
-            str: The trimmed text string.
+            str: The cleaned text content.
         """
-        val = self.text()
-        return val.strip() if val else ""
+        try:
+            val = self.get_text()
+            return val.strip() if val else ""
+        except Exception as e:
+            self._handle_exception(e, "get_trimmed_text")
 
     @allure.step("Getting attribute {attribute} from element")
     def attribute(self, attribute: str) -> str:

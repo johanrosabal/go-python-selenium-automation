@@ -8,6 +8,7 @@ class NewClientComponent(BasePage):
     """
 
     # Locators (using data-testid for automation)
+    MODAL = (By.XPATH, "//div[@role='dialog']")
     TITLE_PAGE = (By.XPATH, "//h2")
     INPUT_CEDULA = (By.XPATH, "//label[text()='Cédula']/..//input")
     BUTTON_VERIFICAR = (By.XPATH, "//button[text()='Verificar']")
@@ -31,6 +32,12 @@ class NewClientComponent(BasePage):
         self.navigation.go(url="clients/new")
         self.elements.wait_for_page_load()
         return self
+
+    def is_visible_modal(self) -> bool:
+        """
+        Checks if the modal is visible.
+        """
+        return self.element(self.MODAL).is_visible()
 
     def is_visible_title(self) -> bool:
         """
@@ -121,12 +128,20 @@ class NewClientComponent(BasePage):
         self.element(self.BUTTON_CANCEL).click()
         return self 
     
-    def crear_cliente(self, client: dict):
+    def crear_cliente(self, client: dict, verify: bool = False, save: bool = True):
         """
         Creates a new client.
         """
+        # Sincronización: Esperar a que el modal sea visible antes de empezar
+        self.element(self.MODAL).wait_visible(timeout=5)
+
         self.enter_cedula(client["cedula"])
-        self.click_verificar()
+
+        # Verificar si el cliente existe
+        if verify:
+            self.click_verificar()
+
+        # Completar 
         self.enter_nombre(client["name"])
         self.enter_primer_apellido(client["last_name"])
         self.enter_segundo_apellido(client["second_last_name"])
@@ -134,6 +149,10 @@ class NewClientComponent(BasePage):
         self.enter_telefono(client["phone"])
         self.enter_notas(client["notes"])
         self.click_vip()
-        self.click_crear()
+        
+        if save:
+            self.click_crear()
+        else:
+            self.click_cancelar()
         
         return self

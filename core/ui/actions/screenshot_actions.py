@@ -109,7 +109,7 @@ class ScreenshotActions(BaseAction):
         except Exception as e:
             self._handle_exception(e, "full_page")
 
-    def element(self, name: str = "element_screenshot"):
+    def screenshot(self, name: str = "element_screenshot"):
         """
         Captures a screenshot of the specified UI element.
 
@@ -146,4 +146,4 @@ class ScreenshotActions(BaseAction):
             self.last_filepath = filepath
             return self
         except Exception as e:
-            self._handle_exception(e, "element")
+            self._handle_exception(e, "screenshot")

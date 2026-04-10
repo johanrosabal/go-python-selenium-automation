@@ -174,11 +174,37 @@ timeout = ConfigManager.get("web.timeout", 30)
 
 ---
 
-## 🚀 Guía del Desarrollador (Paso a Paso)
+## 🚀 Guía del Desarrollador (Productividad)
 
-Sigue este flujo para añadir nuevas pruebas al framework de forma estandarizada.
+Sigue este flujo para añadir nuevas pruebas al framework de forma estandarizada. Tienes dos opciones: usar las herramientas automatizadas o el proceso manual.
 
-### 1. Crear un Page Object
+### ⚡ Opción A: Creación Automatizada (Recomendado)
+
+El framework incluye un sistema de **Scaffolding** integrado con VS Code para acelerar el desarrollo.
+
+#### 1. Uso desde VS Code (Interfaz Visual)
+1. Presiona `Ctrl + Shift + P` y busca **`Tasks: Run Task`**.
+2. Selecciona una de las tareas inteligentes:
+   - **`🚀 Scaffold: New Page Object`**: Crea la página y la registra en el Orquestador automáticamente.
+   - **`🧪 Scaffold: New Test Case`**: Genera un archivo de prueba con decoradores listos.
+   - **`🖥️ Runner: Launch UI`**: Levanta la interfaz gráfica del Test Runner (Flask).
+   - **`📊 Allure: Open Report Server`**: Genera y abre el servidor de reportes Allure.
+3. Sigue los cuadros de diálogo para ingresar el nombre de la app, clase e ID.
+
+#### 2. Uso desde Terminal (CLI)
+Si prefieres la terminal, usa el script `tools/scaffold.py`:
+
+```powershell
+# Crear y registrar una Page
+python tools/scaffold.py page --name PerfilPage --app go_hotel
+
+# Crear un Test Case
+python tools/scaffold.py test --name Perfil --app go_hotel --id HOTEL-001 --feature Perfil
+```
+
+---
+
+### 🛠️ Opción B: Creación Manual (Paso a Paso)
 Crea un archivo en `applications/web/demo/pages/nombre_page.py`. Hereda de `BasePage` y usa la **API Fluida**.
 
 ```python
@@ -348,6 +374,55 @@ def test_b_validar_orden(self):
 
 ---
 
+## 🚀 Arquitectura de Tests y Patrones Avanzados
+
+El framework implementa patrones avanzados para maximizar la velocidad de ejecución y la facilidad de desarrollo.
+
+### 1. Sesiones Persistentes (`persistent_session = True`)
+Por defecto, el framework abre y cierra el navegador para cada método de test (aislamiento total). Sin embargo, en flujos largos o suites de regresión, puedes habilitar la persistencia a nivel de clase:
+
+```python
+class TestReserved(BaseTest):
+    # Mantiene el mismo navegador para todos los métodos de esta clase
+    persistent_session = True 
+```
+*   **Ventaja**: Reduce el tiempo total de ejecución hasta en un 40% al evitar el "cold start" del navegador.
+*   **Limpieza**: El framework se encarga de cerrar el navegador automáticamente al finalizar el último test de la clase.
+
+### 2. Tipado y Autocompletado (`app: GoHotelApp`)
+Para aprovechar al máximo el poder de VS Code (IntelliSense), es fundamental definir el tipo del orquestador en tu clase de test:
+
+```python
+class TestReserved(BaseTest):
+    # Indica al editor que 'self.app' es un GoHotelApp
+    app: GoHotelApp 
+```
+*   **Resultado**: Al escribir `self.app.`, el editor te sugerirá automáticamente todas las páginas disponibles (`login_page`, `reserved_page`, etc.) y sus métodos internos. No necesitas adivinar los nombres.
+
+### 3. Decorador de Aplicación (`@go_hotel`)
+Este decorador de clase configura instantáneamente el contexto de ejecución para un proyecto específico:
+
+```python
+@go_hotel
+class TestLogin(BaseTest):
+    ...
+```
+*   **¿Qué hace?**: Establece los valores por defecto de `app_name`, `profile` (dev/qa), y `browser`. Esto permite ejecutar el test directamente desde el botón "Run" del IDE sin configurar variables de entorno manualmente.
+
+### 4. Decorador de Caso de Prueba (`@test_case`)
+Es el componente más potente para la trazabilidad y la inyección de datos:
+
+```python
+@test_case(id="HOTEL-001")
+def test_login_exitoso(self):
+    ...
+```
+*   **Inyección de Datos**: Busca automáticamente un archivo `HOTEL-001.json` en la carpeta de datos y carga su contenido en `self.get_test_data()`.
+*   **Reportes Allure**: Sincroniza el ID del test con el reporte, permitiendo ver títulos, severidades y tags definidos en el JSON o en el decorador.
+*   **Integración TMS**: Si tienes una herramienta de gestión de tests (Jira/TestRail), el ID crea un enlace directo en el reporte Allure.
+
+---
+
 ## 🕹️ Catálogo Detallado de Métodos
 
 ### 1. Navegación y Contexto (BasePage)
@@ -390,7 +465,8 @@ def test_b_validar_orden(self):
 | `.hover()` | `this` | Mover el mouse sobre el elemento. |
 | `.drag_and_drop(loc)` | `this` | Arrastra el elemento hasta otro destino. |
 | `.click_and_hold()` | `this` | Mantiene el clic presionado. |
-| `.release()` / `.release_mouse()` | `this` | Suelta el clic presionado. |
+| `.release_mouse()` | `this` | Releases mouse button. |
+| `.release()` | `this` | Alias for `.release_mouse()`. |
 
 ### 4. Teclado y Datos (UIElement)
 | Método | Retorna | Descripción |
@@ -408,7 +484,7 @@ def test_b_validar_orden(self):
 ### 5. Scroll y Visibilidad (UIElement)
 | Método | Retorna | Descripción |
 | :--- | :--- | :--- |
-| `.scroll_to(offset)` | `this` | Centra el elemento con un offset opcional. |
+| `.scroll_to(offset)` | `this` | Scrolls viewport to element with an optional offset. |
 | `.scroll_to_center()` | `this` | Centra el elemento exactamente en pantalla. |
 | `.scroll_to_top()` | `this` | Sube al inicio de la página. |
 | `.scroll_to_bottom()` | `this` | Baja al final de la página. |
@@ -450,8 +526,8 @@ def test_b_validar_orden(self):
 | `.table_check_row(r)` | `this` | Marca el checkbox de una fila específica. |
 | `.table_click_button(r, c, t)` | `this` | Clic en botón dentro de celda. |
 | `.table_click_link(r, c, t)` | `this` | Clic en link dentro de celda. |
-| `.table_wait_for_rows(n)` | `this` | Espera a que la tabla tenga N filas. |
-| `.table_wait_not_empty()` | `this` | Espera a que la tabla tenga datos. |
+| `.table_wait_for_rows(n)`| `this` | Espera a que la tabla tenga N filas. |
+| `.table_wait_not_empty()`| `this` | Espera a que la tabla tenga datos. |
 
 ### 9. Capturas y Sincronización Global (BasePage)
 | Método | Retorna | Descripción |
@@ -481,7 +557,7 @@ def test_b_validar_orden(self):
 | `.is_empty()` | `bool` | Verifica si no tiene contenido de texto. |
 | `.wait_until_text_is(t)`| `this` | Espera hasta que el texto sea idéntico. |
 | `.at(seconds)` | `this` | Ajusta el timeout para la siguiente acción. |
-| `.upload.file(path)` | `this` | Sube un archivo. Busca en `resources/uploads` por defecto. |
+| `.upload_file(path)` | `this` | Sube un archivo. |
 
 ---
 
@@ -544,7 +620,6 @@ def gestionar_usuarios(self):
     data = self.element(USERS_TABLE).get_table_data()
     headers = self.element(USERS_TABLE).get_table_headers()
     
-    # Acciones quirúrgicas en celdas
     # (row=1-based, col=nombre o índice)
     self.element(USERS_TABLE).table_click_button(row=2, col="Acciones", text="Eliminar")
     self.element(USERS_TABLE).table_check_row(row=4, column=1) # Marca checkbox
@@ -573,7 +648,7 @@ def validar_footer_pixel_perfect(self):
     self.scroll_to_bottom()
     
     # Scroll local al elemento con offset
-    self.element(FOOTER).scroll_to(pixels=100)
+    self.element(FOOTER).scroll_to(offset=100)
     
     # Centrar exactamente para capturas
     self.element(LOGO).scroll_to_center().screenshot("logo_centrado")
@@ -618,19 +693,33 @@ def manejo_de_alertas(self):
 
 ### 10. Carga de Archivos (Smart Discovery)
 ```python
-def subir_evidencia(self):
-    # Busca automáticamente en resources/uploads/
-    self.element(UPLOAD_INP).upload.file("evidencia.png")
-    
-    # También soporta rutas absolutas
-    self.element(UPLOAD_INP).upload.file("C:/temp/manual.pdf")
+    # Soporta rutas absolutas
+    self.element(UPLOAD_INP).upload_file("C:/temp/manual.pdf")
 ```
 
 ---
 
 > [!TIP]
-> **Pro-Tip**: Puedes encadenar casi cualquier acción. Ejemplo:
-> `self.element(UI).scroll_to_center().hover().wait_clickable().click()`
+> **✨ El Poder de la Interfaz Fluida (Method Chaining)**
+>
+> Puedes encadenar múltiples acciones quirúrgicas sobre un solo elemento en una sola línea. El framework gestiona las esperas y el contexto de forma transparente:
+>
+> ```python
+> # 1. Selecciona el elemento
+> # 2. Aplica un timeout de 30s solo para esta cadena
+> # 3. Se desplaza hasta centrarlo en pantalla
+> # 4. Pone el mouse encima (hover) para activar efectos CSS
+> # 5. Captura una evidencia visual del hover
+> # 6. Espera a que sea cliqueable (por si tiene animaciones)
+> # 7. Realiza el click final
+> self.app.dashboard_page.element(BTN_ADAVANCED_CONFIG) \
+>     .at(30) \
+>     .scroll_to_center() \
+>     .hover() \
+>     .screenshot("btn_hover_state") \
+>     .wait_clickable() \
+>     .click()
+> ```
 
 ---
 

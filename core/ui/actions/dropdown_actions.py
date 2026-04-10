@@ -20,7 +20,7 @@ class DropdownActions(BaseAction):
         super().__init__(driver)
 
     @allure.step("Selecting option '{text}' from dropdown")
-    def text(self, text: str):
+    def select_by_text(self, text: str):
         """
         Selects an option by its exact visible text.
 
@@ -37,10 +37,10 @@ class DropdownActions(BaseAction):
             select.select_by_visible_text(text)
             return self
         except Exception as e:
-            self._handle_exception(e, "text")
+            self._handle_exception(e, "select_by_text")
 
     @allure.step("Selecting value '{value}' from dropdown")
-    def value(self, value: str):
+    def select_by_value(self, value: str):
         """
         Selects an option by its 'value' attribute.
 
@@ -57,10 +57,10 @@ class DropdownActions(BaseAction):
             select.select_by_value(value)
             return self
         except Exception as e:
-            self._handle_exception(e, "value")
+            self._handle_exception(e, "select_by_value")
 
     @allure.step("Selecting index {index} from dropdown")
-    def index(self, index: int):
+    def select_by_index(self, index: int):
         """
         Selects an option by its index.
 
@@ -77,10 +77,10 @@ class DropdownActions(BaseAction):
             select.select_by_index(index)
             return self
         except Exception as e:
-            self._handle_exception(e, "index")
+            self._handle_exception(e, "select_by_index")
 
     @allure.step("Selecting option containing text '{text}' from dropdown")
-    def partial_text(self, text: str):
+    def select_by_partial_text(self, text: str):
         """
         Selects an option that contains the specified partial text.
 
@@ -100,7 +100,7 @@ class DropdownActions(BaseAction):
                     break
             return self
         except Exception as e:
-            self._handle_exception(e, "partial_text")
+            self._handle_exception(e, "select_by_partial_text")
 
     @allure.step("Deselecting all options from dropdown")
     def deselect_all(self):
@@ -123,7 +123,7 @@ class DropdownActions(BaseAction):
             self._handle_exception(e, "deselect_all")
 
     @allure.step("Getting all options from dropdown")
-    def get_options(self) -> list[str]:
+    def get_dropdown_options(self) -> list[str]:
         """
         Retrieves the visible text of all options within the dropdown.
 
@@ -136,4 +136,4 @@ class DropdownActions(BaseAction):
             select = Select(self._element)
             return [option.text for option in select.options]
         except Exception as e:
-            self._handle_exception(e, "get_options")
+            self._handle_exception(e, "get_dropdown_options")

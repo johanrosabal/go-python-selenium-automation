@@ -22,7 +22,7 @@ class ClickActions(BaseAction):
         super().__init__(driver)
 
     @allure.step("Clicking on element")
-    def element(self):
+    def single_click(self):
         """
         Performs a standard click on an element.
 
@@ -76,25 +76,26 @@ class ClickActions(BaseAction):
         except Exception as e:
             self._handle_exception(e, "right_click")
 
-    @allure.step("Clicking using JavaScript")
-    def js_click(self):
+    @allure.step("Clicking on element")
+    def click(self):
         """
-        Expedites a click using direct JavaScript execution.
+        Performs a standard click on an element.
 
         Returns:
             ClickActions: The current instance for method chaining.
         """
         try:
             self._find_element()
-            self.driver.execute_script("arguments[0].click();", self._element)
+            self.logger.info(f"Clicking on element: {self._locator}")
+            self._element.click()
             return self
         except Exception as e:
-            self._handle_exception(e, "js_click")
+            self._handle_exception(e, "click")
 
-    @allure.step("Moving to element")
-    def move_to_element(self):
+    @allure.step("Moving mouse pointer to element")
+    def hover(self):
         """
-        Hovers the mouse over a specific element (Hover action).
+        Moves the mouse pointer over the center of an element.
 
         Returns:
             ClickActions: The current instance for method chaining.
@@ -102,10 +103,12 @@ class ClickActions(BaseAction):
         from selenium.webdriver.common.action_chains import ActionChains
         try:
             self._find_element()
-            ActionChains(self.driver).move_to_element(self._element).perform()
+            self.logger.info(f"Moving mouse pointer to: {self._locator}")
+            actions = ActionChains(self.driver)
+            actions.move_to_element(self._element).perform()
             return self
         except Exception as e:
-            self._handle_exception(e, "move_to_element")
+            self._handle_exception(e, "hover")
 
     @allure.step("Clicking and holding on element")
     def click_and_hold(self):
@@ -124,20 +127,23 @@ class ClickActions(BaseAction):
         except Exception as e:
             self._handle_exception(e, "click_and_hold")
 
-    @allure.step("Releasing mouse")
-    def release(self):
+    @allure.step("Releasing mouse button")
+    def release_mouse(self):
         """
-        Releases the held mouse button.
+        Releases the held mouse button over an element.
 
         Returns:
             ClickActions: The current instance for method chaining.
         """
         from selenium.webdriver.common.action_chains import ActionChains
         try:
-            ActionChains(self.driver).release().perform()
+            self._find_element()
+            self.logger.info(f"Releasing mouse button over: {self._locator}")
+            actions = ActionChains(self.driver)
+            actions.release(self._element).perform()
             return self
         except Exception as e:
-            self._handle_exception(e, "release")
+            self._handle_exception(e, "release_mouse")
 
     @allure.step("Dragging element to target")
     def drag_and_drop(self, target_locator: tuple):

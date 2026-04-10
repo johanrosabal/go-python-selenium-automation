@@ -18,7 +18,12 @@ class VideoRecorder:
     def __init__(self, name="test_execution"):
         self.logger = setup_logger(self.__class__.__name__)
         self.name = name
-        self.enabled = ConfigManager.get("video.enable_local") or False
+        # Priority: Environment Variable > Config Manager
+        env_enabled = os.getenv("VIDEO_ENABLED", "").lower()
+        if env_enabled != "":
+            self.enabled = env_enabled == "true"
+        else:
+            self.enabled = ConfigManager.get("video.enable_local") or False
         self.fps = ConfigManager.get("video.fps") or 10
         self.recording = False
         self.thread = None
@@ -67,9 +72,11 @@ class VideoRecorder:
             if not self.output_path.endswith(".mp4"):
                 self.output_path = os.path.splitext(self.output_path)[0] + ".mp4"
 
-            # Codec Selection (Priority: avc1 > mp4v)
-            # avc1 (H.264) is the web standard
-            codecs = ['avc1', 'mp4v', 'XVID']
+            # Codec Selection (Priority for Browser Compatibility)
+            # 'avc1' (H.264) is the web standard
+            # 'H264' and 'X264' are aliases that might work depending on the backend
+            # 'mp4v' and 'XVID' are fallbacks (might not play in all browsers)
+            codecs = ['avc1', 'H264', 'X264', 'mp4v', 'XVID']
             self.out = None
             
             for code in codecs:

@@ -8299,3 +8299,708 @@ Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
 2026-04-09 23:07:42,524 [INFO] TestReserved - 🏁 FINISHED TEST: HOTEL-004-C
 2026-04-09 23:07:42,525 [INFO] TestReserved - Keeping WebDriver session alive (Persistence mode)
 2026-04-09 23:07:45,701 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 08:03:24,211 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 08:10:43,819 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 08:18:23,743 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 08:29:47,390 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 08:48:29,625 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 08:49:11,917 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-10 08:49:19,077 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-10 08:49:19,195 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-10 08:49:19,198 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 08:49:19,198 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 08:49:19,630 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 08:49:21,301 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 08:49:21,314 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 08:49:21,333 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 08:49:21,550 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-10 08:49:22,263 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 08:49:22,264 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 08:49:22,381 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 08:49:23,837 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 08:49:23,837 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 08:49:24,329 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 08:49:25,372 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-10 08:49:25,514 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 08:49:25,515 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 08:49:25,557 [INFO] ClickActions - Clicking on element: ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 08:49:28,794 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-10 08:49:28,795 [INFO] GoHotelApp - Capturing screenshot: Successful Login (Full Page: True)
+2026-04-10 08:49:30,887 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-10 08:49:30,888 [INFO] TestLogin - Closing WebDriver session (Isolation mode)
+2026-04-10 08:49:38,761 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - Successful Login with Invalid Credentials
+Description: Verifies that a user can not successfully log in using incorrect password.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 08:49:55,284 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-10 08:49:57,813 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-10 08:49:57,841 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-10 08:49:57,842 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 08:49:57,843 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 08:49:58,078 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 08:49:58,911 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 08:49:58,911 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 08:49:58,951 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 08:49:59,305 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-10 08:49:59,833 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 08:49:59,834 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 08:49:59,920 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 08:50:00,453 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 08:50:00,453 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 08:50:00,504 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 08:50:00,805 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-10 08:50:01,185 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 08:50:01,186 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 08:50:01,242 [INFO] ClickActions - Clicking on element: ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 08:50:01,563 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-10 08:50:01,564 [INFO] GoHotelApp - Capturing screenshot: Failed Login (Full Page: True)
+2026-04-10 08:50:04,175 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-10 08:50:04,177 [INFO] TestLogin - Closing WebDriver session (Isolation mode)
+2026-04-10 08:50:07,736 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:20:42,014 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:21:27,367 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:21:39,060 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:21:57,177 [INFO] TestDashboard - 🚀 STARTING TEST: HOTEL-003 - Verify Dashboard Menu Options
+Description: Verifies that a user can access every option in the dashboard.
+Method: test_01_login_and_preparation_centers
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 11:22:03,083 [INFO] TestDashboard - 📡 Persistent session enabled. Driver will be shared across the class.
+2026-04-10 11:22:03,128 [INFO] NavigationActions - Current URL: [data:,]
+2026-04-10 11:22:03,129 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-10 11:22:09,982 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-10 11:22:10,088 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-10 11:22:10,091 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:22:10,091 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:22:10,254 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:22:10,870 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:22:10,871 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:22:10,886 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:22:11,046 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-10 11:22:11,210 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:22:11,210 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:22:11,230 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:22:11,370 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:22:11,370 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:22:11,387 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:22:11,533 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-10 11:22:11,594 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:22:11,595 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:11,616 [INFO] ClickActions - Clicking on element: ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:22:13,270 [INFO] UIElement - DashboardPage - Clicking on element: DIV_COLA_COCINA ('xpath', "//h3[text()='Cola de Cocina']/../..")
+2026-04-10 11:22:13,271 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:14,365 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Cola de Cocina']/../..")
+2026-04-10 11:22:14,803 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/kitchen]
+2026-04-10 11:22:14,805 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:14,806 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:14,838 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:15,051 [INFO] UIElement - DashboardPage - Clicking on element: DIV_COLA_BAR ('xpath', "//h3[text()='Cola de Bar']/../..")
+2026-04-10 11:22:15,052 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:15,242 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Cola de Bar']/../..")
+2026-04-10 11:22:15,479 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/bar]
+2026-04-10 11:22:15,480 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:15,481 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:15,499 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:15,672 [INFO] TestDashboard - 🏁 FINISHED TEST: HOTEL-003
+2026-04-10 11:22:15,673 [INFO] TestDashboard - Keeping WebDriver session alive (Persistence mode)
+2026-04-10 11:22:15,700 [INFO] TestDashboard - 🚀 STARTING TEST: HOTEL-003-B - test_02_main_operations
+Description: No description provided.
+Method: test_02_main_operations
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 11:22:15,701 [INFO] TestDashboard - ♻️ Reusing persistent browser session for this test.
+2026-04-10 11:22:15,729 [INFO] UIElement - DashboardPage - Clicking on element: DIV_VENTA_DIRECTA_POS ('xpath', "//h3[text()='Venta Directa (POS)']/../..")
+2026-04-10 11:22:15,730 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:15,821 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Venta Directa (POS)']/../..")
+2026-04-10 11:22:16,114 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/pos]
+2026-04-10 11:22:16,115 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:16,116 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:16,134 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:16,295 [INFO] UIElement - DashboardPage - Clicking on element: DIV_CREAR_RESERVACIONES ('xpath', "//h3[text()='Crear Reservaciones']/../..")
+2026-04-10 11:22:16,296 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:16,957 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Crear Reservaciones']/../..")
+2026-04-10 11:22:17,581 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/reservations]
+2026-04-10 11:22:17,582 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:17,582 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:17,641 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:17,884 [INFO] UIElement - DashboardPage - Clicking on element: DIV_PANEL_HABITACIONES ('xpath', "//h3[text()='Panel de Habitaciones']/../..")
+2026-04-10 11:22:17,884 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:18,004 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Panel de Habitaciones']/../..")
+2026-04-10 11:22:18,994 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard/rooms]
+2026-04-10 11:22:18,995 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:18,995 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:19,040 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:19,229 [INFO] UIElement - DashboardPage - Clicking on element: DIV_COLA_LIMPIEZA ('xpath', "//h3[text()='Cola de Limpieza']/../..")
+2026-04-10 11:22:19,230 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:19,812 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Cola de Limpieza']/../..")
+2026-04-10 11:22:20,582 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/cleaning]
+2026-04-10 11:22:20,583 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:20,584 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:20,618 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:20,802 [INFO] UIElement - DashboardPage - Clicking on element: DIV_GESTION_CLIENTES ('xpath', "//h3[text()='Gestión de Clientes']/../..")
+2026-04-10 11:22:20,803 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:20,915 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Gestión de Clientes']/../..")
+2026-04-10 11:22:21,433 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/clients]
+2026-04-10 11:22:21,434 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:21,434 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:21,507 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:21,699 [INFO] UIElement - DashboardPage - Clicking on element: DIV_GESTION_INVENTARIO ('xpath', "//h3[text()='Gestión de Inventario']/../..")
+2026-04-10 11:22:21,699 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:21,817 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Gestión de Inventario']/../..")
+2026-04-10 11:22:22,353 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/inventory]
+2026-04-10 11:22:22,354 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:22,354 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:22,374 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:22,668 [INFO] TestDashboard - 🏁 FINISHED TEST: HOTEL-003-B
+2026-04-10 11:22:22,669 [INFO] TestDashboard - Keeping WebDriver session alive (Persistence mode)
+2026-04-10 11:22:22,685 [INFO] TestDashboard - 🚀 STARTING TEST: HOTEL-003-C - test_03_finance_and_admin
+Description: No description provided.
+Method: test_03_finance_and_admin
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 11:22:22,686 [INFO] TestDashboard - ♻️ Reusing persistent browser session for this test.
+2026-04-10 11:22:22,722 [INFO] UIElement - DashboardPage - Clicking on element: DIV_CENTRO_MARKETING ('xpath', "//h3[text()='Centro de Marketing']/../..")
+2026-04-10 11:22:22,723 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:22,792 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Centro de Marketing']/../..")
+2026-04-10 11:22:23,406 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/marketing]
+2026-04-10 11:22:23,407 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:23,408 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:23,442 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:24,050 [INFO] UIElement - DashboardPage - Clicking on element: DIV_FACTURACION ('xpath', "//h3[text()='Facturación']/../..")
+2026-04-10 11:22:24,050 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:24,375 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Facturación']/../..")
+2026-04-10 11:22:24,798 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/billing/invoices]
+2026-04-10 11:22:24,799 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:24,800 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:24,833 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:25,692 [INFO] UIElement - DashboardPage - Clicking on element: DIV_REGISTRAR_COMPRAS ('xpath', "//h3[text()='Registrar Compras']/../..")
+2026-04-10 11:22:25,693 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:25,923 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Registrar Compras']/../..")
+2026-04-10 11:22:26,814 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/purchases]
+2026-04-10 11:22:26,815 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:26,815 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:26,835 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:27,014 [INFO] UIElement - DashboardPage - Clicking on element: DIV_REPORTES_ESTADISTICAS ('xpath', "//h3[text()='Reportes y Estadísticas']/../..")
+2026-04-10 11:22:27,015 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:27,616 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Reportes y Estadísticas']/../..")
+2026-04-10 11:22:28,972 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/reports]
+2026-04-10 11:22:28,973 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:28,973 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:29,044 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:29,531 [INFO] UIElement - DashboardPage - Clicking on element: DIV_REGISTRO_ESTANCIAS ('xpath', "//h3[text()='Registro de Estancias']/../..")
+2026-04-10 11:22:29,532 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:29,681 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Registro de Estancias']/../..")
+2026-04-10 11:22:30,360 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/reports/stays]
+2026-04-10 11:22:30,361 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:30,361 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:30,384 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:30,512 [INFO] UIElement - DashboardPage - Clicking on element: DIV_GESTION_SINPE ('xpath', "//h3[text()='Gestión de SINPE']/../..")
+2026-04-10 11:22:30,514 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:30,642 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Gestión de SINPE']/../..")
+2026-04-10 11:22:30,874 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/settings/sinpe-accounts]
+2026-04-10 11:22:30,875 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:30,876 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:30,895 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:31,056 [INFO] UIElement - DashboardPage - Clicking on element: DIV_GESTION_PROVEEDORES ('xpath', "//h3[text()='Gestión de Proveedores']/../..")
+2026-04-10 11:22:31,057 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:31,183 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Gestión de Proveedores']/../..")
+2026-04-10 11:22:31,458 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/suppliers]
+2026-04-10 11:22:31,459 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:31,460 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:31,492 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:31,707 [INFO] UIElement - DashboardPage - Clicking on element: DIV_AJUSTES_SISTEMA ('xpath', "//h3[text()='Ajustes del Sistema']/../..")
+2026-04-10 11:22:31,707 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:31,778 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Ajustes del Sistema']/../..")
+2026-04-10 11:22:32,103 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/settings]
+2026-04-10 11:22:32,104 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:32,104 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:32,302 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:32,794 [INFO] UIElement - DashboardPage - Clicking on element: DIV_GESTION_USUARIOS ('xpath', "//h3[text()='Gestión de Usuarios']/../..")
+2026-04-10 11:22:32,795 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:32,932 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Gestión de Usuarios']/../..")
+2026-04-10 11:22:33,169 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/users]
+2026-04-10 11:22:33,170 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:33,171 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:33,186 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:33,310 [INFO] UIElement - DashboardPage - Clicking on element: DIV_GESTION_TUTORIALES ('xpath', "//h3[text()='Gestión de Tutoriales']/../..")
+2026-04-10 11:22:33,310 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:33,419 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Gestión de Tutoriales']/../..")
+2026-04-10 11:22:34,091 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard/tutorials/manage]
+2026-04-10 11:22:34,091 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:34,092 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:34,108 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:34,269 [INFO] UIElement - DashboardPage - Clicking on element: DIV_MANUAL_OPERATIVO ('xpath', "//h3[text()='Manual Operativo']/../..")
+2026-04-10 11:22:34,269 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:34,396 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Manual Operativo']/../..")
+2026-04-10 11:22:35,212 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/manual/operations]
+2026-04-10 11:22:35,213 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:35,214 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:35,246 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:35,810 [INFO] UIElement - DashboardPage - Clicking on element: DIV_DOCUMENTACION_TECNICA ('xpath', "//h3[text()='Documentación Técnica']/../..")
+2026-04-10 11:22:35,810 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:35,930 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Documentación Técnica']/../..")
+2026-04-10 11:22:36,258 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/manual/project-docs]
+2026-04-10 11:22:36,259 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:36,260 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:36,321 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:36,559 [INFO] UIElement - DashboardPage - Clicking on element: DIV_CENTRO_AYUDA ('xpath', "//h3[text()='Centro de Ayuda']/../..")
+2026-04-10 11:22:36,560 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:37,204 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Centro de Ayuda']/../..")
+2026-04-10 11:22:37,413 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/help-center]
+2026-04-10 11:22:37,414 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:37,417 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:37,442 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:37,567 [INFO] UIElement - DashboardPage - Clicking on element: DIV_TUTORIALES_APRENDIZAJE ('xpath', "//h3[text()='Tutoriales y Aprendizaje']/../..")
+2026-04-10 11:22:37,568 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:37,682 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Tutoriales y Aprendizaje']/../..")
+2026-04-10 11:22:37,867 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/manual/tutorials]
+2026-04-10 11:22:37,868 [INFO] UIElement - DashboardPage - Clicking on element: BUTTON_BACK ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:37,869 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:37,902 [INFO] ClickActions - Clicking on element: ('xpath', "//a[@data-testid='topnav-back-link']")
+2026-04-10 11:22:38,024 [INFO] TestDashboard - 🏁 FINISHED TEST: HOTEL-003-C
+2026-04-10 11:22:38,024 [INFO] TestDashboard - Keeping WebDriver session alive (Persistence mode)
+2026-04-10 11:22:38,048 [INFO] TestDashboard - 🚀 STARTING TEST: HOTEL-003-EXIT - test_04_logout
+Description: No description provided.
+Method: test_04_logout
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 11:22:38,051 [INFO] TestDashboard - ♻️ Reusing persistent browser session for this test.
+2026-04-10 11:22:38,159 [INFO] UIElement - DashboardPage - Clicking on element: DIV_USER_MENU ('xpath', "//button[@data-testid='usermenu-action-button']")
+2026-04-10 11:22:38,161 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:38,303 [INFO] ClickActions - Clicking on element: ('xpath', "//button[@data-testid='usermenu-action-button']")
+2026-04-10 11:22:38,625 [INFO] UIElement - DashboardPage - Clicking on element: DIV_LOGOUT ('xpath', "//span[text()='Cerrar Sesión']/..")
+2026-04-10 11:22:38,626 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:38,862 [INFO] ClickActions - Clicking on element: ('xpath', "//span[text()='Cerrar Sesión']/..")
+2026-04-10 11:22:39,056 [INFO] TestDashboard - 🏁 FINISHED TEST: HOTEL-003-EXIT
+2026-04-10 11:22:39,057 [INFO] TestDashboard - Keeping WebDriver session alive (Persistence mode)
+2026-04-10 11:22:41,598 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 11:22:47,234 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-10 11:22:48,262 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-10 11:22:48,473 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-10 11:22:48,474 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:22:48,474 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:22:48,509 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:22:49,107 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:22:49,107 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:22:49,121 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:22:49,291 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-10 11:22:49,466 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:22:49,467 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:22:49,494 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:22:49,664 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:22:49,664 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:22:49,683 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:22:49,861 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-10 11:22:49,935 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:22:49,937 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:22:49,962 [INFO] ClickActions - Clicking on element: ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:22:51,643 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-10 11:22:51,644 [INFO] GoHotelApp - Capturing screenshot: Successful Login (Full Page: True)
+2026-04-10 11:22:51,900 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-10 11:22:51,900 [INFO] TestLogin - Closing WebDriver session (Isolation mode)
+2026-04-10 11:22:54,333 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-002 - Successful Login with Invalid Credentials
+Description: Verifies that a user can not successfully log in using incorrect password.
+Method: test_failed_login_invalid_password
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 11:22:59,786 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-10 11:23:00,898 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-10 11:23:00,971 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-10 11:23:00,972 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:23:00,978 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:23:01,053 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:23:01,617 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:23:01,618 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:23:01,636 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:23:01,871 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-10 11:23:02,044 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:23:02,045 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:23:02,078 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:23:02,267 [INFO] UIElement - LoginPage - Typing 'wrong_password_123' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:23:02,267 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:23:02,281 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:23:02,437 [DEBUG] SendKeysActions - Send Keys [wrong_password_123]
+2026-04-10 11:23:02,525 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:23:02,526 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:23:02,547 [INFO] ClickActions - Clicking on element: ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:23:02,687 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/login]
+2026-04-10 11:23:02,688 [INFO] GoHotelApp - Capturing screenshot: Failed Login (Full Page: True)
+2026-04-10 11:23:03,805 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-002
+2026-04-10 11:23:03,805 [INFO] TestLogin - Closing WebDriver session (Isolation mode)
+2026-04-10 11:23:06,242 [INFO] TestReserved - 🚀 STARTING TEST: HOTEL-004-A - Navegación, Búsqueda y Filtros en Reservaciones
+Description: Valida que el buscador de reservaciones funcione y que se pueda navegar entre pestañas y vistas.
+Method: test_01_filtros_y_vistas
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 11:23:11,756 [INFO] TestReserved - 📡 Persistent session enabled. Driver will be shared across the class.
+2026-04-10 11:23:11,786 [INFO] NavigationActions - Current URL: [data:,]
+2026-04-10 11:23:11,787 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-10 11:23:12,801 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-10 11:23:12,884 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-10 11:23:12,885 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:23:12,886 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:23:12,993 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:23:13,550 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:23:13,550 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:23:13,568 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:23:13,728 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-10 11:23:13,871 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:23:13,871 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:23:13,900 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:23:14,041 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:23:14,042 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:23:14,058 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:23:14,213 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-10 11:23:14,272 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:23:14,272 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:23:14,300 [INFO] ClickActions - Clicking on element: ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:23:15,465 [INFO] UIElement - DashboardPage - Clicking on element: DIV_CREAR_RESERVACIONES ('xpath', "//h3[text()='Crear Reservaciones']/../..")
+2026-04-10 11:23:15,465 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:23:16,558 [INFO] ClickActions - Clicking on element: ('xpath', "//h3[text()='Crear Reservaciones']/../..")
+2026-04-10 11:23:17,493 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/reservations]
+2026-04-10 11:23:17,506 [INFO] UIElement - ReservedPage - Clearing on element: INPUT_SEARCH ('xpath', "//input[contains(@data-testid,'search')]")
+2026-04-10 11:23:17,507 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:23:17,554 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:23:17,915 [INFO] UIElement - ReservedPage - Typing 'Juan' into on element: INPUT_SEARCH ('xpath', "//input[contains(@data-testid,'search')]")
+2026-04-10 11:23:17,915 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:23:17,931 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:23:18,118 [DEBUG] SendKeysActions - Send Keys [Juan]
+2026-04-10 11:23:18,206 [INFO] UIElement - ReservedPage - Performing physical clear on element: INPUT_SEARCH ('xpath', "//input[contains(@data-testid,'search')]")
+2026-04-10 11:23:18,207 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:23:18,261 [DEBUG] SendKeysActions - Performing physical clear (CTRL+A + BACKSPACE)
+2026-04-10 11:23:18,425 [INFO] UIElement - ReservedPage - Clicking on element: TAB_TODOS ('xpath', "//button[text()='Todas']")
+2026-04-10 11:23:18,425 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:23:18,474 [INFO] ClickActions - Clicking on element: ('xpath', "//button[text()='Todas']")
+2026-04-10 11:23:18,600 [INFO] UIElement - Pausing for 3 second(s)...
+2026-04-10 11:23:21,602 [INFO] UIElement - ReservedPage - Clicking on element: TAB_POR_INGRESAR ('xpath', "//button[text()='Por Ingresar']")
+2026-04-10 11:23:21,602 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:23:21,621 [INFO] ClickActions - Clicking on element: ('xpath', "//button[text()='Por Ingresar']")
+2026-04-10 11:23:21,758 [INFO] UIElement - Pausing for 3 second(s)...
+2026-04-10 11:23:24,760 [INFO] UIElement - ReservedPage - Clicking on element: TAB_EN_HABITACION ('xpath', "//button[text()='En Habitación']")
+2026-04-10 11:23:24,760 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:23:24,805 [INFO] ClickActions - Clicking on element: ('xpath', "//button[text()='En Habitación']")
+2026-04-10 11:23:24,944 [INFO] UIElement - Pausing for 3 second(s)...
+2026-04-10 11:23:27,945 [INFO] UIElement - ReservedPage - Clicking on element: TAB_FINALIZADAS ('xpath', "//button[text()='Finalizadas']")
+2026-04-10 11:23:27,946 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:23:27,974 [INFO] ClickActions - Clicking on element: ('xpath', "//button[text()='Finalizadas']")
+2026-04-10 11:23:28,160 [INFO] UIElement - Pausing for 3 second(s)...
+2026-04-10 11:23:31,161 [INFO] UIElement - ReservedPage - Clicking on element: TAB_CANCELADAS ('xpath', "//button[text()='Canceladas']")
+2026-04-10 11:23:31,161 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:23:31,191 [INFO] ClickActions - Clicking on element: ('xpath', "//button[text()='Canceladas']")
+2026-04-10 11:23:31,324 [INFO] UIElement - Pausing for 3 second(s)...
+2026-04-10 11:23:34,326 [INFO] UIElement - ReservedPage - Clicking on element: TAB_NO_SE_PRESENTO ('xpath', "//button[text()='No se presentó']")
+2026-04-10 11:23:34,326 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:23:34,347 [INFO] ClickActions - Clicking on element: ('xpath', "//button[text()='No se presentó']")
+2026-04-10 11:23:34,499 [INFO] UIElement - Pausing for 3 second(s)...
+2026-04-10 11:23:37,500 [INFO] UIElement - ReservedPage - Clicking on element: VIEW_TARJETAS ('xpath', "//button[text()='Tarjetas']")
+2026-04-10 11:23:37,500 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:23:37,523 [INFO] ClickActions - Clicking on element: ('xpath', "//button[text()='Tarjetas']")
+2026-04-10 11:23:37,645 [INFO] UIElement - Pausing for 3 second(s)...
+2026-04-10 11:23:40,646 [INFO] UIElement - ReservedPage - Clicking on element: VIEW_AGENDA ('xpath', "//button[text()='Agenda']")
+2026-04-10 11:23:40,647 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:23:40,668 [INFO] ClickActions - Clicking on element: ('xpath', "//button[text()='Agenda']")
+2026-04-10 11:23:40,815 [INFO] UIElement - Pausing for 3 second(s)...
+2026-04-10 11:23:43,817 [INFO] UIElement - ReservedPage - Clicking on element: VIEW_LISTA ('xpath', "//button[text()='Lista']")
+2026-04-10 11:23:43,817 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:23:43,851 [INFO] ClickActions - Clicking on element: ('xpath', "//button[text()='Lista']")
+2026-04-10 11:23:43,969 [INFO] UIElement - Pausing for 3 second(s)...
+2026-04-10 11:23:47,366 [INFO] TestReserved - 🏁 FINISHED TEST: HOTEL-004-A
+2026-04-10 11:23:47,367 [INFO] TestReserved - Keeping WebDriver session alive (Persistence mode)
+2026-04-10 11:23:47,380 [INFO] TestReserved - 🚀 STARTING TEST: HOTEL-004-B - Apertura Modal: Nuevo Cliente
+Description: Verifica que el botón de 'Nuevo Cliente' abra correctamente el modal de registro.
+Method: test_02_modal_nuevo_cliente
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 11:23:47,381 [INFO] TestReserved - ♻️ Reusing persistent browser session for this test.
+2026-04-10 11:23:47,442 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/reservations]
+2026-04-10 11:23:47,487 [INFO] UIElement - ReservedPage - Clicking on element: BUTTON_NEW_CLIENT ('xpath', "//button[contains(@data-testid,'add-client')]")
+2026-04-10 11:23:47,490 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:23:48,078 [INFO] ClickActions - Clicking on element: ('xpath', "//button[contains(@data-testid,'add-client')]")
+2026-04-10 11:23:48,712 [INFO] GoHotelApp - Capturing screenshot: Modal Nuevo Cliente (Full Page: True)
+2026-04-10 11:23:50,735 [INFO] TestReserved - 🏁 FINISHED TEST: HOTEL-004-B
+2026-04-10 11:23:50,736 [INFO] TestReserved - Keeping WebDriver session alive (Persistence mode)
+2026-04-10 11:23:50,750 [INFO] TestReserved - 🚀 STARTING TEST: HOTEL-004-C - Apertura Modal: Nueva Reservación
+Description: Verifica que el botón de 'Nueva Reservación' abra correctamente el flujo de reserva.
+Method: test_03_modal_nueva_reservacion
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 11:23:50,751 [INFO] TestReserved - ♻️ Reusing persistent browser session for this test.
+2026-04-10 11:23:50,786 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/reservations]
+2026-04-10 11:23:50,804 [INFO] UIElement - ReservedPage - Clicking on element: BUTTON_NEW_RESERVATION ('xpath', "//button[contains(@data-testid,'add-reservation')]")
+2026-04-10 11:23:50,805 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:23:51,545 [INFO] ClickActions - Clicking on element: ('xpath', "//button[contains(@data-testid,'add-reservation')]")
+2026-04-10 11:23:51,921 [INFO] GoHotelApp - Capturing screenshot: Modal Nueva Reservación (Full Page: True)
+2026-04-10 11:23:53,578 [INFO] TestReserved - 🏁 FINISHED TEST: HOTEL-004-C
+2026-04-10 11:23:53,579 [INFO] TestReserved - Keeping WebDriver session alive (Persistence mode)
+2026-04-10 11:23:56,151 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:34:53,174 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:34:56,487 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:36:11,232 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:36:15,838 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 11:36:22,018 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-10 11:36:23,403 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-10 11:36:23,551 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-10 11:36:23,553 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:36:23,553 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:36:23,602 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:36:24,257 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:36:24,263 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:36:24,279 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:36:24,433 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-10 11:36:24,583 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:36:24,584 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:36:24,607 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:36:24,736 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:36:24,736 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:36:24,750 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:36:24,924 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-10 11:36:24,984 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:36:24,985 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:36:25,003 [INFO] ClickActions - Clicking on element: ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:36:26,138 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-10 11:36:26,139 [INFO] GoHotelApp - Capturing screenshot: Successful Login (Full Page: True)
+2026-04-10 11:36:26,325 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-10 11:36:26,325 [INFO] TestLogin - Closing WebDriver session (Isolation mode)
+2026-04-10 11:36:28,708 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:37:35,427 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 11:37:40,831 [INFO] VideoRecorder - Video recording started: C:\ai\go-python-selenium-automation\reports\videos\test_successful_login_20260410_113740.mp4
+2026-04-10 11:37:40,843 [INFO] VideoRecorder - Context: Recording monitor 0 (logical: 1920x1848)
+2026-04-10 11:37:40,852 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-10 11:37:41,052 [INFO] VideoRecorder - Video resolution: 1920x1848 pixels
+2026-04-10 11:37:42,201 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-10 11:37:42,213 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-10 11:37:42,215 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:37:42,216 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:37:42,884 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:37:43,096 [INFO] VideoRecorder - Initialized VideoWriter with codec: 'avc1'
+2026-04-10 11:37:43,535 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:37:43,535 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:37:43,556 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:37:43,790 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-10 11:37:43,976 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:37:43,976 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:37:44,004 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:37:44,262 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:37:44,263 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:37:44,279 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:37:44,551 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-10 11:37:44,678 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:37:44,681 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:37:44,745 [INFO] ClickActions - Clicking on element: ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:37:46,018 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-10 11:37:46,019 [INFO] GoHotelApp - Capturing screenshot: Successful Login (Full Page: True)
+2026-04-10 11:37:46,512 [INFO] VideoRecorder - Recording Finished. Total frames: 29. Avg Capture Speed: 9.62 FPS
+2026-04-10 11:37:46,626 [INFO] VideoRecorder - Video saved: C:\ai\go-python-selenium-automation\reports\videos\test_successful_login_20260410_113740.mp4 | Duration: 00:02
+2026-04-10 11:37:46,627 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-10 11:37:46,627 [INFO] TestLogin - Closing WebDriver session (Isolation mode)
+2026-04-10 11:37:48,986 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:38:56,847 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 11:39:02,562 [INFO] VideoRecorder - Video recording started: C:\ai\go-python-selenium-automation\reports\videos\test_successful_login_20260410_113902.mp4
+2026-04-10 11:39:02,580 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-10 11:39:02,585 [INFO] VideoRecorder - Context: Recording monitor 0 (logical: 1920x1848)
+2026-04-10 11:39:02,733 [INFO] VideoRecorder - Video resolution: 1920x1848 pixels
+2026-04-10 11:39:03,332 [INFO] VideoRecorder - Initialized VideoWriter with codec: 'avc1'
+2026-04-10 11:39:04,203 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-10 11:39:04,349 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-10 11:39:04,351 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:39:04,351 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:39:04,553 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:39:05,514 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:39:05,516 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:39:05,538 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:39:05,740 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-10 11:39:05,918 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:39:05,919 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:39:05,961 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:39:06,157 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:39:06,158 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:39:06,174 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:39:06,377 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-10 11:39:06,473 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:39:06,473 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:39:06,514 [INFO] ClickActions - Clicking on element: ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:39:08,232 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-10 11:39:08,234 [INFO] GoHotelApp - Capturing screenshot: Successful Login (Full Page: True)
+2026-04-10 11:39:08,704 [INFO] VideoRecorder - Recording Finished. Total frames: 44. Avg Capture Speed: 9.08 FPS
+2026-04-10 11:39:08,761 [INFO] VideoRecorder - Video saved: C:\ai\go-python-selenium-automation\reports\videos\test_successful_login_20260410_113902.mp4 | Duration: 00:04
+2026-04-10 11:39:08,761 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-10 11:39:08,762 [INFO] TestLogin - Closing WebDriver session (Isolation mode)
+2026-04-10 11:39:11,091 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:41:32,594 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:43:25,652 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:43:34,349 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:43:56,847 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 11:44:02,577 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-10 11:44:04,491 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-10 11:44:04,511 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-10 11:44:04,514 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:44:04,514 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:44:04,641 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:44:05,190 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:44:05,195 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:44:05,215 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:44:05,371 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-10 11:44:05,510 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:44:05,511 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:44:05,529 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:44:05,657 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:44:05,657 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:44:05,669 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:44:05,819 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-10 11:44:05,880 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:44:05,881 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:44:05,904 [INFO] ClickActions - Clicking on element: ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:44:07,064 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-10 11:44:07,064 [INFO] GoHotelApp - Capturing screenshot: Successful Login (Full Page: True)
+2026-04-10 11:44:07,287 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-10 11:44:07,288 [INFO] TestLogin - Closing WebDriver session (Isolation mode)
+2026-04-10 11:44:09,556 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:44:13,583 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 11:44:19,015 [INFO] VideoRecorder - Video recording started: C:\ai\go-python-selenium-automation\reports\videos\test_successful_login_20260410_114419.mp4
+2026-04-10 11:44:19,032 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-10 11:44:19,034 [INFO] VideoRecorder - Context: Recording monitor 0 (logical: 1920x1848)
+2026-04-10 11:44:19,234 [INFO] VideoRecorder - Video resolution: 1920x1848 pixels
+2026-04-10 11:44:20,291 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-10 11:44:20,309 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-10 11:44:20,311 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:44:20,312 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:44:20,400 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:44:20,442 [INFO] VideoRecorder - Initialized VideoWriter with codec: 'avc1'
+2026-04-10 11:44:21,980 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:44:21,981 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:44:22,020 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:44:22,248 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-10 11:44:22,447 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:44:22,447 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:44:22,476 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:44:22,828 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:44:22,829 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:44:22,854 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:44:23,086 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-10 11:44:23,168 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:44:23,169 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:44:23,250 [INFO] ClickActions - Clicking on element: ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:44:24,682 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-10 11:44:24,683 [INFO] GoHotelApp - Capturing screenshot: Successful Login (Full Page: True)
+2026-04-10 11:44:25,383 [INFO] VideoRecorder - Recording Finished. Total frames: 42. Avg Capture Speed: 9.37 FPS
+2026-04-10 11:44:25,465 [INFO] VideoRecorder - Video saved: C:\ai\go-python-selenium-automation\reports\videos\test_successful_login_20260410_114419.mp4 | Duration: 00:04
+2026-04-10 11:44:25,466 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-10 11:44:25,466 [INFO] TestLogin - Closing WebDriver session (Isolation mode)
+2026-04-10 11:44:27,962 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:44:48,851 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: True)
+2026-04-10 11:44:54,267 [INFO] VideoRecorder - Video recording started: C:\ai\go-python-selenium-automation\reports\videos\test_successful_login_20260410_114454.mp4
+2026-04-10 11:44:54,277 [INFO] VideoRecorder - Context: Recording monitor 0 (logical: 1920x1848)
+2026-04-10 11:44:54,282 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-10 11:44:54,437 [INFO] VideoRecorder - Video resolution: 1920x1848 pixels
+2026-04-10 11:44:55,324 [INFO] VideoRecorder - Initialized VideoWriter with codec: 'avc1'
+2026-04-10 11:44:56,016 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-10 11:44:56,145 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-10 11:44:56,146 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:44:56,146 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:44:56,237 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:44:57,282 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:44:57,283 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:44:57,313 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:44:57,618 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-10 11:44:57,824 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:44:57,824 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:44:57,880 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:44:58,121 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:44:58,122 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:44:58,147 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:44:58,442 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-10 11:44:58,553 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:44:58,553 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:44:58,595 [INFO] ClickActions - Clicking on element: ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:45:00,476 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-10 11:45:00,477 [INFO] GoHotelApp - Capturing screenshot: Successful Login (Full Page: True)
+2026-04-10 11:45:01,211 [INFO] VideoRecorder - Recording Finished. Total frames: 48. Avg Capture Speed: 8.89 FPS
+2026-04-10 11:45:01,314 [INFO] VideoRecorder - Video saved: C:\ai\go-python-selenium-automation\reports\videos\test_successful_login_20260410_114454.mp4 | Duration: 00:04
+2026-04-10 11:45:01,314 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-10 11:45:01,315 [INFO] TestLogin - Closing WebDriver session (Isolation mode)
+2026-04-10 11:45:03,543 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:45:54,124 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:45:56,479 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:46:05,392 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:46:11,704 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 11:46:17,202 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-10 11:46:18,870 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-10 11:46:18,880 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-10 11:46:18,881 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:46:18,882 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:46:18,931 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:46:19,348 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:46:19,353 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:46:19,375 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:46:19,529 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-10 11:46:19,674 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:46:19,675 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:46:19,703 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:46:19,834 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:46:19,835 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:46:19,849 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:46:20,001 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-10 11:46:20,068 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:46:20,068 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:46:20,100 [INFO] ClickActions - Clicking on element: ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:46:21,745 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-10 11:46:21,746 [INFO] GoHotelApp - Capturing screenshot: Successful Login (Full Page: True)
+2026-04-10 11:46:21,943 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-10 11:46:21,943 [INFO] TestLogin - Closing WebDriver session (Isolation mode)
+2026-04-10 11:46:24,230 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:46:27,513 [INFO] TestLogin - 🚀 STARTING TEST: HOTEL-001 - Successful Login with Valid Credentials
+Description: Verifies that a user can successfully log in using valid credentials.
+Method: test_successful_login
+Context: App=go_hotel | Env=dev | Browser=chrome (Headless: False)
+2026-04-10 11:46:33,158 [INFO] VideoRecorder - Video recording started: C:\ai\go-python-selenium-automation\reports\videos\test_successful_login_20260410_114633.mp4
+2026-04-10 11:46:33,170 [INFO] VideoRecorder - Context: Recording monitor 0 (logical: 1920x1848)
+2026-04-10 11:46:33,172 [DEBUG] NavigationActions - Go to: https://studio--studio-860739249-376ef.us-central1.hosted.app/login
+2026-04-10 11:46:33,352 [INFO] VideoRecorder - Video resolution: 1920x1848 pixels
+2026-04-10 11:46:34,396 [INFO] VideoRecorder - Initialized VideoWriter with codec: 'avc1'
+2026-04-10 11:46:35,096 [INFO] SwitchWindowsActions - Setting page zoom to 75%
+2026-04-10 11:46:35,143 [INFO] LoginPage - Logging in with email: johan.manuel.rosabal@gmail.com
+2026-04-10 11:46:35,144 [INFO] UIElement - LoginPage - Clearing on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:46:35,145 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:46:35,227 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:46:36,114 [INFO] UIElement - LoginPage - Typing 'johan.manuel.rosabal@gmail.com' into on element: INP_EMAIL ('xpath', "//input[@name='email']")
+2026-04-10 11:46:36,115 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:46:36,140 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:46:36,365 [DEBUG] SendKeysActions - Send Keys [johan.manuel.rosabal@gmail.com]
+2026-04-10 11:46:36,576 [INFO] UIElement - LoginPage - Clearing on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:46:36,587 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:46:36,614 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:46:36,849 [INFO] UIElement - LoginPage - Typing 'Snap1234!' into on element: INP_PASSWORD ('xpath', "//input[@name='password']")
+2026-04-10 11:46:36,850 [DEBUG] SendKeysActions - Setting temporary timeout to 10s
+2026-04-10 11:46:36,896 [DEBUG] SendKeysActions - Clearing text from element.
+2026-04-10 11:46:37,172 [DEBUG] SendKeysActions - Send Keys [Snap1234!]
+2026-04-10 11:46:37,259 [INFO] UIElement - LoginPage - Clicking on element: BTN_LOGIN ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:46:37,259 [DEBUG] ClickActions - Setting temporary timeout to 10s
+2026-04-10 11:46:37,332 [INFO] ClickActions - Clicking on element: ('xpath', "//button[@data-testid='login-submit-button']")
+2026-04-10 11:46:38,575 [INFO] NavigationActions - Current URL: [https://studio--studio-860739249-376ef.us-central1.hosted.app/dashboard]
+2026-04-10 11:46:38,576 [INFO] GoHotelApp - Capturing screenshot: Successful Login (Full Page: True)
+2026-04-10 11:46:39,361 [INFO] VideoRecorder - Recording Finished. Total frames: 42. Avg Capture Speed: 9.37 FPS
+2026-04-10 11:46:39,440 [INFO] VideoRecorder - Video saved: C:\ai\go-python-selenium-automation\reports\videos\test_successful_login_20260410_114633.mp4 | Duration: 00:04
+2026-04-10 11:46:39,441 [INFO] TestLogin - 🏁 FINISHED TEST: HOTEL-001
+2026-04-10 11:46:39,442 [INFO] TestLogin - Closing WebDriver session (Isolation mode)
+2026-04-10 11:46:41,705 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:47:20,739 [WARNING] Notifier - No webhook URL configured. Skipping notification.
+2026-04-10 11:47:25,266 [WARNING] Notifier - No webhook URL configured. Skipping notification.

@@ -79,6 +79,43 @@ class ScrollActions(BaseAction):
         except Exception as e:
             self._handle_exception(e, "to_center")
 
+    @allure.step("Scrolling to element (Offset: {offset})")
+    def scroll_to(self, offset: int = 0):
+        """
+        Scrolls the page until the specified element is in the viewport.
+
+        Args:
+            offset (int): Vertical offset adjustment.
+
+        Returns:
+            ScrollActions: The current instance for method chaining.
+        """
+        try:
+            self._find_element()
+            self.logger.info(f"Scrolling to element: {self._locator}")
+            self.driver.execute_script("arguments[0].scrollIntoView(true);", self._element)
+            if offset != 0:
+                self.driver.execute_script(f"window.scrollBy(0, {offset});")
+            return self
+        except Exception as e:
+            self._handle_exception(e, "scroll_to")
+
+    @allure.step("Scrolling element to center")
+    def scroll_to_center(self):
+        """
+        Scrolls the page until the element is centered in the viewport.
+
+        Returns:
+            ScrollActions: The current instance for method chaining.
+        """
+        try:
+            self._find_element()
+            self.logger.info(f"Scrolling element {self._locator} to center.")
+            self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", self._element)
+            return self
+        except Exception as e:
+            self._handle_exception(e, "scroll_to_center")
+
     @allure.step("Scrolling to bottom of the page")
     def to_bottom(self):
         """

@@ -1,0 +1,53 @@
+# AI Rules for Go Hotel Automation Framework
+
+You are an expert SDET working on a Python Selenium framework. To ensure code quality, consistency, and professional grade results, you MUST follow these strictly enforced rules.
+
+## 🏗️ Architecture & Core Patterns
+- **Page Object Model:** All pages must inherit from `BasePage`.
+- **Orchestrator Pattern:** Always use `self.app` (e.g., `self.app.login_page`) to access pages. Never instantiate Page Objects manually in tests.
+- **Lazy Loading:** Register new pages in the App Orchestrator using the lazy loading pattern (check `hasattr(self, '_page_name')`).
+- **One Locator = One Method (CRITICAL):** 
+    - Every locator defined in a Page Object **MUST** have its own dedicated interaction method.
+    - Input methods: `enter_[field_name]`.
+    - Button/Link methods: `click_[element_name]`.
+    - Verification methods: `is_[element]_visible` or `get_[element]_text`.
+- **Composite Methods:** Build high-level flows (e.g., `login`) by reusing granular methods. Do not interact with locators directly inside composite methods; call the granular methods instead.
+- **Fluent API:** ALL interaction methods (granular and composite) MUST `return self` to allow method chaining.
+
+## 🕹️ UI Action Methods (1:1 Mapping)
+The framework uses a strict 1:1 mapping between internal logic components and the `UIElement` facade.
+- **Consult `core/ui/actions/README.md`** before suggesting an action on a `UIElement`.
+- **FORBIDDEN (Old Names):** `set_text()`, `single_click()`, `move_to_element()`, `capture_element()`.
+- **MANDATORY (New Names):** `type()`, `click()`, `hover()`, `screenshot()`.
+- **Components:** Use specific components for non-element actions:
+    - `self.window`: Switch tabs, open/close windows.
+    - `self.frame`: Switch to/from IFrames.
+    - `self.navigation`: Back, forward, refresh, wait_url.
+    - `self.alert`: Accept, dismiss, type in JS alerts.
+
+## 🏷️ Naming Conventions
+- **Page Classes:** `PascalCase` (e.g., `LoginPage`).
+- **Methods:** `snake_case` (e.g., `login_as_user`).
+- **Locators:** `CAPS_SNAKE` with type prefix:
+    - `BTN_` (Buttons), `INP_` (Inputs), `TXT_` (Labels/Texts), `SEL_` (Selects), `CHK_` (Checkboxes).
+    - Example: `BTN_LOGIN`, `INP_USERNAME`, `TXT_ERROR_MSG`.
+
+## 💎 Advanced & Enterprise Features
+- **Visual Regression:** Use `assert_visual_match(id)` for pixel-perfect comparisons.
+- **Accessibility:** Use `assert_no_accessibility_violations()` to audit WCAG compliance.
+- **Database:** Use `self.app.db` for SQL queries (SQLAlchemy).
+- **Session Management:** Use `SessionContext` for sharing data between tests.
+- **Persistent Sessions:** Suggest `persistent_session = True` for suites that benefit from keeping the browser open.
+
+## 📊 Data & Config
+- **Data-Driven:** Use `@test_case(id="...")` and `self.get_test_data()`. Do not hardcode test data.
+- **Configuration:** Use `ConfigManager.get("key")` for environment/YAML values.
+- **Decorators:** Always use `@go_hotel` on test classes to set project context.
+
+## 🧪 Testing Standards
+- **Wait Management:** Use built-in fluent waits (e.g., `element(...).at(30).wait_visible()`). Never use `time.sleep()`.
+- **Mocking/Logging:** Use `type_encrypted()` for sensitive data in logs.
+- **Assertions:** Use descriptive assertion messages and prefer framework-provided assertions.
+
+---
+*Before generating any code, verify if your solution violates any of "One Locator = One Method" or "Fluent API" standards.*

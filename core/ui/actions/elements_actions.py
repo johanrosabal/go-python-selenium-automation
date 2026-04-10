@@ -65,7 +65,7 @@ class ElementsActions(BaseAction):
             return False
 
     @allure.step("Checking if element is present in DOM")
-    def is_present(self) -> bool:
+    def wait_present(self) -> bool:
         """
         Checks if the element is present in the DOM, regardless of visibility.
 
@@ -211,6 +211,25 @@ class ElementsActions(BaseAction):
             self.logger.warning("Timeout waiting for JS completion (jQuery active or slow async)")
         return self
 
+    @allure.step("Waiting for element to be visible")
+    def wait_visible(self, timeout: int = None):
+        """
+        Wait until the element is visible on the page.
+
+        Args:
+            timeout (int, optional): Custom timeout for this wait.
+
+        Returns:
+            ElementsActions: The current instance for method chaining.
+        """
+        wait = self.at(timeout)._get_wait() if timeout else self._get_wait()
+        try:
+            wait.until(EC.visibility_of_element_located(self._locator))
+            self.logger.info(f"Element {self._locator} is now visible.")
+            return self
+        except Exception as e:
+            self._handle_exception(e, "wait_visible")
+
     @allure.step("Waiting for element to disappear")
     def wait_disappear(self, timeout: int = None):
         """
@@ -230,16 +249,13 @@ class ElementsActions(BaseAction):
         except Exception as e:
             self._handle_exception(e, "wait_disappear")
 
-    @allure.step("Checking if element {locator} is enabled via JavaScript")
-    def is_enabled_js(self, locator: tuple) -> bool:
+    @allure.step("Checking if element is enabled via JavaScript")
+    def is_enabled_js(self) -> bool:
         """
         Checks if an element is enabled using direct JavaScript execution.
-
-        Args:
-            locator (tuple): The (By, Value) locator of the element.
 
         Returns:
             bool: True if enabled, False otherwise.
         """
-        element = self.get_element(locator)
+        element = self.get_element()
         return not self.driver.execute_script("return arguments[0].disabled;", element)

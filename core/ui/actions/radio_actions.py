@@ -1,5 +1,6 @@
 from selenium.webdriver.support import expected_conditions as EC
 from core.ui.actions.base_action import BaseAction
+import allure
 
 class RadioActions(BaseAction):
     """
@@ -8,20 +9,22 @@ class RadioActions(BaseAction):
     This component provides high-level methods to ensure a radio button 
     is selected, handling the current state check automatically.
     """
-    def select(self):
+    @allure.step("Selecting radio button")
+    def select_radio(self):
         """
-        Selects the radio button if it is not already selected.
+        Selects the radio button if not already selected.
 
         Returns:
             RadioActions: The current instance for method chaining.
         """
         try:
             self._find_element()
-            if not self._element.is_selected():
+            if not self.is_selected():
+                self.logger.info(f"Selecting radio button: {self._locator}")
                 self._element.click()
             return self
         except Exception as e:
-            self._handle_exception(e, "select")
+            self._handle_exception(e, "select_radio")
 
     def is_selected(self) -> bool:
         """

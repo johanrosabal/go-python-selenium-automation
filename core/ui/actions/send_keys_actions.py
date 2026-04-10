@@ -32,7 +32,7 @@ class SendKeysActions(BaseAction):
         return self
 
     @allure.step("Typing text into element (Clear: {clear})")
-    def set_text(self, text: str, clear: bool = False):
+    def type(self, text: str, clear: bool = False):
         """
         Sets and sends the provided text to the element.
 
@@ -59,10 +59,10 @@ class SendKeysActions(BaseAction):
             self._encrypt = False
             return self
         except Exception as e:
-            self._handle_exception(e, "set_text")
+            self._handle_exception(e, "type")
 
     @allure.step("Typing text via JavaScript (Clear: {clear})")
-    def set_text_js(self, text: str, clear: bool = False):
+    def type_js(self, text: str, clear: bool = False):
         """
         Sets the element value using JavaScript and triggers events.
 
@@ -85,10 +85,10 @@ class SendKeysActions(BaseAction):
             """, self._element, text)
             return self
         except Exception as e:
-            self._handle_exception(e, "set_text_js")
+            self._handle_exception(e, "type_js")
 
     @allure.step("Typing text character by character")
-    def set_text_by_character(self, text: str):
+    def type_by_character(self, text: str):
         """
         Sends text to the element character by character to simulate human typing.
 
@@ -113,9 +113,9 @@ class SendKeysActions(BaseAction):
             self._encrypt = False
             return self
         except Exception as e:
-            self._handle_exception(e, "set_text_by_character")
+            self._handle_exception(e, "type_by_character")
 
-    def get_text_value(self) -> str:
+    def get_value(self) -> str:
         """
         Retrieves text from the element's 'value' attribute.
 
@@ -128,7 +128,7 @@ class SendKeysActions(BaseAction):
             self.logger.debug(f"Retrieved Element Value: {input_value}")
             return input_value
         except Exception as e:
-            self._handle_exception(e, "get_text_value")
+            self._handle_exception(e, "get_value")
 
     @allure.step("Clearing text (Use JS: {use_js})")
     def clear(self, use_js: bool = False):
@@ -211,6 +211,20 @@ class SendKeysActions(BaseAction):
     def press_return(self):
         """Presses the RETURN key."""
         return self._press_key(Keys.RETURN, "RETURN")
+
+    @allure.step("Pressing key on element")
+    def press(self, key: Keys, key_name: str = "KEY"):
+        """
+        Sends a keyboard key stroke to the element.
+
+        Args:
+            key (Keys): The Selenium Keys constant.
+            key_name (str): Label for logging.
+
+        Returns:
+            SendKeysActions: The current instance for method chaining.
+        """
+        return self._press_key(key, key_name)
 
     def _press_key(self, key, key_name):
         """Internal helper to press a key on the element."""

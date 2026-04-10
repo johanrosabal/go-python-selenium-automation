@@ -9,32 +9,26 @@ class CheckActions(BaseAction):
     This component provides high-level methods to ensure a checkbox reaches 
     a specific toggle state, handling the current state check automatically.
     """
-    @allure.step("Setting checkbox/radio state to {state}")
-    def set_state(self, state: bool):
+    @allure.step("Setting checkbox state to {state}")
+    def check(self, state: bool = True):
         """
-        Sets the checkbox or radio button to the desired state.
+        Sets the checkbox to the desired state.
 
-        If the element is already in the target state, no action is taken.
-        Otherwise, a click is performed to toggle it.
-        
         Args:
-            state (bool): True to ensure it is checked/selected, False for unchecked.
+            state (bool): True to check, False to uncheck.
 
         Returns:
             CheckActions: The current instance for method chaining.
         """
         try:
             self._find_element()
-            is_selected = self._element.is_selected()
-            
-            if is_selected != state:
+            current_state = self.is_checked()
+            if current_state != state:
+                self.logger.info(f"Toggling checkbox {self._locator} to {state}")
                 self._element.click()
-                self.logger.info(f"Checkbox state changed to {state}")
-            else:
-                self.logger.info(f"Checkbox already in state {state}")
             return self
         except Exception as e:
-            self._handle_exception(e, "set_state")
+            self._handle_exception(e, "check")
 
     @allure.step("Checking selection state")
     def is_checked(self) -> bool:

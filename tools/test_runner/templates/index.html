@@ -821,6 +821,10 @@
                         <input type="checkbox" id="config-headless"> Headless
                     </label>
 
+                    <label style="display: flex; align-items: center; gap: 5px; margin-left: 10px;">
+                        <input type="checkbox" id="config-video"> Grabar Video
+                    </label>
+
                     <button class="allure-btn" id="allure-btn" onclick="generateAllureReport()">📊 Allure
                         Report</button>
 
@@ -912,6 +916,7 @@
             await fetchApps();
             await fetchTests();
             await fetchPlans(); // Load saved plans
+            await loadExistingMedia(); // Discover previous captures
         });
 
         async function fetchPlans() {
@@ -1228,6 +1233,7 @@
             const env = document.getElementById('config-env').value;
             const browser = document.getElementById('config-browser').value;
             const headless = document.getElementById('config-headless').checked;
+            const video = document.getElementById('config-video').checked;
 
             const term = document.getElementById('terminal');
             const runBtn = document.getElementById('run-btn');
@@ -1255,7 +1261,8 @@
                         test_id: selectedTests, // Sending array now
                         browser: browser,
                         env: env,
-                        headless: headless
+                        headless: headless,
+                        video: video
                     })
                 });
 
@@ -1501,7 +1508,7 @@
                     </span>
                 </div>
                 ${item.type === 'video'
-                    ? `<video src="/${item.path}" controls autoplay
+                    ? `<video src="/${item.path}" type="video/mp4" controls autoplay
                     style="max-width: 100%; max-height: 55vh; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5);"></video>`
                     : `<img src="/${item.path}"
                     style="max-width: 100%; max-height: 55vh; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">`
@@ -1580,22 +1587,27 @@
                 // Refresh gallery after execution ends to pick up everything
                 setTimeout(loadExistingMedia, 2000);
             } else {
-                // Hide noisy internal logs (pytest sections, video recorder engine details)
-                if (
-                    data.message.includes('--- live log') ||
-                    data.message.includes('--- Captured log') ||
-                    data.message.includes('[INFO] VideoRecorder - ')
-                ) {
-                    return; // Skip rendering
-                }
-
-                // Process message to unescape Python's log_cli escaping
+                // Initialize htmlMessage and sanitize/unescape
                 let htmlMessage = data.message
                     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); // XSS basic
 
-
                 // Unescape literal \n
                 htmlMessage = htmlMessage.replace(/\\n/g, '\n');
+
+                // Parse media from streaming logs (MUST be before the filter)
+                const mediaData = extractMediaPath(htmlMessage);
+                if (mediaData) {
+                    setTimeout(() => displayMedia(mediaData), 2000);
+                }
+
+                // Hide noisy internal logs (pytest sections, video recorder engine details)
+                if (
+                    htmlMessage.includes('--- live log') ||
+                    htmlMessage.includes('--- Captured log') ||
+                    htmlMessage.includes('[INFO] VideoRecorder - ')
+                ) {
+                    return; // Skip rendering
+                }
 
                 // Unescape unicode \U0001f680 and \uXXXX
                 htmlMessage = htmlMessage.replace(/\\U([0-9a-fA-F]{8})/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)));
@@ -1617,15 +1629,6 @@
                 }
                 if (htmlMessage.includes('STARTING TEST:') || htmlMessage.includes('FINISHED TEST:')) {
                     span.className = 'log-header';
-                }
-
-                // Removed: else if (data.type === 'start' || data.type === 'env') span.className = 'log-meta';
-
-                // Parse media from streaming logs
-                const mediaData = extractMediaPath(data.message);
-                if (mediaData) {
-                    // Small delay to ensure file write finishes OS-side before browser requests it
-                    setTimeout(() => displayMedia(mediaData), 2000);
                 }
             }
 

@@ -50,6 +50,9 @@ class DriverManager:
             options.add_argument("--no-sandbox")
             options.add_argument("--disable-dev-shm-usage")
             options.add_argument("--disable-gpu")
+            options.add_argument("--log-level=3")
+            options.add_argument("--silent")
+            options.add_argument("--disable-logging")
             
             # Stealth and automation flags
             options.add_experimental_option("excludeSwitches", ["enable-automation"])
@@ -116,7 +119,10 @@ class DriverManager:
         elif browser_name == "edge":
             options = webdriver.EdgeOptions()
             options.add_argument("--no-sandbox")
-            
+            options.add_argument("--disable-gpu")
+            options.add_argument("--log-level=3")
+            options.add_argument("--silent")
+            options.add_argument("--disable-logging")
             # Stealth and automation flags
             options.add_experimental_option("excludeSwitches", ["enable-automation"])
             options.add_experimental_option("useAutomationExtension", False)
