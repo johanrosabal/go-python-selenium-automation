@@ -17,7 +17,7 @@ class LoginPage(BasePage):
     def wait_for_page_load(self):
         self.navigation.go(url=self.RELATIVE)
         self.elements.wait_for_page_load()
-        self.window.set_zoom_level(100)
+        self.window.set_zoom_level(75)
         return self
 
     @allure.step("Entering email: {email}")
@@ -35,16 +35,35 @@ class LoginPage(BasePage):
         self.element(self.BTN_LOGIN).click()
         return self
 
-    def login(self, email=None, password=None):
+    @allure.step("Logging in")
+    def login(self, email=None, password=None, wait_success=True):
         user_email = email if email else self.username
         user_pwd = password if password else self.password
         
         self.logger.info(f"Logging in with email: {user_email}")
-        return self.enter_email(user_email) \
-                   .enter_password(user_pwd) \
-                   .click_login()
+        self.enter_email(user_email).enter_password(user_pwd).click_login()
+        
+        # Sincronización opcional: Solo esperar si esperamos un éxito
+        if wait_success:
+            self.navigation.wait_url_contains(partial_url="dashboard")
+            
+        return self
 
     def is_login_successful(self) -> bool:
-        # Assuming successful login redirects away from login page
-        self.pause(seconds=5)
-        return "login" not in self.navigation.get_current_url()
+        """
+        Checks if the user is already on a dashboard or functional page.
+        Returns True if the current URL is valid and does not contain 'login'.
+        """
+        url = self.navigation.get_current_url()
+        # If we are on any functional page, login was successful
+        return any(path in url for path in ["dashboard", "reservations", "clients", "order"])
+
+    def is_login_not_logged(self) -> bool:
+        """
+        Checks if the user needs to log in.
+        Returns True if on login page or blank/start pages.
+        """
+        url = self.navigation.get_current_url()
+        if url in ["", "about:blank", "data:,"] or "login" in url:
+            return True
+        return False

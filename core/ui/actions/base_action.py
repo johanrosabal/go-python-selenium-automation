@@ -160,3 +160,18 @@ class BaseAction:
             self.logger.error(f"{msg}: Unexpected error -> {str(exception)}")
         
         raise exception
+
+    def pause(self, seconds: int = 1):
+        """
+        Pauses execution for a specified duration.
+
+        Args:
+            seconds (int): Duration in seconds. Defaults to 1.
+
+        Returns:
+            BaseAction: The current instance for method chaining.
+        """
+        import time
+        self.logger.info(f"Pausing for {seconds} second(s)...")
+        time.sleep(seconds)
+        return self

@@ -61,7 +61,7 @@ class SwitchWindowsActions(BaseAction):
                 handles = self.driver.window_handles
                 if 0 <= index < len(handles):
                     self.driver.switch_to.window(handles[index])
-                    self.logger.info(f"Switched to tab index {index}")
+                    self.logger.info(f"Switched to tab index {str(index)}")
                     from core.ui.common.base_app import BaseApp
                     BaseApp.pause(1)
                 else:

@@ -25,10 +25,10 @@ class TestLogin(BaseTest):
         # Open base url from config + login route using the Orchestrator
         self.app.login_page.wait_for_page_load()
         
-        # Provide invalid password explicitly
-        self.app.login_page.login(password=test_data['password'])
+        # Provide invalid password explicitly (skip success sync to avoid timeout)
+        self.app.login_page.login(password=test_data['password'], wait_success=False)
         
         # Verify login wasn't successful
-        assert not self.app.login_page.is_login_successful(), "Login succeeded with wrong password, this should not happen"
+        assert self.app.login_page.is_login_not_logged(), "Login succeeded with wrong password, this should not happen"
         self.app.screenshot(name="Failed Login")
 

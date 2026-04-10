@@ -1,0 +1,15 @@
+{
+    "tests": {
+        "id": "HOTEL-004-C",
+        "title": "Apertura Modal: Nueva Reservación",
+        "description": "Verifica que el botón de 'Nueva Reservación' abra correctamente el flujo de reserva.",
+        "feature": "Reservations",
+        "story": "Reservation Management",
+        "severity": "critical",
+        "tag": [
+            "regression",
+            "p1"
+        ],
+        "data": {}
+    }
+}

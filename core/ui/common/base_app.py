@@ -118,6 +118,7 @@ class BaseApp:
         import time
         self.logger.info(f"Pausing for {seconds} second(s)...")
         time.sleep(seconds)
+        return self
 
     def screenshot(self, name: str = "Screenshot", full_page: bool = True):
         """

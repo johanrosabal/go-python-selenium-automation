@@ -173,6 +173,25 @@ class SendKeysActions(BaseAction):
         except Exception as e:
             self._handle_exception(e, "clear_js")
 
+    @allure.step("Performing physical clear (CONTROL+A + BACKSPACE)")
+    def physical_clear(self):
+        """
+        Simulates physical clearing of an input field using keyboard shortcuts.
+        Useful for React/Angular components that don't respond to standard clear().
+
+        Returns:
+            SendKeysActions: The current instance for method chaining.
+        """
+        try:
+            from selenium.webdriver import Keys
+            self._find_element()
+            self.logger.debug("Performing physical clear (CTRL+A + BACKSPACE)")
+            self._element.send_keys(Keys.CONTROL + "a")
+            self._element.send_keys(Keys.BACKSPACE)
+            return self
+        except Exception as e:
+            self._handle_exception(e, "physical_clear")
+
     def press_enter(self):
         """Presses the ENTER key."""
         return self._press_key(Keys.ENTER, "ENTER")

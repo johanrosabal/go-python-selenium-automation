@@ -80,19 +80,6 @@ class UIElement(BaseAction):
         """
         self.logger.info(f"{self.page_name} - {action} on element: {self.locator_name} {self.locator}")
 
-    def pause(self, seconds: int = 1):
-        """
-        Pauses execution for a specified duration before the next action.
-
-        Args:
-            seconds (int): Duration in seconds. Defaults to 1.
-
-        Returns:
-            UIElement: Self instance for method chaining.
-        """
-        super().pause(seconds)
-        return self
-
     # --- Click Actions ---
 
     def click(self):
@@ -265,6 +252,17 @@ class UIElement(BaseAction):
         """
         self._log_action("Clearing")
         self._send_keys.at(self._get_current_timeout()).clear(use_js=use_js)
+        return self
+
+    def physical_clear(self):
+        """
+        Clears the input using keyboard shortcuts (CTRL+A + BACKSPACE).
+
+        Returns:
+            UIElement: Self instance for method chaining.
+        """
+        self._log_action("Performing physical clear")
+        self._send_keys.at(self._get_current_timeout()).physical_clear()
         return self
 
     def press(self, key: str):

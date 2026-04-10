@@ -1,0 +1,46 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches and temporary files
+.pytest_cache/
+.hypothesis/
+.cache/
+.tox/
+.coverage
+.nosepy
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+
+# Environments
+venv/
+.venv/
+env/
+build/
+dist/
+*.egg-info/
+
+# Automated Testing Artifacts
+allure-results/
+allure-report/
+reports/
+screenshots/
+videos/
+logs/
+test-reports/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+.project
+.pydevproject
+.settings/
+
+# OS-specific files
+DS_Store
+Thumbs.db

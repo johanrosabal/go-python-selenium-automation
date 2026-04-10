@@ -1,0 +1,15 @@
+{
+    "tests": {
+        "id": "HOTEL-003",
+        "title": "Verify Dashboard Menu Options",
+        "description": "Verifies that a user can access every option in the dashboard.",
+        "feature": "Dashboard",
+        "story": "Dashboard Menu Options",
+        "severity": "critical",
+        "tag": [
+            "smoke",
+            "p1"
+        ],
+        "data": {}
+    }
+}

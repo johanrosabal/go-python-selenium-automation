@@ -944,6 +944,48 @@ self.app.screenshot("Error Visible", full_page=False)
 
 ---
 
+## 🧭 Ciclo de Vida: Aislamiento vs. Persistencia
+
+El framework permite elegir entre dos modos de ejecución según las necesidades de tus pruebas:
+
+### 1. Modo Aislamiento (Predeterminado)
+Por defecto, **cada test abre y cierra un navegador nuevo**. Es el modo más seguro porque garantiza que cada prueba comience desde cero, sin "basura" o estados residuales de ejecuciones anteriores.
+
+*   **Ideal para:** Pruebas independientes, validaciones rápidas, regresiones críticas.
+*   **Comportamiento:** Browser -> Test 1 -> Cerrar -> Browser -> Test 2 -> Cerrar.
+
+### 2. Modo Persistente (Sesión Compartida)
+Permite mantener **el mismo navegador abierto** durante todos los métodos dentro de una misma clase de prueba. Esto es ideal para flujos largos donde quieres loguearte una vez y realizar múltiples validaciones secuenciales sin perder tiempo reiniciando la sesión.
+
+*   **Ideal para:** Dashboards complejos, flujos de procesos (ej: Crear factura -> Ver reporte -> Borrar factura).
+*   **Comportamiento:** Browser -> Test 1 -> Test 2 -> Test 3 -> Cerrar (al final de la clase).
+
+#### 🛠️ Cómo activarlo
+Simplemente añade el atributo `persistent_session = True` en tu clase de prueba:
+
+```python
+@go_hotel
+class TestDashboard(BaseTest):
+    persistent_session = True  # <--- Activa la sesión compartida para esta clase
+
+    @test_case(id="HOTEL-003")
+    def test_login_flow(self):
+        self.app.login_page.wait_for_page_load().login()
+
+    @test_case(id="HOTEL-004")
+    def test_verify_menu(self):
+        # El browser sigue abierto y la sesión de login activa
+        self.app.dashboard_page.click_cola_cocina()
+```
+
+> [!IMPORTANT]
+> En **Modo Persistente**, si un método falla y deja el sistema en un estado bloqueado (ej: un modal abierto que cubre la pantalla), es muy probable que los métodos posteriores también fallen. Úsalo con sabiduría.
+
+---
+
+
+---
+
 ## 💻 Integración con Visual Studio Code
 
 El proyecto está optimizado para trabajar con VS Code. Sigue estos pasos para una configuración perfecta:

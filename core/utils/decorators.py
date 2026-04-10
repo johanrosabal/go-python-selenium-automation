@@ -5,12 +5,18 @@ from core.utils.config_manager import ConfigManager
 
 import os
 
-def test_case(id: str, json_file: str = None, title: str = None, description: str = None, feature: str = None, story: str = None, severity: str = None):
+def test_case(id: str, json_file: str = None, title: str = None, description: str = None, feature: str = None, story: str = None, severity: str = None, skip: bool = False, skip_reason: str = None):
     """
     Custom decorator to link a test method with its JSON metadata and Allure report.
     Resolves metadata dynamically using execution variables (app_name, app_type).
     """
     def decorator(func):
+        # Apply native pytest skip mark if requested
+        if skip:
+            import pytest
+            reason = skip_reason or f"Test Case {id} skipped via @test_case decorator."
+            func = pytest.mark.skip(reason=reason)(func)
+
         # Attach basic metadata for early access by Pytest setup fixtures
         func._test_id = id
         func._test_json_file = json_file

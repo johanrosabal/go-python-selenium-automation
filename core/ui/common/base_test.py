@@ -17,25 +17,29 @@ class BaseTest(BaseApp):
     and provides utilities for data-driven testing using JSON loaders.
 
     Attributes:
+        persistent_session (bool): If True, the browser session is maintained 
+                                   across all test methods in the class.
         app (BaseApp): The application orchestrator for the current project.
         recorder (VideoRecorder): The local screen recorder.
     """
+    persistent_session: bool = False
+    _shared_driver = None
+    
     app: BaseApp = None
     recorder: VideoRecorder = None
     
+    @pytest.fixture(scope="class", autouse=True)
+    def _class_driver_cleanup(self):
+        """Internal fixture to ensure context-level driver cleanup."""
+        yield
+        if BaseTest._shared_driver:
+            from core.ui.common.base_app import BaseApp
+            BaseTest._shared_driver.quit()
+            BaseTest._shared_driver = None
+            BaseApp.set_driver(None)
+
     def get_test_data(self, test_id: str = None) -> dict:
-        """
-        Retrieves JSON test data for the current application context.
-        
-        Prioritizes the explicit environment-specific JSON data cleanly pre-loaded
-        by the setup fixture. Otherwise, it performs a live dynamic resolution.
-
-        Args:
-            test_id (str, optional): The target Test Case ID or filename.
-
-        Returns:
-            dict: The key-value data mappings for the test.
-        """
+        # ... (unchanged) ...
         target_id = test_id if test_id else getattr(self, '_current_test_id', None)
         
         # 1. Yield pre-loaded data if it accurately matches the requested ID
@@ -80,7 +84,7 @@ class BaseTest(BaseApp):
         Automated Setup and Teardown fixture for individual test cases.
         Resolves configuration defaults from decorators or environment variables.
         """
-        # Clear Singleton instances
+        # Clear Singleton instances (except the driver if persistent)
         SingletonMeta.clear_instances()
 
         # 1. Resolve Application and Profile
@@ -147,17 +151,26 @@ class BaseTest(BaseApp):
         self.logger.info(header_text)
         
         try:
-            # Initialize and configure the driver instance
-            driver_instance = DriverManager.get_driver(browser, headless)
-            
-            try:
-                # Firefox can sometimes throw 'Browsing context has been discarded' on immediate maximize
-                driver_instance.maximize_window()
-            except Exception as e:
-                self.logger.warning(f"Could not maximize window (likely Firefox quirk): {e}")
+            # --- WEBDRIVER ACQUISITION STRATEGY ---
+            if self.persistent_session and BaseTest._shared_driver:
+                driver_instance = BaseTest._shared_driver
+                self.logger.info("♻️ Reusing persistent browser session for this test.")
+            else:
+                # Initialize new driver instance
+                driver_instance = DriverManager.get_driver(browser, headless)
+                
+                try:
+                    driver_instance.maximize_window()
+                except Exception as e:
+                    self.logger.warning(f"Could not maximize window: {e}")
+                
+                if self.persistent_session:
+                    BaseTest._shared_driver = driver_instance
+                    self.logger.info("📡 Persistent session enabled. Driver will be shared across the class.")
             
             # Set global driver context
             BaseApp.set_driver(driver_instance)
+            
             # Initialize App Orchestrator dynamically based on the app context
             if app_name == 'go_hotel':
                 from applications.web.go_hotel.app.go_hotel_app import GoHotelApp
@@ -181,14 +194,16 @@ class BaseTest(BaseApp):
             self.recorder.stop()
 
         # --- ROBUST LOG FOOTER ---
-        # Provide a clean reference to the video URL for the front-end before finalizing
         if hasattr(self, 'recorder') and self.recorder and getattr(self.recorder, 'video_path', None):
             self.logger.info(f"🎥 Video URL: {self.recorder.video_path}")
             
         self.logger.info(f"🏁 FINISHED TEST: {test_id}")
 
-
-        self.logger.info("Closing WebDriver session")
-        if hasattr(self, 'driver') and self.driver:
-            self.driver.quit()
-            BaseApp.set_driver(None)
+        # --- TERMINATION STRATEGY ---
+        if not self.persistent_session:
+            self.logger.info("Closing WebDriver session (Isolation mode)")
+            if hasattr(self, 'driver') and self.driver:
+                self.driver.quit()
+                BaseApp.set_driver(None)
+        else:
+            self.logger.info("Keeping WebDriver session alive (Persistence mode)")
