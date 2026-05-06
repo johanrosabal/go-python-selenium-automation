@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Assistant - Go Automation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0f111a;
+            --bg-card: #1a1c2e;
+            --accent-blue: #89b4fa;
+            --accent-purple: #cba6f7;
+            --accent-green: #a6e3a1;
+            --accent-cyan: #89dceb;
+            --text-main: #cdd6f4;
+            --text-muted: #9399b2;
+            --border: rgba(255, 255, 255, 0.1);
+            --sidebar-width: 350px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header */
+        header {
+            height: 60px;
+            background: rgba(15, 17, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: 800;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .back-btn {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover { color: #fff; }
+
+        /* Layout */
+        main {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Left Sidebar */
+        #inspector-sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            z-index: 50;
+        }
+
+        /* Right Content Area */
+        #content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #f0f0f0; /* Simulate browser bg */
+        }
+
+        /* URL Bar - Now above Content */
+        .url-bar-container {
+            padding: 10px 20px;
+            background: var(--bg-deep);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .url-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            gap: 10px;
+        }
+
+        .url-bar input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .btn-go {
+            background: #222;
+            color: #fff;
+            border: 1px solid var(--border);
+            padding: 0 20px;
+            height: 40px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-go:hover { background: #333; }
+
+        .btn-inspect {
+            background: var(--accent-cyan);
+            color: #111;
+            border: none;
+            padding: 0 20px;
+            height: 40px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-inspect.active {
+            background: #ff5f5f;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(255, 95, 95, 0.4);
+        }
+
+        .btn-inspect:hover { transform: scale(1.05); }
+
+        /* Viewport */
+        #viewport-container {
+            flex: 1;
+            position: relative;
+            background: #fff;
+            overflow: hidden;
+        }
+
+        #viewport {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+
+        #highlighter {
+            position: absolute;
+            border: 2px solid var(--accent-purple);
+            background: rgba(203, 166, 247, 0.2);
+            pointer-events: none;
+            display: none;
+            z-index: 9999;
+            transition: all 0.1s ease-out;
+            box-shadow: 0 0 15px rgba(203, 166, 247, 0.5);
+        }
+
+        /* Sidebar UI Elements */
+        .section-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-blue);
+            font-weight: 800;
+            margin-bottom: 15px;
+            margin-top: 25px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title:first-child { margin-top: 0; }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        select:focus, input[type="text"]:focus {
+            border-color: var(--accent-blue);
+        }
+
+        /* Elements List */
+        .elements-list {
+            flex: 1;
+            overflow-y: auto;
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .element-card {
+            background: #1a1a1a;
+            border: 1px solid var(--border);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+
+        .element-card:hover { border-color: var(--accent-cyan); }
+
+        .element-card .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .verify-btn {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid #22c55e;
+            color: #22c55e;
+            font-size: 0.6rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 800;
+            transition: 0.2s;
+        }
+
+        .verify-btn:hover {
+            background: #22c55e;
+            color: #fff;
+        }
+
+        .element-card .tag {
+            font-size: 0.65rem;
+            background: var(--accent-purple);
+            color: #111;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 800;
+        }
+
+        .element-card .var-input {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: #fff;
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        /* Locator Suggestions */
+        .locator-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .locator-item {
+            font-size: 0.75rem;
+            padding: 8px;
+            background: #252525;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.2s;
+        }
+
+        .locator-item:hover { background: #333; }
+        .locator-item.selected {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 243, 255, 0.05);
+        }
+
+        .locator-val {
+            font-family: 'Fira Code', monospace;
+            color: #aaa;
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .locator-item.selected .locator-val { color: var(--accent-cyan); }
+
+        .count-chip {
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 800;
+        }
+        .count-chip.unique { background: #22c55e; color: #fff; }
+        .count-chip.multi { background: #f59e0b; color: #fff; }
+
+        .btn-attrs {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            padding: 0;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .attrs-panel {
+            font-size: 0.7rem;
+            background: #000;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 8px;
+            display: none;
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+        }
+
+        /* Verification Flash Effect */
+        @keyframes locator-pulse {
+            0% { outline: 4px solid var(--accent-cyan); outline-offset: 0px; box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.7); }
+            50% { outline: 4px solid var(--accent-purple); outline-offset: 10px; box-shadow: 0 0 20px 10px rgba(187, 154, 247, 0); }
+            100% { outline: 4px solid var(--accent-cyan); outline-offset: 0px; box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); }
+        }
+
+        .verify-pulse {
+            animation: locator-pulse 0.8s ease-in-out 3;
+            z-index: 10000 !important;
+            position: relative;
+        }
+
+        .btn-generate {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: #111;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(137, 180, 250, 0.2);
+        }
+
+        /* Loading Overlay for Ajax */
+        #loading-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 17, 26, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-overlay">
+        <div style="font-size: 2rem;">⚡</div>
+        <div style="font-weight: 800;">LOADING ASSETS...</div>
+    </div>
+
+    <header>
+        <a href="/" class="back-btn">← Back</a>
+        <div class="logo">PAGE ASSISTANT</div>
+    </header>
+
+    <main>
+        <div id="inspector-sidebar">
+            <div class="section-title">📍 Selection</div>
+            <div class="form-group">
+                <label>Select Project</label>
+                <select id="app-select">
+                    <option value="">Loading Projects...</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Environment</label>
+                <select id="env-select">
+                    <option value="">Env...</option>
+                </select>
+            </div>
+
+            <div class="section-title">📦 Page Metadata</div>
+            <div class="form-group">
+                <label>Page Class Name</label>
+                <input type="text" id="page-name" placeholder="e.g. DashboardPage">
+            </div>
+            <div class="form-group">
+                <label>Subfolder (optional)</label>
+                <input type="text" id="subfolder" placeholder="auth">
+            </div>
+
+            <div class="section-title">✨ Captured Elements</div>
+            <div id="elements-list" class="elements-list">
+                <div style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 20px;">
+                    Click elements in the view to capture them.
+                </div>
+            </div>
+
+            <button class="btn-generate" onclick="generatePage()">
+                🚀 GENERATE PAGE OBJECT
+            </button>
+        </div>
+
+        <div id="content-area">
+            <div class="url-bar-container">
+                <div class="url-bar">
+                    <span>🌐</span>
+                    <input type="text" id="target-url" placeholder="Enter URL to inspect..." value="http://localhost:5000">
+                </div>
+                <button class="btn-go" onclick="loadUrl()">GO</button>
+                <button id="inspect-toggle" class="btn-inspect" onclick="toggleInspection()">
+                    🔍 INSPECT
+                </button>
+            </div>
+
+            <div id="viewport-container">
+                <iframe id="viewport" src="" sandbox="allow-same-origin allow-scripts allow-forms allow-popups"></iframe>
+                <div id="highlighter"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Global error catcher to debug loading issues
+        window.onerror = function(msg, url, line) {
+            console.error("Global Error:", msg, "at", url, ":", line);
+            alert("Assistant Error: " + msg + " (See console)");
+        };
+
+        console.info("🔥 Assistant NUCLEAR RESET: " + new Date().toLocaleString());
+        
+        let capturedElements = [];
+        let appData = [];
+        let isInspecting = false;
+        const viewport = document.getElementById('viewport');
+        const highlighter = document.getElementById('highlighter');
+        const appSelect = document.getElementById('app-select');
+        const envSelect = document.getElementById('env-select');
+
+        // 1. Initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log("Assistant DOM Loaded. Fetching apps...");
+            fetchApps();
+        });
+
+        async function fetchApps() {
+            try {
+                const bust = new Date().getTime();
+                console.info("Assistant: Fetching projects... (Cache buster: " + bust + ")");
+                const res = await fetch('/api/assistant/apps?v=' + bust);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                
+                const data = await res.json();
+                appData = data.apps || [];
+                
+                console.log("Apps received:", appData);
+                
+                if (appData.length === 0) {
+                    appSelect.innerHTML = '<option value="">No Projects Found</option>';
+                    return;
+                }
+                
+                let appOptions = '<option value="">Select Project...</option>';
+                appData.forEach(app => {
+                    appOptions += `<option value="${app.folder}">${app.name}</option>`;
+                });
+                appSelect.innerHTML = appOptions;
+
+                // Bind listener
+                appSelect.onchange = handleAppChange;
+                envSelect.onchange = handleEnvChange;
+
+            } catch (err) {
+                console.error("Fetch Error:", err);
+                appSelect.innerHTML = '<option value="">Error loading projects</option>';
+                alert("Could not load projects. Check if the server is running.");
+            }
+        }
+
+        function handleAppChange() {
+            const selectedApp = appData.find(a => a.folder === appSelect.value);
+            if (selectedApp) {
+                const envs = Object.keys(selectedApp.environments);
+                if (envs.length > 0) {
+                    envSelect.innerHTML = envs.map(e => `<option value="${e}">${e.toUpperCase()}</option>`).join('');
+                    envSelect.value = envs[0];
+                    updateUrlFromEnv(selectedApp, envs[0]);
+                } else {
+                    envSelect.innerHTML = '<option value="">No Envs</option>';
+                }
+            } else {
+                envSelect.innerHTML = '<option value="">Env...</option>';
+            }
+        }
+
+        function handleEnvChange() {
+            const selectedApp = appData.find(a => a.folder === appSelect.value);
+            if (selectedApp) {
+                updateUrlFromEnv(selectedApp, envSelect.value);
+            }
+        }
+
+        function updateUrlFromEnv(app, env) {
+            const url = app.environments[env];
+            if (url) {
+                document.getElementById('target-url').value = url;
+            }
+        }
+
+        function loadUrl() {
+            const url = document.getElementById('target-url').value;
+            if (!url) return alert("Please enter a URL.");
+            
+            console.log("Loading URL:", url);
+            document.getElementById('loading-overlay').style.display = 'flex';
+            
+            // Turn off inspection mode on load to allow safe navigation
+            setInspection(false);
+            
+            viewport.src = `/api/proxy?url=${encodeURIComponent(url)}`;
+            
+            viewport.onload = () => {
+                console.log("Viewport loaded. Waiting for hydration...");
+                document.getElementById('loading-overlay').style.display = 'none';
+                
+                // Retry injection a few times because Next.js/SPAs might re-render the DOM
+                let retries = 3;
+                const attemptInjection = () => {
+                    injectBridge();
+                    if (--retries > 0) setTimeout(attemptInjection, 2000);
+                };
+                setTimeout(attemptInjection, 1000);
+            };
+        }
+
+        function toggleInspection() {
+            setInspection(!isInspecting);
+        }
+
+        function setInspection(val) {
+            isInspecting = val;
+            const btn = document.getElementById('inspect-toggle');
+            if (isInspecting) {
+                btn.classList.add('active');
+                btn.innerHTML = '🛑 STOP INSPECT';
+            } else {
+                btn.classList.remove('active');
+                btn.innerHTML = '🔍 INSPECT';
+                highlighter.style.display = 'none';
+            }
+            // Send state to iframe
+            if (viewport.contentWindow) {
+                viewport.contentWindow.postMessage({ type: 'set-inspect', active: isInspecting }, '*');
+            }
+        }
+
+        function injectBridge() {
+            try {
+                const iframeContent = viewport.contentWindow;
+                const iframeDoc = viewport.contentDocument || iframeContent.document;
+
+                // 1. Mock History API
+                if (!iframeDoc.getElementById('history-mock')) {
+                    const historyMock = iframeDoc.createElement('script');
+                    historyMock.id = 'history-mock';
+                    historyMock.textContent = `
+                        (function() {
+                            const noop = () => {};
+                            window.history.pushState = noop;
+                            window.history.replaceState = noop;
+                        })();
+                    `;
+                    iframeDoc.head.appendChild(historyMock);
+                }
+
+                // 2. Inject Capture Bridge
+                if (!iframeDoc.getElementById('assistant-bridge')) {
+                    const script = iframeDoc.createElement('script');
+                    script.id = 'assistant-bridge';
+                    script.textContent = `
+                        (() => {
+                            let lastHovered = null;
+                            window.__IS_INSPECTING__ = false;
+
+                            window.addEventListener('message', e => {
+                                if (e.data.type === 'set-inspect') {
+                                    window.__IS_INSPECTING__ = e.data.active;
+                                } else if (e.data.type === 'highlight') {
+                                    highlightElement(e.data.locator_type, e.data.locator_value);
+                                }
+                            });
+
+                            // Highlighting Logic
+                            function highlightElement(type, val) {
+                                let el = null;
+                                try {
+                                    if (type === 'testid') el = document.querySelector(\`[data-testid="\${val}"]\`);
+                                    else if (type === 'id') el = document.querySelector(\`#\${val}\`);
+                                    else if (type === 'name') el = document.querySelector(\`[name="\${val}"]\`);
+                                    else if (type === 'css') el = document.querySelector(val);
+                                    else if (type === 'xpath') {
+                                        el = document.evaluate(val, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                                    }
+                                    
+                                    if (el) {
+                                        el.classList.remove('verify-pulse');
+                                        void el.offsetWidth; // Trigger reflow
+                                        el.classList.add('verify-pulse');
+                                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                    }
+                                } catch(e) { console.error("Highlight Error:", e); }
+                            }
+
+                            // Inject pulse CSS into the iframe
+                            const style = document.createElement('style');
+                            style.textContent = \`
+                                @keyframes locator-pulse {
+                                    0% { outline: 4px solid #00f3ff; outline-offset: 0px; box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.7); }
+                                    50% { outline: 4px solid #bb9af7; outline-offset: 10px; box-shadow: 0 0 20px 10px rgba(187, 154, 247, 0); }
+                                    100% { outline: 4px solid #00f3ff; outline-offset: 0px; box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); }
+                                }
+                                .verify-pulse {
+                                    animation: locator-pulse 0.8s ease-in-out 3;
+                                    z-index: 10000 !important;
+                                    position: relative;
+                                }
+                            \`;
+                            document.head.appendChild(style);
+
+                            // Helper to generate multiple locator options
+                            function getSuggestions(el) {
+                                const list = [];
+                                
+                                // Helper to escape CSS class names (for Tailwind, etc.)
+                                const escapeCss = (cls) => cls.replace(/([#:.@\\[\\]/])/g, '\\\\$1');
+
+                                // 1. Test ID
+                                const tid = el.getAttribute('data-testid');
+                                if (tid) list.push({ type: 'testid', value: tid });
+
+                                // 2. Stable ID
+                                if (el.id && !el.id.includes(':r') && !el.id.includes('radix')) {
+                                    list.push({ type: 'id', value: el.id });
+                                }
+
+                                // 3. Name
+                                const name = el.getAttribute('name');
+                                if (name) list.push({ type: 'name', value: name });
+
+                                // 4. XPath by Text (Prioritized)
+                                const text = el.innerText.trim();
+                                if (text && text.length < 50 && !text.includes('\n')) {
+                                    list.push({ type: 'xpath', value: `//${el.tagName.toLowerCase()}[text()='${text}']` });
+                                }
+
+                                // 5. CSS Selector (Robust Tailwind Support)
+                                if (el.className && typeof el.className === 'string') {
+                                    const classes = el.className.split(/\s+/).filter(c => c.length > 0);
+                                    if (classes.length > 0) {
+                                        const selector = el.tagName.toLowerCase() + '.' + classes.map(escapeCss).join('.');
+                                        list.push({ type: 'css', value: selector });
+                                    }
+                                }
+
+                                // 6. Attribute Based XPath
+                                const classAttr = el.getAttribute('class');
+                                if (classAttr) {
+                                    list.push({ type: 'xpath', value: `//${el.tagName.toLowerCase()}[[@class='${classAttr}']]` });
+                                }
+                                
+                                const placeholder = el.getAttribute('placeholder');
+                                if (placeholder) {
+                                    list.push({ type: 'xpath', value: `//${el.tagName.toLowerCase()}[[@placeholder='${placeholder}']]` });
+                                }
+
+                                // 7. Fallback Relative XPath
+                                list.push({ type: 'xpath', value: `//${el.tagName.toLowerCase()}` });
+
+                                // Validate counts for each suggestion
+                                return list.map(s => {
+                                    let count = 0;
+                                    try {
+                                        let cleanValue = s.value.replace(/\[\[/g, '[').replace(/\]\]/g, ']'); // Unescape our internal double brackets
+                                        if (s.type === 'testid') count = document.querySelectorAll(`[data-testid="${cleanValue}"]`).length;
+                                        else if (s.type === 'id') count = document.querySelectorAll(`#${cleanValue}`).length;
+                                        else if (s.type === 'name') count = document.querySelectorAll(`[name="${cleanValue}"]`).length;
+                                        else if (s.type === 'css') count = document.querySelectorAll(cleanValue).length;
+                                        else if (s.type === 'xpath') {
+                                            count = document.evaluate(`count(${cleanValue})`, document, null, XPathResult.NUMBER_TYPE, null).numberValue;
+                                        }
+                                        return { ...s, value: cleanValue, count };
+                                    } catch(e) {
+                                        return { ...s, count: 0 };
+                                    }
+                                });
+                            }
+
+                            function getAllAttributes(el) {
+                                return Array.from(el.attributes).reduce((acc, attr) => {
+                                    acc[attr.name] = attr.value;
+                                    return acc;
+                                }, {});
+                            }
+
+                            document.addEventListener('mousemove', e => {
+                                if (!window.__IS_INSPECTING__) return;
+                                const el = e.target;
+                                if (el === lastHovered) return;
+                                lastHovered = el;
+                                const rect = el.getBoundingClientRect();
+                                window.parent.postMessage({ type: 'hover', rect }, '*');
+                            }, true);
+
+                            document.addEventListener('mousedown', e => {
+                                if (!window.__IS_INSPECTING__) return;
+                                e.preventDefault();
+                                e.stopPropagation();
+                                
+                                const el = e.target;
+                                const suggestions = getSuggestions(el);
+                                const attrs = getAllAttributes(el);
+                                
+                                const data = {
+                                    tag: el.tagName.toLowerCase(),
+                                    suggestions: suggestions,
+                                    attributes: attrs
+                                };
+                                window.parent.postMessage({ type: 'click', element: data }, '*');
+                            }, true);
+
+                            document.addEventListener('click', e => {
+                                if (!window.__IS_INSPECTING__) return;
+                                e.preventDefault();
+                                e.stopPropagation();
+                            }, true);
+                        })();
+                    `;
+                    iframeDoc.head.appendChild(script);
+                }
+                
+                // Sync current state immediately after injection
+                setInspection(isInspecting);
+
+            } catch (err) {
+                console.warn("Bridge injection failed:", err);
+            }
+        }
+
+        // 2. Communication with Bridge
+        window.addEventListener('message', e => {
+            const data = e.data;
+            if (data.type === 'hover') {
+                showHighlighter(data.rect);
+            } else if (data.type === 'click') {
+                captureElement(data.element);
+            }
+        });
+
+        function showHighlighter(rect) {
+            highlighter.style.display = 'block';
+            highlighter.style.top = rect.top + 'px';
+            highlighter.style.left = rect.left + 'px';
+            highlighter.style.width = rect.width + 'px';
+            highlighter.style.height = rect.height + 'px';
+        }
+
+        function captureElement(el) {
+            // Pick best initial locator
+            const best = el.suggestions.find(s => s.count === 1) || el.suggestions[0];
+            
+            // Suggest variation name (cleaner, uppercase, with prefix)
+            let rawName = (best.value || "element")
+                .toLowerCase()
+                .replace(/[^a-z0-9]/g, '_')
+                .replace(/^_+|_+$/g, '');
+            
+            const prefix = best.type.toUpperCase() + "_";
+            let suggestedName = (prefix + rawName).toUpperCase();
+            
+            const item = {
+                tag: el.tag,
+                variableName: suggestedName,
+                locator_type: best.type,
+                locator_value: best.value,
+                suggestions: el.suggestions,
+                attributes: el.attributes
+            };
+
+            capturedElements.push(item);
+            renderElements();
+        }
+
+        function renderElements() {
+            const list = document.getElementById('elements-list');
+            if (capturedElements.length === 0) {
+                list.innerHTML = '<div style="color:var(--text-muted); font-size:0.8rem; text-align:center; padding:20px;">No elements captured yet.</div>';
+                return;
+            }
+
+            // Check for duplicate names
+            const names = capturedElements.map(e => e.variableName);
+            
+            list.innerHTML = capturedElements.map((el, idx) => {
+                const isDuplicate = names.filter(n => n === el.variableName).length > 1;
+                
+                return `
+                <div class="element-card" style="${isDuplicate ? 'border-color: #ef4444' : ''}">
+                    <div class="header">
+                        <div>
+                            <span class="tag">${el.tag.toUpperCase()}</span>
+                            ${isDuplicate ? '<span style="color:#ef4444; font-size:0.6rem; margin-left:5px">⚠️ Duplicate name</span>' : ''}
+                        </div>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <button class="verify-btn" onclick="verifyLocator(${idx})" title="Verify visual match">✅ VERIFY</button>
+                            <button onclick="removeElement(${idx})" style="background:none; border:none; color:#ff5f5f; cursor:pointer; font-size:0.8rem" title="Remove">🗑️</button>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="font-size: 0.65rem; color: var(--accent-blue); font-weight: 800; display: block; margin-bottom: 4px;">
+                            📝 VARIABLE NAME (UPPERCASE_ONLY)
+                        </label>
+                        <input type="text" class="var-input" placeholder="e.g. ID_LOGIN_BUTTON" 
+                            value="${el.variableName}" onchange="updateEl(${idx}, 'variableName', this.value)">
+                    </div>
+
+                    <label style="font-size: 0.65rem; color: var(--text-muted); font-weight: 800; display: block; margin-bottom: 8px;">
+                        SELECT BEST LOCATOR
+                    </label>
+                    <div class="locator-list">
+                        ${el.suggestions.map(s => `
+                            <div class="locator-item ${el.locator_value === s.value ? 'selected' : ''}" 
+                                onclick="selectLocator(${idx}, '${s.type}', '${s.value}')">
+                                <span class="locator-val" title="${s.value}">${s.type}: ${s.value}</span>
+                                <span class="count-chip ${s.count === 1 ? 'unique' : 'multi'}">
+                                    ${s.count === 1 ? '1 result' : s.count + ' results'}
+                                </span>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <button class="btn-attrs" onclick="toggleAttrs(${idx})">Show all attributes</button>
+                    <div id="attrs-${idx}" class="attrs-panel">
+                        ${Object.entries(el.attributes).map(([k, v]) => `
+                            <div style="margin-bottom: 4px">
+                                <b style="color:var(--accent-purple)">${k}:</b> <span style="color:#ddd">${v}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function removeElement(idx) {
+            capturedElements.splice(idx, 1);
+            renderElements();
+        }
+
+        function verifyLocator(idx) {
+            const el = capturedElements[idx];
+            if (viewport.contentWindow) {
+                viewport.contentWindow.postMessage({
+                    type: 'highlight',
+                    locator_type: el.locator_type,
+                    locator_value: el.locator_value
+                }, '*');
+            }
+        }
+
+        function selectLocator(idx, type, val) {
+            const el = capturedElements[idx];
+            const oldPrefix = el.locator_type.toUpperCase() + "_";
+            const newPrefix = type.toUpperCase() + "_";
+            
+            // Swap prefix in the name if it exists
+            if (el.variableName.startsWith(oldPrefix)) {
+                el.variableName = el.variableName.replace(oldPrefix, newPrefix);
+            } else {
+                el.variableName = newPrefix + el.variableName;
+            }
+            
+            el.locator_type = type;
+            el.locator_value = val;
+            renderElements();
+        }
+
+        function toggleAttrs(idx) {
+            const el = document.getElementById('attrs-' + idx);
+            el.style.display = el.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function updateEl(idx, field, val) {
+            if (field === 'variableName') {
+                // Enforce uppercase and underscores
+                val = val.toUpperCase().replace(/[^A-Z0-9]/g, '_').replace(/_+/g, '_');
+            }
+            capturedElements[idx][field] = val;
+            renderElements();
+        }
+
+        async function generatePage() {
+            const app = document.getElementById('app-select').value;
+            const name = document.getElementById('page-name').value;
+            const subfolder = document.getElementById('subfolder').value;
+
+            if (!app) return alert("Select a project.");
+            if (!name) return alert("Enter a Page Class name.");
+            if (capturedElements.length === 0) return alert("Capture some elements first.");
+
+            const res = await fetch('/api/assistant/scaffold', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ app, name, subfolder, elements: capturedElements })
+            });
+
+            const data = await res.json();
+            if (data.status === 'success') {
+                alert("Success: " + data.message);
+                window.location.href = '/';
+            } else {
+                alert("Error: " + data.message);
+            }
+        }
+    </script>
+</body>
+</html>

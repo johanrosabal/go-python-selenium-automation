@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistant V3 - Stable Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0f111a;
+            --bg-card: #1a1c2e;
+            --accent-blue: #89b4fa;
+            --accent-purple: #cba6f7;
+            --accent-green: #a6e3a1;
+            --accent-cyan: #89dceb;
+            --text-main: #cdd6f4;
+            --text-muted: #9399b2;
+            --border: rgba(255, 255, 255, 0.1);
+            --sidebar-width: 350px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 2px solid #bd93f9; /* V3 VISUAL MARKER */
+            box-sizing: border-box;
+        }
+
+        /* Header */
+        header {
+            height: 60px;
+            background: rgba(15, 17, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: 800;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .version-badge {
+            background: #bd93f9;
+            color: #111;
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 900;
+        }
+
+        .back-btn {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover { color: #fff; }
+
+        /* Layout */
+        main {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Left Sidebar */
+        #inspector-sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            z-index: 50;
+        }
+
+        /* URL Bar */
+        .url-bar-container {
+            padding: 10px 20px;
+            background: var(--bg-deep);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .url-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            gap: 10px;
+        }
+
+        .url-bar input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .btn-go {
+            background: #222;
+            color: #fff;
+            border: 1px solid var(--border);
+            padding: 0 20px;
+            height: 40px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        /* Viewport */
+        #viewport-container {
+            flex: 1;
+            position: relative;
+            background: #fff;
+            overflow: hidden;
+        }
+
+        #viewport {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        #highlighter {
+            position: absolute;
+            border: 2px solid var(--accent-purple);
+            background: rgba(203, 166, 247, 0.2);
+            pointer-events: none;
+            display: none;
+            z-index: 9999;
+        }
+
+        /* Sidebar Elements */
+        .section-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-blue);
+            font-weight: 800;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .element-card {
+            background: #111;
+            border: 1px solid var(--border);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+        }
+
+        .var-input {
+            width: 100%;
+            background: #222;
+            border: 1px solid var(--border);
+            color: var(--accent-green);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
+            padding: 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .btn-generate {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: #111;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        /* Locator Options UI */
+        .locator-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .locator-item {
+            font-size: 0.75rem;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.2s;
+        }
+
+        .locator-item:hover { background: rgba(255, 255, 255, 0.08); }
+        .locator-item.selected {
+            border-color: var(--accent-cyan);
+            background: rgba(137, 220, 235, 0.1);
+            box-shadow: 0 0 10px rgba(137, 220, 235, 0.1);
+        }
+
+        .locator-val {
+            font-family: 'JetBrains Mono', monospace;
+            color: #9399b2;
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .selected .locator-val { color: var(--accent-cyan); }
+
+        .count-chip {
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 800;
+        }
+        .count-chip.unique { background: #a6e3a1; color: #111; }
+        .count-chip.multi { background: #f9e2af; color: #111; }
+
+        .verify-btn {
+            background: rgba(166, 227, 161, 0.1);
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            font-size: 0.6rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 800;
+        }
+        .verify-btn:hover { background: var(--accent-green); color: #111; }
+
+        /* Attributes Panel */
+        .btn-attrs {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            padding: 0;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 10px;
+        }
+        .attrs-panel {
+            font-size: 0.7rem;
+            background: #000;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 8px;
+            display: none;
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            color: #6c7086;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="back-btn">← Home</a>
+        <div class="logo">ASSISTANT V3</div>
+        <div class="version-badge">STABLE</div>
+    </header>
+
+    <main>
+        <div id="inspector-sidebar">
+            <div class="section-title">📍 Project & Env</div>
+            <select id="app-select">
+                <option value="">Loading Projects...</option>
+            </select>
+            <div style="height:10px"></div>
+            <select id="env-select">
+                <option value="">Env...</option>
+            </select>
+
+            <div class="section-title">📦 Metadata</div>
+            <input type="text" id="page-name" placeholder="Page Class Name">
+            <div style="height:10px"></div>
+            <input type="text" id="subfolder" placeholder="Subfolder (optional)">
+
+            <div class="section-title">✨ Captured Elements</div>
+            <div id="elements-list"></div>
+
+            <button class="btn-generate" onclick="generatePage()">
+                🚀 GENERATE PAGE OBJECT
+            </button>
+        </div>
+
+        <div style="flex:1; display:flex; flex-direction:column;">
+            <div class="url-bar-container">
+                <div class="url-bar">
+                    <input type="text" id="target-url" value="http://localhost:5000">
+                </div>
+                <button class="btn-go" onclick="loadUrl()">GO</button>
+                <button id="inspect-toggle" onclick="toggleInspection()" style="padding:10px 20px; border-radius:20px; border:none; background:#89dceb; font-weight:800; cursor:pointer;">
+                    🔍 INSPECT
+                </button>
+            </div>
+            <div id="viewport-container">
+                <iframe id="viewport"></iframe>
+                <div id="highlighter"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        console.info("🚀 ASSISTANT V3 BOOTING...");
+        
+        let capturedElements = [];
+        let appData = [];
+        let isInspecting = false;
+        const viewport = document.getElementById('viewport');
+        const highlighter = document.getElementById('highlighter');
+        const appSelect = document.getElementById('app-select');
+        const envSelect = document.getElementById('env-select');
+
+        // FORCE FETCH APPS
+        async function fetchApps() {
+            const select = document.getElementById('app-select');
+            const env = document.getElementById('env-select');
+            
+            try {
+                const bust = Date.now();
+                console.info("v3: Fetching /api/assistant/apps?v=" + bust);
+                const res = await fetch('/api/assistant/apps?v=' + bust);
+                const data = await res.json();
+                appData = data.apps || [];
+                
+                console.info("v3: Received " + appData.length + " apps");
+                
+                if (appData.length === 0) {
+                    select.innerHTML = '<option value="">No Projects Found</option>';
+                    return;
+                }
+                
+                // Clear and rebuild dropdown safely
+                select.innerHTML = '';
+                const placeholder = document.createElement('option');
+                placeholder.value = "";
+                placeholder.textContent = "Select Project...";
+                select.appendChild(placeholder);
+
+                appData.forEach(app => {
+                    const opt = document.createElement('option');
+                    opt.value = app.folder;
+                    opt.textContent = app.name;
+                    select.appendChild(opt);
+                });
+
+                select.onchange = handleAppChange;
+                env.onchange = handleEnvChange;
+                
+                console.info("v3: Dropdown populated successfully.");
+            } catch (err) {
+                console.error("v3 Fetch Error:", err);
+                if (select) select.innerHTML = '<option value="">Error loading</option>';
+            }
+        }
+
+        function handleAppChange() {
+            const app = appData.find(a => a.folder === appSelect.value);
+            if (app) {
+                const envs = Object.keys(app.environments);
+                envSelect.innerHTML = envs.map(e => `<option value="${e}">${e.toUpperCase()}</option>`).join('');
+                document.getElementById('target-url').value = app.environments[envs[0]] || '';
+            }
+        }
+
+        function handleEnvChange() {
+            const app = appData.find(a => a.folder === appSelect.value);
+            if (app) document.getElementById('target-url').value = app.environments[envSelect.value] || '';
+        }
+
+        function loadUrl() {
+            const url = document.getElementById('target-url').value;
+            viewport.src = `/api/proxy?url=${encodeURIComponent(url)}`;
+            viewport.onload = () => {
+                setTimeout(injectBridge, 1000);
+            };
+        }
+
+        function toggleInspection() {
+            isInspecting = !isInspecting;
+            document.getElementById('inspect-toggle').style.background = isInspecting ? '#ff5f5f' : '#89dceb';
+            viewport.contentWindow.postMessage({ type: 'set-inspect', active: isInspecting }, '*');
+        }
+
+        window.addEventListener('message', e => {
+            if (e.data.type === 'hover') {
+                highlighter.style.display = 'block';
+                highlighter.style.top = e.data.rect.top + 'px';
+                highlighter.style.left = e.data.rect.left + 'px';
+                highlighter.style.width = e.data.rect.width + 'px';
+                highlighter.style.height = e.data.rect.height + 'px';
+            } else if (e.data.type === 'click') {
+                captureElement(e.data.element);
+            }
+        });
+
+        function captureElement(el) {
+            // Pick best unique locator or just the first one
+            const best = el.suggestions.find(s => s.count === 1) || el.suggestions[0];
+            const prefix = best.type.toUpperCase() + "_";
+            const rawName = (best.value || "element").toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/^_+|_+$/g, '');
+            
+            const item = {
+                tag: el.tag,
+                variableName: (prefix + rawName).toUpperCase(),
+                selected_type: best.type,
+                selected_value: best.value,
+                suggestions: el.suggestions,
+                attributes: el.attributes
+            };
+            capturedElements.push(item);
+            renderElements();
+        }
+
+        function selectLocator(elIdx, type, value) {
+            const item = capturedElements[elIdx];
+            item.selected_type = type;
+            item.selected_value = value;
+            
+            // Auto-update variable prefix
+            const prefix = type.toUpperCase() + "_";
+            const currentName = item.variableName.split('_').slice(1).join('_');
+            item.variableName = prefix + (currentName || "element");
+            
+            renderElements();
+        }
+
+        function verifyLocator(type, value) {
+            viewport.contentWindow.postMessage({ type: 'highlight', locator_type: type, locator_value: value }, '*');
+        }
+
+        function toggleAttributes(id) {
+            const panel = document.getElementById(id);
+            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function renderElements() {
+            const list = document.getElementById('elements-list');
+            if (capturedElements.length === 0) {
+                list.innerHTML = '<div style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 20px;">Click elements in the view to capture them.</div>';
+                return;
+            }
+
+            list.innerHTML = capturedElements.map((el, idx) => `
+                <div class="element-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
+                        <span style="color:var(--accent-purple); font-weight:800; font-size:0.7rem; letter-spacing:1px">${el.tag.toUpperCase()}</span>
+                        <div style="display:flex; gap:8px">
+                            <button class="verify-btn" onclick="verifyLocator('${el.selected_type}', '${el.selected_value}')">VERIFY</button>
+                            <button onclick="capturedElements.splice(${idx},1);renderElements();" style="background:none; border:none; color:#f38ba8; cursor:pointer; font-size:1rem">🗑️</button>
+                        </div>
+                    </div>
+                    
+                    <input type="text" class="var-input" value="${el.variableName}" 
+                           onchange="capturedElements[${idx}].variableName=this.value.toUpperCase()">
+                    
+                    <div class="locator-list">
+                        ${el.suggestions.map(s => {
+                            const isSelected = s.type === el.selected_type && s.value === el.selected_value;
+                            const countClass = s.count === 1 ? 'unique' : 'multi';
+                            return `
+                                <div class="locator-item ${isSelected ? 'selected' : ''}" 
+                                     onclick="selectLocator(${idx}, '${s.type}', '${s.value}')">
+                                    <span style="font-weight:700; color:var(--accent-blue)">${s.type.toUpperCase()}</span>
+                                    <span class="locator-val" title="${s.value}">${s.value}</span>
+                                    <span class="count-chip ${countClass}">${s.count}</span>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+
+                    <button class="btn-attrs" onclick="toggleAttributes('attrs-${idx}')">Inspect Attributes</button>
+                    <div id="attrs-${idx}" class="attrs-panel">
+                        <pre style="margin:0">${JSON.stringify(el.attributes, null, 2)}</pre>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function generatePage() {
+            const app = appSelect.value;
+            const name = document.getElementById('page-name').value;
+            if (!app || !name) return alert("Select project and name.");
+            
+            // Map our internal state to the backend format
+            const elements = capturedElements.map(el => ({
+                tag: el.tag,
+                variableName: el.variableName,
+                locator_type: el.selected_type,
+                locator_value: el.selected_value
+            }));
+
+            const res = await fetch('/api/assistant/scaffold', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ app, name, elements })
+            });
+            const data = await res.json();
+            alert(data.status === 'success' ? "Success!" : "Error: " + data.message);
+        }
+
+        function injectBridge() {
+            const doc = viewport.contentDocument || viewport.contentWindow.document;
+            const script = doc.createElement('script');
+            script.textContent = `
+                (function() {
+                    window.__IS_INSPECTING__ = false;
+                    window.addEventListener('message', e => {
+                        if (e.data.type === 'set-inspect') {
+                            window.__IS_INSPECTING__ = e.data.active;
+                        } else if (e.data.type === 'highlight') {
+                            highlightElement(e.data.locator_type, e.data.locator_value);
+                        }
+                    });
+
+                    function highlightElement(type, val) {
+                        let el = null;
+                        try {
+                            if (type === 'testid') el = document.querySelector(\`[data-testid="\${val}"]\`);
+                            else if (type === 'id') el = document.querySelector(\`#\${val}\`);
+                            else if (type === 'name') el = document.querySelector(\`[name="\${val}"]\`);
+                            else if (type === 'css') el = document.querySelector(val);
+                            else if (type === 'xpath') el = document.evaluate(val, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                            
+                            if (el) {
+                                el.classList.remove('verify-pulse');
+                                void el.offsetWidth; // Trigger reflow
+                                el.classList.add('verify-pulse');
+                                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                        } catch(e) { console.error("Highlight Error:", e); }
+                    }
+
+                    // Pulse CSS for the iframe
+                    const style = document.createElement('style');
+                    style.textContent = \`
+                        @keyframes locator-pulse {
+                            0% { outline: 4px solid #00f3ff; outline-offset: 0px; box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.7); }
+                            50% { outline: 4px solid #bb9af7; outline-offset: 10px; box-shadow: 0 0 20px 10px rgba(187, 154, 247, 0); }
+                            100% { outline: 4px solid #00f3ff; outline-offset: 0px; box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); }
+                        }
+                        .verify-pulse {
+                            animation: locator-pulse 0.8s ease-in-out 3;
+                            z-index: 10000 !important;
+                            position: relative;
+                        }
+                    \`;
+                    document.head.appendChild(style);
+
+                    function getSuggestions(el) {
+                        const list = [];
+                        const escapeCss = (cls) => cls.replace(/([#:.@\\\\\\[\\]/])/g, '\\\\\\\\$1');
+
+                        if (el.getAttribute('data-testid')) list.push({ type: 'testid', value: el.getAttribute('data-testid') });
+                        if (el.id && !el.id.includes(':r')) list.push({ type: 'id', value: el.id });
+                        if (el.getAttribute('name')) list.push({ type: 'name', value: el.getAttribute('name') });
+
+                        const text = el.innerText.trim();
+                        if (text && text.length < 50 && !text.includes('\\n')) {
+                            list.push({ type: 'xpath', value: \`//\${el.tagName.toLowerCase()}[text()='\${text}']\` });
+                        }
+
+                        if (el.className && typeof el.className === 'string') {
+                            const classes = el.className.split(/\\s+/).filter(c => c.length > 0);
+                            if (classes.length > 0) {
+                                const selector = el.tagName.toLowerCase() + '.' + classes.map(escapeCss).join('.');
+                                list.push({ type: 'css', value: selector });
+                            }
+                        }
+
+                        list.push({ type: 'xpath', value: \`//\${el.tagName.toLowerCase()}\` });
+
+                        return list.map(s => {
+                            let count = 0;
+                            try {
+                                if (s.type === 'testid') count = document.querySelectorAll(\`[data-testid="\${s.value}"]\`).length;
+                                else if (s.type === 'id') count = document.querySelectorAll(\`#\${s.value}\`).length;
+                                else if (s.type === 'name') count = document.querySelectorAll(\`[name="\${s.value}"]\`).length;
+                                else if (s.type === 'css') count = document.querySelectorAll(s.value).length;
+                                else if (s.type === 'xpath') count = document.evaluate(\`count(\${s.value})\`, document, null, XPathResult.NUMBER_TYPE, null).numberValue;
+                                return { ...s, count };
+                            } catch(e) { return { ...s, count: 0 }; }
+                        });
+                    }
+
+                    function getAllAttributes(el) {
+                        return Array.from(el.attributes).reduce((acc, attr) => {
+                            acc[attr.name] = attr.value;
+                            return acc;
+                        }, {});
+                    }
+
+                    document.addEventListener('mousemove', e => {
+                        if (!window.__IS_INSPECTING__) return;
+                        const rect = e.target.getBoundingClientRect();
+                        window.parent.postMessage({ type: 'hover', rect }, '*');
+                    });
+
+                    document.addEventListener('mousedown', e => {
+                        if (!window.__IS_INSPECTING__) return;
+                        e.preventDefault(); e.stopPropagation();
+                        const el = e.target;
+                        const suggestions = getSuggestions(el);
+                        window.parent.postMessage({ type: 'click', element: { 
+                            tag: el.tagName.toLowerCase(), 
+                            suggestions: suggestions,
+                            attributes: getAllAttributes(el)
+                        }}, '*');
+                    });
+                })();
+            `;
+            doc.head.appendChild(script);
+        }
+
+        window.addEventListener('DOMContentLoaded', fetchApps);
+    </script>
+</body>
+</html>

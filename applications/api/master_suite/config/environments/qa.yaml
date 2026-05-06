@@ -1,0 +1,5 @@
+api:
+  base_url: "https://jsonplaceholder.typicode.com"
+  reqres_url: "https://jsonplaceholder.typicode.com"
+  token: "d27038753239a5893a74360e2277d3419356d78880a6b5e08b335359196b0151"
+  sla_limit_ms: 3000

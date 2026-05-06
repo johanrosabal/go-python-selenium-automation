@@ -5,7 +5,10 @@ import ast
 import re
 import cv2
 from datetime import datetime
-from flask import Flask, render_template, request, Response, jsonify, send_from_directory
+import requests
+from urllib.parse import urljoin, urlparse
+from flask import Flask, render_template, request, Response, jsonify, send_from_directory, make_response
+import sys
 
 app = Flask(__name__)
 
@@ -14,333 +17,205 @@ PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..
 REPORTS_DIR = os.path.join(PROJECT_ROOT, "reports")
 PLANS_DIR = os.path.join(PROJECT_ROOT, "tools", "test_runner", "plans")
 
+# Add tools directory to path to import scaffold
+sys.path.append(os.path.join(PROJECT_ROOT, "tools"))
+import scaffold
+
 if not os.path.exists(PLANS_DIR):
     os.makedirs(PLANS_DIR)
 
 def extract_metadata(file_path, test_method_name):
-    """
-    Extracts metadata (id, title, description) from a test method using AST.
-    Prioritizes @test_case decorators and falls back to docstrings.
-    """
-    metadata = {
-        "id": None,
-        "title": test_method_name,
-        "description": ""
-    }
-    
+    """Extracts metadata (id, title, description) from a test method using AST."""
+    metadata = {"id": None, "title": test_method_name, "description": ""}
     try:
         abs_path = os.path.join(PROJECT_ROOT, file_path)
-        if not os.path.exists(abs_path):
-            return metadata
-            
+        if not os.path.exists(abs_path): return metadata
         with open(abs_path, "r", encoding="utf-8") as f:
             tree = ast.parse(f.read())
-            
         for node in ast.walk(tree):
             if isinstance(node, ast.FunctionDef) and node.name == test_method_name:
-                # 1. Check for @test_case decorator
                 for decorator in node.decorator_list:
-                    # Case: @test_case(id="...")
                     if isinstance(decorator, ast.Call) and getattr(decorator.func, 'id', '') == 'test_case':
                         for kw in decorator.keywords:
                             if kw.arg == 'id' and isinstance(kw.value, ast.Constant):
-                                test_id = kw.value.value
-                                metadata["id"] = test_id
-                                # Try to load JSON metadata for this ID
-                                # Structure: applications/<layer>/<app>/data/json/<id>.json
-                                path_parts = file_path.replace("\\", "/").split("/")
-                                if "applications" in path_parts:
-                                    idx = path_parts.index("applications")
-                                    app_base = os.path.join(PROJECT_ROOT, *path_parts[:idx+3]) # applications/layer/app
-                                    json_path = os.path.join(app_base, "data", "json", f"{test_id}.json")
-                                    
-                                    if os.path.exists(json_path):
-                                        with open(json_path, "r", encoding="utf-8") as jf:
-                                            data = json.load(jf).get("tests", {})
-                                            metadata["title"] = data.get("title", metadata["title"])
-                                            metadata["description"] = data.get("description", "")
+                                metadata["id"] = kw.value.value
                                 break
-                    # Case: Simple name @test_case (unlikely but possible)
-                    elif isinstance(decorator, ast.Name) and decorator.id == 'test_case':
-                        pass # Need ID argument to load JSON
-
-                # 2. Docstring Fallback (if title/description still default)
-                docstring = ast.get_docstring(node)
-                if docstring:
-                    lines = [l.strip() for l in docstring.split("\n") if l.strip()]
-                    if metadata["title"] == test_method_name and lines:
-                        metadata["title"] = lines[0]
-                    if not metadata["description"]:
-                        metadata["description"] = docstring.strip()
-                break
-    except Exception as e:
-        print(f"Error extracting metadata for {test_method_name}: {e}")
-        
+    except Exception: pass
     return metadata
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
-@app.route("/reports/<path:filename>")
-def serve_reports(filename):
-    """Serve media files (videos, screenshots) directly to the web UI."""
-    return send_from_directory(REPORTS_DIR, filename)
+import yaml
 
-@app.route("/api/report/generate", methods=["POST"])
-def generate_report():
-    """Generate Allure Report and serve it via an ad-hoc local server if needed, or just generate the HTML."""
-    try:
-        # Generate the report into reports/allure-report
-        allure_results = os.path.join(REPORTS_DIR, "allure-results")
-        allure_report = os.path.join(REPORTS_DIR, "allure-report")
-        
-        if not os.path.exists(allure_results):
-            return jsonify({"status": "error", "message": "No allure results found. Run tests first."}), 400
-
-        cmd = ["npx", "allure-commandline", "generate", allure_results, "-o", allure_report, "--clean"]
-        
-        # We use shell=True on Windows because 'allure' is usually a .bat or .cmd script
-        result = subprocess.run(cmd, cwd=PROJECT_ROOT, shell=True, capture_output=True, text=True)
-        
-        if result.returncode != 0:
-            error_msg = result.stderr or "Allure CLI failure."
-            if "not recognized" in error_msg or "not found" in error_msg.lower():
-                error_msg = "Allure CLI is not recognized. Please install it with 'choco install allure' as Administrator."
-            return jsonify({"status": "error", "message": f"Failed to generate Allure report: {error_msg}"}), 500
-
-        return jsonify({"status": "success", "message": "Allure report generated successfully.", "url": "/reports/allure-report/index.html"})
-    except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
-
-@app.route("/api/apps")
-def get_apps():
-    """Discover available applications in the applications/ directory."""
+@app.route("/api/apps", strict_slashes=False)
+def list_apps():
     apps = []
-    apps_dir = os.path.join(PROJECT_ROOT, "applications")
-    if os.path.exists(apps_dir):
-        # We expect applications/layer/app_name
-        for layer in os.listdir(apps_dir):
-            layer_path = os.path.join(apps_dir, layer)
-            if os.path.isdir(layer_path) and not layer.startswith("__"):
-                for app_name in os.listdir(layer_path):
-                    app_path = os.path.join(layer_path, app_name)
-                    if os.path.isdir(app_path) and not app_name.startswith("__"):
-                        # Check if it has a tests directory
-                        if os.path.isdir(os.path.join(app_path, "tests")):
-                            apps.append({
-                                "id": f"{layer}/{app_name}",
-                                "name": f"({layer.upper()}) {app_name.capitalize()}",
-                                "path": f"applications/{layer}/{app_name}/tests"
-                            })
+    # Folders to ignore
+    ignore = ["__pycache__", ".pytest_cache", ".venv", "common", "shared", "__init__.py"]
+    
+    for app_type in ["web", "api"]:
+        apps_dir = os.path.join(PROJECT_ROOT, "applications", app_type)
+        if not os.path.exists(apps_dir):
+            continue
+            
+        for d in os.listdir(apps_dir):
+            if d in ignore or not os.path.isdir(os.path.join(apps_dir, d)):
+                continue
+                
+            app_info = {
+                "name": f"[{app_type.upper()}] {d.replace('_', ' ').title()}",
+                "folder": d,
+                "type": app_type,
+                "path": f"applications/{app_type}/{d}/tests",
+                "environments": {}
+            }
+            
+            # Scan all environments for this app
+            env_dir = os.path.join(apps_dir, d, "config", "environments")
+            if os.path.exists(env_dir):
+                for env_file in os.listdir(env_dir):
+                    if env_file.endswith(".yaml") or env_file.endswith(".yml"):
+                        env_name = os.path.splitext(env_file)[0]
+                        try:
+                            with open(os.path.join(env_dir, env_file), "r") as f:
+                                cfg = yaml.safe_load(f)
+                                if not cfg: continue
+                                
+                                # Detect URL based on app type
+                                url = None
+                                if app_type == "web" and "web" in cfg:
+                                    url = cfg["web"].get("base_url")
+                                elif app_type == "api" and "api" in cfg:
+                                    url = cfg["api"].get("base_url")
+                                
+                                if url:
+                                    app_info["environments"][env_name] = url
+                        except Exception:
+                            pass
+            
+            # Fallback if no specific environments found
+            if not app_info["environments"]:
+                app_info["environments"]["qa"] = "https://example.com"
+                
+            apps.append(app_info)
+            
     return jsonify({"status": "success", "apps": apps})
 
 @app.route("/api/tests")
-def get_tests():
-    """Run pytest --setup-plan to get all available tests."""
-    app_path = request.args.get('app_path', 'applications/web/demo/tests')
-    try:
-        # Run pytest setup-plan which reliably prints node IDs even with allure/xdist
-        cmd = ["pytest", app_path, "--setup-plan"]
-        result = subprocess.run(cmd, cwd=PROJECT_ROOT, capture_output=True, text=True)
-        
-        output_lines = result.stdout.split('\n')
-        tests = []
-        
-        for line in output_lines:
-            line = line.strip()
-            # Pytest --setup-plan outputs node IDs like:
-            # applications/web/demo/tests/test_login.py::TestLogin::test_valid_login (fixtures used: request, setup)
-            if "::" in line and "(fixtures used:" in line:
-                # Extract just the node ID before the space
-                node_id = line.split(" (fixtures used:")[0].strip()
-                if node_id not in tests:
-                    tests.append(node_id)
-                
-        # Group tests by file
-        grouped_tests = {}
-        for test_path in tests:
-            parts = test_path.split("::")
-            if len(parts) >= 3:
-                file_path, class_name, test_name = parts[0], parts[1], parts[2]
-                file_name = os.path.basename(file_path)
-                
-                if file_name not in grouped_tests:
-                    grouped_tests[file_name] = []
-                
-                # Extract metadata for this test
-                meta = extract_metadata(file_path, test_name)
-                    
-                grouped_tests[file_name].append({
-                    "id": test_path,
-                    "name": test_name,
-                    "class": class_name,
-                    "title": meta["title"],
-                    "test_id": meta["id"],
-                    "description": meta["description"]
-                })
-        
-        return jsonify({"status": "success", "files": grouped_tests})
+def list_tests():
+    app_path = request.args.get("app_path", "applications/web/demo/tests")
+    full_path = os.path.join(PROJECT_ROOT, app_path)
+    files_tree = {}
     
-    except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
+    if os.path.exists(full_path):
+        for root, _, files in os.walk(full_path):
+            for file in files:
+                if file.startswith("test_") and file.endswith(".py"):
+                    rel_path = os.path.relpath(os.path.join(root, file), PROJECT_ROOT)
+                    with open(os.path.join(root, file), "r", encoding="utf-8") as f:
+                        tree = ast.parse(f.read())
+                        classes = [node for node in tree.body if isinstance(node, ast.ClassDef)]
+                        
+                        file_tests = []
+                        for cls in classes:
+                            methods = [n.name for n in cls.body if isinstance(n, ast.FunctionDef) and n.name.startswith("test_")]
+                            for m in methods:
+                                meta = extract_metadata(rel_path, m)
+                                file_tests.append({
+                                    "id": f"{rel_path}::{cls.name}::{m}",
+                                    "name": m,
+                                    "class": cls.name,
+                                    "file": rel_path,
+                                    "test_id": meta.get("id"),
+                                    "title": meta.get("title"),
+                                    "description": meta.get("description")
+                                })
+                        
+                        if file_tests:
+                            display_name = os.path.basename(rel_path)
+                            files_tree[display_name] = file_tests
+                            
+    return jsonify({"status": "success", "files": files_tree})
 
-@app.route("/api/reports/list", methods=["GET"])
-def list_reports():
-    """List all existing screenshots and videos."""
-    media = []
+@app.route("/api/plans", methods=["GET", "POST", "DELETE"])
+def manage_plans():
+    if request.method == "POST":
+        data = request.json
+        name = data.get("name", f"Plan_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
+        file_path = os.path.join(PLANS_DIR, f"{name}.json")
+        with open(file_path, "w") as f:
+            json.dump(data, f)
+        return jsonify({"status": "success", "message": "Plan saved"})
     
-    # Scan videos
+    if request.method == "DELETE":
+        name = request.args.get("name")
+        file_path = os.path.join(PLANS_DIR, f"{name}.json")
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            return jsonify({"status": "success", "message": "Plan deleted"})
+        return jsonify({"status": "error", "message": "Plan not found"}), 404
+
+    plans = []
+    if os.path.exists(PLANS_DIR):
+        for f in os.listdir(PLANS_DIR):
+            if f.endswith(".json"):
+                with open(os.path.join(PLANS_DIR, f), "r") as json_file:
+                    plans.append(json.load(json_file))
+    return jsonify({"status": "success", "plans": plans})
+
+@app.route("/api/media", methods=["DELETE"])
+def delete_media():
+    path = request.args.get("path")
+    full_path = os.path.join(PROJECT_ROOT, path)
+    if os.path.exists(full_path):
+        os.remove(full_path)
+        return jsonify({"status": "success"})
+    return jsonify({"status": "error", "message": "File not found"}), 404
+
+@app.route("/api/reports/list")
+def list_reports():
+    media = []
     video_dir = os.path.join(REPORTS_DIR, "videos")
     if os.path.exists(video_dir):
         for f in os.listdir(video_dir):
             if f.endswith(".mp4") or f.endswith(".avi"):
                 file_path = os.path.join(video_dir, f)
-                timestamp = datetime.fromtimestamp(os.path.getmtime(file_path)).strftime("%I:%M:%S %p")
-                
-                # Get video duration
-                duration_str = "00:00"
-                try:
-                    cap = cv2.VideoCapture(file_path)
-                    if cap.isOpened():
-                        fps = cap.get(cv2.CAP_PROP_FPS)
-                        frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT)
-                        if fps > 0:
-                            duration_sec = frame_count / fps
-                            mins = int(duration_sec // 60)
-                            secs = int(duration_sec % 60)
-                            duration_str = f"{mins:02d}:{secs:02d}"
-                        cap.release()
-                except:
-                    pass
-
-                # Try to guess test name and ID from filename
-                # Filename format: test_name_ID_YYYYMMDD_HHMMSS.mp4 or test_name_YYYYMMDD_HHMMSS.mp4
-                name_parts = f.split("_20")[0] # Removes timestamp
-                test_name = name_parts
-                test_id = ""
-                
-                # Check if there is an ID (e.g. test_case_TC001)
-                if "_TC" in name_parts:
-                    test_name_raw = name_parts.split("_TC")[0]
-                    test_id = "TC" + name_parts.split("_TC")[1] # Reconstruct TC001
-                    test_name = test_name_raw.replace("_", " ").title()
-                else:
-                    test_name = test_name.replace("_", " ").title()
-
-                media.append({
-                    "type": "video",
-                    "path": f"reports/videos/{f}",
-                    "name": f,
-                    "testName": test_name,
-                    "testId": test_id,
-                    "timestamp": timestamp,
-                    "duration": duration_str
-                })
+                media.append({"type": "video", "path": f"reports/videos/{f}", "name": f, "timestamp": datetime.fromtimestamp(os.path.getmtime(file_path)).strftime("%I:%M:%S %p"), "testName": f, "testId": ""})
     
-    # Scan screenshots
     screenshot_dir = os.path.join(REPORTS_DIR, "screenshots")
     if os.path.exists(screenshot_dir):
         for f in os.listdir(screenshot_dir):
             if f.lower().endswith((".png", ".jpg", ".jpeg")):
                 file_path = os.path.join(screenshot_dir, f)
-                timestamp = datetime.fromtimestamp(os.path.getmtime(file_path)).strftime("%I:%M:%S %p")
-                
-                name_parts = f.split("_20")[0]
-                test_name = name_parts
-                test_id = ""
-                
-                if "_TC" in name_parts:
-                    test_name_raw = name_parts.split("_TC")[0]
-                    test_id = "TC" + name_parts.split("_TC")[1]
-                    test_name = test_name_raw.replace("_", " ").title()
-                else:
-                    test_name = test_name.replace("_", " ").title()
-
-                media.append({
-                    "type": "screenshot",
-                    "path": f"reports/screenshots/{f}",
-                    "name": f,
-                    "testName": test_name,
-                    "testId": test_id,
-                    "timestamp": timestamp
-                })
+                media.append({"type": "screenshot", "path": f"reports/screenshots/{f}", "name": f, "timestamp": datetime.fromtimestamp(os.path.getmtime(file_path)).strftime("%I:%M:%S %p"), "testName": f, "testId": ""})
     
-    # Sort by timestamp (newest first)
     media.sort(key=lambda x: os.path.getmtime(os.path.join(PROJECT_ROOT, x["path"])), reverse=True)
     return jsonify({"status": "success", "media": media})
 
-@app.route("/api/media", methods=["DELETE"])
-def delete_media():
-    """Delete a media file."""
-    file_path = request.args.get("path")
-    if not file_path:
-        return jsonify({"status": "error", "message": "Path required"}), 400
-    
-    # Security: Ensure we only delete from reports directory
-    if ".." in file_path or not file_path.startswith("reports"):
-        return jsonify({"status": "error", "message": "Access denied"}), 403
-    
-    full_path = os.path.join(PROJECT_ROOT, file_path)
-    if os.path.exists(full_path):
-        try:
-            os.remove(full_path)
-            return jsonify({"status": "success", "message": "File deleted"})
-        except Exception as e:
-            return jsonify({"status": "error", "message": str(e)}), 500
-    return jsonify({"status": "error", "message": "File not found"}), 404
+@app.route("/api/report/generate", methods=["POST"])
+def generate_report():
+    try:
+        allure_results = os.path.join(REPORTS_DIR, "allure-results")
+        allure_report = os.path.join(REPORTS_DIR, "allure-report")
+        if not os.path.exists(allure_results):
+            return jsonify({"status": "error", "message": "No allure results found. Run tests first."}), 400
+        cmd = ["npx", "allure-commandline", "generate", allure_results, "-o", allure_report, "--clean"]
+        result = subprocess.run(cmd, cwd=PROJECT_ROOT, shell=True, capture_output=True, text=True)
+        if result.returncode != 0:
+            return jsonify({"status": "error", "message": f"Failed: {result.stderr}"}), 500
+        return jsonify({"status": "success", "url": "/reports/allure-report/index.html"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
 
-@app.route("/api/plans", methods=["GET", "POST", "DELETE"])
-def manage_plans():
-    """List, save or delete test plans."""
-    if request.method == "POST":
-        data = request.json
-        name = data.get("name")
-        if not name:
-            return jsonify({"status": "error", "message": "Plan name required"}), 400
-        
-        # Clean filename: remove special characters
-        safe_name = "".join([c for c in name if c.isalnum() or c in (' ', '_', '-')]).rstrip()
-        filename = f"{safe_name}.json"
-        path = os.path.join(PLANS_DIR, filename)
-        
-        with open(path, "w") as f:
-            json.dump(data, f, indent=4)
-            
-        return jsonify({"status": "success", "message": f"Plan '{name}' saved successfully."})
-    
-    if request.method == "DELETE":
-        name = request.args.get("name")
-        if not name:
-            return jsonify({"status": "error", "message": "Plan name required"}), 400
-        
-        safe_name = "".join([c for c in name if c.isalnum() or c in (' ', '_', '-')]).rstrip()
-        filename = f"{safe_name}.json"
-        path = os.path.join(PLANS_DIR, filename)
-        
-        if os.path.exists(path):
-            os.remove(path)
-            return jsonify({"status": "success", "message": f"Plan '{name}' deleted."})
-        return jsonify({"status": "error", "message": "Plan not found"}), 404
-
-    # GET: List all plans
-    plans = []
-    if os.path.exists(PLANS_DIR):
-        for f in os.listdir(PLANS_DIR):
-            if f.endswith(".json"):
-                try:
-                    with open(os.path.join(PLANS_DIR, f), "r") as json_file:
-                        plans.append(json.load(json_file))
-                except Exception:
-                    continue
-    return jsonify({"status": "success", "plans": plans})
-
+@app.route("/reports/<path:filename>")
+def serve_reports(filename):
+    return send_from_directory(REPORTS_DIR, filename)
 
 @app.route("/api/run", methods=["POST"])
 def run_test():
-    """Run specific test(s) and stream the output back to the client."""
     data = request.json
-    # test_id can now be a string or a list of strings
     test_ids = data.get("test_id", "applications/web/demo/tests")
     browser = data.get("browser", "chrome")
     env_name = data.get("env", "qa")
@@ -349,61 +224,207 @@ def run_test():
     
     def generate_output():
         env_vars = os.environ.copy()
-        env_vars["BROWSER"] = browser
-        env_vars["ENV"] = env_name
-        env_vars["HEADLESS"] = "true" if headless else "false"
-        env_vars["VIDEO_ENABLED"] = "true" if video else "false"
-        env_vars["PYTHONPATH"] = PROJECT_ROOT
-        env_vars["PYTHONIOENCODING"] = "utf-8"
-
+        env_vars.update({"BROWSER": browser, "ENV": env_name, "HEADLESS": "true" if headless else "false", "VIDEO_ENABLED": "true" if video else "false", "PYTHONPATH": PROJECT_ROOT, "PYTHONIOENCODING": "utf-8"})
+        cmd = ["pytest", "-v", "--no-header", "--alluredir=reports/allure-results", "--clean-alluredir", "-o", "log_cli=true", "-o", "log_cli_level=INFO"]
+        if isinstance(test_ids, list): cmd.extend(test_ids)
+        else: cmd.append(test_ids)
         
-        # Prepare the pytest command
-        cmd = [
-            "pytest", 
-            "-v", 
-            "--no-header",
-            "--alluredir=reports/allure-results",
-            "--clean-alluredir",
-            "-o", "log_cli=true",
-            "-o", "log_cli_level=INFO"
-        ]
-        
-        if isinstance(test_ids, list):
-            cmd.extend(test_ids)
-        else:
-            cmd.append(test_ids)
-        
-        # Start the process
-        process = subprocess.Popen(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            cwd=PROJECT_ROOT,
-            env=env_vars,
-            text=True,
-            encoding="utf-8",
-            bufsize=1
-        )
-
-        
-        display_cmd = f"pytest {' '.join(test_ids) if isinstance(test_ids, list) else test_ids}"
-        yield f"data: {json.dumps({'type': 'start', 'message': f'Running: {display_cmd}'})}\n\n"
-        yield f"data: {json.dumps({'type': 'env', 'message': f'Environment: {env_name.upper()} | Browser: {browser.upper()} | Headless: {headless}'})}\n\n"
-        
-        # Stream the output line by line
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=PROJECT_ROOT, env=env_vars, text=True, encoding="utf-8", bufsize=1)
+        yield f"data: {json.dumps({'type': 'start', 'message': f'Running pytest...'})}\n\n"
         for line in iter(process.stdout.readline, ""):
-            if line:
-                yield f"data: {json.dumps({'type': 'log', 'message': line.strip()})}\n\n"
-                
+            if line: yield f"data: {json.dumps({'type': 'log', 'message': line.strip()})}\n\n"
         process.stdout.close()
         return_code = process.wait()
-        
-        status = "PASSED" if return_code == 0 else "FAILED"
-        yield f"data: {json.dumps({'type': 'end', 'status': status, 'code': return_code})}\n\n"
+        yield f"data: {json.dumps({'type': 'end', 'status': 'DONE', 'code': return_code})}\n\n"
 
     return Response(generate_output(), mimetype="text/event-stream")
 
+# --- PAGE INSPECTOR ASSISTANT ---
+
+@app.route("/inspector", strict_slashes=False)
+@app.route("/assistant-v3", strict_slashes=False)
+def assistant_v3_view():
+    print("Serving FRESH Assistant V3 template...")
+    resp = make_response(render_template("assistant_v3.html"))
+    resp.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    resp.headers["Pragma"] = "no-cache"
+    resp.headers["Expires"] = "0"
+    return resp
+
+ACTIVE_INSPECTION_ORIGIN = None
+
+import traceback
+
+def perform_proxy(url):
+    """Core proxy logic - acts as a transparent tunnel for all HTTP methods and sessions."""
+    global ACTIVE_INSPECTION_ORIGIN
+    
+    if not url.startswith("http"): url = "http://" + url
+    
+    try:
+        # 1. Forward headers from browser to target
+        excluded_req = ['host', 'content-length', 'connection']
+        headers = {k: v for k, v in request.headers.items() if k.lower() not in excluded_req}
+        
+        # Rewrite Referer and Origin to match target
+        parsed_target = urlparse(url)
+        target_origin = f"{parsed_target.scheme}://{parsed_target.netloc}"
+        
+        if 'Referer' in headers:
+            # Keep the path but swap the domain
+            u = urlparse(headers['Referer'])
+            headers['Referer'] = urljoin(target_origin, u.path + ("?" + u.query if u.query else ""))
+        if 'Origin' in headers:
+            headers['Origin'] = target_origin
+            
+        print(f"Tunneling [{request.method}]: {url}")
+        
+        # 2. Forward request body
+        data = request.get_data()
+        
+        # 3. Execute request
+        resp = requests.request(
+            method=request.method,
+            url=url,
+            data=data,
+            headers=headers,
+            timeout=30,
+            verify=False,
+            allow_redirects=False # We handle redirects manually for transparency
+        )
+        
+        # Capture origin for session tracking
+        parsed_resp = urlparse(resp.url)
+        origin = f"{parsed_resp.scheme}://{parsed_resp.netloc}"
+        if "api/proxy" in request.path:
+            ACTIVE_INSPECTION_ORIGIN = origin
+        
+        # 4. Prepare response headers
+        excluded_resp = [
+            "content-security-policy", "x-frame-options", 
+            "content-encoding", "transfer-encoding", "connection",
+            "strict-transport-security"
+        ]
+        
+        # Use a list of tuples to allow multiple Set-Cookie headers
+        resp_headers = []
+        for name, value in resp.raw.headers.items():
+            if name.lower() not in excluded_resp:
+                resp_headers.append((name, value))
+        
+        # Ensure CORS is permissive
+        resp_headers.append(("Access-Control-Allow-Origin", "*"))
+        resp_headers.append(("Access-Control-Allow-Credentials", "true"))
+        
+        # 5. Handle Content
+        ctype = resp.headers.get("Content-Type", "").lower()
+        
+        # HTML Rewriting (Only for the main page)
+        if "text/html" in ctype and "api/proxy" in request.path:
+            content = resp.text
+            proxy_prefix = f"{request.host_url.rstrip('/')}/api/proxy?url="
+            
+            # Rewrite all absolute paths to go through proxy
+            content = content.replace('src="/', f'src="{proxy_prefix}{origin}/')
+            content = content.replace('href="/', f'href="{proxy_prefix}{origin}/')
+            content = content.replace('action="/', f'action="{proxy_prefix}{origin}/')
+            content = content.replace('srcset="/', f'srcset="{proxy_prefix}{origin}/')
+            
+            # CSS patterns
+            content = content.replace('url(/', f'url({proxy_prefix}{origin}/')
+            content = content.replace('url("/', f'url("{proxy_prefix}{origin}/')
+            content = content.replace("url('/", f"url('{proxy_prefix}{origin}/")
+            
+            # Injected script to fix missing assets in JS
+            injection = f"""
+            <script id="proxy-fix">
+                window.__PROXY_ORIGIN__ = "{origin}";
+                console.log("Assistant: Proxy active for {origin}");
+            </script>
+            """
+            content = content.replace("<head>", "<head>" + injection)
+            
+            return Response(content, resp.status_code, resp_headers)
+        
+        # Transparent pass-through for assets/data
+        return Response(resp.content, resp.status_code, resp_headers)
+
+    except Exception as e:
+        print(f"--- PROXY ERROR ---")
+        traceback.print_exc()
+        return f"Proxy Error: {str(e)}", 500
+
+@app.route("/api/assistant/scaffold", methods=["POST"])
+def scaffold_from_inspect():
+    data = request.json
+    app_name, page_name, subfolder, elements = data.get("app"), data.get("name"), data.get("subfolder", ""), data.get("elements", [])
+    if not app_name or not page_name: return jsonify({"status": "error", "message": "Missing info"}), 400
+    try:
+        locators, methods = [], []
+        for el in elements:
+            # Use 'variableName' which is what inspector.html sends
+            v_name = el.get("variableName", "ELEMENT").upper()
+            l_type, l_val = el["locator_type"], el["locator_value"]
+            
+            locators.append(f"    {v_name} = (By.{l_type.upper()}, \"{l_val}\")")
+            m_name = v_name.lower()
+            if v_name.startswith("BTN_"): 
+                methods.append(f"    def click_{m_name[4:]}(self):\n        self.element(self.{v_name}).click()\n        return self")
+            elif v_name.startswith("INP_"): 
+                methods.append(f"    def fill_{m_name[4:]}(self, value):\n        self.element(self.{v_name}).send_keys(value)\n        return self")
+            elif v_name.startswith("LNK_"): 
+                methods.append(f"    def navigate_to_{m_name[4:]}(self):\n        self.element(self.{v_name}).click()\n        return self")
+            else: 
+                methods.append(f"    def get_{m_name}(self):\n        return self.element(self.{v_name}).text")
+        
+        # Load template
+        tmpl_path = os.path.join(PROJECT_ROOT, "templates", "page_object.tmpl")
+        if not os.path.exists(tmpl_path):
+            # Fallback inline template if file missing
+            tmpl = """from selenium.webdriver.common.by import By\nfrom applications.web.common.base_page import BasePage\n\nclass {{ class_name }}(BasePage):\n    # Locators\n# EXAMPLE_BUTTON = (By.ID, \"example-id\")\n\n    # Actions\n# def click_example_button(self):\n    #     self.element(self.EXAMPLE_BUTTON).click()\n    #     return self\n"""
+        else:
+            with open(tmpl_path, "r") as f: tmpl = f.read()
+            
+        content = tmpl.replace("{{ class_name }}", page_name)
+        content = content.replace("# EXAMPLE_BUTTON = (By.ID, \"example-id\")", "\n".join(locators))
+        content = content.replace("# def click_example_button(self):\n    #     self.element(self.EXAMPLE_BUTTON).click()\n    #     return self", "\n\n".join(methods))
+        
+        snake = scaffold.to_snake_case(page_name)
+        target_dir = os.path.join(PROJECT_ROOT, f"applications/web/{app_name}/pages", subfolder)
+        os.makedirs(target_dir, exist_ok=True)
+        f_path = os.path.join(target_dir, f"{snake}.py")
+        with open(f_path, "w", encoding="utf-8") as f: f.write(content)
+        scaffold.register_page(page_name, app_name, subfolder, snake)
+        return jsonify({"status": "success", "message": f"Created: {f_path}"})
+    except Exception as e: 
+        traceback.print_exc()
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route("/api/proxy", methods=["GET", "POST", "PUT", "DELETE"])
+def proxy_route():
+    url = request.args.get("url")
+    if not url: return "Missing URL", 400
+    return perform_proxy(url)
+
+@app.route('/<path:path>', methods=["GET", "POST", "PUT", "DELETE", "PATCH"])
+def handle_catchall(path=None):
+    """Catch all unknown paths and tunnel them to the current target origin."""
+    global ACTIVE_INSPECTION_ORIGIN
+    
+    # ASSISTANT PROTECTION: Never proxy these prefixes
+    p = request.path
+    if p.startswith("/api/assistant") or p == "/inspector" or p == "/inspector/" or p == "/api/proxy":
+        print(f"Direct API Match (Internal): {p}")
+        return jsonify({"error": "Internal Route Not Found (404)", "path": p}), 404
+        
+    if not ACTIVE_INSPECTION_ORIGIN:
+        print(f"Proxy Denied: No origin for {p}")
+        return jsonify({"error": "No Active Origin Set", "path": p}), 404
+        
+    full_target_url = urljoin(ACTIVE_INSPECTION_ORIGIN, request.full_path)
+    print(f"Tunneling -> {full_target_url}")
+    return perform_proxy(full_target_url)
+
 if __name__ == "__main__":
-    print(f"🚀 Starting Test Runner GUI at http://localhost:5000")
-    print(f"📂 Project Root: {PROJECT_ROOT}")
+    print(f"Starting Test Runner GUI at http://localhost:5000")
     app.run(host="0.0.0.0", port=5000, debug=True)

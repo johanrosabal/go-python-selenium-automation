@@ -398,7 +398,241 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            transition: all 0.3s;
         }
+
+        .api-inspector {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            background: var(--bg-sidebar);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Workspace Tabs */
+        .workspace-tabs {
+            display: none;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .workspace-container.api-mode .workspace-tabs {
+            display: flex;
+        }
+
+        .workspace-tab {
+            padding: 8px 20px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .workspace-tab:hover { color: var(--text-main); }
+
+        .workspace-tab.active {
+            background: rgba(139, 233, 253, 0.1);
+            color: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        .workspace-container.api-mode .api-inspector.active {
+            display: flex;
+        }
+
+        .workspace-container.api-mode .console-container.hidden {
+            display: none;
+        }
+
+        .inspector-header {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 0.75rem;
+        }
+
+        .status-success { background: rgba(80, 250, 123, 0.15); color: var(--accent-green); border: 1px solid var(--accent-green); }
+        .status-error { background: rgba(255, 85, 85, 0.15); color: var(--accent-red); border: 1px solid var(--accent-red); }
+        .status-warning { background: rgba(252, 161, 48, 0.15); color: #fca130; border: 1px solid #fca130; }
+
+        /* History Sidebar */
+        .inspector-sidebar {
+            width: 250px;
+            border-right: 1px solid var(--border);
+            background: rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .history-header {
+            padding: 15px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .history-item:hover { background: rgba(255,255,255,0.05); }
+        .history-item.active { 
+            background: rgba(139, 233, 253, 0.1); 
+            border-left: 3px solid var(--accent-blue);
+        }
+
+        .history-item-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-method {
+            font-size: 0.65rem;
+            font-weight: 900;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        .history-status {
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+
+        .history-name {
+            font-size: 0.75rem;
+            color: var(--text-main);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .inspector-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .inspector-header {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .inspector-tabs {
+            display: flex;
+            gap: 5px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 3px;
+            border-radius: 8px;
+        }
+
+        .inspector-tab {
+            flex: 1;
+            padding: 6px;
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 800;
+            cursor: pointer;
+            border-radius: 6px;
+            color: var(--text-muted);
+            transition: 0.2s;
+        }
+
+        .inspector-tab.active {
+            background: var(--bg-panel);
+            color: var(--accent-blue);
+        }
+
+        .inspector-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .inspector-code {
+            background: #11111b;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+            color: #cdd6f4;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+        }
+
+        .header-table th {
+            text-align: left;
+            padding: 8px;
+            color: var(--accent-purple);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-table td {
+            padding: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .header-key { font-weight: 700; color: var(--text-main); }
+        .header-val { color: var(--text-muted); }
+
+        .method-badge {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 900;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .method-get { background: rgba(97, 175, 254, 0.2); color: #61affe; }
+        .method-post { background: rgba(73, 204, 144, 0.2); color: #49cc90; }
+        .method-put { background: rgba(252, 161, 48, 0.2); color: #fca130; }
+        .method-delete { background: rgba(249, 62, 62, 0.2); color: #f93e3e; }
 
         .media-container {
             display: none;
@@ -743,6 +977,47 @@
             font-weight: bold;
             text-transform: uppercase;
         }
+
+        /* Mode Tabs Styles */
+        .mode-tabs {
+            display: flex;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 4px;
+            border-radius: 10px;
+            margin: 0 15px 15px;
+            border: 1px solid var(--border);
+        }
+
+        .mode-tab {
+            flex: 1;
+            padding: 8px;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .mode-tab.active {
+            background: var(--accent-blue);
+            color: #000;
+            box-shadow: 0 4px 12px rgba(139, 233, 253, 0.3);
+        }
+
+        .mode-tab:not(.active):hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+        }
+
+        /* Utility classes for conditional visibility */
+        .ui-only { transition: all 0.3s; }
+        .hidden { display: none !important; }
     </style>
 </head>
 
@@ -753,6 +1028,16 @@
         <div class="sidebar-header">
             <span class="framework-label">Automation Framework</span>
             <h2 class="runner-title">Go Python Runner</h2>
+        </div>
+
+        <!-- Mode Selector Tabs -->
+        <div class="mode-tabs">
+            <div class="mode-tab active" id="tab-web" onclick="switchMode('web')">
+                <span>🖥️</span> UI TESTS
+            </div>
+            <div class="mode-tab" id="tab-api" onclick="switchMode('api')">
+                <span>🌐</span> API TESTS
+            </div>
         </div>
 
         <!-- App Custom Dropdown -->
@@ -806,8 +1091,8 @@
                         <input type="hidden" id="config-env" value="qa">
                     </div>
 
-                    <label style="color: var(--text-muted); font-size: 0.85rem; margin-left: 10px;">Browser</label>
-                    <div class="custom-select" style="width: 130px;">
+                    <label class="ui-only" style="color: var(--text-muted); font-size: 0.85rem; margin-left: 10px;">Browser</label>
+                    <div class="ui-only custom-select" style="width: 130px;">
                         <div class="select-trigger" id="browser-trigger">Chrome</div>
                         <div class="options-list">
                             <div class="option-item selected" data-value="chrome">Chrome</div>
@@ -817,16 +1102,21 @@
                         <input type="hidden" id="config-browser" value="chrome">
                     </div>
 
-                    <label style="display: flex; align-items: center; gap: 5px;">
+                    <label class="ui-only" style="display: flex; align-items: center; gap: 5px;">
                         <input type="checkbox" id="config-headless"> Headless
                     </label>
 
-                    <label style="display: flex; align-items: center; gap: 5px; margin-left: 10px;">
+                    <label class="ui-only" style="display: flex; align-items: center; gap: 5px; margin-left: 10px;">
                         <input type="checkbox" id="config-video"> Grabar Video
                     </label>
 
                     <button class="allure-btn" id="allure-btn" onclick="generateAllureReport()">📊 Allure
                         Report</button>
+
+                    <button class="assistant-btn" onclick="window.location.href='/assistant-v3'"
+                        style="background: rgba(189, 147, 249, 0.15); border: 1px solid rgba(189, 147, 249, 0.3); color: var(--accent-purple); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: all 0.2s; height: 38px; margin-right: 10px;">
+                        🤖 Assistant
+                    </button>
 
                     <button class="media-btn" id="media-gallery-btn" onclick="openMediaGallery()">
                         🎬 Media Gallery
@@ -847,46 +1137,109 @@
 
         <!-- Terminal & Media Console -->
         <div class="workspace-container" id="terminal-container">
-            <div class="console-container">
-                <div id="terminal-hero" class="hero-container">
-                    <div class="hero-icon">🚀</div>
-                    <h1 class="hero-title">Ready for Takeoff</h1>
-                    <p class="hero-subtitle">Your Go Python automation framework is primed and ready. Select your tests
-                        from the explorer and launch the execution.</p>
+            <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
+                <!-- Workspace Internal Tabs -->
+                <div class="workspace-tabs">
+                    <div class="workspace-tab active" id="wtab-logs" onclick="switchWorkspaceTab('logs')">📝 LOGS</div>
+                    <div class="workspace-tab" id="wtab-inspector" onclick="switchWorkspaceTab('inspector')">🔍 INSPECTOR</div>
+                </div>
 
-                    <div class="hero-grid">
-                        <div class="hero-card">
-                            <span class="hero-card-icon">📁</span>
-                            <span class="hero-card-title">Select App</span>
-                            <span class="hero-card-text">Pick your project target from the sidebar.</span>
+                <div class="console-container" id="console-panel">
+                    <div id="terminal-hero" class="hero-container">
+                        <div class="hero-icon">🚀</div>
+                        <h1 class="hero-title">Ready for Takeoff</h1>
+                        <p class="hero-subtitle">Your Go Python automation framework is primed and ready. Select your tests
+                            from the explorer and launch the execution.</p>
+
+                        <div class="hero-grid">
+                            <div class="hero-card">
+                                <span class="hero-card-icon">📁</span>
+                                <span class="hero-card-title">Select App</span>
+                                <span class="hero-card-text">Pick your project target from the sidebar.</span>
+                            </div>
+                            <div class="hero-card">
+                                <span class="hero-card-icon">🧪</span>
+                                <span class="hero-card-title">Pick Tests</span>
+                                <span class="hero-card-text">Choose specific cases or run a saved plan.</span>
+                            </div>
+                            <div class="hero-card">
+                                <span class="hero-card-icon">⚡</span>
+                                <span class="hero-card-title">Execute</span>
+                                <span class="hero-card-text">Stream logs and capture results in real-time.</span>
+                            </div>
                         </div>
-                        <div class="hero-card">
-                            <span class="hero-card-icon">🧪</span>
-                            <span class="hero-card-title">Pick Tests</span>
-                            <span class="hero-card-text">Choose specific cases or run a saved plan.</span>
+                    </div>
+
+                    <div id="terminal-live" style="display: none; flex: 1; flex-direction: column; overflow: hidden;">
+                        <div class="console-header">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span>Execution Logs</span>
+                                <button onclick="copyLogToClipboard()"
+                                    style="background: none; border: 1px solid var(--border); color: var(--text-muted); border-radius: 4px; cursor: pointer; padding: 2px 8px; font-size: 0.8rem; transition: 0.2s;"
+                                    onmouseover="this.style.color='var(--accent-blue)'; this.style.borderColor='var(--accent-blue)'"
+                                    onmouseout="this.style.color='var(--text-muted)'; this.style.borderColor='var(--border)'">
+                                    📋 Copy
+                                </button>
+                            </div>
+                            <span id="exec-status"></span>
                         </div>
-                        <div class="hero-card">
-                            <span class="hero-card-icon">⚡</span>
-                            <span class="hero-card-title">Execute</span>
-                            <span class="hero-card-text">Stream logs and capture results in real-time.</span>
-                        </div>
+                        <div class="terminal" id="terminal"></div>
                     </div>
                 </div>
 
-                <div id="terminal-live" style="display: none; flex: 1; flex-direction: column; overflow: hidden;">
-                    <div class="console-header">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <span>Execution Logs</span>
-                            <button onclick="copyLogToClipboard()"
-                                style="background: none; border: 1px solid var(--border); color: var(--text-muted); border-radius: 4px; cursor: pointer; padding: 2px 8px; font-size: 0.8rem; transition: 0.2s;"
-                                onmouseover="this.style.color='var(--accent-blue)'; this.style.borderColor='var(--accent-blue)'"
-                                onmouseout="this.style.color='var(--text-muted)'; this.style.borderColor='var(--border)'">
-                                📋 Copy
-                            </button>
+                <!-- API Inspector Panel -->
+                <div class="api-inspector" id="api-inspector" style="flex-direction: row;">
+                    <!-- Sidebar History -->
+                    <div class="inspector-sidebar">
+                        <div class="history-header">
+                            <span>📜 REQUEST HISTORY</span>
+                            <span id="history-count" style="background: var(--accent-blue); color: #111; padding: 2px 6px; border-radius: 10px; font-size: 10px;">0</span>
                         </div>
-                        <span id="exec-status"></span>
+                        <div class="history-list" id="inspector-history">
+                            <!-- Items will be added here -->
+                        </div>
                     </div>
-                    <div class="terminal" id="terminal"></div>
+
+                    <!-- Main Content -->
+                    <div class="inspector-main" id="inspector-details">
+                        <div class="inspector-header">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div id="inspector-method-badge" class="method-badge method-get">GET</div>
+                                    <div id="inspector-status-badge" class="status-badge status-warning">PENDING</div>
+                                </div>
+                                <div id="inspector-time" style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">0.00s</div>
+                            </div>
+                            <div id="inspector-url" style="font-size: 0.8rem; color: var(--text-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid var(--border); font-family: monospace;">
+                                No request captured yet.
+                            </div>
+                            <div class="inspector-tabs">
+                                <div class="inspector-tab active" data-tab="req-body" onclick="switchInspectorTab('req-body')">REQUEST</div>
+                                <div class="inspector-tab" data-tab="res-body" onclick="switchInspectorTab('res-body')">RESPONSE</div>
+                                <div class="inspector-tab" data-tab="headers" onclick="switchInspectorTab('headers')">HEADERS</div>
+                            </div>
+                        </div>
+                        <div class="inspector-body">
+                            <div id="ins-req-body" class="inspector-pane">
+                                <div style="margin-bottom: 8px; font-size: 0.7rem; color: var(--text-muted); font-weight: 800;">REQUEST BODY:</div>
+                                <div class="inspector-code" id="code-req-body">{}</div>
+                            </div>
+                            <div id="ins-res-body" class="inspector-pane hidden">
+                                <div style="margin-bottom: 8px; font-size: 0.7rem; color: var(--text-muted); font-weight: 800;">RESPONSE BODY:</div>
+                                <div class="inspector-code" id="code-res-body">{}</div>
+                            </div>
+                            <div id="ins-headers" class="inspector-pane hidden">
+                                <div style="margin-bottom: 20px;">
+                                    <div style="font-size: 0.75rem; color: var(--accent-purple); font-weight: 800; margin-bottom: 8px; border-left: 3px solid var(--accent-purple); padding-left: 10px;">REQUEST HEADERS</div>
+                                    <table class="header-table" id="table-req-headers"></table>
+                                </div>
+                                <div style="margin-top: 30px;">
+                                    <div style="font-size: 0.75rem; color: var(--accent-green); font-weight: 800; margin-bottom: 8px; border-left: 3px solid var(--accent-green); padding-left: 10px;">RESPONSE HEADERS</div>
+                                    <table class="header-table" id="table-res-headers"></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -907,14 +1260,253 @@
     </dialog>
 
     <script>
+        let currentMode = 'web'; // Default mode
+        let allApps = []; // Store all apps for filtering
         let currentTestId = null;
         let mediaGallery = []; // Store captured media
+        let sessionRequests = []; // For API history
+        let activeRequestIndex = -1;
+        let currentTestName = "Unknown Test";
+
+        function switchMode(mode) {
+            currentMode = mode;
+            // Update UI tabs
+            document.getElementById('tab-web').classList.toggle('active', mode === 'web');
+            document.getElementById('tab-api').classList.toggle('active', mode === 'api');
+
+            // Toggle Workspace Layout
+            const container = document.getElementById('terminal-container');
+            container.classList.toggle('api-mode', mode === 'api');
+            
+            // Reset Workspace Tab to Logs
+            if (mode === 'api') switchWorkspaceTab('logs');
+
+            // Hide/Show UI-only controls
+            document.querySelectorAll('.ui-only').forEach(el => {
+                if (mode === 'api') el.classList.add('hidden');
+                else el.classList.remove('hidden');
+            });
+
+            // Update App list
+            renderAppDropdown();
+        }
+
+        function switchWorkspaceTab(tabId) {
+            // Update tabs
+            document.getElementById('wtab-logs').classList.toggle('active', tabId === 'logs');
+            document.getElementById('wtab-inspector').classList.toggle('active', tabId === 'inspector');
+            
+            // Update panels
+            const consolePanel = document.getElementById('console-panel');
+            const inspectorPanel = document.getElementById('api-inspector');
+            
+            if (tabId === 'logs') {
+                consolePanel.classList.remove('hidden');
+                inspectorPanel.classList.remove('active');
+            } else {
+                consolePanel.classList.add('hidden');
+                inspectorPanel.classList.add('active');
+            }
+        }
+
+        function switchInspectorTab(tabId) {
+            // Update tabs
+            document.querySelectorAll('.inspector-tab').forEach(t => {
+                t.classList.toggle('active', t.dataset.tab === tabId);
+            });
+            // Update panes
+            document.querySelectorAll('.inspector-pane').forEach(p => {
+                p.classList.add('hidden');
+            });
+            document.getElementById(`ins-${tabId}`).classList.remove('hidden');
+        }
+
+        function updateInspectorHeader(method, url) {
+            const badge = document.getElementById('inspector-method-badge');
+            const urlEl = document.getElementById('inspector-url');
+            const statusBadge = document.getElementById('inspector-status-badge');
+            const timeEl = document.getElementById('inspector-time');
+            
+            badge.innerText = method;
+            badge.className = `method-badge method-${method.toLowerCase()}`;
+            urlEl.innerText = url;
+            urlEl.title = url;
+            
+            // Reset status and time for new request
+            statusBadge.innerText = "PENDING";
+            statusBadge.className = "status-badge status-warning";
+            timeEl.innerText = "0.00s";
+        }
+
+        function updateInspectorStatus(statusText) {
+            const statusBadge = document.getElementById('inspector-status-badge');
+            statusBadge.innerText = statusText;
+            
+            if (statusText.startsWith('2') || statusText.includes('OK')) {
+                statusBadge.className = "status-badge status-success";
+            } else if (statusText.startsWith('4') || statusText.startsWith('5')) {
+                statusBadge.className = "status-badge status-error";
+            } else {
+                statusBadge.className = "status-badge status-warning";
+            }
+        }
+
+        function createNewRequestEntry(method, url) {
+            const request = {
+                testName: currentTestName,
+                method: method,
+                url: url,
+                status: "PENDING",
+                time: "0.00s",
+                reqBody: "{}",
+                resBody: "{}",
+                reqHeaders: {},
+                resHeaders: {}
+            };
+            sessionRequests.push(request);
+            activeRequestIndex = sessionRequests.length - 1;
+            renderRequestHistory();
+            selectHistoryItem(activeRequestIndex);
+        }
+
+        function renderRequestHistory() {
+            const list = document.getElementById('inspector-history');
+            const count = document.getElementById('history-count');
+            list.innerHTML = '';
+            count.innerText = sessionRequests.length;
+
+            sessionRequests.forEach((req, index) => {
+                const item = document.createElement('div');
+                item.className = `history-item ${index === activeRequestIndex ? 'active' : ''}`;
+                
+                const statusClass = (req.status.startsWith('2') || req.status === 'OK') ? 'status-success' : 
+                                    (req.status.startsWith('4') || req.status.startsWith('5')) ? 'status-error' : 'status-warning';
+
+                item.innerHTML = `
+                    <div class="history-item-top">
+                        <span class="history-method method-${req.method.toLowerCase()}">${req.method}</span>
+                        <span class="history-status ${statusClass}" style="font-size: 10px; padding: 1px 4px; border-radius: 3px;">${req.status}</span>
+                    </div>
+                    <div class="history-name">${req.testName}</div>
+                    <div style="font-size: 9px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${req.url}</div>
+                `;
+                item.onclick = () => selectHistoryItem(index);
+                list.appendChild(item);
+            });
+            // Auto scroll to bottom
+            list.scrollTop = list.scrollHeight;
+        }
+
+        function selectHistoryItem(index) {
+            activeRequestIndex = index;
+            const req = sessionRequests[index];
+            if (!req) return;
+
+            // Highlight in sidebar
+            document.querySelectorAll('.history-item').forEach((item, idx) => {
+                item.classList.toggle('active', idx === index);
+            });
+
+            // Update Main Details
+            const badge = document.getElementById('inspector-method-badge');
+            const urlEl = document.getElementById('inspector-url');
+            const statusBadge = document.getElementById('inspector-status-badge');
+            const timeEl = document.getElementById('inspector-time');
+            
+            badge.innerText = req.method;
+            badge.className = `method-badge method-${req.method.toLowerCase()}`;
+            urlEl.innerText = req.url;
+            urlEl.title = req.url;
+            
+            statusBadge.innerText = req.status;
+            if (req.status.startsWith('2') || req.status.includes('OK')) {
+                statusBadge.className = "status-badge status-success";
+            } else if (req.status.startsWith('4') || req.status.startsWith('5')) {
+                statusBadge.className = "status-badge status-error";
+            } else {
+                statusBadge.className = "status-badge status-warning";
+            }
+            
+            timeEl.innerText = req.time;
+
+            // Bodies
+            updateInspectorCode('code-req-body', req.reqBody);
+            updateInspectorCode('code-res-body', req.resBody);
+
+            // Headers
+            updateInspectorHeaders('table-req-headers', req.reqHeaders);
+            updateInspectorHeaders('table-res-headers', req.resHeaders);
+        }
+
+        function updateInspectorCode(elementId, data) {
+            const el = document.getElementById(elementId);
+            try {
+                const parsed = typeof data === 'string' ? JSON.parse(data) : data;
+                el.innerText = JSON.stringify(parsed, null, 2);
+            } catch (e) {
+                el.innerText = data;
+            }
+        }
+
+        function updateInspectorHeaders(tableId, headers) {
+            const table = document.getElementById(tableId);
+            table.innerHTML = '<thead><tr><th>Key</th><th>Value</th></tr></thead><tbody></tbody>';
+            const tbody = table.querySelector('tbody');
+            
+            for (const [key, val] of Object.entries(headers)) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td class="header-key">${key}</td><td class="header-val">${val}</td>`;
+                tbody.appendChild(row);
+            }
+        }
+
+        function renderAppDropdown() {
+            const optionsList = document.getElementById('app-options');
+            const trigger = document.getElementById('app-trigger');
+            const hiddenInput = document.getElementById('app-selector');
+            
+            optionsList.innerHTML = '';
+            
+            const filtered = allApps.filter(a => a.type === currentMode);
+            
+            if (filtered.length === 0) {
+                trigger.innerText = `No ${currentMode.toUpperCase()} apps found`;
+                return;
+            }
+
+            filtered.forEach((app, index) => {
+                const icon = app.type === 'api' ? '🌐' : '🖥️';
+                const option = document.createElement('div');
+                option.className = 'option-item';
+                
+                const labelHtml = `<span style="margin-right: 8px;">${icon}</span>${app.name}`;
+                
+                if (index === 0) {
+                    option.classList.add('selected');
+                    trigger.innerHTML = labelHtml;
+                    hiddenInput.value = app.path;
+                }
+                
+                option.innerHTML = labelHtml;
+                option.onclick = () => {
+                    optionsList.querySelectorAll('.option-item').forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                    trigger.innerHTML = labelHtml;
+                    hiddenInput.value = app.path;
+                    document.getElementById('app-dropdown').classList.remove('open');
+                    fetchTests();
+                };
+                optionsList.appendChild(option);
+            });
+            
+            // Trigger test fetch for the new selected app
+            fetchTests();
+        }
 
         // Load tests when the page opens
         document.addEventListener('DOMContentLoaded', async () => {
             initCustomSelects(); // Global setup for dropdowns
             await fetchApps();
-            await fetchTests();
             await fetchPlans(); // Load saved plans
             await loadExistingMedia(); // Discover previous captures
         });
@@ -1059,31 +1651,8 @@
                 const data = await response.json();
 
                 if (data.status === 'success') {
-                    const optionsList = document.getElementById('app-options');
-                    const trigger = document.getElementById('app-trigger');
-                    const hiddenInput = document.getElementById('app-selector');
-
-                    optionsList.innerHTML = '';
-
-                    data.apps.forEach((app, index) => {
-                        const option = document.createElement('div');
-                        option.className = 'option-item';
-                        if (index === 0) {
-                            option.classList.add('selected');
-                            trigger.innerText = app.name;
-                            hiddenInput.value = app.path;
-                        }
-                        option.innerText = app.name;
-                        option.onclick = () => {
-                            optionsList.querySelectorAll('.option-item').forEach(opt => opt.classList.remove('selected'));
-                            option.classList.add('selected');
-                            trigger.innerText = app.name;
-                            hiddenInput.value = app.path;
-                            document.getElementById('app-dropdown').classList.remove('open');
-                            fetchTests();
-                        };
-                        optionsList.appendChild(option);
-                    });
+                    allApps = data.apps;
+                    renderAppDropdown();
                 }
             } catch (e) {
                 console.error("Failed to fetch apps", e);
@@ -1227,13 +1796,33 @@
             return Array.from(document.querySelectorAll('.test-checkbox:checked')).map(cb => cb.value);
         }
 
+
+
         async function runSelectedTest() {
-            const selectedTests = getSelectedTestIds();
-            const appPath = document.getElementById('app-selector').value;
+            const testIds = getSelectedTestIds();
+            if (testIds.length === 0) return;
+
+            // Reset UI for new run
+            document.getElementById('terminal').innerHTML = '';
+            document.getElementById('terminal-hero').style.display = 'none';
+            document.getElementById('terminal-live').style.display = 'flex';
+            document.getElementById('exec-status').innerText = 'Running...';
+            document.getElementById('run-btn').disabled = true;
+            document.getElementById('run-icon').innerText = '⏳';
+            
+            // API Specific Reset
+            sessionRequests = [];
+            activeRequestIndex = -1;
+            renderRequestHistory();
+            document.getElementById('inspector-url').innerText = 'No request captured yet.';
+            updateInspectorCode('code-req-body', '{}');
+            updateInspectorCode('code-res-body', '{}');
+
             const env = document.getElementById('config-env').value;
             const browser = document.getElementById('config-browser').value;
             const headless = document.getElementById('config-headless').checked;
             const video = document.getElementById('config-video').checked;
+            const appPath = document.getElementById('app-selector').value;
 
             const term = document.getElementById('terminal');
             const runBtn = document.getElementById('run-btn');
@@ -1258,7 +1847,7 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        test_id: selectedTests, // Sending array now
+                        test_id: testIds, // Fixed from selectedTests
                         browser: browser,
                         env: env,
                         headless: headless,
@@ -1613,6 +2202,85 @@
                 htmlMessage = htmlMessage.replace(/\\U([0-9a-fA-F]{8})/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)));
                 htmlMessage = htmlMessage.replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)));
                 htmlMessage = htmlMessage.replace(/\\x([0-9a-fA-F]{2})/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)));
+
+                // JSON Pretty Print and Inspector Update for API responses
+                if (currentMode === 'api') {
+                    // 0. Detect Current Test Name
+                    if (htmlMessage.includes('STARTING API TEST:')) {
+                        currentTestName = htmlMessage.split('TEST:')[1].split('|')[0].trim();
+                        if (currentTestName === 'N/A') {
+                           // Try to find it in the pytest file line
+                           const match = htmlMessage.match(/::(\w+)/);
+                           if (match) currentTestName = match[1];
+                        }
+                    }
+
+                    // 1. Detect Request
+                    if (htmlMessage.includes('🌐') && htmlMessage.includes('request to:')) {
+                        const method = htmlMessage.match(/🌐 (GET|POST|PUT|DELETE|PATCH)/)?.[1] || "GET";
+                        const url = htmlMessage.split('request to:')[1].trim();
+                        createNewRequestEntry(method, url);
+                    }
+
+                    if (activeRequestIndex === -1) { span.innerText = htmlMessage + '\n'; terminal.appendChild(span); return; }
+                    const currentReq = sessionRequests[activeRequestIndex];
+
+                    // 2. Detect Body (Request or Response)
+                    if (htmlMessage.includes('Body:')) {
+                        const isResponse = htmlMessage.includes('Response Body:');
+                        const prefix = isResponse ? 'Response Body:' : 'Body:';
+                        const jsonPart = htmlMessage.split(prefix)[1];
+                        
+                        if (jsonPart && (jsonPart.includes('{') || jsonPart.includes('['))) {
+                            try {
+                                const parsed = JSON.parse(jsonPart.trim());
+                                const pretty = JSON.stringify(parsed, null, 2);
+                                htmlMessage = htmlMessage.replace(jsonPart, '\n' + pretty);
+                                
+                                // Update Session State
+                                if (isResponse) currentReq.resBody = parsed;
+                                else currentReq.reqBody = parsed;
+                                
+                                // Update UI if currently viewing this request
+                                selectHistoryItem(activeRequestIndex);
+                            } catch (e) { }
+                        }
+                    }
+
+                    // 3. Detect Headers
+                    if (htmlMessage.includes('📋') && htmlMessage.includes('Headers:')) {
+                        const isResponse = htmlMessage.includes('Response Headers:');
+                        const prefix = isResponse ? 'Response Headers:' : 'Request Headers:';
+                        const jsonPart = htmlMessage.split(prefix)[1];
+                        
+                        try {
+                            const headers = JSON.parse(jsonPart.trim());
+                            if (isResponse) currentReq.resHeaders = headers;
+                            else currentReq.reqHeaders = headers;
+                            
+                            selectHistoryItem(activeRequestIndex);
+                            return; // Hide headers from console
+                        } catch (e) { }
+                    }
+                    
+                    // 4. Detect Status
+                    if (htmlMessage.includes('Status:')) {
+                        const statusPart = htmlMessage.split('Status:')[1].trim();
+                        currentReq.status = statusPart;
+                        renderRequestHistory();
+                        selectHistoryItem(activeRequestIndex);
+                    }
+
+                    // 5. Detect Test Completion / Time
+                    if (htmlMessage.includes('passed in')) {
+                        const timePart = htmlMessage.match(/passed in ([\d.]+)s/)?.[1];
+                        if (timePart) {
+                            currentReq.time = timePart + 's';
+                            renderRequestHistory();
+                            selectHistoryItem(activeRequestIndex);
+                        }
+                    }
+                }
 
                 span.innerText = htmlMessage + '\n';
 

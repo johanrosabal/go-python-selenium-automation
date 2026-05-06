@@ -1,0 +1,11 @@
+# Go Hotel Configuration - LOCAL
+name: Go Hotel Automation
+web:
+  base_url: http://localhost:9002
+
+default:
+  browser: chrome
+
+user:
+  username: johan.manuel.rosabal@gmail.com
+  password: Snap1234!

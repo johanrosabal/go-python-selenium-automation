@@ -126,6 +126,10 @@ def create_test(name, app, test_id, feature):
         print(f"Created Test Case: {file_path}")
 
 if __name__ == "__main__":
+    # Ensure templates directory exists
+    if not os.path.exists("templates"):
+        os.makedirs("templates")
+        
     parser = argparse.ArgumentParser(description="Framework Scaffolding Tool")
     subparsers = parser.add_subparsers(dest="command")
 

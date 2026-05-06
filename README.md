@@ -81,8 +81,10 @@ El sistema separa estrictamente la infraestructura (`core`) de los proyectos ind
 │       ├── pages/          # 🏗️ Page Objects (POM)
 │       └── tests/          # 🧪 Casos de Prueba (Scripts)
 ├── core/                   # 🧠 Núcleo del Framework (Inmutable)
-│   ├── ui/actions/         # 🕹️ Componentes de Acción (Stateful Pattern)
-│   ├── ui/common/          # 🧱 Singleton, BasePage, BaseTest
+│   ├── ui/actions/         # 🕹️ Componentes de Acción UI (Stateful Pattern)
+│   ├── ui/common/          # 🧱 Singleton, BasePage, BaseTest UI
+│   ├── api/actions/        # 🌐 Componentes de Acción API (GET, POST, etc.)
+│   ├── api/common/         # 🏛️ BaseEndpoint, BaseAPITest, APIResponse
 │   └── utils/              # 🧰 Logger, Config, Loader, Decorators
 ├── logs/                   # 🔎 Trazabilidad (automation.log)
 ├── reports/                # 📊 Resultados de Allure
@@ -720,6 +722,58 @@ def manejo_de_alertas(self):
 >     .wait_clickable() \
 >     .click()
 > ```
+
+---
+
+## 🌐 API Testing (Endpoints Object Model - EOM)
+
+Siguiendo la misma filosofía que el POM para UI, el framework implementa el patrón **Endpoints Object Model (EOM)** para pruebas de API robustas, escalables y con aserciones fluidas.
+
+### 1. Arquitectura EOM
+*   **`BaseEndpoint`**: Centraliza las acciones HTTP (`get`, `post`, `put`, `delete`).
+*   **`BaseAPITest`**: Gestiona sesiones de `requests`, autenticación y configuración de ambiente.
+*   **`APIResponse`**: Wrapper para respuestas que permite encadenar validaciones (Fluent Assertions).
+
+### 2. Ejemplo de Endpoint Object
+Crea tus objetos de endpoint en `applications/api/{app_name}/endpoints/`:
+
+```python
+from core.api.common.base_endpoint import BaseEndpoint
+
+class UserEndpoint(BaseEndpoint):
+    def __init__(self, session):
+        super().__init__(session)
+        self.url = f"{self.base_url}/users"
+
+    def get_users(self):
+        return self.get.call(self.url)
+
+    def create_user(self, name, job):
+        return self.post.call(self.url, json={"name": name, "job": job})
+```
+
+### 3. Ejemplo de Test de API
+```python
+from core.api.common.base_api_test import BaseAPITest
+from applications.api.demo.endpoints.user_endpoint import UserEndpoint
+
+class TestUserAPI(BaseAPITest):
+    app_name = "demo"
+    
+    def test_create_user(self):
+        # 1. Instanciar el endpoint
+        users_api = UserEndpoint(self.session)
+        
+        # 2. Ejecutar y Validar de forma fluida
+        users_api.create_user("Johan", "QA") \
+            .assert_status_code(201) \
+            .assert_json_path("name", "Johan")
+```
+
+### 4. Ventajas del EOM
+- **Logging Automático**: Todas las peticiones y respuestas se registran con iconos visuales en la consola y Allure.
+- **Fluent Assertions**: Valida status codes y contenido JSON en una sola línea.
+- **Mantenibilidad**: Los cambios en los contratos de API se reflejan en un solo lugar (el Endpoint Object).
 
 ---
 

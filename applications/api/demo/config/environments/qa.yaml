@@ -1,0 +1,10 @@
+api:
+  base_url: "https://jsonplaceholder.typicode.com"
+  timeout: 30
+
+user:
+  username: "demo_api_user"
+  password: "demo_api_password"
+
+logging:
+  level: "INFO"

@@ -10,3 +10,4 @@ mss
 Pillow
 axe-selenium-python
 sqlalchemy
+requests
