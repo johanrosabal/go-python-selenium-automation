@@ -1,0 +1,92 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "🚀 Scaffold: New Page Object",
+            "type": "shell",
+            "command": "python tools/scaffold.py page --name ${input:pageName} --app ${input:appName} --subfolder ${input:subfolder}",
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "🧪 Scaffold: New Test Case",
+            "type": "shell",
+            "command": "python tools/scaffold.py test --name ${input:testName} --app ${input:appName} --id ${input:testId} --feature ${input:featureName}",
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "📊 Allure: Open Report Server",
+            "type": "shell",
+            "command": "serve-report.bat",
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "🖥️ Runner: Launch UI",
+            "type": "shell",
+            "command": "python tools/test_runner/app.py",
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "appName",
+            "type": "pickString",
+            "description": "Select the application/project",
+            "options": [
+                "demo",
+                "go_hotel",
+                "demo2"
+            ],
+            "default": "demo"
+        },
+        {
+            "id": "pageName",
+            "type": "promptString",
+            "description": "Enter the Page Object name (e.g. ProfilePage)",
+            "default": "NewPage"
+        },
+        {
+            "id": "subfolder",
+            "type": "promptString",
+            "description": "Enter a subfolder inside pages/ (optional)",
+            "default": ""
+        },
+        {
+            "id": "testName",
+            "type": "promptString",
+            "description": "Enter the Test Class name (e.g. Login)",
+            "default": "Login"
+        },
+        {
+            "id": "testId",
+            "type": "promptString",
+            "description": "Enter the Test ID (e.g. HOTEL-001)",
+            "default": "CT-XXX"
+        },
+        {
+            "id": "featureName",
+            "type": "promptString",
+            "description": "Enter the Feature name for the file (e.g. Auth)",
+            "default": "Feature"
+        }
+    ]
+}

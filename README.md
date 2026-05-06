@@ -55,11 +55,58 @@ $env:PYTHONPATH = "."; pytest --version
 
 ---
 
-## 🔌 Recommended VS Code Extensions
-- **Python (Microsoft)**: Full language support and IntelliSense.
-- **Pylance**: Fast static code analysis.
-- **vscode-icons**: Visual folder identification.
-- **Allure Support**: In-IDE results visualization.
+## 🔌 VS Code Extensions
+
+The project includes a `.vscode/extensions.json` file — VS Code will automatically prompt you to install all recommended extensions when you open the project.
+
+To install them manually: `Ctrl+Shift+P` → **Extensions: Show Recommended Extensions**
+
+### ✅ Required (Core Functionality)
+
+| Extension | ID | Purpose |
+| :--- | :--- | :--- |
+| **Python** | `ms-python.python` | Language support, IntelliSense, test runner integration |
+| **Pylance** | `ms-python.pylance` | Fast type-checking and autocompletion |
+| **Debugpy** | `ms-python.debugpy` | Debugger for F5 / launch profiles |
+
+### 🧪 Testing
+
+| Extension | ID | Purpose |
+| :--- | :--- | :--- |
+| **Python Test Adapter** | `littlefoxteam.vscode-python-test-adapter` | Tree view of all pytest test cases |
+| **Test Explorer UI** | `hbenl.vscode-test-explorer` | Base for the Test Explorer sidebar |
+
+### 📊 Reporting
+
+| Extension | ID | Purpose |
+| :--- | :--- | :--- |
+| **Allure Support** | `yagajs.allure-support` | View Allure reports directly inside VS Code |
+
+### ⚙️ YAML
+
+| Extension | ID | Purpose |
+| :--- | :--- | :--- |
+| **YAML** | `redhat.vscode-yaml` | Validation and autocomplete for `qa.yaml` / `dev.yaml` |
+
+### 🎥 Media (Video Recordings)
+
+| Extension | ID | Purpose |
+| :--- | :--- | :--- |
+| **Preview MP4** | `analytic-signal.preview-mp4` | Preview `.avi`/`.mp4` test recordings in VS Code |
+
+### 🛠️ Productivity (Optional but Recommended)
+
+| Extension | ID | Purpose |
+| :--- | :--- | :--- |
+| **GitLens** | `eamodio.gitlens` | Inline Git blame and history |
+| **vscode-icons** | `vscode-icons-team.vscode-icons` | Visual folder/file icon theme |
+| **Markdown All in One** | `yzhang.markdown-all-in-one` | Preview + shortcuts for README editing |
+| **GitHub Markdown Preview** | `bierner.markdown-preview-github-styles` | GitHub-style README preview |
+| **Black Formatter** | `ms-python.black-formatter` | Auto-format Python code on save |
+| **autoDocstring** | `njpwerner.autodocstring` | Auto-generate Python docstrings |
+
+> [!WARNING]
+> **Avoid installing Pyrefly** (`facebook.pyrefly`). It generates false parse errors on decorator lines. The project already has `"pyrefly.enable": false` in `settings.json`, but it's safer not to install it at all.
 
 ---
 

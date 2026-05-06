@@ -1,0 +1,32 @@
+{
+    "recommendations": [
+        // ── REQUIRED ──────────────────────────────────────────────
+        "ms-python.python",           // Python language support + IntelliSense
+        "ms-python.pylance",          // Fast type-checking and autocompletion
+        "ms-python.debugpy",          // Debugger (F5 / launch profiles)
+
+        // ── TESTING ───────────────────────────────────────────────
+        "littlefoxteam.vscode-python-test-adapter", // Test Explorer UI (tree view)
+        "hbenl.vscode-test-explorer",               // Test Explorer base
+
+        // ── REPORTING ─────────────────────────────────────────────
+        "yagajs.allure-support",      // Allure report viewer inside VS Code
+
+        // ── PRODUCTIVITY ──────────────────────────────────────────
+        "eamodio.gitlens",            // Git history and blame inline
+        "vscode-icons-team.vscode-icons", // Folder/file icon theme
+        "mechatroner.rainbow-csv",    // Color-coded CSV/JSON table view
+        "yzhang.markdown-all-in-one", // Markdown preview + shortcuts (for README)
+        "bierner.markdown-preview-github-styles", // GitHub-style markdown preview
+
+        // ── VIDEO / MEDIA ─────────────────────────────────────────
+        "analytic-signal.preview-mp4", // Preview .avi/.mp4 video recordings
+
+        // ── YAML ──────────────────────────────────────────────────
+        "redhat.vscode-yaml",         // YAML validation and autocomplete (qa.yaml)
+
+        // ── OPTIONAL / CONVENIENCE ────────────────────────────────
+        "ms-python.black-formatter", // Auto-format Python code on save
+        "njpwerner.autodocstring"    // Auto-generate Python docstrings
+    ]
+}

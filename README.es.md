@@ -58,12 +58,58 @@ $env:PYTHONPATH = "."; pytest --version
 
 ---
 
-## 🔌 Extensiones Recomendadas (VS Code)
-Para una mejor experiencia de desarrollo, instala estas extensiones:
-- **Python (Microsoft)**: Soporte completo de lenguaje e IntelliSense.
-- **Pylance**: Análisis de código estático rápido.
-- **vscode-icons**: Para identificar carpetas de forma visual.
-- **Allure Support**: Para visualización de resultados dentro del IDE.
+## 🔌 Extensiones de VS Code
+
+El proyecto incluye un archivo `.vscode/extensions.json` — VS Code te pedirá automáticamente instalar todas las extensiones recomendadas al abrir el proyecto.
+
+Para instalarlas manualmente: `Ctrl+Shift+P` → **Extensions: Show Recommended Extensions**
+
+### ✅ Requeridas (Funcionalidad Core)
+
+| Extensión | ID | Propósito |
+| :--- | :--- | :--- |
+| **Python** | `ms-python.python` | Soporte de lenguaje, IntelliSense, integración con test runner |
+| **Pylance** | `ms-python.pylance` | Type-checking rápido y autocompletado |
+| **Debugpy** | `ms-python.debugpy` | Debugger para F5 / launch profiles |
+
+### 🧪 Testing
+
+| Extensión | ID | Propósito |
+| :--- | :--- | :--- |
+| **Python Test Adapter** | `littlefoxteam.vscode-python-test-adapter` | Vista de árbol de todos los pytest test cases |
+| **Test Explorer UI** | `hbenl.vscode-test-explorer` | Base del sidebar Test Explorer |
+
+### 📊 Reportes
+
+| Extensión | ID | Propósito |
+| :--- | :--- | :--- |
+| **Allure Support** | `yagajs.allure-support` | Ver reportes Allure directamente en VS Code |
+
+### ⚙️ YAML
+
+| Extensión | ID | Propósito |
+| :--- | :--- | :--- |
+| **YAML** | `redhat.vscode-yaml` | Validación y autocompletado para `qa.yaml` / `dev.yaml` |
+
+### 🎥 Media (Grabaciones de Video)
+
+| Extensión | ID | Propósito |
+| :--- | :--- | :--- |
+| **Preview MP4** | `analytic-signal.preview-mp4` | Previsualizar grabaciones `.avi`/`.mp4` en VS Code |
+
+### 🛠️ Productividad (Opcional pero Recomendado)
+
+| Extensión | ID | Propósito |
+| :--- | :--- | :--- |
+| **GitLens** | `eamodio.gitlens` | Historial Git y blame inline |
+| **vscode-icons** | `vscode-icons-team.vscode-icons` | Tema de iconos para carpetas y archivos |
+| **Markdown All in One** | `yzhang.markdown-all-in-one` | Preview + atajos para editar README |
+| **GitHub Markdown Preview** | `bierner.markdown-preview-github-styles` | Preview de README estilo GitHub |
+| **Black Formatter** | `ms-python.black-formatter` | Autoformato de código Python al guardar |
+| **autoDocstring** | `njpwerner.autodocstring` | Generación automática de docstrings Python |
+
+> [!WARNING]
+> **Evita instalar Pyrefly** (`facebook.pyrefly`). Genera falsos errores de parseo en líneas de decoradores. El proyecto ya tiene `"pyrefly.enable": false` en `settings.json`, pero es más seguro no instalarlo.
 
 ---
 
