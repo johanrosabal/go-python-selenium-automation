@@ -1288,3 +1288,103 @@ $env:ENV="qa"; $env:HEADLESS="true"; pytest applications/web/demo/tests --allure
 
 ---
 *Diseñado por Johan Rosabal para una automatización de excelencia.*
+
+---
+
+## ⚡ Referencia Rápida de Ejecución
+
+### 🖥️ Test Runner GUI
+
+La interfaz visual te permite explorar, ejecutar y monitorear tests desde el navegador sin tocar la terminal.
+
+**Paso 1 — Iniciar el servidor:**
+```powershell
+$env:PYTHONPATH = "."; python tools/test_runner/app.py
+```
+
+**Paso 2 — Abrir el navegador:**
+```
+http://localhost:5000
+```
+
+**Qué puedes hacer desde la GUI:**
+
+| Funcionalidad | Descripción |
+| :--- | :--- |
+| 🌲 **Árbol de Tests** | Explora todos los casos por app/feature con sus IDs |
+| ▶️ **Ejecutar Test** | Clic en Play sobre cualquier test o carpeta |
+| 📋 **Test Plans** | Agrupa tests + elige Browser/Env/Headless y guarda como plan |
+| 📺 **Logs en Vivo** | Observa la consola en tiempo real mientras corren los tests (SSE) |
+| 🎥 **Media Gallery** | Revisa videos y screenshots de tests fallidos |
+| 📊 **Reporte Allure** | Genera y abre el reporte Allure completo con un clic |
+
+> [!TIP]
+> También puedes lanzar la GUI desde VS Code: `Ctrl+Shift+P` → `Tasks: Run Task` → **`🖥️ Runner: Launch UI`**
+
+---
+
+### 🖱️ Comandos de Terminal (Resumen)
+
+#### Tests de UI
+```powershell
+# Ejecutar todos los tests de UI
+$env:PYTHONPATH = "."; pytest applications/web/demo/tests
+
+# Ejecutar un archivo específico
+$env:PYTHONPATH = "."; pytest applications/web/demo/tests/test_login.py
+
+# Ejecutar un test específico
+$env:PYTHONPATH = "."; pytest applications/web/demo/tests/test_login.py::TestLogin::test_valid_login
+
+# Ejecutar con ambiente y navegador
+$env:PYTHONPATH = "."; $env:ENV="qa"; $env:BROWSER="chrome"; pytest applications/web/demo/tests
+
+# Ejecutar sin ventana (headless)
+$env:PYTHONPATH = "."; $env:HEADLESS="true"; pytest applications/web/demo/tests
+
+# Ejecutar en paralelo (todos los núcleos)
+$env:PYTHONPATH = "."; pytest applications/web/demo/tests -n auto
+
+# Ejecutar por tag / marker
+$env:PYTHONPATH = "."; pytest applications/web/demo/tests -m smoke
+```
+
+#### Tests de API
+```powershell
+# Ejecutar todos los tests API de nico_search
+$env:PYTHONPATH = "."; pytest applications/api/nico_search/tests
+
+# Ejecutar un test de API específico
+$env:PYTHONPATH = "."; pytest applications/api/nico_search/tests/test_search.py::TestNicoSearch::test_search_by_policy_number
+
+# Ejecutar con ambiente específico
+$env:PYTHONPATH = "."; $env:ENV="qa"; pytest applications/api/nico_search/tests
+```
+
+#### Reportes
+```powershell
+# Ejecutar y generar resultados Allure
+$env:PYTHONPATH = "."; pytest --alluredir=reports
+
+# Abrir reporte Allure (Windows)
+.\serve-report.bat
+
+# Abrir reporte Allure (Node.js)
+npx allure-commandline serve reports
+```
+
+#### Flags Útiles
+| Flag | Efecto |
+| :--- | :--- |
+| `-v` | Verbose — muestra el nombre de cada test |
+| `-s` | Muestra la salida de `print()` en consola |
+| `--tb=short` | Traceback corto en fallos |
+| `-x` | Detiene al primer fallo |
+| `-k "keyword"` | Ejecuta solo tests cuyo nombre contiene la palabra |
+| `--alluredir=reports` | Guarda resultados crudos de Allure en `/reports` |
+| `-n auto` | Ejecución en paralelo usando todos los núcleos |
+
+```powershell
+# Ejemplo: verbose + detener en primer fallo + Allure
+$env:PYTHONPATH = "."; pytest applications/web/demo/tests -v -x --alluredir=reports
+```
