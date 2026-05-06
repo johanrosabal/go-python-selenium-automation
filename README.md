@@ -901,6 +901,19 @@ Pixel-perfect UI comparisons against baseline images.
 - **Usage**: `self.app.login_page.assert_visual_match("unique_test_id")`
 - **Result**: Diffs are saved in `reports/visual/diffs/` when the test fails.
 
+#### ⚙️ Activation / Deactivation
+You can enable or disable visual validation globally via the environment configuration file (`qa.yaml`):
+
+```yaml
+visual:
+  enable: true  # Set to false to skip all visual assertions
+```
+
+Alternatively, you can override this setting using an environment variable without changing any files:
+```powershell
+$env:VISUAL_ENABLE="false"; pytest
+```
+
 ### 2. Accessibility Testing (A11y)
 Automated WCAG compliance scans powered by **Axe-Core**.
 - **Usage**: `self.app.login_page.assert_no_accessibility_violations(impact_level="critical")`

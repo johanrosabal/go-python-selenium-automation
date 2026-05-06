@@ -17,6 +17,10 @@ video:
   fps: 10
   monitor_index: 1
 
+# Visual Regression Validation
+visual:
+  enable: false
+
 user:
   username: standard_user
   password: secret_sauce

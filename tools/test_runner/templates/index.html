@@ -123,6 +123,24 @@
             border-left-color: var(--accent-blue);
         }
 
+        .status-badge-inline {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            display: none;
+            margin-right: 5px;
+        }
+
+        .status-passed-bg { background: rgba(80, 250, 123, 0.2); color: var(--accent-green); border: 1px solid var(--accent-green); display: inline-block; }
+        .status-failed-bg { background: rgba(255, 85, 85, 0.2); color: var(--accent-red); border: 1px solid var(--accent-red); display: inline-block; }
+        .status-skipped-bg { background: rgba(252, 161, 48, 0.2); color: #fca130; border: 1px solid #fca130; display: inline-block; }
+
+        .test-item.passed { border-left-color: var(--accent-green) !important; background-color: rgba(80, 250, 123, 0.05); }
+        .test-item.failed { border-left-color: var(--accent-red) !important; background-color: rgba(255, 85, 85, 0.05); }
+        .test-item.skipped { border-left-color: #fca130 !important; background-color: rgba(252, 161, 48, 0.05); }
+
         /* Main Content Container */
         .plan-item {
             padding: 8px 12px;
@@ -1728,9 +1746,39 @@
             tree.innerHTML = '';
 
             for (const [filename, tests] of Object.entries(files)) {
+                // File Header with Master Checkbox
                 const fileGroup = document.createElement('div');
                 fileGroup.className = 'file-group';
-                fileGroup.innerHTML = `📄 ${filename}`;
+                fileGroup.style.display = 'flex';
+                fileGroup.style.justifyContent = 'flex-start';
+                fileGroup.style.alignItems = 'center';
+                fileGroup.style.gap = '15px';
+                
+                const fileLabel = document.createElement('div');
+                fileLabel.innerHTML = `📄 ${filename}`;
+                fileLabel.style.display = 'flex';
+                fileLabel.style.alignItems = 'center';
+                fileLabel.style.gap = '8px';
+
+                const masterCheckbox = document.createElement('input');
+                masterCheckbox.type = 'checkbox';
+                masterCheckbox.className = 'file-master-checkbox';
+                masterCheckbox.style.margin = '0';
+                masterCheckbox.onclick = (e) => {
+                    e.stopPropagation();
+                    const isChecked = masterCheckbox.checked;
+                    // Find all sibling test items until next file group
+                    let next = fileGroup.nextElementSibling;
+                    while(next && next.classList.contains('test-item')) {
+                        const cb = next.querySelector('.test-checkbox');
+                        if(cb) cb.checked = isChecked;
+                        next = next.nextElementSibling;
+                    }
+                    updateSelectedCount();
+                };
+
+                fileGroup.appendChild(masterCheckbox);
+                fileGroup.appendChild(fileLabel);
                 tree.appendChild(fileGroup);
 
                 tests.forEach(test => {
@@ -1746,12 +1794,16 @@
                     checkbox.style.marginTop = '4px';
                     checkbox.value = test.id;
                     checkbox.onclick = (e) => e.stopPropagation();
-                    checkbox.onchange = () => updateSelectedCount();
+                    checkbox.onchange = () => {
+                        // Sync master checkbox if all are checked manually
+                        updateSelectedCount();
+                    };
 
                     const label = document.createElement('div');
                     label.style.flex = '1';
 
                     let inner = '<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">';
+                    inner += `<span class="status-badge-inline" id="status-${test.id.replace(/[:.\/]/g, '_')}"></span>`;
                     if (test.test_id) {
                         inner += `<span class="test-id-badge">${test.test_id}</span> `;
                     }
@@ -1809,6 +1861,15 @@
             document.getElementById('exec-status').innerText = 'Running...';
             document.getElementById('run-btn').disabled = true;
             document.getElementById('run-icon').innerText = '⏳';
+            
+            // Clean previous statuses from the tree
+            document.querySelectorAll('.test-item').forEach(item => {
+                item.classList.remove('passed', 'failed', 'skipped', 'active');
+            });
+            document.querySelectorAll('.status-badge-inline').forEach(badge => {
+                badge.style.display = 'none';
+                badge.innerText = '';
+            });
             
             // API Specific Reset
             sessionRequests = [];
@@ -2147,23 +2208,56 @@
         function appendLog(data, terminal) {
             const span = document.createElement('span');
 
-            // Metadata capture: Pytest log lines often contain the test node name
-            // Format: applications/layer/app/tests/file.py::ClassName::test_function
-            if (data.message.includes('::') && !data.message.includes('collected')) {
-                const parts = data.message.split('::');
-                const rawName = parts[parts.length - 1].split(' ')[0].trim();
+            // --- ROBUST STATUS DETECTION ---
+            const cleanMsg = data.message.trim();
+
+            // 1. Detect Test Identity (Starting or in-progress)
+            if (cleanMsg.includes('::') && !cleanMsg.includes('collected')) {
+                const parts = cleanMsg.split(' ');
+                const testId = parts[0].trim();
+                window._lastTestIdSeen = testId;
 
                 // Track ID if mentioned (e.g. TC001)
-                const idMatch = data.message.match(/TC\d+/i);
-                if (idMatch) {
-                    window._currentExecutingTestId = idMatch[0].toUpperCase();
-                } else {
-                    window._currentExecutingTestId = "";
-                }
+                const idMatch = cleanMsg.match(/TC\d+/i);
+                window._currentExecutingTestId = idMatch ? idMatch[0].toUpperCase() : "";
+                
+                // Format name for media gallery: test_my_flow -> Test My Flow
+                const rawName = testId.split('::').pop();
+                window._currentExecutingTestName = rawName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
 
-                // Format name: test_my_flow -> Test My Flow
-                window._currentExecutingTestName = rawName.replace(/_/g, ' ')
-                    .replace(/\b\w/g, l => l.toUpperCase());
+                // UI Update: Highlight running test
+                const testNode = document.querySelector(`.test-item[data-id="${testId}"]`);
+                if (testNode) {
+                    testNode.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    document.querySelectorAll('.test-item').forEach(n => n.classList.remove('active'));
+                    testNode.classList.add('active');
+                }
+            }
+
+            // 2. Detect Results (PASSED, FAILED, SKIPPED)
+            const statusMatch = cleanMsg.match(/\b(PASSED|FAILED|SKIPPED)\b/);
+            if (statusMatch) {
+                const status = statusMatch[1];
+                // Use ID from line if present, otherwise fallback to last seen
+                const targetId = cleanMsg.includes('::') ? cleanMsg.split(' ')[0].trim() : window._lastTestIdSeen;
+
+                if (targetId) {
+                    const testNode = document.querySelector(`.test-item[data-id="${targetId}"]`);
+                    if (testNode) {
+                        const badgeId = `status-${targetId.replace(/[:.\/]/g, '_')}`;
+                        const badge = document.getElementById(badgeId);
+                        if (badge) {
+                            badge.innerText = status;
+                            badge.style.display = 'inline-block';
+                            badge.className = 'status-badge-inline ' + (
+                                status === 'PASSED' ? 'status-passed-bg' : 
+                                status === 'FAILED' ? 'status-failed-bg' : 'status-skipped-bg'
+                            );
+                        }
+                        testNode.classList.remove('active');
+                        testNode.classList.add(status.toLowerCase());
+                    }
+                }
             }
 
             if (data.type === 'end') {

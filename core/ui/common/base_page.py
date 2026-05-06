@@ -91,7 +91,14 @@ class BasePage(BaseApp, metaclass=SingletonMeta):
     def assert_visual_match(self, test_name: str, threshold: float = 0.01):
         """
         Performs a visual comparison of the current page against a baseline.
+        The validation only runs if 'visual.enable' is True in the configuration.
         """
+        enabled = self.config.get("visual.enable", True)
+        
+        if not enabled:
+            self.logger.warning(f"Visual validation skipped for '{test_name}' (Disabled in config).")
+            return self
+
         self.screenshot.full_page(f"temp_visual_{test_name}")
         current_screenshot = self.screenshot.last_filepath
         match = self.visual.compare(current_screenshot, test_name, threshold)
@@ -110,3 +117,32 @@ class BasePage(BaseApp, metaclass=SingletonMeta):
         Extracts and logs browser performance data.
         """
         return self.performance.capture_metrics(self.__class__.__name__)
+
+    # --- Navigation Shortcuts ---
+
+    def open(self, url: str = None):
+        """
+        Navigates to the specified URL or to the base URL from config.
+        
+        Args:
+            url (str, optional): Target URL. If None, uses web.base_url.
+            
+        Returns:
+            BasePage: The current instance for chaining.
+        """
+        target = url if url else self.base_url
+        self.navigation.open(target)
+        return self
+
+    def open_relative(self, path: str):
+        """
+        Navigates to a path relative to the base URL.
+        
+        Args:
+            path (str): Relative path (e.g. "/inventory").
+            
+        Returns:
+            BasePage: The current instance for chaining.
+        """
+        self.navigation.go(path)
+        return self

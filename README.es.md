@@ -1006,6 +1006,20 @@ Realiza comparaciones pixel-perfect de la interfaz de usuario contra imágenes b
 - **Uso**: `self.app.login_page.assert_visual_match("id_unico_del_test")`
 - **Resultado**: Los "diffs" (diferencias) se guardan en `reports/visual/diffs/` si la prueba falla.
 
+#### ⚙️ Activación / Desactivación
+Puedes habilitar o deshabilitar la validación visual de forma global mediante el archivo de configuración del ambiente (`qa.yaml`):
+
+```yaml
+visual:
+  enable: true  # Cámbialo a false para saltar todas las aserciones visuales
+```
+
+Alternativamente, puedes sobrescribir este ajuste usando una variable de entorno sin necesidad de modificar archivos:
+```powershell
+$env:VISUAL_ENABLE="false"; pytest
+```
+
+
 ### 2. Pruebas de Accesibilidad (A11y)
 Escaneos automáticos de cumplimiento WCAG potenciados por **Axe-Core**.
 - **Uso**: `self.app.login_page.assert_no_accessibility_violations(impact_level="critical")`
