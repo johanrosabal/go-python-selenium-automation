@@ -1,0 +1,31 @@
+{
+  "tests": {
+    "id": "SEARCH-014",
+    "title": "Combined: Name + Policy State",
+    "description": "Combined search: First name + Last name + Policy state",
+    "feature": "Policy Search",
+    "story": "Combined Search",
+    "severity": "NORMAL",
+    "tag": ["p2", "combined"],
+    "data": {
+      "payload": {
+        "companyNumber": 0,
+        "agencyCode": [],
+        "policyNumber": "",
+        "insuredName": "",
+        "firstName": "John",
+        "lastName": "Doe",
+        "phoneNumber": "",
+        "quoteNumber": 0,
+        "vin": "",
+        "policyState": "TX",
+        "address": "",
+        "city": "",
+        "state": "",
+        "zip": "",
+        "effectiveDate": null,
+        "insuredEmailAddress": ""
+      }
+    }
+  }
+}

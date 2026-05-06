@@ -1,0 +1,31 @@
+{
+  "tests": {
+    "id": "SEARCH-003",
+    "title": "Search by Policy Number",
+    "description": "Search by policy number",
+    "feature": "Policy Search",
+    "story": "Search Policies",
+    "severity": "CRITICAL",
+    "tag": ["smoke", "p1"],
+    "data": {
+      "payload": {
+        "companyNumber": 0,
+        "agencyCode": [],
+        "policyNumber": "POL-123456",
+        "insuredName": "",
+        "firstName": "",
+        "lastName": "",
+        "phoneNumber": "",
+        "quoteNumber": 0,
+        "vin": "",
+        "policyState": "",
+        "address": "",
+        "city": "",
+        "state": "",
+        "zip": "",
+        "effectiveDate": null,
+        "insuredEmailAddress": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "tests": {
+    "id": "SEARCH-002",
+    "title": "Search by First Name + Last Name",
+    "description": "Search by insured first and last name",
+    "feature": "Policy Search",
+    "story": "Search Policies",
+    "severity": "CRITICAL",
+    "tag": ["smoke", "p1"],
+    "data": {
+      "payload": {
+        "companyNumber": 0,
+        "agencyCode": [],
+        "policyNumber": "",
+        "insuredName": "",
+        "firstName": "John",
+        "lastName": "Doe",
+        "phoneNumber": "",
+        "quoteNumber": 0,
+        "vin": "",
+        "policyState": "",
+        "address": "",
+        "city": "",
+        "state": "",
+        "zip": "",
+        "effectiveDate": null,
+        "insuredEmailAddress": ""
+      }
+    }
+  }
+}

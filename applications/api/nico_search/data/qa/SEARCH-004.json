@@ -1,0 +1,31 @@
+{
+  "tests": {
+    "id": "SEARCH-004",
+    "title": "Search by Insured Full Name",
+    "description": "Search by insured full name (insuredName field)",
+    "feature": "Policy Search",
+    "story": "Search Policies",
+    "severity": "NORMAL",
+    "tag": ["p2"],
+    "data": {
+      "payload": {
+        "companyNumber": 0,
+        "agencyCode": [],
+        "policyNumber": "",
+        "insuredName": "John Doe",
+        "firstName": "",
+        "lastName": "",
+        "phoneNumber": "",
+        "quoteNumber": 0,
+        "vin": "",
+        "policyState": "",
+        "address": "",
+        "city": "",
+        "state": "",
+        "zip": "",
+        "effectiveDate": null,
+        "insuredEmailAddress": ""
+      }
+    }
+  }
+}

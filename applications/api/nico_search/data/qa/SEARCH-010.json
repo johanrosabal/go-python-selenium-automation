@@ -1,0 +1,31 @@
+{
+  "tests": {
+    "id": "SEARCH-010",
+    "title": "Search by Full Address",
+    "description": "Search by full address (address + city + state + zip)",
+    "feature": "Policy Search",
+    "story": "Search Policies",
+    "severity": "NORMAL",
+    "tag": ["p2"],
+    "data": {
+      "payload": {
+        "companyNumber": 0,
+        "agencyCode": [],
+        "policyNumber": "",
+        "insuredName": "",
+        "firstName": "",
+        "lastName": "",
+        "phoneNumber": "",
+        "quoteNumber": 0,
+        "vin": "",
+        "policyState": "",
+        "address": "123 Main St",
+        "city": "Austin",
+        "state": "TX",
+        "zip": "78701",
+        "effectiveDate": null,
+        "insuredEmailAddress": ""
+      }
+    }
+  }
+}

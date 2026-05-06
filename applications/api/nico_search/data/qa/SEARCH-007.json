@@ -1,0 +1,31 @@
+{
+  "tests": {
+    "id": "SEARCH-007",
+    "title": "Search by Quote Number",
+    "description": "Search by quote number",
+    "feature": "Policy Search",
+    "story": "Search Policies",
+    "severity": "NORMAL",
+    "tag": ["p2"],
+    "data": {
+      "payload": {
+        "companyNumber": 0,
+        "agencyCode": [],
+        "policyNumber": "",
+        "insuredName": "",
+        "firstName": "",
+        "lastName": "",
+        "phoneNumber": "",
+        "quoteNumber": 987654,
+        "vin": "",
+        "policyState": "",
+        "address": "",
+        "city": "",
+        "state": "",
+        "zip": "",
+        "effectiveDate": null,
+        "insuredEmailAddress": ""
+      }
+    }
+  }
+}

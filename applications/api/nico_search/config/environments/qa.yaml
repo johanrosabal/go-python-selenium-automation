@@ -1,0 +1,3 @@
+api:
+  base_url: "https://wapi-search-cus-test.azurewebsites.net"
+  token: "eyJ0eX" # Truncated token from user request, needs update

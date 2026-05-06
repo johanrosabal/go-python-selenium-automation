@@ -1,0 +1,31 @@
+{
+  "tests": {
+    "id": "SEARCH-013",
+    "title": "Search by Company Number",
+    "description": "Search by company number",
+    "feature": "Policy Search",
+    "story": "Search Policies",
+    "severity": "NORMAL",
+    "tag": ["p2"],
+    "data": {
+      "payload": {
+        "companyNumber": 1001,
+        "agencyCode": [],
+        "policyNumber": "",
+        "insuredName": "",
+        "firstName": "",
+        "lastName": "",
+        "phoneNumber": "",
+        "quoteNumber": 0,
+        "vin": "",
+        "policyState": "",
+        "address": "",
+        "city": "",
+        "state": "",
+        "zip": "",
+        "effectiveDate": null,
+        "insuredEmailAddress": ""
+      }
+    }
+  }
+}
