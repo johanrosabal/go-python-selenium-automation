@@ -6,25 +6,15 @@
     "feature": "Policy Search",
     "story": "Search Policies",
     "severity": "CRITICAL",
-    "tag": ["smoke", "p1", "e2e"],
+    "tag": [
+      "smoke",
+      "p1",
+      "e2e"
+    ],
     "data": {
       "payload": {
-        "companyNumber": 0,
-        "agencyCode": ["string"],
-        "policyNumber": "string",
-        "insuredName": "string",
-        "firstName": "string",
-        "lastName": "string",
-        "phoneNumber": "string",
-        "quoteNumber": 0,
-        "vin": "string",
-        "policyState": "string",
-        "address": "string",
-        "city": "string",
-        "state": "string",
-        "zip": "string",
-        "effectiveDate": "2026-05-06T19:43:03.905Z",
-        "insuredEmailAddress": "string"
+        "companyNumber": 2,
+        "insuredName": "Smith"
       }
     }
   }
