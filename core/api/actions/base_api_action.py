@@ -101,9 +101,13 @@ class BaseAPIAction:
         if kwargs.get('headers'):
             self.logger.info(f"📋 Request Headers: {json.dumps(kwargs.get('headers'))}")
 
+        # Log CURL equivalent
+        curl_cmd = self._to_curl(method, url, **kwargs)
+        self.logger.info(f"💻 CURL: {curl_cmd}")
+
         # Allure attachment
         allure.attach(
-            f"Method: {method}\nURL: {url}\nHeaders: {kwargs.get('headers')}\nBody: {kwargs.get('json')}\nParams: {kwargs.get('params')}",
+            f"Method: {method}\nURL: {url}\nHeaders: {kwargs.get('headers')}\nBody: {kwargs.get('json') or kwargs.get('data')}\nParams: {kwargs.get('params')}\n\nCURL:\n{curl_cmd}",
             name=f"Request: {method} {url}",
             attachment_type=allure.attachment_type.TEXT
         )
@@ -129,3 +133,34 @@ class BaseAPIAction:
                 name="Response Body",
                 attachment_type=allure.attachment_type.TEXT
             )
+
+    def _to_curl(self, method, url, **kwargs):
+        """Generates a curl command equivalent to the request."""
+        parts = [f"curl -X {method} '{url}'"]
+        
+        headers = kwargs.get('headers', {})
+        for k, v in headers.items():
+            parts.append(f"-H '{k}: {v}'")
+            
+        params = kwargs.get('params')
+        if params:
+            import urllib.parse
+            query = urllib.parse.urlencode(params)
+            # Replace the URL in the first part if it doesn't already have params
+            if '?' not in parts[0]:
+                parts[0] = parts[0].replace(f"'{url}'", f"'{url}?{query}'")
+            else:
+                parts[0] = parts[0].replace(f"'{url}'", f"'{url}&{query}'")
+
+        json_data = kwargs.get('json')
+        if json_data:
+            parts.append(f"-d '{json.dumps(json_data)}'")
+            
+        data = kwargs.get('data')
+        if data:
+            if isinstance(data, dict):
+                parts.append(f"-d '{json.dumps(data)}'")
+            else:
+                parts.append(f"-d '{data}'")
+                
+        return " ".join(parts)
