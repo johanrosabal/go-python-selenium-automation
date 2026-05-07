@@ -1,6 +1,5 @@
 from core.api.common.base_endpoint import BaseEndpoint
 
-
 class AcesEndpoint(BaseEndpoint):
     """
     Endpoint for ACES Policy Search and Results.
@@ -11,6 +10,11 @@ class AcesEndpoint(BaseEndpoint):
         self.base_url = config.get("base_url")
         self.token = config.get("token")
 
+    def search_policies(self, payload):
+        """
+        Initiates a policy search in ACES.
+        POST /api/policies/policy-search
+        """
         return (
             self.post.set_url(self.base_url)
             .set_endpoint("/api/policies/policy-search")
