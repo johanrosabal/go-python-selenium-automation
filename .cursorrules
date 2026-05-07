@@ -41,8 +41,20 @@ The framework uses a strict 1:1 mapping between internal logic components and th
 
 ## 📊 Data & Config
 - **Data-Driven:** Use `@test_case(id="...")` and `self.get_test_data()`. Do not hardcode test data.
-- **Configuration:** Use `ConfigManager.get("key")` for environment/YAML values.
-- **Decorators:** Always use `@go_hotel` on test classes to set project context.
+- **API Data Path:** `applications/api/{app_name}/data/{env}/{test_id}.json`.
+- **API Config Path:** `applications/api/{app_name}/config/environments/{env}.yaml`.
+- **Config Standard:** All API configs MUST be placed under a root `api:` key in the YAML file.
+- **Configuration Access:** Use `ConfigManager.get("key")` for environment/YAML values.
+- **Decorators:** Always use `@test_case` for API/UI and `@go_hotel` on UI test classes to set project context.
+
+## 🌐 API Framework Rules
+- **Base Class:** All API tests MUST inherit from `BaseAPITest`.
+- **Client Orchestrator:** Every project MUST have a `client.py` orchestrator using lazy loading for endpoints.
+- **Fluent Requests:** Always use the `RequestBuilder` pattern (e.g., `self.get.set_url().send()`).
+- **SSL Verification:** For test/internal environments, explicitly use `.set_verify(False)` in the RequestBuilder.
+- **Timeouts:** ALWAYS include `.set_timeout(seconds)` in every request to prevent execution hangs.
+- **Response Validation:** Prefer using `response.assert_status_code(code)` for standardized assertions.
+- **Convention:** Client orchestrators are auto-loaded by convention if `client.py` exists in the app folder.
 
 ## 🧪 Testing Standards
 - **Wait Management:** Use built-in fluent waits (e.g., `element(...).at(30).wait_visible()`). Never use `time.sleep()`.

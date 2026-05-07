@@ -29,7 +29,7 @@ class TestNicoAces(BaseAPITest):
                 pytest.skip(f"Request blocked (Status: {search_response.status_code})")
                 
             search_response.assert_status_code(201)
-            search_id = search_response.body.strip()
+            search_id = str(search_response.body).strip()
             assert search_id, "Search ID should not be empty"
 
         with allure.step(f"Retrieve policies for Search ID: {search_id}"):
