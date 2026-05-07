@@ -1,6 +1,11 @@
 import pytest
+from typing import TYPE_CHECKING
 from core.api.common.base_api_test import BaseAPITest
 from core.utils.decorators import test_case
+
+if TYPE_CHECKING:
+    from applications.api.nico_search.client import NicoSearchClient
+
 
 
 class TestNicoSearch(BaseAPITest):
@@ -12,6 +17,7 @@ class TestNicoSearch(BaseAPITest):
     Allure metadata (title, description, severity, tags, feature, story)
     is injected automatically from the JSON — no need to repeat in the decorator.
     """
+    app: 'NicoSearchClient'
     app_name = "nico_search"
 
     def _do_search(self, test_id):
@@ -39,14 +45,15 @@ class TestNicoSearch(BaseAPITest):
     @test_case(id="SEARCH-001")
     def test_complete_search_flow(self):
         """Full end-to-end via orchestrator: search → GUID → get_results."""
-        data = self.get_test_data("SEARCH-001")
-        search_id, results_response = self.app.search_and_get_results(data["data"]["payload"])
+        payload = self.get_test_data()["data"]["payload"]
+        search_id, results_response = self.app.search_and_get_results(payload)
 
+        # Skip if auth/IP block is detected during the flow
         if results_response.status_code in [401, 403]:
             pytest.skip("Unauthorized or IP Forbidden.")
 
         results_response.assert_status_code(200)
-        assert isinstance(results_response.body, list)
+        assert isinstance(results_response.body, list), "Expected results body to be a list"
 
     @test_case(id="SEARCH-002")
     def test_search_by_first_last_name(self):
