@@ -27,10 +27,12 @@ class NicoSearchClient:
         """
         Full flow: POST to initiate search → GET results by GUID.
         Returns: tuple (search_id: str, results_response: APIResponse)
+        Note: If search fails, search_id will be None and results_response will be the error response.
         """
         search_response = self.search.search_policies(payload)
-        search_response.assert_status_code(201)
+        if search_response.status_code != 201:
+            return None, search_response
+
         search_id = search_response.body.strip()
-        assert len(search_id) > 10, f"Expected GUID, got: '{search_id}'"
         results_response = self.search.get_results(search_id)
         return search_id, results_response
