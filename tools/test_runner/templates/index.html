@@ -55,9 +55,9 @@
         }
 
         .sidebar-toggle {
-            position: absolute;
+            position: fixed;
             top: 20px;
-            right: -15px;
+            left: 485px;
             width: 30px;
             height: 30px;
             background: var(--bg-panel);
@@ -67,10 +67,14 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 100;
+            z-index: 1000;
             color: var(--accent-blue);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar.collapsed + .sidebar-toggle {
+            left: 15px;
         }
 
         .sidebar-toggle:hover {
@@ -223,6 +227,11 @@
             display: flex;
             flex-direction: column;
             background-color: var(--bg-dark);
+            transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar.collapsed + .sidebar-toggle + .main-content .toolbar {
+            padding-left: 50px;
         }
 
         /* Top Control Bar */
@@ -1078,9 +1087,6 @@
 
     <!-- Sidebar with Tests -->
     <div class="sidebar" id="sidebar">
-        <div class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">
-            <span id="toggle-icon">❮</span>
-        </div>
         <div class="sidebar-header">
             <span class="framework-label">Automation Framework</span>
             <h2 class="runner-title">Go Python Runner</h2>
@@ -1127,6 +1133,10 @@
             <div style="padding: 20px; color: var(--text-muted); text-align: center;">Scanning project for tests...
             </div>
         </div>
+    </div>
+
+    <div class="sidebar-toggle" id="sidebar-toggle-btn" onclick="toggleSidebar()" title="Toggle Sidebar">
+        <span id="toggle-icon">❮</span>
     </div>
 
     <!-- Main Execution Area -->
@@ -1789,6 +1799,8 @@
             tree.innerHTML = `<div style="padding: 20px; color: var(--text-muted); text-align: center;">
                 <div class="spinner" style="display:inline-block"></div> Scanning project...
             </div>`;
+            fetchTests();
+        }
 
         async function fetchTests() {
             const appPath = document.getElementById('app-selector').value;
