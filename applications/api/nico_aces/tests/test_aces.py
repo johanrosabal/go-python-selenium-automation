@@ -49,3 +49,7 @@ class TestNicoAces(BaseAPITest):
             search_response.assert_status_code(201)
             search_id = str(search_response.body).strip()
             assert search_id, "Search ID should not be empty"
+
+        with allure.step(f"Retrieve policies for Search ID: {search_id}"):
+            results_response = self.app.aces.get_policies(search_id)
+            results_response.assert_status_code(200)
