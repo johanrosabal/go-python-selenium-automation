@@ -1286,6 +1286,12 @@
         let activeRequestIndex = -1;
         let currentTestName = "Unknown Test";
 
+        // Multi-line capturing state
+        let isCapturingBuffer = false;
+        let captureType = null; // 'body', 'res-body', 'headers', 'res-headers'
+        let captureTargetIndex = -1;
+        let captureBuffer = "";
+
         function switchMode(mode) {
             currentMode = mode;
             // Update UI tabs
@@ -1387,6 +1393,49 @@
             selectHistoryItem(activeRequestIndex);
         }
 
+        function flushCaptureBuffer() {
+            if (!isCapturingBuffer || captureTargetIndex === -1) return;
+            
+            const req = sessionRequests[captureTargetIndex];
+            if (!req) return;
+
+            let finalData = captureBuffer.trim();
+            
+            // Try to parse as JSON for pretty printing
+            try {
+                if (finalData.startsWith('{') || finalData.startsWith('[')) {
+                    finalData = JSON.parse(finalData);
+                }
+            } catch (e) { }
+
+            // Store based on type
+            if (captureType === 'body') req.reqBody = finalData;
+            else if (captureType === 'res-body') req.resBody = finalData;
+            else if (captureType === 'headers') req.reqHeaders = tryParse(finalData);
+            else if (captureType === 'res-headers') req.resHeaders = tryParse(finalData);
+
+            // Refresh UI if viewing this request
+            if (activeRequestIndex === captureTargetIndex) {
+                selectHistoryItem(activeRequestIndex);
+            }
+
+            // Reset state
+            isCapturingBuffer = false;
+            captureBuffer = "";
+            captureType = null;
+        }
+
+        function tryParse(data) {
+            if (typeof data !== 'string') return data;
+            const trimmed = data.trim();
+            try {
+                if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+                    return JSON.parse(trimmed);
+                }
+            } catch (e) { }
+            return data;
+        }
+
         function renderRequestHistory() {
             const list = document.getElementById('inspector-history');
             const count = document.getElementById('history-count');
@@ -1471,7 +1520,14 @@
             table.innerHTML = '<thead><tr><th>Key</th><th>Value</th></tr></thead><tbody></tbody>';
             const tbody = table.querySelector('tbody');
             
-            for (const [key, val] of Object.entries(headers)) {
+            if (typeof headers === 'string') {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="2" style="font-family: monospace; font-size: 10px; color: var(--text-muted);">${headers}</td>`;
+                tbody.appendChild(row);
+                return;
+            }
+
+            for (const [key, val] of Object.entries(headers || {})) {
                 const row = document.createElement('tr');
                 row.innerHTML = `<td class="header-key">${key}</td><td class="header-val">${val}</td>`;
                 tbody.appendChild(row);
@@ -1935,9 +1991,9 @@
                         }
                     }
                 }
-            } catch (error) {
                 appendLog({ type: 'error', message: `Runner Error: ${error.message}` }, term);
             } finally {
+                flushCaptureBuffer(); // Final flush
                 runBtn.disabled = false;
                 runIcon.className = '';
                 runIcon.innerText = '▶';
@@ -2316,60 +2372,81 @@
                         createNewRequestEntry(method, url);
                     }
 
-                    if (activeRequestIndex === -1) { span.innerText = htmlMessage + '\n'; terminal.appendChild(span); return; }
-                    const currentReq = sessionRequests[activeRequestIndex];
+                    // 2. Multi-line Capture Logic (Robust)
+                    const hasTimestamp = /^\d{4}-\d{2}-\d{2}/.test(cleanMsg);
+                    
+                    // If we see a new timestamped log, flush any active buffer
+                    if (hasTimestamp && isCapturingBuffer) {
+                        flushCaptureBuffer();
+                    }
 
-                    // 2. Detect Body (Request or Response)
-                    if (htmlMessage.includes('Body:')) {
-                        const isResponse = htmlMessage.includes('Response Body:');
-                        const prefix = isResponse ? 'Response Body:' : 'Body:';
-                        const jsonPart = htmlMessage.split(prefix)[1];
+                    if (isCapturingBuffer && !hasTimestamp) {
+                        // Append continuation lines to buffer
+                        captureBuffer += (captureBuffer ? '\n' : '') + cleanMsg;
                         
-                        if (jsonPart && (jsonPart.includes('{') || jsonPart.includes('['))) {
-                            try {
-                                const parsed = JSON.parse(jsonPart.trim());
-                                const pretty = JSON.stringify(parsed, null, 2);
-                                htmlMessage = htmlMessage.replace(jsonPart, '\n' + pretty);
-                                
-                                // Update Session State
-                                if (isResponse) currentReq.resBody = parsed;
-                                else currentReq.reqBody = parsed;
-                                
-                                // Update UI if currently viewing this request
+                        // Reactive update
+                        const req = sessionRequests[captureTargetIndex];
+                        if (req) {
+                            if (captureType === 'body') req.reqBody = captureBuffer;
+                            else if (captureType === 'res-body') req.resBody = captureBuffer;
+                            else if (captureType === 'headers') req.reqHeaders = tryParse(captureBuffer);
+                            else if (captureType === 'res-headers') req.resHeaders = tryParse(captureBuffer);
+                            
+                            if (activeRequestIndex === captureTargetIndex) {
                                 selectHistoryItem(activeRequestIndex);
-                            } catch (e) { }
+                            }
                         }
                     }
 
-                    // 3. Detect Headers
-                    if (htmlMessage.includes('📋') && htmlMessage.includes('Headers:')) {
-                        const isResponse = htmlMessage.includes('Response Headers:');
-                        const prefix = isResponse ? 'Response Headers:' : 'Request Headers:';
-                        const jsonPart = htmlMessage.split(prefix)[1];
+                    // 3. Detect Start of Body/Headers
+                    if (htmlMessage.includes('Body:') || htmlMessage.includes('Headers:')) {
+                        const isResponse = htmlMessage.includes('Response Body:') || htmlMessage.includes('Response Headers:');
+                        const isHeaders = htmlMessage.includes('Headers:');
                         
-                        try {
-                            const headers = JSON.parse(jsonPart.trim());
-                            if (isResponse) currentReq.resHeaders = headers;
-                            else currentReq.reqHeaders = headers;
+                        // Set capture type
+                        if (isHeaders) captureType = isResponse ? 'res-headers' : 'headers';
+                        else captureType = isResponse ? 'res-body' : 'body';
+                        
+                        captureTargetIndex = activeRequestIndex;
+                        isCapturingBuffer = true;
+                        captureBuffer = "";
+
+                        // Try to get inline part if present
+                        const prefix = isHeaders ? (isResponse ? 'Response Headers:' : 'Request Headers:') : (isResponse ? 'Response Body:' : 'Body:');
+                        const inlinePart = htmlMessage.split(prefix)[1]?.trim();
+                        if (inlinePart) {
+                            captureBuffer = inlinePart;
                             
-                            selectHistoryItem(activeRequestIndex);
-                            return; // Hide headers from console
-                        } catch (e) { }
+                            // Reactive update for inline part
+                            const req = sessionRequests[captureTargetIndex];
+                            if (req) {
+                                if (captureType === 'body') req.reqBody = captureBuffer;
+                                else if (captureType === 'res-body') req.resBody = captureBuffer;
+                                else if (captureType === 'headers') req.reqHeaders = tryParse(captureBuffer);
+                                else if (captureType === 'res-headers') req.resHeaders = tryParse(captureBuffer);
+                                
+                                if (activeRequestIndex === captureTargetIndex) {
+                                    selectHistoryItem(activeRequestIndex);
+                                }
+                            }
+                        }
                     }
-                    
-                    // 4. Detect Status
+
+                    // 4. Detect Status (Can also trigger flush)
                     if (htmlMessage.includes('Status:')) {
                         const statusPart = htmlMessage.split('Status:')[1].trim();
-                        currentReq.status = statusPart;
-                        renderRequestHistory();
-                        selectHistoryItem(activeRequestIndex);
+                        if (activeRequestIndex !== -1) {
+                            sessionRequests[activeRequestIndex].status = statusPart;
+                            renderRequestHistory();
+                            selectHistoryItem(activeRequestIndex);
+                        }
                     }
 
                     // 5. Detect Test Completion / Time
                     if (htmlMessage.includes('passed in')) {
                         const timePart = htmlMessage.match(/passed in ([\d.]+)s/)?.[1];
-                        if (timePart) {
-                            currentReq.time = timePart + 's';
+                        if (timePart && activeRequestIndex !== -1) {
+                            sessionRequests[activeRequestIndex].time = timePart + 's';
                             renderRequestHistory();
                             selectHistoryItem(activeRequestIndex);
                         }

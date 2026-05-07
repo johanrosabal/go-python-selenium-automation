@@ -117,17 +117,33 @@ class BaseAPIAction:
         status_icon = "✅" if response.status_code < 400 else "❌"
         self.logger.info(f"{status_icon} Status: {response.status_code} {response.reason}")
         
+        # Log Content-Type and Length for debugging
+        content_type = response.headers.get("Content-Type", "unknown")
+        content_length = len(response.content) if response.content else 0
+        self.logger.info(f"📊 Content-Type: {content_type} | Length: {content_length} bytes")
+
         try:
             body = response.json()
+            # If body is JSON, log it (one line for terminal)
             self.logger.info(f"📥 Response Body: {json.dumps(body)}")
+            
+            # Log headers
             self.logger.info(f"📋 Response Headers: {json.dumps(dict(response.headers))}")
+            
+            # Allure attachment (pretty printed)
             allure.attach(
                 json.dumps(body, indent=2),
                 name="Response Body",
                 attachment_type=allure.attachment_type.JSON
             )
         except Exception:
-            self.logger.info(f"📥 Response Body: {response.text}")
+            # Fallback to raw text if not JSON
+            text_preview = response.text
+            if len(text_preview) > 5000:
+                self.logger.info(f"📥 Response Body: {text_preview[:5000]}... [TRUNCATED]")
+            else:
+                self.logger.info(f"📥 Response Body: {text_preview}")
+            
             allure.attach(
                 response.text,
                 name="Response Body",
