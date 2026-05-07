@@ -38,5 +38,6 @@ class SearchEndpoint(BaseEndpoint):
             .build_url(id=search_id)
             .add_header("accept", "text/plain")
             .add_header("Authorization", f"Bearer {self.token}")
+            .set_timeout(120)
             .send()
         )

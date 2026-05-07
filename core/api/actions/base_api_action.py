@@ -122,8 +122,14 @@ class BaseAPIAction:
         content_length = len(response.content) if response.content else 0
         self.logger.info(f"📊 Content-Type: {content_type} | Length: {content_length} bytes")
 
+        # Step-by-step trace
+        self.logger.debug(f"Attempting to parse response body (Length: {content_length})...")
+
         try:
+            # Try to get body as JSON
             body = response.json()
+            self.logger.debug("Successfully parsed as JSON")
+            
             # If body is JSON, log it (one line for terminal)
             self.logger.info(f"📥 Response Body: {json.dumps(body)}")
             
@@ -136,19 +142,26 @@ class BaseAPIAction:
                 name="Response Body",
                 attachment_type=allure.attachment_type.JSON
             )
-        except Exception:
+        except Exception as e:
+            self.logger.debug(f"JSON parsing failed or not applicable: {str(e)}")
             # Fallback to raw text if not JSON
-            text_preview = response.text
-            if len(text_preview) > 5000:
-                self.logger.info(f"📥 Response Body: {text_preview[:5000]}... [TRUNCATED]")
-            else:
-                self.logger.info(f"📥 Response Body: {text_preview}")
-            
-            allure.attach(
-                response.text,
-                name="Response Body",
-                attachment_type=allure.attachment_type.TEXT
-            )
+            try:
+                text_preview = response.text
+                if len(text_preview) > 5000:
+                    self.logger.info(f"📥 Response Body: {text_preview[:5000]}... [TRUNCATED]")
+                else:
+                    self.logger.info(f"📥 Response Body: {text_preview}")
+                
+                allure.attach(
+                    response.text,
+                    name="Response Body",
+                    attachment_type=allure.attachment_type.TEXT
+                )
+            except Exception as e2:
+                self.logger.error(f"Failed to read response text: {str(e2)}")
+                self.logger.info("📥 Response Body: [UNREADABLE]")
+
+        self.logger.debug("Finished logging response")
 
     def _to_curl(self, method, url, **kwargs):
         """Generates a curl command equivalent to the request."""
