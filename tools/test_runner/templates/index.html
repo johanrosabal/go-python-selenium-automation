@@ -634,6 +634,7 @@
         .header-table td {
             padding: 8px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            word-break: break-all;
         }
 
         .header-key { font-weight: 700; color: var(--text-main); }
@@ -1228,7 +1229,7 @@
                                 </div>
                                 <div id="inspector-time" style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">0.00s</div>
                             </div>
-                            <div id="inspector-url" style="font-size: 0.8rem; color: var(--text-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid var(--border); font-family: monospace;">
+                            <div id="inspector-url" style="font-size: 0.8rem; color: var(--text-main); overflow: hidden; word-break: break-all; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid var(--border); font-family: monospace;">
                                 No request captured yet.
                             </div>
                             <div class="inspector-tabs">
