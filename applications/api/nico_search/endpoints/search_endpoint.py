@@ -21,6 +21,7 @@ class SearchEndpoint(BaseEndpoint):
             .set_endpoint("/api/policy-search") \
             .add_header("accept", "text/plain") \
             .add_header("Authorization", f"Bearer {self.token}") \
+            .add_header("Content-Type", f"application/json") \
             .set_json(payload) \
             .send()
 
