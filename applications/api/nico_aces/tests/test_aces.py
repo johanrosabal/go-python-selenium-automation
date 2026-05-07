@@ -35,4 +35,17 @@ class TestNicoAces(BaseAPITest):
         with allure.step(f"Retrieve policies for Search ID: {search_id}"):
             results_response = self.app.aces.get_policies(search_id)
             results_response.assert_status_code(200)
-            # Add more assertions based on expected response structure
+
+    @test_case(id="ACES-002")
+    def test_search_by_name_and_company(self):
+        """
+        Verify search filtering by Insured Name and Company ID.
+        """
+        test_data = self.get_test_data()
+        payload = test_data.get('data', {}).get('payload')
+        
+        with allure.step("Search by Name and Company"):
+            search_response = self.app.aces.search_policies(payload)
+            search_response.assert_status_code(201)
+            search_id = str(search_response.body).strip()
+            assert search_id, "Search ID should not be empty"

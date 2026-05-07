@@ -1,0 +1,17 @@
+{
+  "tests": {
+    "id": "ACES-002",
+    "title": "Search by Insured Name and Company",
+    "description": "Verify ACES search filtering by name and company number",
+    "feature": "ACES Policy Search",
+    "story": "Search ACES Policies",
+    "severity": "NORMAL",
+    "tag": ["regression"],
+    "data": {
+      "payload": {
+        "insuredName": "Smith",
+        "company": 2
+      }
+    }
+  }
+}
