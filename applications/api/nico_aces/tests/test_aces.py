@@ -16,9 +16,10 @@ class TestNicoAces(BaseAPITest):
         """
         Verify the complete flow: Search -> Get Policies.
         """
-        # Data is automatically loaded into self._current_test_data by the @test_case decorator
-        payload = self._current_test_data.get('payload')
-        assert payload, "Payload not found in test data"
+        # Use get_test_data() to ensure the JSON is loaded correctly
+        test_data = self.get_test_data()
+        payload = test_data.get('data', {}).get('payload')
+        assert payload, f"Payload not found in test data for {self._current_test_id}"
 
         with allure.step("Initiate ACES Policy Search"):
             search_response = self.app.aces.search_policies(payload)
