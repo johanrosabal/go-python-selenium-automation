@@ -350,10 +350,13 @@ class TestDashboard(BaseTest):
         assert "profile" in self.get_url()
 ```
 
-### 5. Run Tests
+### 5. Run Tests and View Reports
 ```powershell
-$env:PYTHONPATH = "."; pytest applications/web/demo/tests
-pytest applications/web/demo/tests/test_feature.py --alluredir=reports
+# Run tests
+$env:PYTHONPATH = "."; pytest applications/web/demo/tests --alluredir=reports/allure-results
+
+# View Allure Report (Local)
+.\allure-tool\allure-2.29.0\bin\allure.bat serve reports/allure-results
 ```
 
 ### 6. Preconditions (Fixtures)
