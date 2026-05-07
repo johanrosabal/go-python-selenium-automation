@@ -26,6 +26,7 @@ dist/
 # Automated Testing Artifacts
 allure-results/
 allure-report/
+# allure-tool/
 reports/
 screenshots/
 videos/
