@@ -11,11 +11,6 @@ class AcesEndpoint(BaseEndpoint):
         self.base_url = config.get("base_url")
         self.token = config.get("token")
 
-    def search_policies(self, payload):
-        """
-        Initiates a policy search in ACES.
-        POST /api/policies/policy-search
-        """
         return (
             self.post.set_url(self.base_url)
             .set_endpoint("/api/policies/policy-search")
@@ -23,6 +18,7 @@ class AcesEndpoint(BaseEndpoint):
             .add_header("Authorization", f"Bearer {self.token}")
             .set_json(payload)
             .set_timeout(120)
+            .set_verify(False)
             .send()
         )
 
@@ -38,5 +34,6 @@ class AcesEndpoint(BaseEndpoint):
             .add_header("accept", "application/json")
             .add_header("Authorization", f"Bearer {self.token}")
             .set_timeout(120)
+            .set_verify(False)
             .send()
         )
