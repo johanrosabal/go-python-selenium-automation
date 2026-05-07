@@ -1,10 +1,9 @@
 from core.api.common.base_endpoint import BaseEndpoint
 
 
-class SearchEndpoint(BaseEndpoint):
+class AcesEndpoint(BaseEndpoint):
     """
-    Endpoint for Policy Search and Results (nico_search project).
-    Uses the Legacy Builder Style for all requests.
+    Endpoint for ACES Policy Search and Results.
     """
 
     def __init__(self, session, config):
@@ -14,30 +13,29 @@ class SearchEndpoint(BaseEndpoint):
 
     def search_policies(self, payload):
         """
-        Initiates a policy search.
-        POST /api/policy-search
+        Initiates a policy search in ACES.
+        POST /api/policies/policy-search
         """
         return (
             self.post.set_url(self.base_url)
-            .set_endpoint("/api/policy-search")
-            .add_header("accept", "text/plain")
-            .add_header("Content-Type", f"application/json")
+            .set_endpoint("/api/policies/policy-search")
+            .add_header("accept", "application/json")
             .add_header("Authorization", f"Bearer {self.token}")
             .set_json(payload)
             .set_timeout(120)
             .send()
         )
 
-    def get_results(self, search_id):
+    def get_policies(self, search_id):
         """
-        Retrieves results for a given search ID.
-        GET /api/policy-search/{id}/results
+        Retrieves policies for a given search ID in ACES.
+        GET /api/policies/policy-search/{id}/policies
         """
         return (
             self.get.set_url(self.base_url)
-            .set_endpoint("/api/policy-search/{id}/results")
+            .set_endpoint("/api/policies/policy-search/{id}/policies")
             .build_url(id=search_id)
-            .add_header("accept", "text/plain")
+            .add_header("accept", "application/json")
             .add_header("Authorization", f"Bearer {self.token}")
             .set_timeout(120)
             .send()

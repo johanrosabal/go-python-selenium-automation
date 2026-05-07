@@ -1,0 +1,30 @@
+{
+  "tests": {
+    "id": "ACES-001",
+    "title": "Complete ACES Search Flow",
+    "description": "Verify ACES policy search and results retrieval",
+    "feature": "ACES Policy Search",
+    "story": "Search ACES Policies",
+    "severity": "CRITICAL",
+    "tag": ["smoke", "p1"],
+    "data": {
+      "payload": {
+        "policyNumber": "string",
+        "insuredName": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "phoneNumber": "string",
+        "quoteNumber": 0,
+        "vin": "string",
+        "policyState": "string",
+        "effectiveDate": "2026-05-07T17:31:04.423Z",
+        "company": 0,
+        "agencyCode": ["string"],
+        "address1": "string",
+        "zip": "string",
+        "state": "string",
+        "city": "string"
+      }
+    }
+  }
+}
