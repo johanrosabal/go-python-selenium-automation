@@ -6,25 +6,13 @@
     "feature": "Policy Search",
     "story": "Search Policies",
     "severity": "NORMAL",
-    "tag": ["p2"],
+    "tag": [
+      "p2"
+    ],
     "data": {
       "payload": {
-        "companyNumber": 0,
-        "agencyCode": [],
-        "policyNumber": "",
-        "insuredName": "",
-        "firstName": "",
-        "lastName": "",
-        "phoneNumber": "",
-        "quoteNumber": 0,
-        "vin": "",
-        "policyState": "",
-        "address": "",
-        "city": "",
-        "state": "",
-        "zip": "",
-        "effectiveDate": "2026-01-01T00:00:00.000Z",
-        "insuredEmailAddress": ""
+        "companyNumber": 2,
+        "effectiveDate": "2026-01-01T00:00:00.000Z"
       }
     }
   }

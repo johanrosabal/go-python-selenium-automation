@@ -6,25 +6,16 @@
     "feature": "Policy Search",
     "story": "Search Policies",
     "severity": "NORMAL",
-    "tag": ["p2"],
+    "tag": [
+      "p2"
+    ],
     "data": {
       "payload": {
-        "companyNumber": 0,
-        "agencyCode": [],
-        "policyNumber": "",
-        "insuredName": "",
-        "firstName": "",
-        "lastName": "",
-        "phoneNumber": "",
-        "quoteNumber": 0,
-        "vin": "",
-        "policyState": "",
+        "companyNumber": 2,
         "address": "123 Main St",
         "city": "Austin",
         "state": "TX",
-        "zip": "78701",
-        "effectiveDate": null,
-        "insuredEmailAddress": ""
+        "zip": "78701"
       }
     }
   }
