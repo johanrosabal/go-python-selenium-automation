@@ -12,9 +12,23 @@
     "data": {
       "payload": {
         "companyNumber": 2,
-        "vin": "1HGCM82633A004352"
+        "vin": "1ZVBP8EN4A5177904"
       },
-      "expected_results": []
+      "expected_results": [
+        {
+          "policyNumber": "71APT03820401",
+          "quoteNumber": 5196013,
+          "insuredName": "Test GEICO nID 10",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2021-12-06T15:50:00",
+          "source": "NICO-Rate",
+          "agencyCode": "N45300",
+          "agencyName": "GEICO Insurance Agency, INC. a",
+          "policyState": "NE"
+        }
+      ]
     }
   }
 }
