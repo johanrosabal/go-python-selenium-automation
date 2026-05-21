@@ -14,7 +14,22 @@
       "payload": {
         "companyNumber": 2,
         "policyNumber": "70APT048588"
-      }
+      },
+      "expected_results": [
+        {
+          "policyNumber": "70APT048588",
+          "quoteNumber": 5655660,
+          "insuredName": "DAVID SMITH",
+          "dba": "DBA: CDL NOW",
+          "firstName": "DAVID",
+          "lastName": "SMITH",
+          "effectiveDate": "2024-12-15T00:01:00",
+          "source": "MYP",
+          "agencyCode": "N26999",
+          "agencyName": "TEST NICO General Agency for QA",
+          "policyState": "UT"
+        }
+      ]
     }
   }
 }

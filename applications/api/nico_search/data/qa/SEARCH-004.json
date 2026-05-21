@@ -12,8 +12,23 @@
     "data": {
       "payload": {
         "companyNumber": 2,
-        "insuredName": "Smith"
-      }
+        "insuredName": "MICHAEL J BARRY"
+      },
+      "expected_results": [
+        {
+          "policyNumber": null,
+          "quoteNumber": 626755,
+          "insuredName": "MICHAEL J BARRY",
+          "dba": "DBA: BARRY & SON TRANSPORT",
+          "firstName": "MICHAEL",
+          "lastName": "BARRY",
+          "effectiveDate": "2014-05-23T00:00:00",
+          "source": "NICO-Rate",
+          "agencyCode": null,
+          "agencyName": null,
+          "policyState": "MD"
+        }
+      ]
     }
   }
 }

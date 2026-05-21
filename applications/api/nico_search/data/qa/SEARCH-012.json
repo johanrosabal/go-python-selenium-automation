@@ -13,7 +13,8 @@
       "payload": {
         "companyNumber": 2,
         "insuredEmailAddress": "john.doe@example.com"
-      }
+      },
+      "expected_results": []
     }
   }
 }

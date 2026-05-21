@@ -13,7 +13,8 @@
       "payload": {
         "companyNumber": 2,
         "policyState": "TX"
-      }
+      },
+      "expected_results": []
     }
   }
 }

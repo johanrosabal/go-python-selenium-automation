@@ -13,7 +13,8 @@
       "payload": {
         "companyNumber": 2,
         "policyNumber": ""
-      }
+      },
+      "expected_results": []
     }
   }
 }
