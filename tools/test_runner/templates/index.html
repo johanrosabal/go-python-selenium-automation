@@ -475,15 +475,11 @@
 
         /* Workspace Tabs */
         .workspace-tabs {
-            display: none;
+            display: flex;
             gap: 10px;
             margin-bottom: 15px;
             border-bottom: 1px solid var(--border);
             padding-bottom: 10px;
-        }
-
-        .workspace-container.api-mode .workspace-tabs {
-            display: flex;
         }
 
         .workspace-tab {
@@ -505,11 +501,11 @@
             border-color: var(--accent-blue);
         }
 
-        .workspace-container.api-mode .api-inspector.active {
+        .workspace-container .api-inspector.active {
             display: flex;
         }
 
-        .workspace-container.api-mode .console-container.hidden {
+        .workspace-container .console-container.hidden {
             display: none;
         }
 
@@ -1327,7 +1323,7 @@
                     <!-- Sidebar History -->
                     <div class="inspector-sidebar">
                         <div class="history-header">
-                            <span>📜 REQUEST HISTORY</span>
+                            <span>📜 SCENARIOS / REQUESTS</span>
                             <div style="display: flex; align-items: center; gap: 8px;">
                                 <button onclick="exportAllRequestsToPDF()" class="pdf-btn" title="Export All to PDF" style="background: rgba(139, 233, 253, 0.15); border: 1px solid var(--accent-blue); color: var(--accent-blue); padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; cursor: pointer; border: 1px solid rgba(139,233,253,0.3);">
                                     📄 Export All
@@ -1364,6 +1360,7 @@
                                 <div class="inspector-tab" data-tab="res-body" onclick="switchInspectorTab('res-body')">RESPONSE</div>
                                 <div class="inspector-tab" data-tab="headers" onclick="switchInspectorTab('headers')">HEADERS</div>
                                 <div class="inspector-tab" data-tab="curl" onclick="switchInspectorTab('curl')">cURL</div>
+                                <div class="inspector-tab" data-tab="logs" onclick="switchInspectorTab('logs')" style="display: none;">LOGS</div>
                             </div>
                         </div>
                         <div class="inspector-body">
@@ -1409,6 +1406,10 @@
                                     </button>
                                 </div>
                                 <div class="inspector-code" id="code-curl" style="white-space: pre-wrap; word-break: break-all; font-family: monospace; font-size: 0.75rem; line-height: 1.5; padding: 12px; background: rgba(0, 0, 0, 0.2); border-radius: 6px; border: 1px solid var(--border);"></div>
+                            </div>
+                            <div id="ins-logs" class="inspector-pane hidden">
+                                <div style="margin-bottom: 8px; font-size: 0.7rem; color: var(--text-muted); font-weight: 800;">SCENARIO LOGS:</div>
+                                <div class="terminal" id="scenario-logs" style="height: 400px; border: 1px solid var(--border); border-radius: 6px;"></div>
                             </div>
                         </div>
                     </div>
@@ -1458,7 +1459,7 @@
             container.classList.toggle('api-mode', mode === 'api');
             
             // Reset Workspace Tab to Logs
-            if (mode === 'api') switchWorkspaceTab('logs');
+            switchWorkspaceTab('logs');
 
             // Hide/Show UI-only controls
             document.querySelectorAll('.ui-only').forEach(el => {
@@ -1530,9 +1531,16 @@
             }
         }
 
-        function createNewRequestEntry(method, url) {
+        function createNewRequestEntry(method, url, modeOverride = currentMode) {
+            let finalName = 'Unknown Test';
+            if (modeOverride === 'web') {
+                finalName = window._currentExecutingTestName || 'Unknown Test';
+            } else {
+                finalName = (currentTestName && currentTestName !== "Unknown Test") ? currentTestName : (window._currentExecutingTestName || 'Unknown Test');
+            }
+
             const request = {
-                testName: currentTestName,
+                testName: finalName,
                 method: method,
                 url: url,
                 status: "PENDING",
@@ -1540,7 +1548,9 @@
                 reqBody: "{}",
                 resBody: "{}",
                 reqHeaders: {},
-                resHeaders: {}
+                resHeaders: {},
+                mode: modeOverride,
+                logBuffer: ""
             };
             sessionRequests.push(request);
             activeRequestIndex = sessionRequests.length - 1;
@@ -1686,11 +1696,12 @@
 
                 item.innerHTML = `
                     <div class="history-item-top">
-                        <span class="history-method method-${req.method.toLowerCase()}">${req.method}</span>
+                        <span class="history-method method-${req.method.toLowerCase()}" ${req.mode === 'web' ? 'style="display:none;"' : ''}>${req.method}</span>
+                        ${req.mode === 'web' ? '<span class="history-method" style="background:var(--accent-purple); color:#000;">UI</span>' : ''}
                         <span class="history-status ${statusClass}" style="font-size: 10px; padding: 1px 4px; border-radius: 3px;">${req.status}</span>
                     </div>
                     <div class="history-name">${req.testName}</div>
-                    <div style="font-size: 9px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${req.url}</div>
+                    ${req.mode === 'api' ? `<div style="font-size: 9px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${req.url}</div>` : ''}
                 `;
                 item.onclick = () => selectHistoryItem(index);
                 list.appendChild(item);
@@ -1727,13 +1738,47 @@
             const statusBadge = document.getElementById('inspector-status-badge');
             const timeEl = document.getElementById('inspector-time');
             
-            badge.innerText = req.method;
-            badge.className = `method-badge method-${req.method.toLowerCase()}`;
-            urlEl.innerText = req.url;
-            urlEl.title = req.url;
+            if (req.mode === 'web') {
+                badge.innerText = 'UI';
+                badge.className = 'method-badge';
+                badge.style.background = 'var(--accent-purple)';
+                badge.style.color = '#000';
+                urlEl.innerText = 'UI Test Scenario';
+                
+                // Hide API tabs
+                document.querySelectorAll('.inspector-tab').forEach(t => {
+                    if (t.dataset.tab === 'logs') t.style.display = 'block';
+                    else t.style.display = 'none';
+                });
+                switchInspectorTab('logs');
+                
+                // Set Logs
+                const logTerm = document.getElementById('scenario-logs');
+                logTerm.innerText = req.logBuffer || "No logs captured yet.";
+                logTerm.scrollTop = logTerm.scrollHeight;
+            } else {
+                badge.innerText = req.method;
+                badge.className = `method-badge method-${req.method.toLowerCase()}`;
+                badge.style.background = '';
+                badge.style.color = '';
+                urlEl.innerText = req.url;
+                urlEl.title = req.url;
+                
+                // Show API tabs
+                document.querySelectorAll('.inspector-tab').forEach(t => {
+                    if (t.dataset.tab === 'logs') t.style.display = 'none';
+                    else t.style.display = 'block';
+                });
+                
+                // Default back to Req Body if currently on Logs
+                const activeTab = document.querySelector('.inspector-tab.active');
+                if (!activeTab || activeTab.dataset.tab === 'logs') {
+                    switchInspectorTab('req-body');
+                }
+            }
             
             statusBadge.innerText = req.status;
-            if (req.status.startsWith('2') || req.status.includes('OK')) {
+            if (req.status.startsWith('2') || req.status.includes('OK') || req.status === 'PASSED') {
                 statusBadge.className = "status-badge status-success";
             } else if (req.status.startsWith('4') || req.status.startsWith('5')) {
                 statusBadge.className = "status-badge status-error";
@@ -2825,6 +2870,14 @@
                     document.querySelectorAll('.test-item').forEach(n => n.classList.remove('active'));
                     testNode.classList.add('active');
                 }
+                
+                // Add Inspector Scenario for Web mode
+                if (currentMode === 'web') {
+                    // Start new scenario entry if it's the beginning of a new test
+                    if (sessionRequests.length === 0 || sessionRequests[sessionRequests.length - 1].testName !== window._currentExecutingTestName) {
+                        createNewRequestEntry('UI', '', 'web');
+                    }
+                }
             }
 
             // 2. Detect Results (PASSED, FAILED, SKIPPED)
@@ -2833,6 +2886,14 @@
                 const status = statusMatch[1];
                 // Use ID from line if present, otherwise fallback to last seen
                 const targetId = cleanMsg.includes('::') ? cleanMsg.split(' ')[0].trim() : window._lastTestIdSeen;
+
+                // Update Inspector Status for Web mode
+                if (currentMode === 'web' && sessionRequests.length > 0) {
+                    const reqIdx = sessionRequests.length - 1;
+                    sessionRequests[reqIdx].status = status;
+                    renderRequestHistory();
+                    if (activeRequestIndex === reqIdx) selectHistoryItem(activeRequestIndex);
+                }
 
                 if (targetId) {
                     const testNode = document.querySelector(`.test-item[data-id="${targetId}"]`);
@@ -2979,13 +3040,37 @@
                         }
                     }
 
-                    // 5. Detect Test Completion / Time
+                    // 5. Detect Test Completion / Time (API)
                     if (htmlMessage.includes('passed in')) {
                         const timePart = htmlMessage.match(/passed in ([\d.]+)s/)?.[1];
                         if (timePart && activeRequestIndex !== -1) {
                             sessionRequests[activeRequestIndex].time = timePart + 's';
                             renderRequestHistory();
                             selectHistoryItem(activeRequestIndex);
+                        }
+                    }
+                }
+                
+                // Track Time and Logs for UI mode
+                if (currentMode === 'web' && sessionRequests.length > 0) {
+                    const reqIdx = sessionRequests.length - 1;
+                    const req = sessionRequests[reqIdx];
+                    
+                    if (htmlMessage.includes('passed in')) {
+                        const timePart = htmlMessage.match(/passed in ([\d.]+)s/)?.[1];
+                        if (timePart) {
+                            req.time = timePart + 's';
+                            renderRequestHistory();
+                            if (activeRequestIndex === reqIdx) selectHistoryItem(activeRequestIndex);
+                        }
+                    }
+                    
+                    req.logBuffer += htmlMessage + '\n';
+                    if (activeRequestIndex === reqIdx) {
+                        const logTerm = document.getElementById('scenario-logs');
+                        if (logTerm) {
+                            logTerm.innerText = req.logBuffer;
+                            logTerm.scrollTop = logTerm.scrollHeight;
                         }
                     }
                 }
@@ -3117,6 +3202,30 @@
         }
 
         function buildRequestEvidenceHTML(req, index, total) {
+            const statusClass = (req.status.startsWith('2') || req.status === 'OK' || req.status === 'PASSED') ? 'status-success' :
+                                (req.status.startsWith('4') || req.status.startsWith('5') || req.status === 'FAILED') ? 'status-error' : 'status-warning';
+
+            if (req.mode === 'web') {
+                return `
+                    <div class="evidence-card">
+                        <div class="evidence-header">
+                            <div>
+                                <span class="evidence-number">Test ${index + 1} of ${total}</span>
+                                <h2 class="test-title">${req.testName || 'UI Test Scenario'}</h2>
+                            </div>
+                            <div class="meta-badges">
+                                <span class="badge" style="background:var(--accent-purple); color:#000;">UI</span>
+                                <span class="badge ${statusClass}">${req.status}</span>
+                                <span class="time-badge">${req.time || '0.00s'}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="section-title">Scenario Execution Logs</div>
+                        <pre class="code-box" style="white-space: pre-wrap; font-family: monospace;">${(req.logBuffer || 'No logs captured').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+                    </div>
+                `;
+            }
+
             let reqBodyStr = "{}";
             if (req.reqBody) {
                 if (typeof req.reqBody === 'object') {
@@ -3166,9 +3275,6 @@
                     resHeadersHTML = `<tr><td colspan="2"><pre style="margin:0; white-space: pre-wrap; font-family: monospace;">${req.resHeaders}</pre></td></tr>`;
                 }
             }
-
-            const statusClass = (req.status.startsWith('2') || req.status === 'OK') ? 'status-success' :
-                                (req.status.startsWith('4') || req.status.startsWith('5')) ? 'status-error' : 'status-warning';
 
             const methodClass = `method-${req.method.toLowerCase()}`;
             const curlCmd = generateCurlCommand(req, 'bash');
