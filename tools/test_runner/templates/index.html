@@ -3048,59 +3048,67 @@
                     }
 
                     // 1.5 Detect Assertion Failure (API)
-                    if (htmlMessage.includes('AssertionError:') || /E\s+AssertionError:/.test(htmlMessage) || /E\s+Failed:/.test(htmlMessage)) {
-                        let errorMsg = htmlMessage.replace(/^.*E\s+AssertionError:\s*/, 'AssertionError: ').trim();
-                        if (errorMsg.includes('E       Failed:')) {
-                            errorMsg = htmlMessage.replace(/^.*E\s+Failed:\s*/, 'Failed: ').trim();
-                        } else if (!errorMsg.startsWith('AssertionError:')) {
-                            errorMsg = htmlMessage.replace(/^.*AssertionError:\s*/, 'AssertionError: ').trim();
-                        }
+                    const lines = htmlMessage.split('\\n');
+                    let handledAssert = false;
+                    
+                    lines.forEach(rawLine => {
+                        const lineText = rawLine.trim();
+                        if (!lineText) return; // Skip empty lines
                         
-                        if (activeRequestIndex !== -1) {
-                            const req = sessionRequests[activeRequestIndex];
-                            // Prevent duplicating the error if pytest logs it multiple times
-                            if (!req.assertSummary && !req.assertError) {
-                                req.assertSummary = errorMsg;
-                                req.assertExpected = '';
-                                req.assertClosest = '';
-                                req.assertMismatched = '';
-                                req.assertActual = '';
-                                req._currentAssertSection = null;
-                                
-                                isCapturingAssert = true;
-                                assertTargetIndex = activeRequestIndex;
-                                
-                                renderRequestHistory();
-                                selectHistoryItem(activeRequestIndex);
-                            }
-                        }
-                    } else if (isCapturingAssert) {
-                        const req = sessionRequests[assertTargetIndex];
-                        if (req && cleanMsg.match(/^E\s/)) {
-                            // It's a continuation of the assert
-                            const line = cleanMsg.replace(/^E\s+/, '');
-                            if (line.startsWith('EXPECTED:')) {
-                                req._currentAssertSection = 'expected';
-                            } else if (line.startsWith('CLOSEST ACTUAL MATCH FOUND:')) {
-                                req._currentAssertSection = 'closest';
-                            } else if (line.startsWith('MISMATCHED FIELDS:')) {
-                                req._currentAssertSection = 'mismatched';
-                            } else if (line.startsWith('ACTUAL RESULTS RETURNED')) {
-                                req._currentAssertSection = 'actual';
-                            } else if (line.trim() !== '') {
-                                if (req._currentAssertSection === 'expected') req.assertExpected += line + '\n';
-                                else if (req._currentAssertSection === 'closest') req.assertClosest += line + '\n';
-                                else if (req._currentAssertSection === 'mismatched') req.assertMismatched += line + '\n';
-                                else if (req._currentAssertSection === 'actual') req.assertActual += line + '\n';
+                        if (lineText.includes('AssertionError:') || /E\\s+AssertionError:/.test(lineText) || /E\\s+Failed:/.test(lineText)) {
+                            handledAssert = true;
+                            let errorMsg = lineText.replace(/^.*E\\s+AssertionError:\\s*/, 'AssertionError: ').trim();
+                            if (errorMsg.includes('E       Failed:')) {
+                                errorMsg = lineText.replace(/^.*E\\s+Failed:\\s*/, 'Failed: ').trim();
+                            } else if (!errorMsg.startsWith('AssertionError:')) {
+                                errorMsg = lineText.replace(/^.*AssertionError:\\s*/, 'AssertionError: ').trim();
                             }
                             
-                            if (activeRequestIndex === assertTargetIndex) {
-                                renderResponseBody(req);
+                            if (activeRequestIndex !== -1) {
+                                const req = sessionRequests[activeRequestIndex];
+                                if (!req.assertSummary && !req.assertError) {
+                                    req.assertSummary = errorMsg;
+                                    req.assertExpected = '';
+                                    req.assertClosest = '';
+                                    req.assertMismatched = '';
+                                    req.assertActual = '';
+                                    req._currentAssertSection = null;
+                                    
+                                    isCapturingAssert = true;
+                                    assertTargetIndex = activeRequestIndex;
+                                    
+                                    renderRequestHistory();
+                                    selectHistoryItem(activeRequestIndex);
+                                }
                             }
-                        } else if (!cleanMsg.match(/^E\s/) && cleanMsg.trim() !== '') {
-                            isCapturingAssert = false;
+                        } else if (isCapturingAssert) {
+                            handledAssert = true;
+                            const req = sessionRequests[assertTargetIndex];
+                            if (req && lineText.match(/^E\\s/)) {
+                                const content = lineText.replace(/^E\\s+/, '');
+                                if (content.startsWith('EXPECTED:')) {
+                                    req._currentAssertSection = 'expected';
+                                } else if (content.startsWith('CLOSEST ACTUAL MATCH FOUND:')) {
+                                    req._currentAssertSection = 'closest';
+                                } else if (content.startsWith('MISMATCHED FIELDS:')) {
+                                    req._currentAssertSection = 'mismatched';
+                                } else if (content.startsWith('ACTUAL RESULTS RETURNED')) {
+                                    req._currentAssertSection = 'actual';
+                                } else if (content.trim() !== '') {
+                                    if (req._currentAssertSection === 'expected') req.assertExpected += content + '\\n';
+                                    else if (req._currentAssertSection === 'closest') req.assertClosest += content + '\\n';
+                                    else if (req._currentAssertSection === 'mismatched') req.assertMismatched += content + '\\n';
+                                    else if (req._currentAssertSection === 'actual') req.assertActual += content + '\\n';
+                                }
+                                
+                                if (activeRequestIndex === assertTargetIndex) {
+                                    renderResponseBody(req);
+                                }
+                            } else if (!lineText.match(/^E\\s/)) {
+                                isCapturingAssert = false;
+                            }
                         }
-                    }
+                    });
 
                     // 2. Multi-line Capture Logic (Robust)
                     const hasTimestamp = /^\d{4}-\d{2}-\d{2}/.test(cleanMsg);
