@@ -1718,19 +1718,20 @@
             if (!req) return "";
             const isWindows = navigator.platform.indexOf('Win') !== -1 || navigator.userAgent.indexOf('Win') !== -1;
             const curlBase = isWindows ? "curl.exe --ssl-no-revoke" : "curl";
+            const escapedQuote = isWindows ? '\\""' : '\\"';
             let curl = `${curlBase} -X ${req.method.toUpperCase()} "${req.url}"`;
             
             // Add headers
             if (req.reqHeaders && typeof req.reqHeaders === 'object') {
                 for (const [key, val] of Object.entries(req.reqHeaders)) {
-                    const escapedVal = String(val).replace(/"/g, '\\"');
+                    const escapedVal = String(val).replace(/"/g, escapedQuote);
                     curl += ` -H "${key}: ${escapedVal}"`;
                 }
             } else if (typeof req.reqHeaders === 'string' && req.reqHeaders.trim()) {
                 try {
                     const parsedHeaders = JSON.parse(req.reqHeaders);
                     for (const [key, val] of Object.entries(parsedHeaders)) {
-                        const escapedVal = String(val).replace(/"/g, '\\"');
+                        const escapedVal = String(val).replace(/"/g, escapedQuote);
                         curl += ` -H "${key}: ${escapedVal}"`;
                     }
                 } catch(e) {
@@ -1740,7 +1741,7 @@
                             const parts = line.split(':');
                             const key = parts[0].trim();
                             const val = parts.slice(1).join(':').trim();
-                            const escapedVal = val.replace(/"/g, '\\"');
+                            const escapedVal = val.replace(/"/g, escapedQuote);
                             curl += ` -H "${key}: ${escapedVal}"`;
                         }
                     }
@@ -1763,7 +1764,7 @@
             }
             
             if (bodyStr) {
-                const escapedBody = bodyStr.replace(/"/g, '\\"').replace(/\n/g, '\\n');
+                const escapedBody = bodyStr.replace(/"/g, escapedQuote).replace(/\n/g, '\\n');
                 curl += ` -d "${escapedBody}"`;
             }
             
