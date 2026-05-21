@@ -3055,13 +3055,13 @@
                         const lineText = rawLine.trim();
                         if (!lineText) return; // Skip empty lines
                         
-                        if (lineText.includes('AssertionError:') || /E\\s+AssertionError:/.test(lineText) || /E\\s+Failed:/.test(lineText)) {
+                        if (lineText.includes('AssertionError:') || /E\s+AssertionError:/.test(lineText) || /E\s+Failed:/.test(lineText)) {
                             handledAssert = true;
-                            let errorMsg = lineText.replace(/^.*E\\s+AssertionError:\\s*/, 'AssertionError: ').trim();
-                            if (errorMsg.includes('E       Failed:')) {
-                                errorMsg = lineText.replace(/^.*E\\s+Failed:\\s*/, 'Failed: ').trim();
+                            let errorMsg = lineText.replace(/^.*E\s+AssertionError:\s*/, 'AssertionError: ').trim();
+                            if (errorMsg.includes('Failed:')) {
+                                errorMsg = lineText.replace(/^.*E\s+Failed:\s*/, 'Failed: ').trim();
                             } else if (!errorMsg.startsWith('AssertionError:')) {
-                                errorMsg = lineText.replace(/^.*AssertionError:\\s*/, 'AssertionError: ').trim();
+                                errorMsg = lineText.replace(/^.*AssertionError:\s*/, 'AssertionError: ').trim();
                             }
                             
                             if (activeRequestIndex !== -1) {
@@ -3084,8 +3084,8 @@
                         } else if (isCapturingAssert) {
                             handledAssert = true;
                             const req = sessionRequests[assertTargetIndex];
-                            if (req && lineText.match(/^E\\s/)) {
-                                const content = lineText.replace(/^E\\s+/, '');
+                            if (req && /^E(\s|$)/.test(lineText)) {
+                                const content = lineText.replace(/^E\s*/, '');
                                 if (content.startsWith('EXPECTED:')) {
                                     req._currentAssertSection = 'expected';
                                 } else if (content.startsWith('CLOSEST ACTUAL MATCH FOUND:')) {
@@ -3095,16 +3095,16 @@
                                 } else if (content.startsWith('ACTUAL RESULTS RETURNED')) {
                                     req._currentAssertSection = 'actual';
                                 } else if (content.trim() !== '') {
-                                    if (req._currentAssertSection === 'expected') req.assertExpected += content + '\\n';
-                                    else if (req._currentAssertSection === 'closest') req.assertClosest += content + '\\n';
-                                    else if (req._currentAssertSection === 'mismatched') req.assertMismatched += content + '\\n';
-                                    else if (req._currentAssertSection === 'actual') req.assertActual += content + '\\n';
+                                    if (req._currentAssertSection === 'expected') req.assertExpected += content + '\n';
+                                    else if (req._currentAssertSection === 'closest') req.assertClosest += content + '\n';
+                                    else if (req._currentAssertSection === 'mismatched') req.assertMismatched += content + '\n';
+                                    else if (req._currentAssertSection === 'actual') req.assertActual += content + '\n';
                                 }
                                 
                                 if (activeRequestIndex === assertTargetIndex) {
                                     renderResponseBody(req);
                                 }
-                            } else if (!lineText.match(/^E\\s/)) {
+                            } else if (!/^E(\s|$)/.test(lineText)) {
                                 isCapturingAssert = false;
                             }
                         }
