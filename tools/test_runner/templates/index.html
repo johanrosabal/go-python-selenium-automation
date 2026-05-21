@@ -1379,12 +1379,33 @@
                                         <button onclick="switchResponseFormat('html-preview')" class="format-btn" id="btn-format-html-preview">HTML (Preview)</button>
                                     </div>
                                 </div>
-                                <div id="assert-error-container" style="display: none; margin-bottom: 12px; padding: 12px; background: rgba(255, 85, 85, 0.05); border: 1px solid rgba(255, 85, 85, 0.2); border-radius: 6px; border-left: 4px solid var(--accent-red);">
-                                    <div style="font-size: 0.75rem; color: var(--accent-red); font-weight: 800; margin-bottom: 8px;">❌ ASSERTION FAILURE</div>
-                                    <div class="inspector-code" id="code-assert-error" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,85,85,0.1); color: #ffb3b3; white-space: pre-wrap; max-height: 300px; overflow-y: auto;"></div>
-                                </div>
                                 <div class="inspector-code" id="code-res-body">{}</div>
                                 <iframe id="preview-res-body" style="display: none; width: 100%; height: 350px; background: white; border: 1px solid var(--border); border-radius: 6px; margin-top: 8px;" sandbox></iframe>
+                                
+                                <div id="assert-error-container" style="display: none; margin-top: 20px; padding: 12px; background: rgba(255, 85, 85, 0.05); border: 1px solid rgba(255, 85, 85, 0.2); border-radius: 6px; border-left: 4px solid var(--accent-red);">
+                                    <div style="font-size: 0.75rem; color: var(--accent-red); font-weight: 800; margin-bottom: 8px;">❌ ASSERTION FAILURE</div>
+                                    <div class="inspector-code" id="code-assert-error" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,85,85,0.1); color: #ffb3b3; white-space: pre-wrap; max-height: 150px; overflow-y: auto;"></div>
+                                    
+                                    <div id="assert-expected-container" style="display: none; margin-top: 15px;">
+                                        <div style="font-size: 0.7rem; color: var(--text-main); font-weight: 800; margin-bottom: 4px;">EXPECTED:</div>
+                                        <div class="inspector-code" id="code-assert-expected" style="background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: var(--text-main); white-space: pre-wrap;"></div>
+                                    </div>
+                                    
+                                    <div id="assert-closest-container" style="display: none; margin-top: 15px;">
+                                        <div style="font-size: 0.7rem; color: var(--text-main); font-weight: 800; margin-bottom: 4px;">CLOSEST ACTUAL MATCH FOUND:</div>
+                                        <div class="inspector-code" id="code-assert-closest" style="background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: var(--text-main); white-space: pre-wrap;"></div>
+                                    </div>
+                                    
+                                    <div id="assert-mismatched-container" style="display: none; margin-top: 15px;">
+                                        <div style="font-size: 0.7rem; color: var(--text-main); font-weight: 800; margin-bottom: 4px;">MISMATCHED FIELDS:</div>
+                                        <div class="inspector-code" id="code-assert-mismatched" style="background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: var(--text-main); white-space: pre-wrap;"></div>
+                                    </div>
+                                    
+                                    <div id="assert-actual-container" style="display: none; margin-top: 15px;">
+                                        <div style="font-size: 0.7rem; color: var(--text-main); font-weight: 800; margin-bottom: 4px;">ACTUAL RESULTS RETURNED:</div>
+                                        <div class="inspector-code" id="code-assert-actual" style="background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: var(--text-main); white-space: pre-wrap;"></div>
+                                    </div>
+                                </div>
                             </div>
                             <div id="ins-headers" class="inspector-pane hidden">
                                 <div style="margin-bottom: 20px;">
@@ -1452,6 +1473,10 @@
         let captureType = null; // 'body', 'res-body', 'headers', 'res-headers'
         let captureTargetIndex = -1;
         let captureBuffer = "";
+        
+        // Multi-line capturing state for Assertions
+        let isCapturingAssert = false;
+        let assertTargetIndex = -1;
 
         function switchMode(mode) {
             currentMode = mode;
@@ -1704,7 +1729,7 @@
                         <span class="history-method method-${req.method.toLowerCase()}" ${req.mode === 'web' ? 'style="display:none;"' : ''}>${req.method}</span>
                         ${req.mode === 'web' ? '<span class="history-method" style="background:var(--accent-purple); color:#000;">UI</span>' : ''}
                         <span class="history-status ${statusClass}" style="font-size: 10px; padding: 1px 4px; border-radius: 3px;">${req.status}</span>
-                        ${req.assertError ? '<span class="history-status status-error" style="font-size: 10px; padding: 1px 4px; border-radius: 3px; margin-left: 4px;">Assert Failed</span>' : ''}
+                        ${req.assertSummary || req.assertError ? '<span class="history-status status-error" style="font-size: 10px; padding: 1px 4px; border-radius: 3px; margin-left: 4px;">Assert Failed</span>' : ''}
                     </div>
                     <div class="history-name">${req.testName}</div>
                     ${req.mode === 'api' ? `<div style="font-size: 9px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${req.url}</div>` : ''}
@@ -1793,7 +1818,7 @@
             }
             
             const assertBadge = document.getElementById('inspector-assert-badge');
-            if (req.assertError) {
+            if (req.assertSummary || req.assertError) {
                 assertBadge.style.display = 'inline-block';
             } else {
                 assertBadge.style.display = 'none';
@@ -1883,13 +1908,43 @@
         function renderResponseBody(req) {
             const codeEl = document.getElementById('code-res-body');
             const iframeEl = document.getElementById('preview-res-body');
+            
             const assertContainer = document.getElementById('assert-error-container');
             const assertCodeEl = document.getElementById('code-assert-error');
+            const assertExpectedContainer = document.getElementById('assert-expected-container');
+            const assertExpectedCode = document.getElementById('code-assert-expected');
+            const assertClosestContainer = document.getElementById('assert-closest-container');
+            const assertClosestCode = document.getElementById('code-assert-closest');
+            const assertMismatchedContainer = document.getElementById('assert-mismatched-container');
+            const assertMismatchedCode = document.getElementById('code-assert-mismatched');
+            const assertActualContainer = document.getElementById('assert-actual-container');
+            const assertActualCode = document.getElementById('code-assert-actual');
+            
             const data = req.resBody || "";
             
-            if (req.assertError) {
+            if (req.assertSummary || req.assertError) {
                 assertContainer.style.display = 'block';
-                assertCodeEl.innerText = req.assertError;
+                assertCodeEl.innerText = req.assertSummary || req.assertError;
+                
+                if (req.assertExpected) {
+                    assertExpectedContainer.style.display = 'block';
+                    assertExpectedCode.innerText = req.assertExpected.trim();
+                } else assertExpectedContainer.style.display = 'none';
+                
+                if (req.assertClosest) {
+                    assertClosestContainer.style.display = 'block';
+                    assertClosestCode.innerText = req.assertClosest.trim();
+                } else assertClosestContainer.style.display = 'none';
+                
+                if (req.assertMismatched) {
+                    assertMismatchedContainer.style.display = 'block';
+                    assertMismatchedCode.innerText = req.assertMismatched.trim();
+                } else assertMismatchedContainer.style.display = 'none';
+                
+                if (req.assertActual) {
+                    assertActualContainer.style.display = 'block';
+                    assertActualCode.innerText = req.assertActual.trim();
+                } else assertActualContainer.style.display = 'none';
             } else {
                 assertContainer.style.display = 'none';
             }
@@ -3004,11 +3059,46 @@
                         if (activeRequestIndex !== -1) {
                             const req = sessionRequests[activeRequestIndex];
                             // Prevent duplicating the error if pytest logs it multiple times
-                            if (!req.assertError) {
-                                req.assertError = errorMsg;
+                            if (!req.assertSummary && !req.assertError) {
+                                req.assertSummary = errorMsg;
+                                req.assertExpected = '';
+                                req.assertClosest = '';
+                                req.assertMismatched = '';
+                                req.assertActual = '';
+                                req._currentAssertSection = null;
+                                
+                                isCapturingAssert = true;
+                                assertTargetIndex = activeRequestIndex;
+                                
                                 renderRequestHistory();
                                 selectHistoryItem(activeRequestIndex);
                             }
+                        }
+                    } else if (isCapturingAssert) {
+                        const req = sessionRequests[assertTargetIndex];
+                        if (req && cleanMsg.match(/^E\s/)) {
+                            // It's a continuation of the assert
+                            const line = cleanMsg.replace(/^E\s+/, '');
+                            if (line.startsWith('EXPECTED:')) {
+                                req._currentAssertSection = 'expected';
+                            } else if (line.startsWith('CLOSEST ACTUAL MATCH FOUND:')) {
+                                req._currentAssertSection = 'closest';
+                            } else if (line.startsWith('MISMATCHED FIELDS:')) {
+                                req._currentAssertSection = 'mismatched';
+                            } else if (line.startsWith('ACTUAL RESULTS RETURNED')) {
+                                req._currentAssertSection = 'actual';
+                            } else if (line.trim() !== '') {
+                                if (req._currentAssertSection === 'expected') req.assertExpected += line + '\n';
+                                else if (req._currentAssertSection === 'closest') req.assertClosest += line + '\n';
+                                else if (req._currentAssertSection === 'mismatched') req.assertMismatched += line + '\n';
+                                else if (req._currentAssertSection === 'actual') req.assertActual += line + '\n';
+                            }
+                            
+                            if (activeRequestIndex === assertTargetIndex) {
+                                renderResponseBody(req);
+                            }
+                        } else if (!cleanMsg.match(/^E\s/) && cleanMsg.trim() !== '') {
+                            isCapturingAssert = false;
                         }
                     }
 
