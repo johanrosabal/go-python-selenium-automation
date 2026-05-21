@@ -12,9 +12,23 @@
     "data": {
       "payload": {
         "companyNumber": 2,
-        "phoneNumber": "555-123-4567"
+        "phoneNumber": "5205288888"
       },
-      "expected_results": []
+      "expected_results": [
+        {
+          "policyNumber": "01APG07869401",
+          "quoteNumber": 6898655,
+          "insuredName": "STACEY HILL",
+          "dba": "",
+          "firstName": "STACEY",
+          "lastName": "HILL",
+          "effectiveDate": "2017-08-04T11:47:36",
+          "source": "MYP",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "AZ"
+        }
+      ]
     }
   }
 }
