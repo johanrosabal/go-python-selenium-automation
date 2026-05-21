@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
             --bg-dark: #0f111a;
@@ -1579,14 +1580,94 @@
             captureType = null;
         }
 
+        function decodeHtmlEntities(str) {
+            if (typeof str !== 'string') return str;
+            return str.replace(/&amp;/g, '&')
+                      .replace(/&lt;/g, '<')
+                      .replace(/&gt;/g, '>')
+                      .replace(/&quot;/g, '"')
+                      .replace(/&#39;/g, "'");
+        }
+
+        function sanitizeJsonString(str) {
+            if (typeof str !== 'string') return str;
+            let s = str.trim();
+            if (!s) return s;
+            s = decodeHtmlEntities(s);
+            // Remove invalid escape sequences (anything that's not \", \\, \/, \b, \f, \n, \r, \t, or \uXXXX)
+            s = s.replace(/\\(?!["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '');
+            return s;
+        }
+
         function tryParse(data) {
             if (typeof data !== 'string') return data;
             const trimmed = data.trim();
+            if (!trimmed) return data;
+
+            // Pre-sanitize the string if it looks like JSON or python dict
+            let sanitized = trimmed;
+            if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+                sanitized = sanitizeJsonString(trimmed);
+            }
+
+            // 1. Try standard JSON parse
             try {
-                if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
-                    return JSON.parse(trimmed);
+                if (sanitized.startsWith('{') || sanitized.startsWith('[')) {
+                    return JSON.parse(sanitized);
                 }
-            } catch (e) { }
+            } catch (e) {}
+
+            // 2. Try parsing Python/JS dictionary/object literal
+            if (sanitized.startsWith('{') && sanitized.endsWith('}')) {
+                try {
+                    // Sanitize Python-specific boolean/None literals to valid Javascript (excluding quoted strings)
+                    const jsStr = sanitized.replace(/("[^"\\]*(?:\\.[^"\\]*)*"|'[^'\\]*(?:\\.[^'\\]*)*')|\b(True|False|None)\b/g, (match, group1, group2) => {
+                        if (group1) return group1;
+                        if (group2 === 'True') return 'true';
+                        if (group2 === 'False') return 'false';
+                        if (group2 === 'None') return 'null';
+                        return match;
+                    });
+                    const fn = new Function('return (' + jsStr + ');');
+                    const res = fn();
+                    if (res && typeof res === 'object') {
+                        return res;
+                    }
+                } catch (e) {}
+            }
+
+            // 3. Try parsing standard multi-line HTTP headers key-value format
+            try {
+                const lines = trimmed.split('\n');
+                const obj = {};
+                for (const line of lines) {
+                    const idx = line.indexOf(':');
+                    if (idx !== -1) {
+                        let key = line.substring(0, idx).trim();
+                        let val = line.substring(idx + 1).trim();
+                        // Strip quotes from value
+                        if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+                            val = val.substring(1, val.length - 1);
+                        }
+                        // Strip trailing commas
+                        if (val.endsWith(',')) {
+                            val = val.substring(0, val.length - 1).trim();
+                            if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+                                val = val.substring(1, val.length - 1);
+                            }
+                        }
+                        // Strip quotes from key
+                        if ((key.startsWith('"') && key.endsWith('"')) || (key.startsWith("'") && key.endsWith("'"))) {
+                            key = key.substring(1, key.length - 1);
+                        }
+                        obj[key] = val;
+                    }
+                }
+                if (Object.keys(obj).length > 0) {
+                    return obj;
+                }
+            } catch (e) {}
+
             return data;
         }
 
@@ -2953,7 +3034,9 @@
                 alert("No captured request selected.");
                 return;
             }
-            openPrintWindow([req], "Single Test Execution Evidence");
+            const testName = req.testName || 'api-request';
+            const safeName = testName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            generatePDFReport([req], `${safeName || 'single-test'}-evidence.pdf`);
         }
 
         function exportAllRequestsToPDF() {
@@ -2961,28 +3044,75 @@
                 alert("No captured requests in history to export.");
                 return;
             }
-            openPrintWindow(sessionRequests, "All Tests Execution Evidence Report");
+            generatePDFReport(sessionRequests, 'all-tests-evidence-report.pdf');
         }
 
         function tryParseJSON(str) {
             if (!str) return null;
+            if (typeof str === 'object') return str;
+            const trimmed = str.trim();
+            if (!trimmed) return null;
+
+            // Pre-sanitize the string if it looks like JSON or python dict
+            let sanitized = trimmed;
+            if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+                sanitized = sanitizeJsonString(trimmed);
+            }
+
+            // 1. Try standard JSON parse
             try {
-                return JSON.parse(str);
-            } catch (e) {
-                // Try to parse split lines
+                return JSON.parse(sanitized);
+            } catch (e) {}
+
+            // 2. Try parsing Python/JS dictionary/object literal
+            if (sanitized.startsWith('{') && sanitized.endsWith('}')) {
                 try {
-                    const lines = str.split('\n');
-                    const obj = {};
-                    for (const line of lines) {
-                        const idx = line.indexOf(':');
-                        if (idx !== -1) {
-                            obj[line.substring(0, idx).trim()] = line.substring(idx + 1).trim();
-                        }
+                    // Sanitize Python-specific boolean/None literals to valid Javascript (excluding quoted strings)
+                    const jsStr = sanitized.replace(/("[^"\\]*(?:\\.[^"\\]*)*"|'[^'\\]*(?:\\.[^'\\]*)*')|\b(True|False|None)\b/g, (match, group1, group2) => {
+                        if (group1) return group1;
+                        if (group2 === 'True') return 'true';
+                        if (group2 === 'False') return 'false';
+                        if (group2 === 'None') return 'null';
+                        return match;
+                    });
+                    const fn = new Function('return (' + jsStr + ');');
+                    const res = fn();
+                    if (res && typeof res === 'object') {
+                        return res;
                     }
-                    return Object.keys(obj).length > 0 ? obj : null;
-                } catch(err) {
-                    return null;
+                } catch (e) {}
+            }
+
+            // 3. Try to parse split lines
+            try {
+                const lines = trimmed.split('\n');
+                const obj = {};
+                for (const line of lines) {
+                    const idx = line.indexOf(':');
+                    if (idx !== -1) {
+                        let key = line.substring(0, idx).trim();
+                        let val = line.substring(idx + 1).trim();
+                        // Strip quotes from value
+                        if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+                            val = val.substring(1, val.length - 1);
+                        }
+                        // Strip trailing commas
+                        if (val.endsWith(',')) {
+                            val = val.substring(0, val.length - 1).trim();
+                            if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+                                val = val.substring(1, val.length - 1);
+                            }
+                        }
+                        // Strip quotes from key
+                        if ((key.startsWith('"') && key.endsWith('"')) || (key.startsWith("'") && key.endsWith("'"))) {
+                            key = key.substring(1, key.length - 1);
+                        }
+                        obj[key] = val;
+                    }
                 }
+                return Object.keys(obj).length > 0 ? obj : null;
+            } catch(err) {
+                return null;
             }
         }
 
@@ -3099,236 +3229,235 @@
             `;
         }
 
-        function openPrintWindow(requests, title) {
-            const printWindow = window.open('', '_blank');
-            if (!printWindow) {
-                alert("Popup blocker prevented opening the print report window. Please allow popups for this site.");
-                return;
-            }
+        function generatePDFReport(requests, filename) {
+            // Save original body styles to prevent layout breakage
+            const originalOverflow = document.body.style.overflow;
+            const originalHeight = document.body.style.height;
 
+            // Override body styles to allow html2canvas to measure full height
+            document.body.style.overflow = 'visible';
+            document.body.style.height = 'auto';
+
+            // Create a wrapper div that is absolute positioned offscreen/below fold
+            const wrapperDiv = document.createElement('div');
+            wrapperDiv.style.position = 'absolute';
+            wrapperDiv.style.left = '0';
+            wrapperDiv.style.top = (document.documentElement.scrollHeight + 100) + 'px';
+            wrapperDiv.style.zIndex = '-9999';
+            wrapperDiv.style.width = '790px';
+            wrapperDiv.style.background = '#ffffff';
+
+            // Create the actual container with static positioning
+            const container = document.createElement('div');
+            container.style.color = '#1f2937';
+            container.style.padding = '30px';
+            container.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            container.style.fontSize = '12px';
+            container.style.lineHeight = '1.5';
+            
+            // Build the HTML content
             const total = requests.length;
-            const evidenceHTML = requests.map((req, idx) => buildRequestEvidenceHTML(req, idx, total)).join('<div class="page-break"></div>');
+            const evidenceCardsHTML = requests.map((req, idx) => buildRequestEvidenceHTML(req, idx, total)).join('<div class="page-break"></div>');
+            
+            // Format title
+            const displayTitle = filename.replace('.pdf', '').replace(/-/g, ' ').toUpperCase();
 
-            const fullHTML = `
-<!DOCTYPE html>
-<html>
-<head>
-    <title>${title}</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            color: #1f2937;
-            background: #ffffff;
-            margin: 0;
-            padding: 40px;
-            font-size: 13px;
-            line-height: 1.5;
-        }
-        
-        /* Report Header */
-        .report-header {
-            border-bottom: 2px solid #3b82f6;
-            padding-bottom: 15px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .report-title {
-            margin: 0;
-            font-size: 22px;
-            color: #111827;
-            font-weight: 700;
-        }
-        .report-date {
-            font-size: 11px;
-            color: #6b7280;
-        }
+            container.innerHTML = `
+                <style>
+                    /* Custom print styles to ensure absolute wrap and proper display in html2pdf */
+                    .report-header {
+                        border-bottom: 2px solid #3b82f6;
+                        padding-bottom: 12px;
+                        margin-bottom: 25px;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
+                    .report-title {
+                        margin: 0;
+                        font-size: 20px;
+                        color: #111827;
+                        font-weight: 700;
+                    }
+                    .report-date {
+                        font-size: 11px;
+                        color: #6b7280;
+                        text-align: right;
+                    }
+                    .evidence-card {
+                        margin-bottom: 30px;
+                        page-break-inside: avoid;
+                    }
+                    .evidence-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: flex-start;
+                        margin-bottom: 12px;
+                    }
+                    .evidence-number {
+                        font-size: 10px;
+                        text-transform: uppercase;
+                        font-weight: 800;
+                        color: #3b82f6;
+                        letter-spacing: 0.5px;
+                    }
+                    .test-title {
+                        margin: 2px 0 0 0;
+                        font-size: 15px;
+                        color: #111827;
+                        font-weight: 700;
+                    }
+                    .meta-badges {
+                        display: flex;
+                        gap: 6px;
+                        align-items: center;
+                    }
+                    .badge {
+                        padding: 3px 8px;
+                        border-radius: 4px;
+                        font-size: 9px;
+                        font-weight: 800;
+                        text-transform: uppercase;
+                    }
+                    .time-badge {
+                        font-size: 10px;
+                        font-weight: 600;
+                        color: #4b5563;
+                        background: #f3f4f6;
+                        padding: 3px 8px;
+                        border-radius: 4px;
+                        border: 1px solid #e5e7eb;
+                    }
+                    .method-get { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+                    .method-post { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+                    .method-put { background: #fdf8e6; color: #b25e00; border: 1px solid #fde68a; }
+                    .method-delete { background: #fdf2f2; color: #b91c1c; border: 1px solid #fecaca; }
+                    
+                    .status-success { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+                    .status-error { background: #fdf2f2; color: #b91c1c; border: 1px solid #fecaca; }
+                    .status-warning { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
 
-        /* Evidence Cards */
-        .evidence-card {
-            margin-bottom: 40px;
-        }
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-        .evidence-number {
-            font-size: 10px;
-            text-transform: uppercase;
-            font-weight: 800;
-            color: #3b82f6;
-            letter-spacing: 0.5px;
-        }
-        .test-title {
-            margin: 2px 0 0 0;
-            font-size: 16px;
-            color: #111827;
-            font-weight: 700;
-        }
-
-        /* Badges */
-        .meta-badges {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
-        .badge {
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-        }
-        .time-badge {
-            font-size: 11px;
-            font-weight: 600;
-            color: #4b5563;
-            background: #f3f4f6;
-            padding: 3px 8px;
-            border-radius: 4px;
-            border: 1px solid #e5e7eb;
-        }
-
-        /* Method Colors */
-        .method-get { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
-        .method-post { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
-        .method-put { background: #fdf8e6; color: #b25e00; border: 1px solid #fde68a; }
-        .method-delete { background: #fdf2f2; color: #b91c1c; border: 1px solid #fecaca; }
-
-        /* Status Colors */
-        .status-success { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
-        .status-error { background: #fdf2f2; color: #b91c1c; border: 1px solid #fecaca; }
-        .status-warning { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
-
-        /* URL Bar */
-        .url-bar {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-family: "Courier New", Courier, monospace;
-            font-size: 12px;
-            word-break: break-all;
-            margin-bottom: 20px;
-        }
-        .url-bar strong {
-            color: #4b5563;
-        }
-
-        /* Tables */
-        .section-title {
-            font-size: 11px;
-            font-weight: 800;
-            color: #374151;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin: 20px 0 8px 0;
-            border-bottom: 1px solid #f3f4f6;
-            padding-bottom: 4px;
-        }
-        .headers-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 15px;
-            font-size: 12px;
-        }
-        .headers-table th, .headers-table td {
-            text-align: left;
-            padding: 6px 10px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        .headers-table th {
-            background: #f9fafb;
-            color: #4b5563;
-            font-weight: 700;
-            width: 30%;
-        }
-        .headers-table td {
-            word-break: break-all;
-        }
-
-        /* Code box */
-        .code-box {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            padding: 10px 14px;
-            border-radius: 6px;
-            font-family: "Courier New", Courier, monospace;
-            font-size: 11px;
-            white-space: pre-wrap;
-            word-break: break-all;
-            margin: 0 0 20px 0;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        .curl-box {
-            background: #f0fdf4;
-            border-color: #bcf0da;
-            color: #14532d;
-        }
-
-        /* Page breaks */
-        .page-break {
-            page-break-before: always;
-            border-top: 1px dashed #d1d5db;
-            margin: 40px 0;
-            padding-top: 40px;
-        }
-
-        @media print {
-            body {
-                padding: 20px;
-                font-size: 12px;
-            }
-            .code-box {
-                max-height: none;
-                overflow: visible;
-                page-break-inside: avoid;
-            }
-            .headers-table {
-                page-break-inside: avoid;
-            }
-            .evidence-card {
-                page-break-inside: avoid;
-            }
-            .page-break {
-                border-top: none;
-                margin: 0;
-                padding-top: 0;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="report-header">
-        <div>
-            <h1 class="report-title">${title}</h1>
-            <div style="font-size:11px; color:#4b5563; margin-top:2px;">Go Python Automation Test Evidence Report</div>
-        </div>
-        <div class="report-date">
-            Generated: ${new Date().toLocaleString()}
-        </div>
-    </div>
-    
-    ${evidenceHTML}
-
-    <script>
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                window.print();
-            }, 500);
-        });
-    <\/script>
-</body>
-</html>
+                    .url-bar {
+                        background: #f9fafb;
+                        border: 1px solid #e5e7eb;
+                        padding: 8px 12px;
+                        border-radius: 6px;
+                        font-family: "Courier New", Courier, monospace;
+                        font-size: 11px;
+                        word-break: break-all;
+                        margin-bottom: 15px;
+                        white-space: pre-wrap !important;
+                        text-align: left !important;
+                    }
+                    .section-title {
+                        font-size: 10px;
+                        font-weight: 800;
+                        color: #374151;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                        margin: 15px 0 6px 0;
+                        border-bottom: 1px solid #f3f4f6;
+                        padding-bottom: 2px;
+                    }
+                    .headers-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-bottom: 12px;
+                        font-size: 11px;
+                    }
+                    .headers-table th, .headers-table td {
+                        text-align: left;
+                        padding: 5px 8px;
+                        border-bottom: 1px solid #e5e7eb;
+                    }
+                    .headers-table th {
+                        background: #f9fafb;
+                        color: #4b5563;
+                        font-weight: 700;
+                        width: 20%;
+                    }
+                    .headers-table td {
+                        word-break: break-all;
+                    }
+                    .code-box {
+                        background: #f9fafb;
+                        border: 1px solid #e5e7eb;
+                        padding: 8px 12px;
+                        border-radius: 6px;
+                        font-family: "Courier New", Courier, monospace;
+                        font-size: 10px;
+                        white-space: pre-wrap !important;
+                        word-break: break-all !important;
+                        overflow-wrap: break-word !important;
+                        margin: 0 0 15px 0;
+                    }
+                    .curl-box {
+                        background: #f0fdf4;
+                        border-color: #bcf0da;
+                        color: #14532d;
+                    }
+                    .page-break {
+                        page-break-before: always;
+                    }
+                </style>
+                <div class="report-header">
+                    <div>
+                        <h1 class="report-title">${displayTitle}</h1>
+                        <div style="font-size:10px; color:#4b5563; margin-top:2px;">Go Python Automation Test Evidence Report</div>
+                    </div>
+                    <div class="report-date">
+                        Generated: ${new Date().toLocaleString()}
+                    </div>
+                </div>
+                ${evidenceCardsHTML}
             `;
+            
+            wrapperDiv.appendChild(container);
+            document.body.appendChild(wrapperDiv);
+            
+            const opt = {
+                margin:       0.3,
+                filename:     filename,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, logging: false },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
+                pagebreak:    { mode: ['css', 'legacy'] }
+            };
+            
+            // Show a feedback overlay to the user
+            const overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.background = 'rgba(0,0,0,0.7)';
+            overlay.style.display = 'flex';
+            overlay.style.justifyContent = 'center';
+            overlay.style.alignItems = 'center';
+            overlay.style.zIndex = '99999';
+            overlay.style.color = '#fff';
+            overlay.style.fontFamily = 'sans-serif';
+            overlay.style.fontSize = '16px';
+            overlay.innerHTML = '<div>📄 Generating PDF Report, please wait...</div>';
+            document.body.appendChild(overlay);
 
-            printWindow.document.open();
-            printWindow.document.write(fullHTML);
-            printWindow.document.close();
+            // Export from container (which has static position inside wrapperDiv)
+            html2pdf().set(opt).from(container).save().then(() => {
+                // Restore body styles and cleanup
+                document.body.style.overflow = originalOverflow;
+                document.body.style.height = originalHeight;
+                document.body.removeChild(wrapperDiv);
+                document.body.removeChild(overlay);
+            }).catch(err => {
+                console.error("PDF generation failed:", err);
+                // Restore body styles and cleanup
+                document.body.style.overflow = originalOverflow;
+                document.body.style.height = originalHeight;
+                if (wrapperDiv.parentNode) document.body.removeChild(wrapperDiv);
+                if (overlay.parentNode) document.body.removeChild(overlay);
+                alert("Failed to generate PDF. Check browser console.");
+            });
         }
 
         function initInspectorResizer() {

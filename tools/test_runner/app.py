@@ -45,7 +45,11 @@ def extract_metadata(file_path, test_method_name):
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    response = make_response(render_template("index.html"))
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
 
 import yaml
 
