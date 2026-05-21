@@ -20,23 +20,21 @@ class TestNicoSearch(BaseAPITest):
     app: 'NicoSearchClient'
     app_name = "nico_search"
 
-    def _do_search(self, test_id):
-        """Helper: loads JSON payload and submits search. Auto-skips on auth/network blocks."""
+    def _run_full_search_flow(self, test_id=None):
+        """Helper: loads JSON payload, runs the full search-and-get-results flow, and asserts response correctness."""
         data = self.get_test_data(test_id)
         payload = data["data"]["payload"]
-        response = self.app.search.search_policies(payload)
-        if response.status_code == 401:
-            pytest.skip("Invalid/expired token — update qa.yaml.")
-        if response.status_code == 403:
-            pytest.skip("IP Forbidden — run from authorized network.")
-        return response
+        search_id, results_response = self.app.search_and_get_results(payload)
 
-    def _assert_search_id(self, response):
-        """Helper: asserts 201 and extracts the returned GUID."""
-        response.assert_status_code(201)
-        search_id = response.body.strip()
-        assert len(search_id) > 10, f"Expected GUID, got: '{search_id}'"
-        return search_id
+        # Skip if auth/IP block is detected during the flow
+        if results_response.status_code in [401, 403]:
+            pytest.skip("Unauthorized or IP Forbidden.")
+
+        # Ensure search succeeded and we received results
+        assert search_id is not None, f"Search initiation failed: {results_response.status_code}"
+        results_response.assert_status_code(200)
+        assert isinstance(results_response.body, list), "Expected results body to be a list"
+        return search_id, results_response
 
     # =========================================================================
     # CATEGORY 1: Single-Field Searches
@@ -45,63 +43,55 @@ class TestNicoSearch(BaseAPITest):
     @test_case(id="SEARCH-001")
     def test_complete_search_flow(self):
         """Full end-to-end via orchestrator: search → GUID → get_results."""
-        payload = self.get_test_data()["data"]["payload"]
-        search_id, results_response = self.app.search_and_get_results(payload)
-
-        # Skip if auth/IP block is detected during the flow
-        if results_response.status_code in [401, 403]:
-            pytest.skip("Unauthorized or IP Forbidden.")
-
-        results_response.assert_status_code(200)
-        assert isinstance(results_response.body, list), "Expected results body to be a list"
+        self._run_full_search_flow("SEARCH-001")
 
     @test_case(id="SEARCH-002")
     def test_search_by_first_last_name(self):
-        self._assert_search_id(self._do_search("SEARCH-002"))
+        self._run_full_search_flow("SEARCH-002")
 
     @test_case(id="SEARCH-003")
     def test_search_by_policy_number(self):
-        self._assert_search_id(self._do_search("SEARCH-003"))
+        self._run_full_search_flow("SEARCH-003")
 
     @test_case(id="SEARCH-004")
     def test_search_by_insured_name(self):
-        self._assert_search_id(self._do_search("SEARCH-004"))
+        self._run_full_search_flow("SEARCH-004")
 
     @test_case(id="SEARCH-005")
     def test_search_by_phone_number(self):
-        self._assert_search_id(self._do_search("SEARCH-005"))
+        self._run_full_search_flow("SEARCH-005")
 
     @test_case(id="SEARCH-006")
     def test_search_by_vin(self):
-        self._assert_search_id(self._do_search("SEARCH-006"))
+        self._run_full_search_flow("SEARCH-006")
 
     @test_case(id="SEARCH-007")
     def test_search_by_quote_number(self):
-        self._assert_search_id(self._do_search("SEARCH-007"))
+        self._run_full_search_flow("SEARCH-007")
 
     @test_case(id="SEARCH-008")
     def test_search_by_agency_code(self):
-        self._assert_search_id(self._do_search("SEARCH-008"))
+        self._run_full_search_flow("SEARCH-008")
 
     @test_case(id="SEARCH-009")
     def test_search_by_policy_state(self):
-        self._assert_search_id(self._do_search("SEARCH-009"))
+        self._run_full_search_flow("SEARCH-009")
 
     @test_case(id="SEARCH-010")
     def test_search_by_address(self):
-        self._assert_search_id(self._do_search("SEARCH-010"))
+        self._run_full_search_flow("SEARCH-010")
 
     @test_case(id="SEARCH-011")
     def test_search_by_effective_date(self):
-        self._assert_search_id(self._do_search("SEARCH-011"))
+        self._run_full_search_flow("SEARCH-011")
 
     @test_case(id="SEARCH-012")
     def test_search_by_email(self):
-        self._assert_search_id(self._do_search("SEARCH-012"))
+        self._run_full_search_flow("SEARCH-012")
 
     @test_case(id="SEARCH-013")
     def test_search_by_company_number(self):
-        self._assert_search_id(self._do_search("SEARCH-013"))
+        self._run_full_search_flow("SEARCH-013")
 
     # =========================================================================
     # CATEGORY 2: Combined / Multi-Field Searches
@@ -109,8 +99,8 @@ class TestNicoSearch(BaseAPITest):
 
     @test_case(id="SEARCH-014")
     def test_search_combined_name_state(self):
-        self._assert_search_id(self._do_search("SEARCH-014"))
+        self._run_full_search_flow("SEARCH-014")
 
     @test_case(id="SEARCH-015")
     def test_search_combined_agency_state(self):
-        self._assert_search_id(self._do_search("SEARCH-015"))
+        self._run_full_search_flow("SEARCH-015")
