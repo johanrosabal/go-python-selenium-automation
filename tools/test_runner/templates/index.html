@@ -2970,6 +2970,23 @@
                         createNewRequestEntry(method, url);
                     }
 
+                    // 1.5 Detect Assertion Failure (API)
+                    if (htmlMessage.includes('AssertionError:') || /E\s+AssertionError:/.test(htmlMessage)) {
+                        let errorMsg = htmlMessage.replace(/^.*E\s+AssertionError:\s*/, 'AssertionError: ').trim();
+                        if (!errorMsg.startsWith('AssertionError:')) {
+                            errorMsg = htmlMessage.replace(/^.*AssertionError:\s*/, 'AssertionError: ').trim();
+                        }
+                        
+                        createNewRequestEntry('ERROR', 'Assertion Failure');
+                        if (activeRequestIndex !== -1) {
+                            sessionRequests[activeRequestIndex].status = "Failed";
+                            sessionRequests[activeRequestIndex].resBody = errorMsg;
+                            sessionRequests[activeRequestIndex].reqBody = "Test execution halted due to an assertion failure.";
+                            renderRequestHistory();
+                            selectHistoryItem(activeRequestIndex);
+                        }
+                    }
+
                     // 2. Multi-line Capture Logic (Robust)
                     const hasTimestamp = /^\d{4}-\d{2}-\d{2}/.test(cleanMsg);
                     
