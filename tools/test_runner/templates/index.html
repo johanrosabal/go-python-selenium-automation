@@ -2971,19 +2971,23 @@
                     }
 
                     // 1.5 Detect Assertion Failure (API)
-                    if (htmlMessage.includes('AssertionError:') || /E\s+AssertionError:/.test(htmlMessage)) {
+                    if (htmlMessage.includes('AssertionError:') || /E\s+AssertionError:/.test(htmlMessage) || /E\s+Failed:/.test(htmlMessage)) {
                         let errorMsg = htmlMessage.replace(/^.*E\s+AssertionError:\s*/, 'AssertionError: ').trim();
-                        if (!errorMsg.startsWith('AssertionError:')) {
+                        if (errorMsg.includes('E       Failed:')) {
+                            errorMsg = htmlMessage.replace(/^.*E\s+Failed:\s*/, 'Failed: ').trim();
+                        } else if (!errorMsg.startsWith('AssertionError:')) {
                             errorMsg = htmlMessage.replace(/^.*AssertionError:\s*/, 'AssertionError: ').trim();
                         }
                         
-                        createNewRequestEntry('ERROR', 'Assertion Failure');
                         if (activeRequestIndex !== -1) {
-                            sessionRequests[activeRequestIndex].status = "Failed";
-                            sessionRequests[activeRequestIndex].resBody = errorMsg;
-                            sessionRequests[activeRequestIndex].reqBody = "Test execution halted due to an assertion failure.";
-                            renderRequestHistory();
-                            selectHistoryItem(activeRequestIndex);
+                            const req = sessionRequests[activeRequestIndex];
+                            // Prevent duplicating the error if pytest logs it multiple times
+                            if (!req.resBody || !req.resBody.includes('--- ASSERTION FAILURE ---')) {
+                                req.status = "Failed";
+                                req.resBody = `--- ASSERTION FAILURE ---\n${errorMsg}\n\n--- ORIGINAL RESPONSE ---\n${req.resBody || ''}`;
+                                renderRequestHistory();
+                                selectHistoryItem(activeRequestIndex);
+                            }
                         }
                     }
 

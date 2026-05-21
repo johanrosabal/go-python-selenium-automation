@@ -41,11 +41,28 @@ class TestNicoSearch(BaseAPITest):
             actual_results = results_response.body
             for expected in expected_results:
                 match_found = False
+                closest_match = None
+                max_matched_keys = -1
+                
                 for actual in actual_results:
-                    if all(actual.get(k) == v for k, v in expected.items()):
+                    matched_keys = sum(1 for k, v in expected.items() if actual.get(k) == v)
+                    if matched_keys == len(expected):
                         match_found = True
                         break
-                assert match_found, f"Expected result not found in API response: {expected}"
+                    
+                    if matched_keys > max_matched_keys:
+                        max_matched_keys = matched_keys
+                        closest_match = actual
+                        
+                if not match_found:
+                    error_msg = f"Expected result not found in API response.\n\nEXPECTED:\n{expected}\n"
+                    if closest_match and max_matched_keys > 0:
+                        mismatches = {k: {"expected": v, "actual": closest_match.get(k)} for k, v in expected.items() if closest_match.get(k) != v}
+                        error_msg += f"\nCLOSEST ACTUAL MATCH FOUND:\n{closest_match}\n\nMISMATCHED FIELDS:\n{mismatches}"
+                    else:
+                        error_msg += f"\nACTUAL RESULTS RETURNED ({len(actual_results)} items):\n{actual_results}"
+                        
+                    pytest.fail(error_msg)
 
         return search_id, results_response
 
