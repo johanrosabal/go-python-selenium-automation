@@ -1716,20 +1716,22 @@
 
         function generateCurlCommand(req) {
             if (!req) return "";
-            let curl = `curl -X ${req.method.toUpperCase()} "${req.url}"`;
+            const isWindows = navigator.platform.indexOf('Win') !== -1 || navigator.userAgent.indexOf('Win') !== -1;
+            const curlBase = isWindows ? "curl --ssl-no-revoke" : "curl";
+            let curl = `${curlBase} -X ${req.method.toUpperCase()} "${req.url}"`;
             
             // Add headers
             if (req.reqHeaders && typeof req.reqHeaders === 'object') {
                 for (const [key, val] of Object.entries(req.reqHeaders)) {
                     const escapedVal = String(val).replace(/"/g, '\\"');
-                    curl += ` \\\n  -H "${key}: ${escapedVal}"`;
+                    curl += ` -H "${key}: ${escapedVal}"`;
                 }
             } else if (typeof req.reqHeaders === 'string' && req.reqHeaders.trim()) {
                 try {
                     const parsedHeaders = JSON.parse(req.reqHeaders);
                     for (const [key, val] of Object.entries(parsedHeaders)) {
                         const escapedVal = String(val).replace(/"/g, '\\"');
-                        curl += ` \\\n  -H "${key}: ${escapedVal}"`;
+                        curl += ` -H "${key}: ${escapedVal}"`;
                     }
                 } catch(e) {
                     const lines = req.reqHeaders.split('\n');
@@ -1739,7 +1741,7 @@
                             const key = parts[0].trim();
                             const val = parts.slice(1).join(':').trim();
                             const escapedVal = val.replace(/"/g, '\\"');
-                            curl += ` \\\n  -H "${key}: ${escapedVal}"`;
+                            curl += ` -H "${key}: ${escapedVal}"`;
                         }
                     }
                 }
@@ -1762,7 +1764,7 @@
             
             if (bodyStr) {
                 const escapedBody = bodyStr.replace(/"/g, '\\"').replace(/\n/g, '\\n');
-                curl += ` \\\n  -d "${escapedBody}"`;
+                curl += ` -d "${escapedBody}"`;
             }
             
             return curl;
