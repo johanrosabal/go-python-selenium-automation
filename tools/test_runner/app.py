@@ -229,7 +229,7 @@ def run_test():
     def generate_output():
         env_vars = os.environ.copy()
         env_vars.update({"BROWSER": browser, "ENV": env_name, "HEADLESS": "true" if headless else "false", "VIDEO_ENABLED": "true" if video else "false", "PYTHONPATH": PROJECT_ROOT, "PYTHONIOENCODING": "utf-8"})
-        cmd = ["pytest", "-v", "--no-header", "--alluredir=reports/allure-results", "--clean-alluredir", "-o", "log_cli=true", "-o", "log_cli_level=INFO"]
+        cmd = ["pytest", "-v", "--no-header", "--show-capture=no", "--alluredir=reports/allure-results", "--clean-alluredir", "-o", "log_cli=true", "-o", "log_cli_level=INFO"]
         if isinstance(test_ids, list): cmd.extend(test_ids)
         else: cmd.append(test_ids)
         
