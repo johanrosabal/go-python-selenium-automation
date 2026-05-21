@@ -1739,6 +1739,7 @@
         function generateCurlCommand(req, format = 'bash') {
             if (!req) return "";
             
+            const isWindows = navigator.platform.indexOf('Win') !== -1 || navigator.userAgent.indexOf('Win') !== -1;
             const isCmd = format === 'cmd';
             
             if (isCmd) {
@@ -1796,7 +1797,8 @@
                 return curl;
             } else {
                 // Bash / Git Bash format: curl, single quotes, and pretty-printed JSON
-                let curl = `curl -X '${req.method.toUpperCase()}' \\\n  '${req.url}'`;
+                const sslFlag = isWindows ? " --ssl-no-revoke" : "";
+                let curl = `curl${sslFlag} -X '${req.method.toUpperCase()}' \\\n  '${req.url}'`;
                 
                 // Add headers
                 if (req.reqHeaders && typeof req.reqHeaders === 'object') {
