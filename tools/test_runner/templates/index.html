@@ -1344,6 +1344,7 @@
                                 <div style="display: flex; align-items: center; gap: 12px;">
                                     <div id="inspector-method-badge" class="method-badge method-get">GET</div>
                                     <div id="inspector-status-badge" class="status-badge status-warning">PENDING</div>
+                                    <div id="inspector-assert-badge" class="status-badge status-error" style="display: none;">Assert Failed</div>
                                 </div>
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <div id="inspector-time" style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; margin-right: 4px;">0.00s</div>
@@ -1377,6 +1378,10 @@
                                         <button onclick="switchResponseFormat('html-raw')" class="format-btn" id="btn-format-html-raw">HTML (Raw)</button>
                                         <button onclick="switchResponseFormat('html-preview')" class="format-btn" id="btn-format-html-preview">HTML (Preview)</button>
                                     </div>
+                                </div>
+                                <div id="assert-error-container" style="display: none; margin-bottom: 12px; padding: 12px; background: rgba(255, 85, 85, 0.05); border: 1px solid rgba(255, 85, 85, 0.2); border-radius: 6px; border-left: 4px solid var(--accent-red);">
+                                    <div style="font-size: 0.75rem; color: var(--accent-red); font-weight: 800; margin-bottom: 8px;">❌ ASSERTION FAILURE</div>
+                                    <div class="inspector-code" id="code-assert-error" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,85,85,0.1); color: #ffb3b3; white-space: pre-wrap; max-height: 300px; overflow-y: auto;"></div>
                                 </div>
                                 <div class="inspector-code" id="code-res-body">{}</div>
                                 <iframe id="preview-res-body" style="display: none; width: 100%; height: 350px; background: white; border: 1px solid var(--border); border-radius: 6px; margin-top: 8px;" sandbox></iframe>
@@ -1699,6 +1704,7 @@
                         <span class="history-method method-${req.method.toLowerCase()}" ${req.mode === 'web' ? 'style="display:none;"' : ''}>${req.method}</span>
                         ${req.mode === 'web' ? '<span class="history-method" style="background:var(--accent-purple); color:#000;">UI</span>' : ''}
                         <span class="history-status ${statusClass}" style="font-size: 10px; padding: 1px 4px; border-radius: 3px;">${req.status}</span>
+                        ${req.assertError ? '<span class="history-status status-error" style="font-size: 10px; padding: 1px 4px; border-radius: 3px; margin-left: 4px;">Assert Failed</span>' : ''}
                     </div>
                     <div class="history-name">${req.testName}</div>
                     ${req.mode === 'api' ? `<div style="font-size: 9px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${req.url}</div>` : ''}
@@ -1780,10 +1786,17 @@
             statusBadge.innerText = req.status;
             if (req.status.startsWith('2') || req.status.includes('OK') || req.status === 'PASSED') {
                 statusBadge.className = "status-badge status-success";
-            } else if (req.status.startsWith('4') || req.status.startsWith('5')) {
+            } else if (req.status.startsWith('4') || req.status.startsWith('5') || req.status === 'Failed') {
                 statusBadge.className = "status-badge status-error";
             } else {
                 statusBadge.className = "status-badge status-warning";
+            }
+            
+            const assertBadge = document.getElementById('inspector-assert-badge');
+            if (req.assertError) {
+                assertBadge.style.display = 'inline-block';
+            } else {
+                assertBadge.style.display = 'none';
             }
             
             timeEl.innerText = req.time;
@@ -1870,7 +1883,16 @@
         function renderResponseBody(req) {
             const codeEl = document.getElementById('code-res-body');
             const iframeEl = document.getElementById('preview-res-body');
+            const assertContainer = document.getElementById('assert-error-container');
+            const assertCodeEl = document.getElementById('code-assert-error');
             const data = req.resBody || "";
+            
+            if (req.assertError) {
+                assertContainer.style.display = 'block';
+                assertCodeEl.innerText = req.assertError;
+            } else {
+                assertContainer.style.display = 'none';
+            }
             
             // Hide both by default
             codeEl.style.display = 'none';
@@ -2982,9 +3004,8 @@
                         if (activeRequestIndex !== -1) {
                             const req = sessionRequests[activeRequestIndex];
                             // Prevent duplicating the error if pytest logs it multiple times
-                            if (!req.resBody || !req.resBody.includes('--- ASSERTION FAILURE ---')) {
-                                req.status = "Failed";
-                                req.resBody = `--- ASSERTION FAILURE ---\n${errorMsg}\n\n--- ORIGINAL RESPONSE ---\n${req.resBody || ''}`;
+                            if (!req.assertError) {
+                                req.assertError = errorMsg;
                                 renderRequestHistory();
                                 selectHistoryItem(activeRequestIndex);
                             }
