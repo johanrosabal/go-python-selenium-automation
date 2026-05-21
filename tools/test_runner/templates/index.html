@@ -1357,7 +1357,13 @@
                             </div>
                             <div id="ins-curl" class="inspector-pane hidden">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                    <div style="font-size: 0.75rem; color: var(--accent-blue); font-weight: 800; border-left: 3px solid var(--accent-blue); padding-left: 10px;">cURL COMMAND</div>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div style="font-size: 0.75rem; color: var(--accent-blue); font-weight: 800; border-left: 3px solid var(--accent-blue); padding-left: 10px;">cURL COMMAND</div>
+                                        <div style="display: flex; gap: 4px; background: rgba(0, 0, 0, 0.2); padding: 2px; border-radius: 6px; border: 1px solid var(--border);">
+                                            <button onclick="switchCurlFormat('bash')" class="format-btn active" id="btn-curl-bash">Bash / Git Bash</button>
+                                            <button onclick="switchCurlFormat('cmd')" class="format-btn" id="btn-curl-cmd">Windows CMD</button>
+                                        </div>
+                                    </div>
                                     <button class="copy-curl-btn" onclick="copyCurlToClipboard(event)"
                                         style="background: rgba(137, 180, 250, 0.1); border: 1px solid rgba(137, 180, 250, 0.2); color: var(--accent-blue); border-radius: 6px; cursor: pointer; padding: 4px 10px; font-size: 0.75rem; transition: 0.2s; font-weight: bold;">
                                         📋 Copy cURL
@@ -1394,6 +1400,7 @@
         let sessionRequests = []; // For API history
         let activeRequestIndex = -1;
         let currentTestName = "Unknown Test";
+        let currentCurlFormat = 'bash';
 
         // Multi-line capturing state
         let isCapturingBuffer = false;
@@ -1626,7 +1633,7 @@
             updateInspectorHeaders('table-res-headers', req.resHeaders);
 
             // cURL
-            document.getElementById('code-curl').innerText = generateCurlCommand(req);
+            document.getElementById('code-curl').innerText = generateCurlCommand(req, currentCurlFormat);
         }
 
         function detectResponseFormat(req) {
@@ -1671,12 +1678,27 @@
             
             // Update active state in format buttons
             document.querySelectorAll('.format-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.id === `btn-format-${format}`);
+                if (btn.id.startsWith('btn-format-')) {
+                    btn.classList.toggle('active', btn.id === `btn-format-${format}`);
+                }
             });
             
             const req = sessionRequests[activeRequestIndex];
             if (req) {
                 renderResponseBody(req);
+            }
+        }
+
+        function switchCurlFormat(format) {
+            currentCurlFormat = format;
+            
+            // Update active state in curl format buttons
+            document.getElementById('btn-curl-bash').classList.toggle('active', format === 'bash');
+            document.getElementById('btn-curl-cmd').classList.toggle('active', format === 'cmd');
+            
+            const req = sessionRequests[activeRequestIndex];
+            if (req) {
+                document.getElementById('code-curl').innerText = generateCurlCommand(req, currentCurlFormat);
             }
         }
 
@@ -1714,61 +1736,122 @@
             }
         }
 
-        function generateCurlCommand(req) {
+        function generateCurlCommand(req, format = 'bash') {
             if (!req) return "";
-            const isWindows = navigator.platform.indexOf('Win') !== -1 || navigator.userAgent.indexOf('Win') !== -1;
-            const curlBase = isWindows ? "curl.exe --ssl-no-revoke" : "curl";
-            const escapedQuote = isWindows ? '\\""' : '\\"';
-            let curl = `${curlBase} -X ${req.method.toUpperCase()} "${req.url}"`;
             
-            // Add headers
-            if (req.reqHeaders && typeof req.reqHeaders === 'object') {
-                for (const [key, val] of Object.entries(req.reqHeaders)) {
-                    const escapedVal = String(val).replace(/"/g, escapedQuote);
-                    curl += ` -H "${key}: ${escapedVal}"`;
-                }
-            } else if (typeof req.reqHeaders === 'string' && req.reqHeaders.trim()) {
-                try {
-                    const parsedHeaders = JSON.parse(req.reqHeaders);
-                    for (const [key, val] of Object.entries(parsedHeaders)) {
-                        const escapedVal = String(val).replace(/"/g, escapedQuote);
+            const isCmd = format === 'cmd';
+            
+            if (isCmd) {
+                // Windows CMD format: curl.exe --ssl-no-revoke, double quotes, and \""" escaping
+                const curlBase = "curl.exe --ssl-no-revoke";
+                let curl = `${curlBase} -X ${req.method.toUpperCase()} "${req.url}"`;
+                
+                // Add headers
+                if (req.reqHeaders && typeof req.reqHeaders === 'object') {
+                    for (const [key, val] of Object.entries(req.reqHeaders)) {
+                        const escapedVal = String(val).replace(/"/g, '\\""');
                         curl += ` -H "${key}: ${escapedVal}"`;
                     }
-                } catch(e) {
-                    const lines = req.reqHeaders.split('\n');
-                    for (const line of lines) {
-                        if (line.includes(':')) {
-                            const parts = line.split(':');
-                            const key = parts[0].trim();
-                            const val = parts.slice(1).join(':').trim();
-                            const escapedVal = val.replace(/"/g, escapedQuote);
+                } else if (typeof req.reqHeaders === 'string' && req.reqHeaders.trim()) {
+                    try {
+                        const parsedHeaders = JSON.parse(req.reqHeaders);
+                        for (const [key, val] of Object.entries(parsedHeaders)) {
+                            const escapedVal = String(val).replace(/"/g, '\\""');
                             curl += ` -H "${key}: ${escapedVal}"`;
+                        }
+                    } catch(e) {
+                        const lines = req.reqHeaders.split('\n');
+                        for (const line of lines) {
+                            if (line.includes(':')) {
+                                const parts = line.split(':');
+                                const key = parts[0].trim();
+                                const val = parts.slice(1).join(':').trim();
+                                const escapedVal = val.replace(/"/g, '\\""');
+                                curl += ` -H "${key}: ${escapedVal}"`;
+                            }
                         }
                     }
                 }
-            }
-            
-            // Add body
-            let bodyStr = "";
-            if (req.reqBody) {
-                if (typeof req.reqBody === 'object') {
-                    if (Object.keys(req.reqBody).length > 0) {
-                        bodyStr = JSON.stringify(req.reqBody);
-                    }
-                } else if (typeof req.reqBody === 'string') {
-                    const trimmed = req.reqBody.trim();
-                    if (trimmed && trimmed !== '{}' && trimmed !== '[]') {
-                        bodyStr = trimmed;
+                
+                // Add body
+                let bodyStr = "";
+                if (req.reqBody) {
+                    if (typeof req.reqBody === 'object') {
+                        if (Object.keys(req.reqBody).length > 0) {
+                            bodyStr = JSON.stringify(req.reqBody);
+                        }
+                    } else if (typeof req.reqBody === 'string') {
+                        const trimmed = req.reqBody.trim();
+                        if (trimmed && trimmed !== '{}' && trimmed !== '[]') {
+                            bodyStr = trimmed;
+                        }
                     }
                 }
+                
+                if (bodyStr) {
+                    const escapedBody = bodyStr.replace(/"/g, '\\""').replace(/\n/g, '\\n');
+                    curl += ` -d "${escapedBody}"`;
+                }
+                
+                return curl;
+            } else {
+                // Bash / Git Bash format: curl, single quotes, and pretty-printed JSON
+                let curl = `curl -X '${req.method.toUpperCase()}' \\\n  '${req.url}'`;
+                
+                // Add headers
+                if (req.reqHeaders && typeof req.reqHeaders === 'object') {
+                    for (const [key, val] of Object.entries(req.reqHeaders)) {
+                        const escapedVal = String(val).replace(/'/g, "'\\''");
+                        curl += ` \\\n  -H '${key}: ${escapedVal}'`;
+                    }
+                } else if (typeof req.reqHeaders === 'string' && req.reqHeaders.trim()) {
+                    try {
+                        const parsedHeaders = JSON.parse(req.reqHeaders);
+                        for (const [key, val] of Object.entries(parsedHeaders)) {
+                            const escapedVal = String(val).replace(/'/g, "'\\''");
+                            curl += ` \\\n  -H '${key}: ${escapedVal}'`;
+                        }
+                    } catch(e) {
+                        const lines = req.reqHeaders.split('\n');
+                        for (const line of lines) {
+                            if (line.includes(':')) {
+                                const parts = line.split(':');
+                                const key = parts[0].trim();
+                                const val = parts.slice(1).join(':').trim();
+                                const escapedVal = val.replace(/'/g, "'\\''");
+                                curl += ` \\\n  -H '${key}: ${escapedVal}'`;
+                            }
+                        }
+                    }
+                }
+                
+                // Add body
+                let bodyStr = "";
+                if (req.reqBody) {
+                    if (typeof req.reqBody === 'object') {
+                        if (Object.keys(req.reqBody).length > 0) {
+                            bodyStr = JSON.stringify(req.reqBody, null, 2);
+                        }
+                    } else if (typeof req.reqBody === 'string') {
+                        const trimmed = req.reqBody.trim();
+                        if (trimmed && trimmed !== '{}' && trimmed !== '[]') {
+                            try {
+                                const parsed = JSON.parse(trimmed);
+                                bodyStr = JSON.stringify(parsed, null, 2);
+                            } catch(e) {
+                                bodyStr = trimmed;
+                            }
+                        }
+                    }
+                }
+                
+                if (bodyStr) {
+                    const escapedBody = bodyStr.replace(/'/g, "'\\''");
+                    curl += ` \\\n  -d '${escapedBody}'`;
+                }
+                
+                return curl;
             }
-            
-            if (bodyStr) {
-                const escapedBody = bodyStr.replace(/"/g, escapedQuote).replace(/\n/g, '\\n');
-                curl += ` -d "${escapedBody}"`;
-            }
-            
-            return curl;
         }
 
         function copyCurlToClipboard(event) {
