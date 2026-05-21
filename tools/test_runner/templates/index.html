@@ -535,11 +535,38 @@
         /* History Sidebar */
         .inspector-sidebar {
             width: 250px;
-            border-right: 1px solid var(--border);
             background: rgba(0,0,0,0.2);
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .inspector-sidebar-resizer {
+            width: 4px;
+            cursor: col-resize;
+            background: var(--border);
+            flex-shrink: 0;
+            z-index: 10;
+            position: relative;
+            transition: background-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .inspector-sidebar-resizer:hover,
+        .inspector-sidebar-resizer.resizing {
+            background: var(--accent-blue);
+            box-shadow: 0 0 8px var(--accent-blue);
+        }
+
+        .pdf-btn {
+            transition: all 0.2s ease;
+        }
+        .pdf-btn:hover {
+            transform: translateY(-1px);
+            opacity: 0.9;
+        }
+        .pdf-btn:active {
+            transform: translateY(0);
         }
 
         .history-header {
@@ -1300,12 +1327,18 @@
                     <div class="inspector-sidebar">
                         <div class="history-header">
                             <span>📜 REQUEST HISTORY</span>
-                            <span id="history-count" style="background: var(--accent-blue); color: #111; padding: 2px 6px; border-radius: 10px; font-size: 10px;">0</span>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <button onclick="exportAllRequestsToPDF()" class="pdf-btn" title="Export All to PDF" style="background: rgba(139, 233, 253, 0.15); border: 1px solid var(--accent-blue); color: var(--accent-blue); padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; cursor: pointer; border: 1px solid rgba(139,233,253,0.3);">
+                                    📄 Export All
+                                </button>
+                                <span id="history-count" style="background: var(--accent-blue); color: #111; padding: 2px 6px; border-radius: 10px; font-size: 10px;">0</span>
+                            </div>
                         </div>
                         <div class="history-list" id="inspector-history">
                             <!-- Items will be added here -->
                         </div>
                     </div>
+                    <div class="inspector-sidebar-resizer" id="inspector-resizer"></div>
 
                     <!-- Main Content -->
                     <div class="inspector-main" id="inspector-details">
@@ -1315,7 +1348,12 @@
                                     <div id="inspector-method-badge" class="method-badge method-get">GET</div>
                                     <div id="inspector-status-badge" class="status-badge status-warning">PENDING</div>
                                 </div>
-                                <div id="inspector-time" style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">0.00s</div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div id="inspector-time" style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; margin-right: 4px;">0.00s</div>
+                                    <button onclick="exportRequestToPDF()" class="pdf-btn" id="btn-export-pdf" style="background: rgba(255, 85, 85, 0.15); border: 1px solid var(--accent-red); color: var(--accent-red); padding: 4px 10px; border-radius: 6px; font-weight: 800; font-size: 0.75rem; cursor: pointer; display: none; align-items: center; gap: 4px;">
+                                        📄 PDF Report
+                                    </button>
+                                </div>
                             </div>
                             <div id="inspector-url" style="font-size: 0.8rem; color: var(--text-main); overflow: hidden; word-break: break-all; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid var(--border); font-family: monospace;">
                                 No request captured yet.
@@ -1623,6 +1661,7 @@
             }
             
             timeEl.innerText = req.time;
+            document.getElementById('btn-export-pdf').style.display = 'flex';
 
             // Bodies
             updateInspectorCode('code-req-body', req.reqBody);
@@ -2908,10 +2947,464 @@
             });
         }
 
+        function exportRequestToPDF() {
+            const req = sessionRequests[activeRequestIndex];
+            if (!req) {
+                alert("No captured request selected.");
+                return;
+            }
+            openPrintWindow([req], "Single Test Execution Evidence");
+        }
+
+        function exportAllRequestsToPDF() {
+            if (sessionRequests.length === 0) {
+                alert("No captured requests in history to export.");
+                return;
+            }
+            openPrintWindow(sessionRequests, "All Tests Execution Evidence Report");
+        }
+
+        function tryParseJSON(str) {
+            if (!str) return null;
+            try {
+                return JSON.parse(str);
+            } catch (e) {
+                // Try to parse split lines
+                try {
+                    const lines = str.split('\n');
+                    const obj = {};
+                    for (const line of lines) {
+                        const idx = line.indexOf(':');
+                        if (idx !== -1) {
+                            obj[line.substring(0, idx).trim()] = line.substring(idx + 1).trim();
+                        }
+                    }
+                    return Object.keys(obj).length > 0 ? obj : null;
+                } catch(err) {
+                    return null;
+                }
+            }
+        }
+
+        function buildRequestEvidenceHTML(req, index, total) {
+            let reqBodyStr = "{}";
+            if (req.reqBody) {
+                if (typeof req.reqBody === 'object') {
+                    reqBodyStr = JSON.stringify(req.reqBody, null, 2);
+                } else {
+                    try {
+                        reqBodyStr = JSON.stringify(JSON.parse(req.reqBody), null, 2);
+                    } catch (e) {
+                        reqBodyStr = req.reqBody;
+                    }
+                }
+            }
+
+            let resBodyStr = "";
+            if (req.resBody) {
+                if (typeof req.resBody === 'object') {
+                    resBodyStr = JSON.stringify(req.resBody, null, 2);
+                } else {
+                    try {
+                        resBodyStr = JSON.stringify(JSON.parse(req.resBody), null, 2);
+                    } catch (e) {
+                        resBodyStr = req.resBody;
+                    }
+                }
+            }
+
+            let reqHeadersHTML = "";
+            if (req.reqHeaders) {
+                const headersObj = typeof req.reqHeaders === 'object' ? req.reqHeaders : tryParseJSON(req.reqHeaders);
+                if (headersObj && typeof headersObj === 'object') {
+                    reqHeadersHTML = Object.entries(headersObj)
+                        .map(([k, v]) => `<tr><td><strong>${k}</strong></td><td>${v}</td></tr>`)
+                        .join('');
+                } else {
+                    reqHeadersHTML = `<tr><td colspan="2"><pre style="margin:0; white-space: pre-wrap; font-family: monospace;">${req.reqHeaders}</pre></td></tr>`;
+                }
+            }
+
+            let resHeadersHTML = "";
+            if (req.resHeaders) {
+                const headersObj = typeof req.resHeaders === 'object' ? req.resHeaders : tryParseJSON(req.resHeaders);
+                if (headersObj && typeof headersObj === 'object') {
+                    resHeadersHTML = Object.entries(headersObj)
+                        .map(([k, v]) => `<tr><td><strong>${k}</strong></td><td>${v}</td></tr>`)
+                        .join('');
+                } else {
+                    resHeadersHTML = `<tr><td colspan="2"><pre style="margin:0; white-space: pre-wrap; font-family: monospace;">${req.resHeaders}</pre></td></tr>`;
+                }
+            }
+
+            const statusClass = (req.status.startsWith('2') || req.status === 'OK') ? 'status-success' :
+                                (req.status.startsWith('4') || req.status.startsWith('5')) ? 'status-error' : 'status-warning';
+
+            const methodClass = `method-${req.method.toLowerCase()}`;
+            const curlCmd = generateCurlCommand(req, 'bash');
+
+            return `
+                <div class="evidence-card">
+                    <div class="evidence-header">
+                        <div>
+                            <span class="evidence-number">Test ${index + 1} of ${total}</span>
+                            <h2 class="test-title">${req.testName || 'Captured Request'}</h2>
+                        </div>
+                        <div class="meta-badges">
+                            <span class="badge ${methodClass}">${req.method}</span>
+                            <span class="badge ${statusClass}">${req.status}</span>
+                            <span class="time-badge">${req.time || '0.00s'}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="url-bar">
+                        <strong>URL:</strong> <span>${req.url}</span>
+                    </div>
+
+                    <div class="section-title">Request Headers</div>
+                    <table class="headers-table">
+                        <thead>
+                            <tr>
+                                <th>Header</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${reqHeadersHTML || '<tr><td colspan="2" class="muted">No headers</td></tr>'}
+                        </tbody>
+                    </table>
+
+                    <div class="section-title">Request Body</div>
+                    <pre class="code-box">${reqBodyStr}</pre>
+
+                    <div class="section-title">Response Headers</div>
+                    <table class="headers-table">
+                        <thead>
+                            <tr>
+                                <th>Header</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${resHeadersHTML || '<tr><td colspan="2" class="muted">No headers</td></tr>'}
+                        </tbody>
+                    </table>
+
+                    <div class="section-title">Response Body</div>
+                    <pre class="code-box">${resBodyStr || '(Empty Response)'}</pre>
+
+                    <div class="section-title">Reproduction cURL Command</div>
+                    <pre class="code-box curl-box">${curlCmd}</pre>
+                </div>
+            `;
+        }
+
+        function openPrintWindow(requests, title) {
+            const printWindow = window.open('', '_blank');
+            if (!printWindow) {
+                alert("Popup blocker prevented opening the print report window. Please allow popups for this site.");
+                return;
+            }
+
+            const total = requests.length;
+            const evidenceHTML = requests.map((req, idx) => buildRequestEvidenceHTML(req, idx, total)).join('<div class="page-break"></div>');
+
+            const fullHTML = `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>${title}</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #1f2937;
+            background: #ffffff;
+            margin: 0;
+            padding: 40px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        /* Report Header */
+        .report-header {
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .report-title {
+            margin: 0;
+            font-size: 22px;
+            color: #111827;
+            font-weight: 700;
+        }
+        .report-date {
+            font-size: 11px;
+            color: #6b7280;
+        }
+
+        /* Evidence Cards */
+        .evidence-card {
+            margin-bottom: 40px;
+        }
+        .evidence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .evidence-number {
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: #3b82f6;
+            letter-spacing: 0.5px;
+        }
+        .test-title {
+            margin: 2px 0 0 0;
+            font-size: 16px;
+            color: #111827;
+            font-weight: 700;
+        }
+
+        /* Badges */
+        .meta-badges {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+        .time-badge {
+            font-size: 11px;
+            font-weight: 600;
+            color: #4b5563;
+            background: #f3f4f6;
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid #e5e7eb;
+        }
+
+        /* Method Colors */
+        .method-get { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+        .method-post { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .method-put { background: #fdf8e6; color: #b25e00; border: 1px solid #fde68a; }
+        .method-delete { background: #fdf2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+        /* Status Colors */
+        .status-success { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .status-error { background: #fdf2f2; color: #b91c1c; border: 1px solid #fecaca; }
+        .status-warning { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+
+        /* URL Bar */
+        .url-bar {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 12px;
+            word-break: break-all;
+            margin-bottom: 20px;
+        }
+        .url-bar strong {
+            color: #4b5563;
+        }
+
+        /* Tables */
+        .section-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 20px 0 8px 0;
+            border-bottom: 1px solid #f3f4f6;
+            padding-bottom: 4px;
+        }
+        .headers-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+        .headers-table th, .headers-table td {
+            text-align: left;
+            padding: 6px 10px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .headers-table th {
+            background: #f9fafb;
+            color: #4b5563;
+            font-weight: 700;
+            width: 30%;
+        }
+        .headers-table td {
+            word-break: break-all;
+        }
+
+        /* Code box */
+        .code-box {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 11px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin: 0 0 20px 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .curl-box {
+            background: #f0fdf4;
+            border-color: #bcf0da;
+            color: #14532d;
+        }
+
+        /* Page breaks */
+        .page-break {
+            page-break-before: always;
+            border-top: 1px dashed #d1d5db;
+            margin: 40px 0;
+            padding-top: 40px;
+        }
+
+        @media print {
+            body {
+                padding: 20px;
+                font-size: 12px;
+            }
+            .code-box {
+                max-height: none;
+                overflow: visible;
+                page-break-inside: avoid;
+            }
+            .headers-table {
+                page-break-inside: avoid;
+            }
+            .evidence-card {
+                page-break-inside: avoid;
+            }
+            .page-break {
+                border-top: none;
+                margin: 0;
+                padding-top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="report-header">
+        <div>
+            <h1 class="report-title">${title}</h1>
+            <div style="font-size:11px; color:#4b5563; margin-top:2px;">Go Python Automation Test Evidence Report</div>
+        </div>
+        <div class="report-date">
+            Generated: ${new Date().toLocaleString()}
+        </div>
+    </div>
+    
+    ${evidenceHTML}
+
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                window.print();
+            }, 500);
+        });
+    <\/script>
+</body>
+</html>
+            `;
+
+            printWindow.document.open();
+            printWindow.document.write(fullHTML);
+            printWindow.document.close();
+        }
+
+        function initInspectorResizer() {
+            const resizer = document.getElementById('inspector-resizer');
+            const sidebar = document.querySelector('.inspector-sidebar');
+            if (!resizer || !sidebar) return;
+
+            let isResizing = false;
+
+            resizer.addEventListener('mousedown', (e) => {
+                isResizing = true;
+                resizer.classList.add('resizing');
+                document.body.style.cursor = 'col-resize';
+                document.body.style.userSelect = 'none';
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isResizing) return;
+                
+                const container = document.getElementById('api-inspector');
+                if (!container) return;
+                
+                const containerRect = container.getBoundingClientRect();
+                let newWidth = e.clientX - containerRect.left;
+
+                if (newWidth < 150) newWidth = 150;
+                if (newWidth > 600) newWidth = 600;
+
+                sidebar.style.width = `${newWidth}px`;
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (isResizing) {
+                    isResizing = false;
+                    resizer.classList.remove('resizing');
+                    document.body.style.cursor = '';
+                    document.body.style.userSelect = '';
+                }
+            });
+
+            // Touch events support
+            resizer.addEventListener('touchstart', (e) => {
+                isResizing = true;
+                resizer.classList.add('resizing');
+                e.preventDefault();
+            });
+
+            document.addEventListener('touchmove', (e) => {
+                if (!isResizing) return;
+                const container = document.getElementById('api-inspector');
+                if (!container) return;
+                
+                const containerRect = container.getBoundingClientRect();
+                const touch = e.touches[0];
+                let newWidth = touch.clientX - containerRect.left;
+
+                if (newWidth < 150) newWidth = 150;
+                if (newWidth > 600) newWidth = 600;
+
+                sidebar.style.width = `${newWidth}px`;
+            });
+
+            document.addEventListener('touchend', () => {
+                if (isResizing) {
+                    isResizing = false;
+                    resizer.classList.remove('resizing');
+                }
+            });
+        }
+
         // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
             // Give the browser a moment to settle elements
             setTimeout(loadExistingMedia, 500);
+            initInspectorResizer();
         });
     </script>
 </body>
