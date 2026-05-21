@@ -660,10 +660,17 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
+        .json-key { color: #f5c2e7; font-weight: bold; }
+        .json-string { color: #a6e3a1; }
+        .json-number { color: #fab387; }
+        .json-boolean { color: #f9e2af; font-weight: bold; }
+        .json-null { color: #94e2d5; font-style: italic; }
+
         .header-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 0.75rem;
+            table-layout: fixed;
         }
 
         .header-table th {
@@ -673,14 +680,48 @@
             border-bottom: 1px solid var(--border);
         }
 
+        .header-table th:first-child {
+            width: 180px;
+        }
+
         .header-table td {
             padding: 8px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
             word-break: break-all;
         }
 
-        .header-key { font-weight: 700; color: var(--text-main); }
-        .header-val { color: var(--text-muted); }
+        .header-key {
+            font-weight: 700;
+            color: var(--text-main);
+            word-break: break-word;
+        }
+
+        .header-val {
+            color: var(--text-muted);
+        }
+
+        .format-btn {
+            padding: 2px 8px;
+            font-size: 10px;
+            border: none;
+            border-radius: 4px;
+            background: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .format-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .format-btn.active {
+            background: var(--accent-blue);
+            color: #111;
+            box-shadow: 0 2px 6px rgba(137, 180, 250, 0.3);
+        }
 
         .method-badge {
             padding: 2px 8px;
@@ -1283,6 +1324,7 @@
                                 <div class="inspector-tab active" data-tab="req-body" onclick="switchInspectorTab('req-body')">REQUEST</div>
                                 <div class="inspector-tab" data-tab="res-body" onclick="switchInspectorTab('res-body')">RESPONSE</div>
                                 <div class="inspector-tab" data-tab="headers" onclick="switchInspectorTab('headers')">HEADERS</div>
+                                <div class="inspector-tab" data-tab="curl" onclick="switchInspectorTab('curl')">cURL</div>
                             </div>
                         </div>
                         <div class="inspector-body">
@@ -1291,8 +1333,17 @@
                                 <div class="inspector-code" id="code-req-body">{}</div>
                             </div>
                             <div id="ins-res-body" class="inspector-pane hidden">
-                                <div style="margin-bottom: 8px; font-size: 0.7rem; color: var(--text-muted); font-weight: 800;">RESPONSE BODY:</div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 800;">RESPONSE BODY:</div>
+                                    <div class="response-format-selector" style="display: flex; gap: 5px; background: rgba(0, 0, 0, 0.2); padding: 2px; border-radius: 6px; border: 1px solid var(--border);">
+                                        <button onclick="switchResponseFormat('json')" class="format-btn active" id="btn-format-json">JSON</button>
+                                        <button onclick="switchResponseFormat('text')" class="format-btn" id="btn-format-text">Text</button>
+                                        <button onclick="switchResponseFormat('html-raw')" class="format-btn" id="btn-format-html-raw">HTML (Raw)</button>
+                                        <button onclick="switchResponseFormat('html-preview')" class="format-btn" id="btn-format-html-preview">HTML (Preview)</button>
+                                    </div>
+                                </div>
                                 <div class="inspector-code" id="code-res-body">{}</div>
+                                <iframe id="preview-res-body" style="display: none; width: 100%; height: 350px; background: white; border: 1px solid var(--border); border-radius: 6px; margin-top: 8px;" sandbox></iframe>
                             </div>
                             <div id="ins-headers" class="inspector-pane hidden">
                                 <div style="margin-bottom: 20px;">
@@ -1303,6 +1354,16 @@
                                     <div style="font-size: 0.75rem; color: var(--accent-green); font-weight: 800; margin-bottom: 8px; border-left: 3px solid var(--accent-green); padding-left: 10px;">RESPONSE HEADERS</div>
                                     <table class="header-table" id="table-res-headers"></table>
                                 </div>
+                            </div>
+                            <div id="ins-curl" class="inspector-pane hidden">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <div style="font-size: 0.75rem; color: var(--accent-blue); font-weight: 800; border-left: 3px solid var(--accent-blue); padding-left: 10px;">cURL COMMAND</div>
+                                    <button class="copy-curl-btn" onclick="copyCurlToClipboard(event)"
+                                        style="background: rgba(137, 180, 250, 0.1); border: 1px solid rgba(137, 180, 250, 0.2); color: var(--accent-blue); border-radius: 6px; cursor: pointer; padding: 4px 10px; font-size: 0.75rem; transition: 0.2s; font-weight: bold;">
+                                        📋 Copy cURL
+                                    </button>
+                                </div>
+                                <div class="inspector-code" id="code-curl" style="white-space: pre-wrap; word-break: break-all; font-family: monospace; font-size: 0.75rem; line-height: 1.5; padding: 12px; background: rgba(0, 0, 0, 0.2); border-radius: 6px; border: 1px solid var(--border);"></div>
                             </div>
                         </div>
                     </div>
@@ -1512,10 +1573,22 @@
             list.scrollTop = list.scrollHeight;
         }
 
+        let currentResponseFormat = 'json';
+
         function selectHistoryItem(index) {
+            const isNewRequest = (activeRequestIndex !== index);
             activeRequestIndex = index;
             const req = sessionRequests[index];
             if (!req) return;
+
+            if (isNewRequest) {
+                currentResponseFormat = detectResponseFormat(req);
+            }
+
+            // Update active state in format buttons
+            document.querySelectorAll('.format-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.id === `btn-format-${currentResponseFormat}`);
+            });
 
             // Highlight in sidebar
             document.querySelectorAll('.history-item').forEach((item, idx) => {
@@ -1546,20 +1619,208 @@
 
             // Bodies
             updateInspectorCode('code-req-body', req.reqBody);
-            updateInspectorCode('code-res-body', req.resBody);
+            renderResponseBody(req);
 
             // Headers
             updateInspectorHeaders('table-req-headers', req.reqHeaders);
             updateInspectorHeaders('table-res-headers', req.resHeaders);
+
+            // cURL
+            document.getElementById('code-curl').innerText = generateCurlCommand(req);
+        }
+
+        function detectResponseFormat(req) {
+            if (!req || !req.resHeaders) return 'json';
+            
+            let contentType = '';
+            if (typeof req.resHeaders === 'object') {
+                for (const [key, val] of Object.entries(req.resHeaders)) {
+                    if (key.toLowerCase() === 'content-type') {
+                        contentType = String(val).toLowerCase();
+                        break;
+                    }
+                }
+            } else if (typeof req.resHeaders === 'string') {
+                const match = req.resHeaders.match(/content-type:\s*([^\s;]+)/i);
+                if (match) {
+                    contentType = match[1].toLowerCase();
+                }
+            }
+            
+            if (contentType.includes('html')) {
+                return 'html-preview';
+            } else if (contentType.includes('json')) {
+                return 'json';
+            }
+            
+            // Fallback: check content structure
+            const body = (req.resBody || "").trim();
+            const bodyLower = body.toLowerCase();
+            if (body.startsWith('<') && (bodyLower.startsWith('<!doctype') || bodyLower.includes('</html>') || bodyLower.includes('</div>') || bodyLower.includes('</span>'))) {
+                return 'html-preview';
+            }
+            if ((body.startsWith('{') && body.endsWith('}')) || (body.startsWith('[') && body.endsWith(']'))) {
+                return 'json';
+            }
+            
+            return 'text';
+        }
+
+        function switchResponseFormat(format) {
+            currentResponseFormat = format;
+            
+            // Update active state in format buttons
+            document.querySelectorAll('.format-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.id === `btn-format-${format}`);
+            });
+            
+            const req = sessionRequests[activeRequestIndex];
+            if (req) {
+                renderResponseBody(req);
+            }
+        }
+
+        function renderResponseBody(req) {
+            const codeEl = document.getElementById('code-res-body');
+            const iframeEl = document.getElementById('preview-res-body');
+            const data = req.resBody || "";
+            
+            // Hide both by default
+            codeEl.style.display = 'none';
+            iframeEl.style.display = 'none';
+            
+            if (currentResponseFormat === 'json') {
+                codeEl.style.display = 'block';
+                try {
+                    const parsed = typeof data === 'string' ? JSON.parse(data) : data;
+                    codeEl.innerHTML = syntaxHighlightJson(parsed);
+                } catch (e) {
+                    const fallbackData = typeof data === 'object' ? JSON.stringify(data, null, 2) : data;
+                    codeEl.innerHTML = syntaxHighlightJson(fallbackData);
+                }
+            } else if (currentResponseFormat === 'text') {
+                codeEl.style.display = 'block';
+                codeEl.innerText = typeof data === 'object' ? JSON.stringify(data, null, 2) : data;
+            } else if (currentResponseFormat === 'html-raw') {
+                codeEl.style.display = 'block';
+                codeEl.innerText = typeof data === 'object' ? JSON.stringify(data, null, 2) : data;
+            } else if (currentResponseFormat === 'html-preview') {
+                iframeEl.style.display = 'block';
+                const htmlContent = typeof data === 'object' ? JSON.stringify(data, null, 2) : data;
+                const doc = iframeEl.contentDocument || iframeEl.contentWindow.document;
+                doc.open();
+                doc.write(htmlContent);
+                doc.close();
+            }
+        }
+
+        function generateCurlCommand(req) {
+            if (!req) return "";
+            let curl = `curl -X ${req.method.toUpperCase()} "${req.url}"`;
+            
+            // Add headers
+            if (req.reqHeaders && typeof req.reqHeaders === 'object') {
+                for (const [key, val] of Object.entries(req.reqHeaders)) {
+                    const escapedVal = String(val).replace(/"/g, '\\"');
+                    curl += ` \\\n  -H "${key}: ${escapedVal}"`;
+                }
+            } else if (typeof req.reqHeaders === 'string' && req.reqHeaders.trim()) {
+                try {
+                    const parsedHeaders = JSON.parse(req.reqHeaders);
+                    for (const [key, val] of Object.entries(parsedHeaders)) {
+                        const escapedVal = String(val).replace(/"/g, '\\"');
+                        curl += ` \\\n  -H "${key}: ${escapedVal}"`;
+                    }
+                } catch(e) {
+                    const lines = req.reqHeaders.split('\n');
+                    for (const line of lines) {
+                        if (line.includes(':')) {
+                            const parts = line.split(':');
+                            const key = parts[0].trim();
+                            const val = parts.slice(1).join(':').trim();
+                            const escapedVal = val.replace(/"/g, '\\"');
+                            curl += ` \\\n  -H "${key}: ${escapedVal}"`;
+                        }
+                    }
+                }
+            }
+            
+            // Add body
+            let bodyStr = "";
+            if (req.reqBody) {
+                if (typeof req.reqBody === 'object') {
+                    if (Object.keys(req.reqBody).length > 0) {
+                        bodyStr = JSON.stringify(req.reqBody);
+                    }
+                } else if (typeof req.reqBody === 'string') {
+                    const trimmed = req.reqBody.trim();
+                    if (trimmed && trimmed !== '{}' && trimmed !== '[]') {
+                        bodyStr = trimmed;
+                    }
+                }
+            }
+            
+            if (bodyStr) {
+                const escapedBody = bodyStr.replace(/"/g, '\\"').replace(/\n/g, '\\n');
+                curl += ` \\\n  -d "${escapedBody}"`;
+            }
+            
+            return curl;
+        }
+
+        function copyCurlToClipboard(event) {
+            const curlText = document.getElementById('code-curl').innerText;
+            navigator.clipboard.writeText(curlText).then(() => {
+                const btn = event.target;
+                const originalText = btn.innerText;
+                btn.innerText = "✅ Copied!";
+                btn.style.color = "var(--accent-green)";
+                btn.style.borderColor = "var(--accent-green)";
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.color = "var(--accent-blue)";
+                    btn.style.borderColor = "rgba(137, 180, 250, 0.2)";
+                }, 2000);
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+            });
+        }
+
+        function syntaxHighlightJson(json) {
+            if (json === undefined) return "";
+            if (typeof json !== 'string') {
+                json = JSON.stringify(json, null, 2) || "";
+            }
+            if (!json) return "";
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                let cls = 'json-number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'json-key';
+                    } else {
+                        cls = 'json-string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'json-boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'json-null';
+                }
+                
+                if (cls === 'json-key') {
+                    return `<span class="${cls}">${match.replace(/:$/, '')}</span>:`;
+                }
+                return `<span class="${cls}">${match}</span>`;
+            });
         }
 
         function updateInspectorCode(elementId, data) {
             const el = document.getElementById(elementId);
             try {
                 const parsed = typeof data === 'string' ? JSON.parse(data) : data;
-                el.innerText = JSON.stringify(parsed, null, 2);
+                el.innerHTML = syntaxHighlightJson(parsed);
             } catch (e) {
-                el.innerText = data;
+                el.innerText = typeof data === 'object' ? JSON.stringify(data, null, 2) : data;
             }
         }
 
