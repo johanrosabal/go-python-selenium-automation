@@ -409,6 +409,9 @@ def proxy_route():
     url = request.args.get("url")
     if not url: return "Missing URL", 400
     return perform_proxy(url)
+@app.route('/favicon.ico')
+def favicon():
+    return '', 204
 
 @app.route('/<path:path>', methods=["GET", "POST", "PUT", "DELETE", "PATCH"])
 def handle_catchall(path=None):
