@@ -1865,7 +1865,13 @@
             }
             
             // Fallback: check content structure
-            const body = (req.resBody || "").trim();
+            let body = "";
+            if (typeof req.resBody === 'object') {
+                body = JSON.stringify(req.resBody);
+            } else {
+                body = String(req.resBody || "");
+            }
+            body = body.trim();
             const bodyLower = body.toLowerCase();
             if (body.startsWith('<') && (bodyLower.startsWith('<!doctype') || bodyLower.includes('</html>') || bodyLower.includes('</div>') || bodyLower.includes('</span>'))) {
                 return 'html-preview';
@@ -2650,8 +2656,8 @@
                                 appendLog(data, term);
                             } catch (e) { }
                         }
-                    }
                 }
+            } catch (error) {
                 appendLog({ type: 'error', message: `Runner Error: ${error.message}` }, term);
             } finally {
                 flushCaptureBuffer(); // Final flush
@@ -3765,7 +3771,7 @@
                 margin:       0.3,
                 filename:     filename,
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true, logging: false },
+                html2canvas:  { scale: requests.length > 5 ? 1 : 2, useCORS: true, logging: false },
                 jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
                 pagebreak:    { mode: ['css', 'legacy'] }
             };
