@@ -3611,7 +3611,7 @@
             
             // Build the HTML content
             const total = requests.length;
-            const evidenceCardsHTML = requests.map((req, idx) => buildRequestEvidenceHTML(req, idx, total)).join('<div class="page-break"></div>');
+            const evidenceCardsHTML = requests.map((req, idx) => buildRequestEvidenceHTML(req, idx, total)).join('');
             
             // Format title
             const displayTitle = filename.replace('.pdf', '').replace(/-/g, ' ').toUpperCase();
@@ -3640,13 +3640,17 @@
                     }
                     .evidence-card {
                         margin-bottom: 30px;
-                        page-break-inside: avoid;
+                        page-break-before: always;
+                    }
+                    .evidence-card:first-of-type {
+                        page-break-before: auto;
                     }
                     .evidence-header {
                         display: flex;
                         justify-content: space-between;
                         align-items: flex-start;
                         margin-bottom: 12px;
+                        page-break-inside: avoid;
                     }
                     .evidence-number {
                         font-size: 10px;
@@ -3702,6 +3706,7 @@
                         margin-bottom: 15px;
                         white-space: pre-wrap !important;
                         text-align: left !important;
+                        page-break-inside: avoid;
                     }
                     .section-title {
                         font-size: 10px;
@@ -3718,6 +3723,7 @@
                         border-collapse: collapse;
                         margin-bottom: 12px;
                         font-size: 11px;
+                        page-break-inside: avoid;
                     }
                     .headers-table th, .headers-table td {
                         text-align: left;
@@ -3744,6 +3750,7 @@
                         word-break: break-all !important;
                         overflow-wrap: break-word !important;
                         margin: 0 0 15px 0;
+                        page-break-inside: avoid;
                     }
                     .curl-box {
                         background: #f0fdf4;
