@@ -16,7 +16,8 @@ class TestNicoAces(BaseAPITest):
     Allure metadata (title, description, severity, tags, feature, story)
     is injected automatically from the JSON — no need to repeat in the decorator.
     """
-    app: 'NicoAcesClient'
+
+    app: "NicoAcesClient"
     app_name = "nico_aces"
 
     def _run_full_aces_flow(self, test_id=None):
@@ -30,9 +31,13 @@ class TestNicoAces(BaseAPITest):
             pytest.skip("Unauthorized or IP Forbidden.")
 
         # Ensure search succeeded and we received results
-        assert search_id is not None, f"Search initiation failed: {results_response.status_code}"
+        assert (
+            search_id is not None
+        ), f"Search initiation failed: {results_response.status_code}"
         results_response.assert_status_code(200)
-        assert isinstance(results_response.body, list), "Expected results body to be a list"
+        assert isinstance(
+            results_response.body, list
+        ), "Expected results body to be a list"
 
         # Validate against expected results (if provided and not empty)
         expected_results = data["data"].get("expected_results", [])
@@ -42,25 +47,31 @@ class TestNicoAces(BaseAPITest):
                 match_found = False
                 closest_match = None
                 max_matched_keys = -1
-                
+
                 for actual in actual_results:
-                    matched_keys = sum(1 for k, v in expected.items() if actual.get(k) == v)
+                    matched_keys = sum(
+                        1 for k, v in expected.items() if actual.get(k) == v
+                    )
                     if matched_keys == len(expected):
                         match_found = True
                         break
-                    
+
                     if matched_keys > max_matched_keys:
                         max_matched_keys = matched_keys
                         closest_match = actual
-                        
+
                 if not match_found:
                     error_msg = f"Expected result not found in API response.\n\nEXPECTED:\n{expected}\n"
                     if closest_match and max_matched_keys > 0:
-                        mismatches = {k: {"expected": v, "actual": closest_match.get(k)} for k, v in expected.items() if closest_match.get(k) != v}
+                        mismatches = {
+                            k: {"expected": v, "actual": closest_match.get(k)}
+                            for k, v in expected.items()
+                            if closest_match.get(k) != v
+                        }
                         error_msg += f"\nCLOSEST ACTUAL MATCH FOUND:\n{closest_match}\n\nMISMATCHED FIELDS:\n{mismatches}"
                     else:
                         error_msg += f"\nACTUAL RESULTS RETURNED ({len(actual_results)} items):\n{actual_results}"
-                        
+
                     pytest.fail(error_msg)
 
         return search_id, results_response
@@ -75,3 +86,7 @@ class TestNicoAces(BaseAPITest):
         """Verify search filtering by Insured Name and Company ID."""
         self._run_full_aces_flow("ACES-002")
 
+    @test_case(id="ACES-003")
+    def test_search_by_agent_code_and_policy_number(self):
+        """Verify search filtering by Agent Code and Policy Number."""
+        self._run_full_aces_flow("ACES-003")

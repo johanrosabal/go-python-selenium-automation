@@ -6,7 +6,10 @@
     "feature": "ACES Policy Search",
     "story": "Search ACES Policies",
     "severity": "CRITICAL",
-    "tag": ["smoke", "p1"],
+    "tag": [
+      "smoke",
+      "p1"
+    ],
     "data": {
       "payload": {
         "policyNumber": "string",
@@ -19,12 +22,15 @@
         "policyState": "string",
         "effectiveDate": "2026-05-07T17:31:04.423Z",
         "company": 0,
-        "agencyCode": ["string"],
+        "agencyCode": [
+          "string"
+        ],
         "address1": "string",
         "zip": "string",
         "state": "string",
         "city": "string"
-      }
+      },
+      "expected_results": []
     }
   }
 }

@@ -1,0 +1,23 @@
+{
+  "tests": {
+    "id": "ACES-003",
+    "title": "Search by Agent Code and Policy Number",
+    "description": "Verify ACES search filtering by agent code and policy number",
+    "feature": "ACES Policy Search",
+    "story": "Search ACES Policies",
+    "severity": "NORMAL",
+    "tag": [
+      "regression"
+    ],
+    "data": {
+      "payload": {
+        "company": 2,
+        "policyNumber": "01APG00001801",
+        "agencyCode": [
+          "N26300"
+        ]
+      },
+      "expected_results": []
+    }
+  }
+}
