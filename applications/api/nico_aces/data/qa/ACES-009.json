@@ -11,7 +11,7 @@
     ],
     "data": {
       "payload": {
-        "company": 2,
+        "company": 1,
         "insuredName": "STACEY HILL"
       },
       "expected_results": [
