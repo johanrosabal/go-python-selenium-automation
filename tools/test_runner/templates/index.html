@@ -1329,6 +1329,9 @@
                                 <button onclick="exportAllRequestsToPDF()" class="pdf-btn" title="Export All to PDF" style="background: rgba(139, 233, 253, 0.15); border: 1px solid var(--accent-blue); color: var(--accent-blue); padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; cursor: pointer; border: 1px solid rgba(139,233,253,0.3);">
                                     📄 Export All
                                 </button>
+                                <button onclick="copyAllRequestsToClipboard()" class="pdf-btn" title="Copiar todas las evidencias para JIRA/DevOps" style="background: rgba(80, 250, 123, 0.15); border: 1px solid var(--accent-green); color: var(--accent-green); padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; cursor: pointer; border: 1px solid rgba(80,250,123,0.3);">
+                                    📋 Copiar JIRA/DevOps
+                                </button>
                                 <span id="history-count" style="background: var(--accent-blue); color: #111; padding: 2px 6px; border-radius: 10px; font-size: 10px;">0</span>
                             </div>
                         </div>
@@ -1351,6 +1354,9 @@
                                     <div id="inspector-time" style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; margin-right: 4px;">0.00s</div>
                                     <button onclick="exportRequestToPDF()" class="pdf-btn" id="btn-export-pdf" style="background: rgba(255, 85, 85, 0.15); border: 1px solid var(--accent-red); color: var(--accent-red); padding: 4px 10px; border-radius: 6px; font-weight: 800; font-size: 0.75rem; cursor: pointer; display: none; align-items: center; gap: 4px;">
                                         📄 PDF Report
+                                    </button>
+                                    <button onclick="copyCurrentRequestToClipboard()" class="pdf-btn" id="btn-copy-clipboard" style="background: rgba(80, 250, 123, 0.15); border: 1px solid var(--accent-green); color: var(--accent-green); padding: 4px 10px; border-radius: 6px; font-weight: 800; font-size: 0.75rem; cursor: pointer; display: none; align-items: center; gap: 4px;">
+                                        📋 Copiar JIRA/DevOps
                                     </button>
                                 </div>
                             </div>
@@ -1828,6 +1834,7 @@
             
             timeEl.innerText = req.time;
             document.getElementById('btn-export-pdf').style.display = 'flex';
+            document.getElementById('btn-copy-clipboard').style.display = 'flex';
 
             // Bodies
             updateInspectorCode('code-req-body', req.reqBody);
@@ -2600,6 +2607,8 @@
             activeRequestIndex = -1;
             renderRequestHistory();
             document.getElementById('inspector-url').innerText = 'No request captured yet.';
+            document.getElementById('btn-export-pdf').style.display = 'none';
+            document.getElementById('btn-copy-clipboard').style.display = 'none';
             updateInspectorCode('code-req-body', '{}');
             updateInspectorCode('code-res-body', '{}');
 
@@ -3314,6 +3323,282 @@
                 console.error("Failed to copy log: ", err);
                 alert("Failed to copy log. See console for details.");
             });
+        }
+
+        // --- FUNCIONES DE COPIADO JIRA / AZURE DEVOPS ---
+        function generateJiraDevOpsHTML(requests) {
+            let html = `<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #172b4d; max-width: 800px; margin: 0 auto;">`;
+            
+            requests.forEach((req, index) => {
+                const total = requests.length;
+                const statusUpper = (req.status || 'PENDING').toUpperCase();
+                const isPass = statusUpper === 'PASS' || statusUpper === 'PASSED' || statusUpper.startsWith('2') || statusUpper === 'OK';
+                const isFail = statusUpper === 'FAIL' || statusUpper === 'FAILED' || statusUpper.startsWith('4') || statusUpper.startsWith('5');
+                
+                let badgeColor = '#ffab00'; // Warning (yellow)
+                let badgeBg = '#fff0b3';
+                let statusText = statusUpper;
+                
+                if (isPass) {
+                    badgeColor = '#006644'; // Success (green)
+                    badgeBg = '#e3fcef';
+                    statusText = 'PASS';
+                } else if (isFail) {
+                    badgeColor = '#bf2600'; // Error (red)
+                    badgeBg = '#ffebe6';
+                    statusText = 'FAIL';
+                }
+
+                // If assertions failed, override to FAIL if not already
+                const hasAssertFailure = !!(req.assertSummary || req.assertError);
+                if (hasAssertFailure) {
+                    badgeColor = '#bf2600';
+                    badgeBg = '#ffebe6';
+                    statusText = 'FAIL';
+                }
+
+                html += `
+                    <div style="border: 1px solid #dfe1e6; border-radius: 8px; margin-bottom: 24px; padding: 20px; background-color: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: left;">
+                        <!-- Header Section -->
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid #ebecf0; padding-bottom: 12px; margin-bottom: 16px;">
+                            <div>
+                                <div style="font-size: 11px; text-transform: uppercase; font-weight: bold; color: #5e6c84; letter-spacing: 0.5px;">Caso de Prueba ${index + 1} de ${total}</div>
+                                <h3 style="margin: 4px 0 0 0; font-size: 16px; color: #172b4d; font-weight: 600;">${req.testId ? `[${req.testId}] ` : ''}${req.testName || 'Prueba Capturada'}</h3>
+                            </div>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <span style="background-color: ${req.mode === 'web' ? '#eae6ff' : '#deebff'}; color: ${req.mode === 'web' ? '#403294' : '#0747a6'}; font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 4px; text-transform: uppercase;">
+                                    ${req.mode === 'web' ? 'UI' : req.method || 'API'}
+                                </span>
+                                <span style="background-color: ${badgeBg}; color: ${badgeColor}; font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 4px; text-transform: uppercase;">
+                                    ${statusText}
+                                </span>
+                                <span style="background-color: #f4f5f7; color: #5e6c84; font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 4px; border: 1px solid #dfe1e6;">
+                                    ${req.time || '0.00s'}
+                                </span>
+                            </div>
+                        </div>
+                `;
+
+                if (req.mode === 'web') {
+                    html += `
+                        <div style="margin-top: 12px;">
+                            <h4 style="margin: 0 0 8px 0; font-size: 13px; color: #5e6c84; text-transform: uppercase; letter-spacing: 0.5px;">Logs de Ejecución del Escenario</h4>
+                            <pre style="background-color: #f4f5f7; border: 1px solid #dfe1e6; border-radius: 4px; padding: 12px; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #172b4d; white-space: pre-wrap; word-break: break-all; margin: 0; line-height: 1.5; max-height: 400px; overflow-y: auto;">${(req.logBuffer || 'Sin logs capturados.').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+                        </div>
+                    `;
+                } else {
+                    html += `
+                        <!-- API URL Bar -->
+                        <div style="background-color: #f4f5f7; border: 1px solid #dfe1e6; padding: 10px 12px; border-radius: 6px; font-family: 'Courier New', Courier, monospace; font-size: 12px; word-break: break-all; margin-bottom: 16px; color: #172b4d;">
+                            <strong>URL:</strong> ${req.url}
+                        </div>
+                    `;
+
+                    const formatBody = (body) => {
+                        if (!body) return '(Vacío)';
+                        if (typeof body === 'object') {
+                            return JSON.stringify(body, null, 2);
+                        }
+                        try {
+                            return JSON.stringify(JSON.parse(body), null, 2);
+                        } catch (e) {
+                            return body;
+                        }
+                    };
+
+                    const reqBodyStr = formatBody(req.reqBody);
+                    const resBodyStr = formatBody(req.resBody);
+
+                    html += `
+                        <!-- Request Details -->
+                        <div style="margin-bottom: 16px;">
+                            <h4 style="margin: 0 0 8px 0; font-size: 13px; color: #5e6c84; text-transform: uppercase; letter-spacing: 0.5px;">Body de la Petición (Request Body)</h4>
+                            <pre style="background-color: #f4f5f7; border: 1px solid #dfe1e6; border-radius: 4px; padding: 12px; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #172b4d; white-space: pre-wrap; word-break: break-all; margin: 0; line-height: 1.5;">${reqBodyStr.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+                        </div>
+
+                        <!-- Response Details -->
+                        <div style="margin-bottom: 16px;">
+                            <h4 style="margin: 0 0 8px 0; font-size: 13px; color: #5e6c84; text-transform: uppercase; letter-spacing: 0.5px;">Body de la Respuesta (Response Body)</h4>
+                            <pre style="background-color: #f4f5f7; border: 1px solid #dfe1e6; border-radius: 4px; padding: 12px; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #172b4d; white-space: pre-wrap; word-break: break-all; margin: 0; line-height: 1.5;">${resBodyStr.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+                        </div>
+                    `;
+
+                    if (hasAssertFailure) {
+                        let assertExpectedHTML = "";
+                        if (req.assertExpected) {
+                            assertExpectedHTML = `
+                                <div style="margin-top: 10px;">
+                                    <div style="font-size: 11px; font-weight: bold; color: #5e6c84; text-transform: uppercase; margin-bottom: 4px;">Esperado (Expected)</div>
+                                    <pre style="background-color: #ffffff; border: 1px solid #dfe1e6; border-radius: 4px; padding: 8px; font-family: 'Courier New', Courier, monospace; font-size: 11px; color: #172b4d; white-space: pre-wrap; margin: 0;">${req.assertExpected.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+                                </div>
+                            `;
+                        }
+                        let assertClosestHTML = "";
+                        if (req.assertClosest) {
+                            assertClosestHTML = `
+                                <div style="margin-top: 10px;">
+                                    <div style="font-size: 11px; font-weight: bold; color: #5e6c84; text-transform: uppercase; margin-bottom: 4px;">Coincidencia más cercana encontrada</div>
+                                    <pre style="background-color: #ffffff; border: 1px solid #dfe1e6; border-radius: 4px; padding: 8px; font-family: 'Courier New', Courier, monospace; font-size: 11px; color: #172b4d; white-space: pre-wrap; margin: 0;">${req.assertClosest.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+                                </div>
+                            `;
+                        }
+                        let assertMismatchedHTML = "";
+                        if (req.assertMismatched) {
+                            assertMismatchedHTML = `
+                                <div style="margin-top: 10px;">
+                                    <div style="font-size: 11px; font-weight: bold; color: #bf2600; text-transform: uppercase; margin-bottom: 4px;">Campos no coincidentes (Mismatched Fields)</div>
+                                    <pre style="background-color: #ffffff; border: 1px solid #ffebe6; border-radius: 4px; padding: 8px; font-family: 'Courier New', Courier, monospace; font-size: 11px; color: #bf2600; white-space: pre-wrap; margin: 0;">${req.assertMismatched.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+                                </div>
+                            `;
+                        }
+                        let assertActualHTML = "";
+                        if (req.assertActual) {
+                            assertActualHTML = `
+                                <div style="margin-top: 10px;">
+                                    <div style="font-size: 11px; font-weight: bold; color: #5e6c84; text-transform: uppercase; margin-bottom: 4px;">Resultados Reales Retornados (Actual)</div>
+                                    <pre style="background-color: #ffffff; border: 1px solid #dfe1e6; border-radius: 4px; padding: 8px; font-family: 'Courier New', Courier, monospace; font-size: 11px; color: #172b4d; white-space: pre-wrap; margin: 0;">${req.assertActual.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+                                </div>
+                            `;
+                        }
+
+                        html += `
+                            <!-- Assertion Box -->
+                            <div style="margin-top: 16px; padding: 16px; background-color: #ffebe6; border: 1px solid #ffbdad; border-radius: 6px; border-left: 4px solid #de350b;">
+                                <div style="font-size: 12px; color: #de350b; font-weight: bold; margin-bottom: 8px;">
+                                    ❌ FALLA DE ASERCIÓN
+                                </div>
+                                <pre style="background-color: #ffffff; border: 1px solid #ffbdad; border-radius: 4px; padding: 10px; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #de350b; white-space: pre-wrap; margin: 0; font-weight: bold;">${(req.assertSummary || req.assertError || 'Error de comparación').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+                                ${assertExpectedHTML}
+                                ${assertClosestHTML}
+                                ${assertMismatchedHTML}
+                                ${assertActualHTML}
+                            </div>
+                        `;
+                    }
+
+                    const curlCmd = generateCurlCommand(req, 'bash');
+                    html += `
+                        <div style="margin-top: 16px;">
+                            <h4 style="margin: 0 0 8px 0; font-size: 13px; color: #5e6c84; text-transform: uppercase; letter-spacing: 0.5px;">Comando de Reproducción (cURL)</h4>
+                            <pre style="background-color: #f4f5f7; border: 1px solid #dfe1e6; border-radius: 4px; padding: 12px; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #172b4d; white-space: pre-wrap; word-break: break-all; margin: 0; line-height: 1.5;">${curlCmd.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+                        </div>
+                    `;
+                }
+
+                html += `
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+            return html;
+        }
+
+        function generateJiraDevOpsText(requests) {
+            let text = "";
+            requests.forEach((req, index) => {
+                const total = requests.length;
+                const statusUpper = (req.status || 'PENDING').toUpperCase();
+                const isPass = statusUpper === 'PASS' || statusUpper === 'PASSED' || statusUpper.startsWith('2') || statusUpper === 'OK';
+                const isFail = statusUpper === 'FAIL' || statusUpper === 'FAILED' || statusUpper.startsWith('4') || statusUpper.startsWith('5');
+                const hasAssertFailure = !!(req.assertSummary || req.assertError);
+                
+                let statusText = statusUpper;
+                if (isPass) statusText = 'PASS';
+                else if (isFail || hasAssertFailure) statusText = 'FAIL';
+
+                text += `================================================================================\n`;
+                text += `CASO DE PRUEBA ${index + 1} DE ${total}\n`;
+                text += `Título: ${req.testId ? `[${req.testId}] ` : ''}${req.testName || 'Prueba Capturada'}\n`;
+                text += `Modo: ${req.mode === 'web' ? 'UI' : 'API'}\n`;
+                text += `Estado: ${statusText}\n`;
+                text += `Duración: ${req.time || '0.00s'}\n`;
+                text += `================================================================================\n\n`;
+
+                if (req.mode === 'web') {
+                    text += `[LOGS DE EJECUCIÓN]\n`;
+                    text += `${req.logBuffer || 'Sin logs'}\n\n`;
+                } else {
+                    text += `URL: ${req.url}\n`;
+                    text += `Método: ${req.method}\n\n`;
+                    
+                    const formatBody = (body) => {
+                        if (!body) return '(Vacío)';
+                        if (typeof body === 'object') return JSON.stringify(body, null, 2);
+                        try { return JSON.stringify(JSON.parse(body), null, 2); } catch (e) { return body; }
+                    };
+
+                    text += `[REQUEST BODY]\n`;
+                    text += `${formatBody(req.reqBody)}\n\n`;
+                    
+                    text += `[RESPONSE BODY]\n`;
+                    text += `${formatBody(req.resBody)}\n\n`;
+
+                    if (hasAssertFailure) {
+                        text += `!!! FALLA DE ASERCIÓN !!!\n`;
+                        text += `${req.assertSummary || req.assertError}\n\n`;
+                        if (req.assertExpected) {
+                            text += `[EXPECTED]\n${req.assertExpected.trim()}\n\n`;
+                        }
+                        if (req.assertClosest) {
+                            text += `[CLOSEST MATCH FOUND]\n${req.assertClosest.trim()}\n\n`;
+                        }
+                        if (req.assertMismatched) {
+                            text += `[MISMATCHED FIELDS]\n${req.assertMismatched.trim()}\n\n`;
+                        }
+                        if (req.assertActual) {
+                            text += `[ACTUAL]\n${req.assertActual.trim()}\n\n`;
+                        }
+                    }
+
+                    text += `[COMANDO cURL]\n`;
+                    text += `${generateCurlCommand(req, 'bash')}\n\n`;
+                }
+            });
+            return text;
+        }
+
+        async function copyRequestsToClipboard(requests) {
+            if (!requests || requests.length === 0) {
+                alert("No hay casos de prueba para copiar.");
+                return;
+            }
+
+            try {
+                const htmlContent = generateJiraDevOpsHTML(requests);
+                const textContent = generateJiraDevOpsText(requests);
+
+                const blobHtml = new Blob([htmlContent], { type: 'text/html' });
+                const blobText = new Blob([textContent], { type: 'text/plain' });
+
+                const data = [new ClipboardItem({
+                    'text/html': blobHtml,
+                    'text/plain': blobText
+                })];
+
+                await navigator.clipboard.write(data);
+                alert("¡Evidencia copiada al portapapeles! Puedes pegarla directamente en JIRA o Azure DevOps.");
+            } catch (err) {
+                console.error("Error al copiar al portapapeles: ", err);
+                alert("Error al copiar al portapapeles. Inténtalo de nuevo. Detalles: " + err.message);
+            }
+        }
+
+        function copyCurrentRequestToClipboard() {
+            const req = sessionRequests[activeRequestIndex];
+            if (!req) {
+                alert("No se ha seleccionado ninguna petición.");
+                return;
+            }
+            copyRequestsToClipboard([req]);
+        }
+
+        function copyAllRequestsToClipboard() {
+            if (sessionRequests.length === 0) {
+                alert("No hay peticiones capturadas en la sesión.");
+                return;
+            }
+            copyRequestsToClipboard(sessionRequests);
         }
 
         function exportRequestToPDF() {
