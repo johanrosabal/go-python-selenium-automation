@@ -116,13 +116,21 @@ The system strictly separates the infrastructure (`core`) from individual projec
 
 ```text
 ├── .github/workflows/      # 🔄 CI/CD (GitHub Actions Pipeline)
-├── applications/web/       # 📂 Application Layer (Real projects)
-│   └── demo/               # 🍏 SauceDemo Project
-│       ├── app/            # 📦 App Orchestrator (Entry Point)
-│       ├── config/         # ⚙️ YAML Config per Environment
-│       ├── data/json/      # 📊 Data by ID (CT-XXX.json)
-│       ├── pages/          # 🏗️ Page Objects (POM)
-│       └── tests/          # 🧪 Test Cases (Scripts)
+├── applications/           # 📂 Applications (UI, API, Desktop)
+│   ├── web/                # 📂 UI (Web) Projects
+│   │   └── demo/           # 🍏 SauceDemo Project
+│   │       ├── app/        # 📦 App Orchestrator (Entry Point)
+│   │       ├── config/     # ⚙️ YAML Config per Environment
+│   │       ├── data/json/  # 📊 Data by ID (CT-XXX.json)
+│   │       ├── pages/      # 🏗️ Page Objects (POM)
+│   │       └── tests/      # 🧪 Test Cases (Scripts)
+│   └── api/                # 📂 API Projects
+│       └── nico_search/    # 🔍 Nico Search Project
+│           ├── client.py   # 📦 App Client Orchestrator (Entry Point)
+│           ├── config/     # ⚙️ YAML Config per Environment
+│           ├── data/qa/    # 📊 Data by ID (SEARCH-XXX.json)
+│           ├── endpoints/  # 🌐 Endpoints Objects (EOM)
+│           └── tests/      # 🧪 Test Cases (Scripts)
 ├── core/                   # 🧠 Framework Core (Immutable)
 │   ├── ui/actions/         # 🕹️ UI Action Components (Stateful Pattern)
 │   ├── ui/common/          # 🧱 Singleton, BasePage, BaseTest UI
@@ -687,21 +695,63 @@ Following the same philosophy as POM for UI, the framework implements the **Endp
 *   **`BaseAPITest`**: Manages `requests` sessions, authentication and environment config.
 *   **`APIResponse`**: Response wrapper that enables chained validations (Fluent Assertions).
 
-### 2. Endpoint Object Example
+### 2. Request Builder Pattern
+Endpoints are constructed using a chained builder pattern. This makes requests readable and easy to configure:
+
 ```python
 from core.api.common.base_endpoint import BaseEndpoint
 
-class UserEndpoint(BaseEndpoint):
-    def __init__(self, session):
+class SearchEndpoint(BaseEndpoint):
+    def __init__(self, session, config):
         super().__init__(session)
-        self.url = f"{self.base_url}/users"
+        self.base_url = config.get("base_url")
+        self.token = config.get("token")
 
-    def get_users(self):
-        return self.get.call(self.url)
+    def search_policies(self, payload):
+        return (
+            self.post.set_url(self.base_url)
+            .set_endpoint("/api/policy-search")
+            .add_header("accept", "text/plain")
+            .add_header("Content-Type", "application/json")
+            .add_header("Authorization", f"Bearer {self.token}")
+            .set_json(payload)
+            .set_timeout(120)
+            .send()
+        )
 
-    def create_user(self, name, job):
-        return self.post.call(self.url, json={"name": name, "job": job})
+    def get_results(self, search_id):
+        return (
+            self.get.set_url(self.base_url)
+            .set_endpoint("/api/policy-search/{id}/results")
+            .build_url(id=search_id)
+            .add_header("accept", "text/plain")
+            .add_header("Authorization", f"Bearer {self.token}")
+            .set_timeout(120)
+            .send()
+        )
 ```
+
+#### Available Builder Methods
+The `RequestBuilder` class (accessed via `self.get`, `self.post`, `self.put`, etc.) supports the following fluent methods:
+
+*   **`.set_url(url)`**: Sets the base URL.
+*   **`.set_endpoint(endpoint)`**: Appends the relative endpoint path.
+*   **`.build_url(**kwargs)`**: Interpolates dynamic parameters into the URL template (e.g. `/users/{id}` called with `id=123` resolves to `/users/123`).
+*   **`.add_header(key, value)`**: Adds a single HTTP header.
+*   **`.set_headers(headers: dict)`**: Merges multiple HTTP headers from a dictionary.
+*   **`.set_params(params: dict)`**: Adds query string parameters.
+*   **`.set_json(json_data)`**: Attaches a JSON payload.
+*   **`.set_data(data)`**: Attaches form data or raw body bytes.
+*   **`.set_files(files: dict)`**: Uploads multipart files.
+*   **`.set_auth(username, password)`**: Configures Basic Authentication credentials.
+*   **`.set_timeout(timeout)`**: Specifies the request timeout in seconds.
+*   **`.set_verify(verify: bool)`**: Enforces or disables SSL certificate verification (defaults to `True`).
+*   **`.set_cookies(cookies: dict)`**: Attaches request cookies.
+*   **`.set_allow_redirects(allow: bool)`**: Enables/disables automatic redirect following.
+*   **`.set_proxies(proxies: dict)`**: Configures routing proxies.
+*   **`.set_stream(stream: bool)`**: Streams response content.
+*   **`.send()`**: Executes the HTTP request and returns an `APIResponse` object.
+
 
 ### 3. API Test Example
 ```python
@@ -725,6 +775,7 @@ Just as UI has `DemoApp`, the API layer uses a **Client Orchestrator** to encaps
 class NicoSearchClient:
     def __init__(self, session, config: dict):
         self._session = session
+        self._config = config
         self._search  = None
 
     @property
@@ -736,9 +787,12 @@ class NicoSearchClient:
     def search_and_get_results(self, payload: dict):
         """Composed flow: POST → get GUID → GET results."""
         search_response = self.search.search_policies(payload)
-        search_response.assert_status_code(201)
+        if search_response.status_code != 201:
+            return None, search_response
+
         search_id = search_response.body.strip()
-        return search_id, self.search.get_results(search_id)
+        results_response = self.search.get_results(search_id)
+        return search_id, results_response
 ```
 
 `BaseAPITest` auto-discovers and loads the Client by naming convention (`client.py`). In tests you simply use `self.app`:
@@ -754,11 +808,46 @@ class TestNicoSearch(BaseAPITest):
         results.assert_status_code(200)
 ```
 
-### 5. EOM Advantages
+### 5. Data-Driven Validation & Assertion Matching
+API responses can be validated against an array of expected dictionaries defined in the test case's JSON data. If the `expected_results` array is provided and not empty, the framework verifies the response body list.
+
+#### JSON Data Example (`data/qa/SEARCH-003.json`):
+```json
+{
+  "tests": {
+    "id": "SEARCH-003",
+    "title": "Search by Policy Number",
+    "data": {
+      "payload": {
+        "policyNumber": "NICO12345"
+      },
+      "expected_results": [
+        {
+          "policyNumber": "NICO12345",
+          "insuredName": "Jane Doe",
+          "status": "Active"
+        }
+      ]
+    }
+  }
+}
+```
+
+#### Verification Flow:
+1. **Skip Validation**: If `expected_results` is empty or omitted, validation is skipped.
+2. **Match Finding**: For each expected item, the framework searches the response list.
+3. **Fuzzy/Closest Match Resolution**: If an exact match is not found:
+   - The framework performs fuzzy scoring to find the item in the response with the highest key overlap (**Closest Match**).
+   - It calculates and reports the exact key-value differences (**Mismatched Fields**) showing the expected vs actual value for each field.
+   - If no candidate has any matching keys, it dumps the list of all returned items.
+4. **Assert Isolation**: This information is outputted to the console with clear headers (`EXPECTED:`, `CLOSEST ACTUAL MATCH FOUND:`, `MISMATCHED FIELDS:`), which the Test Runner UI intercepts to visualize the errors on separate cards.
+
+### 6. EOM Advantages
 - **Automatic Logging**: All requests and responses are logged with visual icons in the console and Allure.
 - **Fluent Assertions**: Validates status codes and JSON content in a single line.
 - **Maintainability**: API contract changes are reflected in one place (the Endpoint Object).
 - **Client Orchestrator**: Encapsulates multi-step flows — the test does not know which internal endpoints are called.
+- **Isolate Assertion Details**: Prevents confusing stack traces by explicitly highlighting the exact mismatched fields.
 
 ---
 
@@ -989,13 +1078,29 @@ def pytest_sessionfinish(session, exitstatus):
 
 ### 6. Test Runner GUI (Web Interface)
 
+The Test Runner GUI is a Flask-powered web dashboard designed to orchestrate, execute, and audit tests in a single place. It features real-time SSE streaming logs, visual test plan creation, a media gallery for failure screenshots/videos, and an advanced universal inspector.
+
 #### 🌟 Key Features
-*   **Test Tree Visualization**: Browse all `pytest` test cases hierarchically with their IDs and descriptions.
-*   **Real-Time Logs**: Launch individual cases or Test Plans and watch the live execution console (SSE).
-*   **Test Plans**: Select multiple test cases, combine configurations (Browser, Environment, Headless) and save as reusable plans.
-*   **Media Gallery**: View all videos and screenshots generated by failed tests directly from the UI.
-*   **Allure Report Management**: Generate and view your official Allure HTML report with one click.
-*   **Copy Logs to Clipboard**: Easily extract console output to share with your team.
+*   **Hierarchical Test Tree**: Browse and filter all `pytest` test cases dynamically. Metadata (IDs, titles, descriptions) is extracted from the test scripts and decorators via AST.
+*   **Real-Time Live Logs**: Run individual tests, files, folders, or full test plans. A live SSE console streams logs using color coding (passes in green, errors in red).
+*   **Advanced Universal Inspector**:
+    - **Always-on Tabs**: The `LOGS` and `INSPECTOR` tabs are universally visible in both Web (UI) and API modes.
+    - **Scenario & Request History**: Tracks executions in real-time. For API tests, it logs each HTTP request (method, endpoint, status code, response time). For Web (UI) tests, it registers each test scenario with a dedicated purple `UI` badge, monitoring execution duration and final status.
+    - **Isolated Scenario Logs**: Selecting a test scenario in the Inspector sidebar shows a dedicated **LOGS** tab inside the details panel. This tab filters the execution stdout to contain *only* the logs generated by that specific test, saving you from scrolling through massive terminal logs.
+*   **Visual Assertion Failure Visualizer**:
+    - If a test fails due to mismatched expected results, the UI intercepts and parses the multi-line `pytest` mismatch logs.
+    - It extracts and displays these details in independent, stylized visual cards:
+        - **EXPECTED**: The expected JSON structure/keys.
+        - **CLOSEST ACTUAL MATCH FOUND**: The dictionary returned in the response that shared the highest overlap with the expected fields.
+        - **MISMATCHED FIELDS**: A side-by-side comparison showing the specific field keys, expected values, and actual values.
+        - **ACTUAL RESULTS**: The raw list of returned results (used if no partial matches are detected).
+*   **High-Fidelity PDF Evidence Export**:
+    - Clicking the **📄 PDF Report** button generates a clean, premium PDF document containing full evidence of the selected HTTP request/response or UI scenario.
+    - It parses raw JSON header strings into a clean key-value table layout (e.g. `Content-Type`, `Date`, etc.) instead of showing a raw code block.
+    - Supports exporting a single request or all requests in the execution history consolidated into a single multi-page PDF.
+*   **Test Plans Manager**: Select multiple test cases across different files, configure execution parameters (Browser, Environment, Headless, Video), and save them as reusable plans. Plans can be ran, edited, or deleted directly from the UI.
+*   **Allure Report Integration**: Generate and open the interactive Allure report dashboard with a single click.
+*   **Media Gallery**: Browse, view, and delete video recordings and screenshots of failed tests.
 
 ```bash
 $env:PYTHONPATH = "."; python tools/test_runner/app.py
@@ -1184,6 +1289,9 @@ http://localhost:5000
 | ▶️ **Run Test** | Click Play on any test or folder to execute it |
 | 📋 **Test Plans** | Group tests + choose Browser/Env/Headless and save as a plan |
 | 📺 **Live Logs** | Watch real-time console output as tests run (SSE stream) |
+| 🔍 **Universal Inspector** | Analyze API HTTP calls and filter isolated stdout logs per scenario |
+| 🎴 **Assertion Visualizer** | Isolates mismatch failures into EXPECTED, CLOSEST MATCH, and MISMATCHED FIELDS cards |
+| 📄 **PDF Evidence Export** | Export high-fidelity PDF reports of request history (headers mapped to tables) |
 | 🎥 **Media Gallery** | Review videos and screenshots of failed tests |
 | 📊 **Allure Report** | Generate and open the full Allure report with one click |
 

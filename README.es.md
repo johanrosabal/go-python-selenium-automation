@@ -776,81 +776,120 @@ def manejo_de_alertas(self):
 
 ---
 
-## 🌐 API Testing (Endpoints Object Model - EOM)
+## 🌐 Pruebas de API (Endpoints Object Model - EOM)
 
-Siguiendo la misma filosofía que el POM para UI, el framework implementa el patrón **Endpoints Object Model (EOM)** para pruebas de API robustas, escalables y con aserciones fluidas.
+Siguiendo la misma filosofía que POM para la interfaz de usuario, el framework implementa el **Endpoints Object Model (EOM)** para realizar pruebas de API robustas, escalables y con aserciones fluidas.
 
-### 1. Arquitectura EOM
+### 1. Arquitectura de EOM
 *   **`BaseEndpoint`**: Centraliza las acciones HTTP (`get`, `post`, `put`, `delete`).
-*   **`BaseAPITest`**: Gestiona sesiones de `requests`, autenticación y configuración de ambiente.
-*   **`APIResponse`**: Wrapper para respuestas que permite encadenar validaciones (Fluent Assertions).
+*   **`BaseAPITest`**: Administra las sesiones de `requests`, la autenticación y la configuración del entorno.
+*   **`APIResponse`**: Envolvedor (wrapper) de la respuesta que habilita validaciones encadenadas (Fluent Assertions).
 
-### 2. Ejemplo de Endpoint Object
-Crea tus objetos de endpoint en `applications/api/{app_name}/endpoints/`:
+### 2. Patrón Request Builder
+Los Endpoints se construyen utilizando un patrón de constructor encadenado (Builder Pattern). Esto hace que las solicitudes sean legibles y fáciles de configurar:
 
 ```python
 from core.api.common.base_endpoint import BaseEndpoint
 
-class UserEndpoint(BaseEndpoint):
-    def __init__(self, session):
+class SearchEndpoint(BaseEndpoint):
+    def __init__(self, session, config):
         super().__init__(session)
-        self.url = f"{self.base_url}/users"
+        self.base_url = config.get("base_url")
+        self.token = config.get("token")
 
-    def get_users(self):
-        return self.get.call(self.url)
+    def search_policies(self, payload):
+        return (
+            self.post.set_url(self.base_url)
+            .set_endpoint("/api/policy-search")
+            .add_header("accept", "text/plain")
+            .add_header("Content-Type", "application/json")
+            .add_header("Authorization", f"Bearer {self.token}")
+            .set_json(payload)
+            .set_timeout(120)
+            .send()
+        )
 
-    def create_user(self, name, job):
-        return self.post.call(self.url, json={"name": name, "job": job})
+    def get_results(self, search_id):
+        return (
+            self.get.set_url(self.base_url)
+            .set_endpoint("/api/policy-search/{id}/results")
+            .build_url(id=search_id)
+            .add_header("accept", "text/plain")
+            .add_header("Authorization", f"Bearer {self.token}")
+            .set_timeout(120)
+            .send()
+        )
 ```
 
-### 3. Ejemplo de Test de API
+#### Métodos de Constructor Disponibles
+La clase `RequestBuilder` (a la que se accede mediante `self.get`, `self.post`, `self.put`, etc.) admite los siguientes métodos fluidos:
+
+*   **`.set_url(url)`**: Establece la URL base.
+*   **`.set_endpoint(endpoint)`**: Agrega la ruta relativa del endpoint.
+*   **`.build_url(**kwargs)`**: Interpola parámetros dinámicos en la plantilla de la URL (por ejemplo, `/users/{id}` llamado con `id=123` se resuelve como `/users/123`).
+*   **`.add_header(key, value)`**: Agrega un encabezado HTTP individual.
+*   **`.set_headers(headers: dict)`**: Fusiona múltiples encabezados HTTP desde un diccionario.
+*   **`.set_params(params: dict)`**: Agrega parámetros de consulta (query string).
+*   **`.set_json(json_data)`**: Adjunta un payload JSON.
+*   **`.set_data(data)`**: Adjunta datos de formulario o bytes crudos en el cuerpo del request.
+*   **`.set_files(files: dict)`**: Sube archivos multipart.
+*   **`.set_auth(username, password)`**: Configura las credenciales de Autenticación Básica.
+*   **`.set_timeout(timeout)`**: Especifica el tiempo de espera de la solicitud en segundos.
+*   **`.set_verify(verify: bool)`**: Habilita o deshabilita la verificación del certificado SSL (por defecto es `True`).
+*   **`.set_cookies(cookies: dict)`**: Adjunta cookies a la solicitud.
+*   **`.set_allow_redirects(allow: bool)`**: Habilita/deshabilita el seguimiento automático de redireccionamientos.
+*   **`.set_proxies(proxies: dict)`**: Configura proxies de enrutamiento.
+*   **`.set_stream(stream: bool)`**: Transmite el contenido de la respuesta.
+*   **`.send()`**: Ejecuta la solicitud HTTP y devuelve un objeto `APIResponse`.
+
+
+### 3. Ejemplo de Prueba de API
 ```python
 from core.api.common.base_api_test import BaseAPITest
-from applications.api.demo.endpoints.user_endpoint import UserEndpoint
 
 class TestUserAPI(BaseAPITest):
     app_name = "demo"
-    
+
     def test_create_user(self):
-        # 1. Instanciar el endpoint
         users_api = UserEndpoint(self.session)
-        
-        # 2. Ejecutar y Validar de forma fluida
         users_api.create_user("Johan", "QA") \
             .assert_status_code(201) \
             .assert_json_path("name", "Johan")
 ```
 
-### 4. App Client Orchestrator (API)
-Al igual que el UI tiene `DemoApp`, la capa API usa un **Client Orchestrator** para encapsular flujos multi-endpoint y exponer acceso con Lazy Loading:
+### 4. Orquestador de Clientes de la Aplicación (API)
+Al igual que en la interfaz de usuario con `DemoApp`, la capa de API utiliza un **Orquestador de Clientes** para encapsular flujos de múltiples endpoints mediante Carga Perezosa (Lazy Loading):
 
 ```python
 # applications/api/nico_search/client.py
 class NicoSearchClient:
     def __init__(self, session, config: dict):
         self._session = session
-        self._search = None
+        self._config = config
+        self._search  = None
 
     @property
     def search(self) -> SearchEndpoint:
-        """Lazy-loaded SearchEndpoint."""
         if self._search is None:
             self._search = SearchEndpoint(self._session, self._config)
         return self._search
 
     def search_and_get_results(self, payload: dict):
-        """Composed flow: POST → obtiene GUID → GET resultados."""
+        """Flujo compuesto: POST → obtener GUID → GET resultados."""
         search_response = self.search.search_policies(payload)
-        search_response.assert_status_code(201)
+        if search_response.status_code != 201:
+            return None, search_response
+
         search_id = search_response.body.strip()
-        return search_id, self.search.get_results(search_id)
+        results_response = self.search.get_results(search_id)
+        return search_id, results_response
 ```
 
-`BaseAPITest` auto-descubre y carga el Client por convención de nombre (`client.py`). En los tests simplemente usas `self.app`:
+`BaseAPITest` autodescubre y carga el Cliente según la convención de nombres (`client.py`). En las pruebas, simplemente se utiliza `self.app`:
 
 ```python
 class TestNicoSearch(BaseAPITest):
-    app_name = "nico_search"  # ← auto-carga NicoSearchClient como self.app
+    app_name = "nico_search"   # ← carga automáticamente NicoSearchClient como self.app
 
     @test_case(id="SEARCH-001")
     def test_complete_search_flow(self):
@@ -859,11 +898,46 @@ class TestNicoSearch(BaseAPITest):
         results.assert_status_code(200)
 ```
 
-### 5. Ventajas del EOM
+### 5. Validación Basada en Datos y Coincidencia de Aserciones
+Las respuestas de la API se pueden validar contra una matriz de diccionarios esperados definidos en los datos JSON del caso de prueba. Si la matriz `expected_results` se proporciona y no está vacía, el framework verifica la lista del cuerpo de la respuesta.
+
+#### Ejemplo de Datos JSON (`data/qa/SEARCH-003.json`):
+```json
+{
+  "tests": {
+    "id": "SEARCH-003",
+    "title": "Search by Policy Number",
+    "data": {
+      "payload": {
+        "policyNumber": "NICO12345"
+      },
+      "expected_results": [
+        {
+          "policyNumber": "NICO12345",
+          "insuredName": "Jane Doe",
+          "status": "Active"
+        }
+      ]
+    }
+  }
+}
+```
+
+#### Flujo de Verificación:
+1. **Omitir Validación**: Si `expected_results` está vacío o se omite, la validación se salta.
+2. **Búsqueda de Coincidencia**: Para cada elemento esperado, el framework busca en la lista de respuestas.
+3. **Resolución de Coincidencia Difusa/Cercana**: Si no se encuentra una coincidencia exacta:
+   - El framework realiza una puntuación difusa para encontrar el elemento en la respuesta con la mayor superposición de claves (**Closest Match**).
+   - Calcula y reporta las diferencias exactas de clave-valor (**Mismatched Fields**), mostrando el valor esperado frente al valor real para cada campo.
+   - Si ningún candidato tiene claves coincidentes, vuelca la lista de todos los elementos devueltos.
+4. **Aislamiento de Aserciones**: Esta información se envía a la consola con encabezados claros (`EXPECTED:`, `CLOSEST ACTUAL MATCH FOUND:`, `MISMATCHED FIELDS:`), los cuales la interfaz de usuario de la herramienta de pruebas intercepta para visualizar los errores en tarjetas independientes.
+
+### 6. Ventajas del EOM
 - **Logging Automático**: Todas las peticiones y respuestas se registran con iconos visuales en la consola y Allure.
 - **Fluent Assertions**: Valida status codes y contenido JSON en una sola línea.
 - **Mantenibilidad**: Los cambios en los contratos de API se reflejan en un solo lugar (el Endpoint Object).
-- **Client Orchestrator**: Encapsula flujos multi-step, el test no sabe qué endpoints internos se llaman.
+- **Client Orchestrator**: Encapsula flujos multi-step — el test no sabe qué endpoints internos se llaman.
+- **Detalle de Aserción Aislado**: Evita stack traces confusos al resaltar de manera explícita los campos exactos con discrepancias.
 
 ---
 
@@ -1129,15 +1203,30 @@ El resumen enviado contiene:
 > Las notificaciones solo se envían si la propiedad `webhook_url` está presente en el archivo de configuración. Esto evita spam durante el desarrollo local si no se desea.
 
 ### 6. Test Runner GUI (Web Interface)
-El framework incluye una **Interfaz Gráfica de Usuario (GUI)** personalizada basada en web, diseñada para ofrecer una experiencia similar a Cypress o Playwright directamente en tu navegador, sin necesidad de dependencias pesadas.
 
-#### 🌟 Características Principales
-*   **Visualización de Árbol de Pruebas**: Explora todos tus casos de prueba (`pytest`) organizados de forma jerárquica con sus IDs y descripciones extraídas directamente de los decoradores `@test_case`.
-*   **Ejecución y Logs en Tiempo Real**: Lanza casos individuales o "Test Plans" y observa la consola de ejecución en vivo (SSE) con formato de colores (éxitos en verde, errores en rojo, y separadores claros).
-*   **Test Plans (Planes de Prueba)**: Selecciona múltiples casos de prueba, combina configuraciones (Navegador, Ambiente, Headless) y guárdalos como un Plan de Prueba reutilizable. Edita o elimina planes fácilmente desde la barra lateral.
-*   **Media Gallery Integrada**: Visualiza todos los videos y capturas de pantalla generados por las pruebas que fallaron directamente desde la UI. La galería clasifica los videos mostrando el Nombre de la Prueba, ID y duración (usando métricas reales de OpenCV).
-*   **Gestión de Reportes Allure**: Genera y visualiza tu reporte oficial Allure HTML con un solo clic desde la barra superior.
-*   **Copiar Logs al Portapapeles**: Extrae fácilmente la salida de tu consola de pruebas para compartirla con tu equipo o adjuntarla a tickets de bugs.
+El Test Runner GUI es un panel web impulsado por Flask diseñado para orquestar, ejecutar y auditar pruebas en un solo lugar. Cuenta con streaming de logs SSE en tiempo real, creación visual de planes de prueba, una galería multimedia para capturas de pantalla/videos de fallos y un inspector universal avanzado.
+
+#### 🌟 Características Claves
+*   **Árbol de Pruebas Jerárquico**: Explore y filtre todos los casos de prueba de `pytest` de forma dinámica. Los metadatos (IDs, títulos, descripciones) se extraen de los scripts de prueba y decoradores mediante AST.
+*   **Logs en Vivo en Tiempo Real**: Ejecute pruebas individuales, archivos, carpetas o planes de prueba completos. Una consola SSE en vivo transmite los logs con codificación de colores (éxitos en verde, errores en rojo).
+*   **Universal Inspector Avanzado**:
+    - **Pestañas Siempre Activas**: Las pestañas `LOGS` e `INSPECTOR` son visibles de forma universal tanto en el modo Web (UI) como en el modo API.
+    - **Historial de Escenarios y Solicitudes**: Realiza un seguimiento de las ejecuciones en tiempo real. Para pruebas de API, registra cada solicitud HTTP (método, endpoint, código de estado, tiempo de respuesta). Para pruebas Web (UI), registra cada escenario de prueba con una etiqueta morada `UI` dedicada, monitoreando la duración de la ejecución y el estado final.
+    - **Logs de Escenario Aislados**: Al seleccionar un escenario de prueba en la barra lateral del Inspector, se muestra una pestaña dedicada **LOGS** dentro del panel de detalles. Esta pestaña filtra la salida stdout de la ejecución para contener *únicamente* los logs generados por esa prueba específica, evitando tener que desplazarse por extensos logs de terminal.
+*   **Visualizador de Fallos de Aserción**:
+    - Si un test falla debido a discrepancias en los resultados esperados, la interfaz de usuario intercepta y parsea los logs multilínea de diferencias de `pytest`.
+    - Extrae y muestra estos detalles en tarjetas visuales independientes y estilizadas:
+        - **EXPECTED**: La estructura/claves JSON esperadas.
+        - **CLOSEST ACTUAL MATCH FOUND**: El diccionario devuelto en la respuesta que compartió la mayor coincidencia con los campos esperados.
+        - **MISMATCHED FIELDS**: Una comparación lado a lado que muestra las claves de los campos específicos, los valores esperados y los valores reales.
+        - **ACTUAL RESULTS**: La lista cruda de resultados devueltos (se utiliza si no se detectan coincidencias parciales).
+*   **Exportación de Evidencia PDF de Alta Fidelidad**:
+    - Al hacer clic en el botón **📄 PDF Report**, se genera un documento PDF limpio y premium que contiene la evidencia completa de la solicitud/respuesta HTTP seleccionada o del escenario de la interfaz de usuario.
+    - Convierte las cadenas de encabezados JSON crudos en un diseño de tabla de clave-valor limpio (por ejemplo, `Content-Type`, `Date`, etc.) en lugar de mostrar un bloque de código sin procesar.
+    - Permite exportar una sola solicitud o todas las solicitudes del historial de ejecución consolidadas en un único PDF de varias páginas.
+*   **Gestor de Planes de Prueba**: Seleccione múltiples casos de prueba a través de diferentes archivos, configure parámetros de ejecución (Navegador, Ambiente, Headless, Video) y guárdelos como planes reutilizables. Los planes se pueden ejecutar, editar o eliminar directamente desde la interfaz de usuario.
+*   **Integración de Reportes Allure**: Genere y abra el panel interactivo de reportes Allure con un solo clic.
+*   **Galería Multimedia**: Explore, visualice y elimine grabaciones de video y capturas de pantalla de pruebas fallidas.
 
 #### 🚀 Cómo Iniciarlo
 El Test Runner es una aplicación Flask ligera que sirve el dashboard y se comunica con el framework:
@@ -1375,6 +1464,9 @@ http://localhost:5000
 | ▶️ **Ejecutar Test** | Clic en Play sobre cualquier test o carpeta |
 | 📋 **Test Plans** | Agrupa tests + elige Browser/Env/Headless y guarda como plan |
 | 📺 **Logs en Vivo** | Observa la consola en tiempo real mientras corren los tests (SSE) |
+| 🔍 **Universal Inspector** | Analiza llamadas HTTP de API y filtra logs aislados de stdout por escenario |
+| 🎴 **Assertion Visualizer** | Aísla fallos de discrepancias en tarjetas de EXPECTED, CLOSEST MATCH y MISMATCHED FIELDS |
+| 📄 **Exportar Evidencia PDF** | Exporta reportes PDF de alta fidelidad del historial de solicitudes (encabezados formateados en tablas) |
 | 🎥 **Media Gallery** | Revisa videos y screenshots de tests fallidos |
 | 📊 **Reporte Allure** | Genera y abre el reporte Allure completo con un clic |
 
