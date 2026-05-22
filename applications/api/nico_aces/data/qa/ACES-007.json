@@ -25,8 +25,8 @@
           "lastName": "SMITH",
           "effectiveDate": "2024-12-15T00:01:00",
           "source": "ACES",
-          "agencyCode": null,
-          "agencyName": null,
+          "agencyCode": "N26999",
+          "agencyName": "TEST NICO General Agency for QA",
           "policyState": "UT"
         },
         {
@@ -38,8 +38,8 @@
           "lastName": "SMITH",
           "effectiveDate": "2025-01-01T00:01:00",
           "source": "ACES",
-          "agencyCode": null,
-          "agencyName": null,
+          "agencyCode": "N26999",
+          "agencyName": "TEST NICO General Agency for QA",
           "policyState": "UT"
         }
       ]

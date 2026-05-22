@@ -12,21 +12,21 @@
     "data": {
       "payload": {
         "company": 2,
-        "insuredName": "MICHAEL J BARRY"
+        "insuredName": "STACEY HILL"
       },
       "expected_results": [
         {
-          "policyNumber": null,
-          "quoteNumber": 626755,
-          "insuredName": "MICHAEL J BARRY",
-          "dba": "DBA: BARRY & SON TRANSPORT",
-          "firstName": "MICHAEL",
-          "lastName": "BARRY",
-          "effectiveDate": "2014-05-23T00:00:00",
-          "source": "NICO-Rate",
-          "agencyCode": null,
-          "agencyName": null,
-          "policyState": "MD"
+          "policyNumber": "01APG07869401",
+          "quoteNumber": 6898655,
+          "insuredName": "STACEY HILL",
+          "dba": "",
+          "firstName": "STACEY",
+          "lastName": "HILL",
+          "effectiveDate": "2017-08-04T11:47:36",
+          "source": "ACES",
+          "agencyCode": "H45300",
+          "agencyName": "GEICO Insurance Agency, Inc.",
+          "policyState": "AZ"
         }
       ]
     }
