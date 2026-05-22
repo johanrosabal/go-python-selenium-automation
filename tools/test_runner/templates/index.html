@@ -1210,7 +1210,7 @@
         <!-- Toolbar -->
         <div class="toolbar">
             <div class="toolbar-top">
-                <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">CONFIGURACIÓN</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">CONFIGURATION</div>
                 <div class="controls">
                     <label style="color: var(--text-muted); font-size: 0.85rem;">Env</label>
                     <div class="custom-select" style="width: 100px;">
@@ -1239,7 +1239,7 @@
                     </label>
 
                     <label class="ui-only" style="display: flex; align-items: center; gap: 5px; margin-left: 10px;">
-                        <input type="checkbox" id="config-video"> Grabar Video
+                        <input type="checkbox" id="config-video"> Record Video
                     </label>
 
                     <button class="allure-btn" id="allure-btn" onclick="generateAllureReport()">📊 Allure
@@ -1262,7 +1262,7 @@
             </div>
 
             <div class="test-selection-info">
-                <span style="color: var(--text-muted); font-size: 0.8rem;">Prueba seleccionada:</span>
+                <span style="color: var(--text-muted); font-size: 0.8rem;">Selected test:</span>
                 <div class="test-title" id="selected-test-name">Select a test to run...</div>
             </div>
         </div>
@@ -1329,8 +1329,8 @@
                                 <button onclick="exportAllRequestsToPDF()" class="pdf-btn" title="Export All to PDF" style="background: rgba(139, 233, 253, 0.15); border: 1px solid var(--accent-blue); color: var(--accent-blue); padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; cursor: pointer; border: 1px solid rgba(139,233,253,0.3);">
                                     📄 Export All
                                 </button>
-                                <button onclick="copyAllRequestsToClipboard()" class="pdf-btn" title="Copiar todas las evidencias para JIRA/DevOps" style="background: rgba(80, 250, 123, 0.15); border: 1px solid var(--accent-green); color: var(--accent-green); padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; cursor: pointer; border: 1px solid rgba(80,250,123,0.3);">
-                                    📋 Copiar JIRA/DevOps
+                                <button onclick="copyAllRequestsToClipboard()" class="pdf-btn" title="Copy all evidence for JIRA/DevOps" style="background: rgba(80, 250, 123, 0.15); border: 1px solid var(--accent-green); color: var(--accent-green); padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; cursor: pointer; border: 1px solid rgba(80,250,123,0.3);">
+                                    📋 Copy JIRA/DevOps
                                 </button>
                                 <span id="history-count" style="background: var(--accent-blue); color: #111; padding: 2px 6px; border-radius: 10px; font-size: 10px;">0</span>
                             </div>
@@ -1356,7 +1356,7 @@
                                         📄 PDF Report
                                     </button>
                                     <button onclick="copyCurrentRequestToClipboard()" class="pdf-btn" id="btn-copy-clipboard" style="background: rgba(80, 250, 123, 0.15); border: 1px solid var(--accent-green); color: var(--accent-green); padding: 4px 10px; border-radius: 6px; font-weight: 800; font-size: 0.75rem; cursor: pointer; display: none; align-items: center; gap: 4px;">
-                                        📋 Copiar JIRA/DevOps
+                                        📋 Copy JIRA/DevOps
                                     </button>
                                 </div>
                             </div>
@@ -3325,7 +3325,7 @@
             });
         }
 
-        // --- FUNCIONES DE COPIADO JIRA / AZURE DEVOPS ---
+        // --- JIRA / AZURE DEVOPS COPY FUNCTIONS ---
         function generateJiraDevOpsHTML(requests) {
             let html = `<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #172b4d; max-width: 800px; margin: 0 auto;">`;
             
@@ -3362,8 +3362,8 @@
                         <!-- Header Section -->
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid #ebecf0; padding-bottom: 12px; margin-bottom: 16px;">
                             <div>
-                                <div style="font-size: 11px; text-transform: uppercase; font-weight: bold; color: #5e6c84; letter-spacing: 0.5px;">Caso de Prueba ${index + 1} de ${total}</div>
-                                <h3 style="margin: 4px 0 0 0; font-size: 16px; color: #172b4d; font-weight: 600;">${req.testId ? `[${req.testId}] ` : ''}${req.testName || 'Prueba Capturada'}</h3>
+                                <div style="font-size: 11px; text-transform: uppercase; font-weight: bold; color: #5e6c84; letter-spacing: 0.5px;">Test Case ${index + 1} of ${total}</div>
+                                <h3 style="margin: 4px 0 0 0; font-size: 16px; color: #172b4d; font-weight: 600;">${req.testId ? `[${req.testId}] ` : ''}${req.testName || 'Captured Test'}</h3>
                             </div>
                             <div style="display: flex; gap: 8px; align-items: center;">
                                 <span style="background-color: ${req.mode === 'web' ? '#eae6ff' : '#deebff'}; color: ${req.mode === 'web' ? '#403294' : '#0747a6'}; font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 4px; text-transform: uppercase;">
@@ -3382,8 +3382,8 @@
                 if (req.mode === 'web') {
                     html += `
                         <div style="margin-top: 12px;">
-                            <h4 style="margin: 0 0 8px 0; font-size: 13px; color: #5e6c84; text-transform: uppercase; letter-spacing: 0.5px;">Logs de Ejecución del Escenario</h4>
-                            <pre style="background-color: #f4f5f7; border: 1px solid #dfe1e6; border-radius: 4px; padding: 12px; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #172b4d; white-space: pre-wrap; word-break: break-all; margin: 0; line-height: 1.5; max-height: 400px; overflow-y: auto;">${(req.logBuffer || 'Sin logs capturados.').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+                            <h4 style="margin: 0 0 8px 0; font-size: 13px; color: #5e6c84; text-transform: uppercase; letter-spacing: 0.5px;">Scenario Execution Logs</h4>
+                            <pre style="background-color: #f4f5f7; border: 1px solid #dfe1e6; border-radius: 4px; padding: 12px; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #172b4d; white-space: pre-wrap; word-break: break-all; margin: 0; line-height: 1.5; max-height: 400px; overflow-y: auto;">${(req.logBuffer || 'No logs captured.').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
                         </div>
                     `;
                 } else {
@@ -3395,7 +3395,7 @@
                     `;
 
                     const formatBody = (body) => {
-                        if (!body) return '(Vacío)';
+                        if (!body) return '(Empty)';
                         if (typeof body === 'object') {
                             return JSON.stringify(body, null, 2);
                         }
@@ -3412,13 +3412,13 @@
                     html += `
                         <!-- Request Details -->
                         <div style="margin-bottom: 16px;">
-                            <h4 style="margin: 0 0 8px 0; font-size: 13px; color: #5e6c84; text-transform: uppercase; letter-spacing: 0.5px;">Body de la Petición (Request Body)</h4>
+                            <h4 style="margin: 0 0 8px 0; font-size: 13px; color: #5e6c84; text-transform: uppercase; letter-spacing: 0.5px;">Request Body</h4>
                             <pre style="background-color: #f4f5f7; border: 1px solid #dfe1e6; border-radius: 4px; padding: 12px; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #172b4d; white-space: pre-wrap; word-break: break-all; margin: 0; line-height: 1.5;">${reqBodyStr.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
                         </div>
 
                         <!-- Response Details -->
                         <div style="margin-bottom: 16px;">
-                            <h4 style="margin: 0 0 8px 0; font-size: 13px; color: #5e6c84; text-transform: uppercase; letter-spacing: 0.5px;">Body de la Respuesta (Response Body)</h4>
+                            <h4 style="margin: 0 0 8px 0; font-size: 13px; color: #5e6c84; text-transform: uppercase; letter-spacing: 0.5px;">Response Body</h4>
                             <pre style="background-color: #f4f5f7; border: 1px solid #dfe1e6; border-radius: 4px; padding: 12px; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #172b4d; white-space: pre-wrap; word-break: break-all; margin: 0; line-height: 1.5;">${resBodyStr.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
                         </div>
                     `;
@@ -3428,7 +3428,7 @@
                         if (req.assertExpected) {
                             assertExpectedHTML = `
                                 <div style="margin-top: 10px;">
-                                    <div style="font-size: 11px; font-weight: bold; color: #5e6c84; text-transform: uppercase; margin-bottom: 4px;">Esperado (Expected)</div>
+                                    <div style="font-size: 11px; font-weight: bold; color: #5e6c84; text-transform: uppercase; margin-bottom: 4px;">Expected</div>
                                     <pre style="background-color: #ffffff; border: 1px solid #dfe1e6; border-radius: 4px; padding: 8px; font-family: 'Courier New', Courier, monospace; font-size: 11px; color: #172b4d; white-space: pre-wrap; margin: 0;">${req.assertExpected.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
                                 </div>
                             `;
@@ -3437,7 +3437,7 @@
                         if (req.assertClosest) {
                             assertClosestHTML = `
                                 <div style="margin-top: 10px;">
-                                    <div style="font-size: 11px; font-weight: bold; color: #5e6c84; text-transform: uppercase; margin-bottom: 4px;">Coincidencia más cercana encontrada</div>
+                                    <div style="font-size: 11px; font-weight: bold; color: #5e6c84; text-transform: uppercase; margin-bottom: 4px;">Closest Match Found</div>
                                     <pre style="background-color: #ffffff; border: 1px solid #dfe1e6; border-radius: 4px; padding: 8px; font-family: 'Courier New', Courier, monospace; font-size: 11px; color: #172b4d; white-space: pre-wrap; margin: 0;">${req.assertClosest.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
                                 </div>
                             `;
@@ -3446,7 +3446,7 @@
                         if (req.assertMismatched) {
                             assertMismatchedHTML = `
                                 <div style="margin-top: 10px;">
-                                    <div style="font-size: 11px; font-weight: bold; color: #bf2600; text-transform: uppercase; margin-bottom: 4px;">Campos no coincidentes (Mismatched Fields)</div>
+                                    <div style="font-size: 11px; font-weight: bold; color: #bf2600; text-transform: uppercase; margin-bottom: 4px;">Mismatched Fields</div>
                                     <pre style="background-color: #ffffff; border: 1px solid #ffebe6; border-radius: 4px; padding: 8px; font-family: 'Courier New', Courier, monospace; font-size: 11px; color: #bf2600; white-space: pre-wrap; margin: 0;">${req.assertMismatched.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
                                 </div>
                             `;
@@ -3455,7 +3455,7 @@
                         if (req.assertActual) {
                             assertActualHTML = `
                                 <div style="margin-top: 10px;">
-                                    <div style="font-size: 11px; font-weight: bold; color: #5e6c84; text-transform: uppercase; margin-bottom: 4px;">Resultados Reales Retornados (Actual)</div>
+                                    <div style="font-size: 11px; font-weight: bold; color: #5e6c84; text-transform: uppercase; margin-bottom: 4px;">Actual Results Returned</div>
                                     <pre style="background-color: #ffffff; border: 1px solid #dfe1e6; border-radius: 4px; padding: 8px; font-family: 'Courier New', Courier, monospace; font-size: 11px; color: #172b4d; white-space: pre-wrap; margin: 0;">${req.assertActual.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
                                 </div>
                             `;
@@ -3465,9 +3465,9 @@
                             <!-- Assertion Box -->
                             <div style="margin-top: 16px; padding: 16px; background-color: #ffebe6; border: 1px solid #ffbdad; border-radius: 6px; border-left: 4px solid #de350b;">
                                 <div style="font-size: 12px; color: #de350b; font-weight: bold; margin-bottom: 8px;">
-                                    ❌ FALLA DE ASERCIÓN
+                                    ❌ ASSERTION FAILURE
                                 </div>
-                                <pre style="background-color: #ffffff; border: 1px solid #ffbdad; border-radius: 4px; padding: 10px; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #de350b; white-space: pre-wrap; margin: 0; font-weight: bold;">${(req.assertSummary || req.assertError || 'Error de comparación').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+                                <pre style="background-color: #ffffff; border: 1px solid #ffbdad; border-radius: 4px; padding: 10px; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #de350b; white-space: pre-wrap; margin: 0; font-weight: bold;">${(req.assertSummary || req.assertError || 'Comparison error').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
                                 ${assertExpectedHTML}
                                 ${assertClosestHTML}
                                 ${assertMismatchedHTML}
@@ -3476,13 +3476,7 @@
                         `;
                     }
 
-                    const curlCmd = generateCurlCommand(req, 'bash');
-                    html += `
-                        <div style="margin-top: 16px;">
-                            <h4 style="margin: 0 0 8px 0; font-size: 13px; color: #5e6c84; text-transform: uppercase; letter-spacing: 0.5px;">Comando de Reproducción (cURL)</h4>
-                            <pre style="background-color: #f4f5f7; border: 1px solid #dfe1e6; border-radius: 4px; padding: 12px; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #172b4d; white-space: pre-wrap; word-break: break-all; margin: 0; line-height: 1.5;">${curlCmd.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
-                        </div>
-                    `;
+
                 }
 
                 html += `
@@ -3508,22 +3502,22 @@
                 else if (isFail || hasAssertFailure) statusText = 'FAIL';
 
                 text += `================================================================================\n`;
-                text += `CASO DE PRUEBA ${index + 1} DE ${total}\n`;
-                text += `Título: ${req.testId ? `[${req.testId}] ` : ''}${req.testName || 'Prueba Capturada'}\n`;
-                text += `Modo: ${req.mode === 'web' ? 'UI' : 'API'}\n`;
-                text += `Estado: ${statusText}\n`;
-                text += `Duración: ${req.time || '0.00s'}\n`;
+                text += `TEST CASE ${index + 1} OF ${total}\n`;
+                text += `Title: ${req.testId ? `[${req.testId}] ` : ''}${req.testName || 'Captured Test'}\n`;
+                text += `Mode: ${req.mode === 'web' ? 'UI' : 'API'}\n`;
+                text += `Status: ${statusText}\n`;
+                text += `Duration: ${req.time || '0.00s'}\n`;
                 text += `================================================================================\n\n`;
 
                 if (req.mode === 'web') {
-                    text += `[LOGS DE EJECUCIÓN]\n`;
-                    text += `${req.logBuffer || 'Sin logs'}\n\n`;
+                    text += `[EXECUTION LOGS]\n`;
+                    text += `${req.logBuffer || 'No logs'}\n\n`;
                 } else {
                     text += `URL: ${req.url}\n`;
-                    text += `Método: ${req.method}\n\n`;
+                    text += `Method: ${req.method}\n\n`;
                     
                     const formatBody = (body) => {
-                        if (!body) return '(Vacío)';
+                        if (!body) return '(Empty)';
                         if (typeof body === 'object') return JSON.stringify(body, null, 2);
                         try { return JSON.stringify(JSON.parse(body), null, 2); } catch (e) { return body; }
                     };
@@ -3535,7 +3529,7 @@
                     text += `${formatBody(req.resBody)}\n\n`;
 
                     if (hasAssertFailure) {
-                        text += `!!! FALLA DE ASERCIÓN !!!\n`;
+                        text += `!!! ASSERTION FAILURE !!!\n`;
                         text += `${req.assertSummary || req.assertError}\n\n`;
                         if (req.assertExpected) {
                             text += `[EXPECTED]\n${req.assertExpected.trim()}\n\n`;
@@ -3551,8 +3545,7 @@
                         }
                     }
 
-                    text += `[COMANDO cURL]\n`;
-                    text += `${generateCurlCommand(req, 'bash')}\n\n`;
+
                 }
             });
             return text;
@@ -3560,7 +3553,7 @@
 
         async function copyRequestsToClipboard(requests) {
             if (!requests || requests.length === 0) {
-                alert("No hay casos de prueba para copiar.");
+                alert("No test cases to copy.");
                 return;
             }
 
@@ -3577,17 +3570,17 @@
                 })];
 
                 await navigator.clipboard.write(data);
-                alert("¡Evidencia copiada al portapapeles! Puedes pegarla directamente en JIRA o Azure DevOps.");
+                alert("Evidence copied to clipboard! You can paste it directly into JIRA or Azure DevOps.");
             } catch (err) {
-                console.error("Error al copiar al portapapeles: ", err);
-                alert("Error al copiar al portapapeles. Inténtalo de nuevo. Detalles: " + err.message);
+                console.error("Error copying to clipboard: ", err);
+                alert("Failed to copy to clipboard. Try again. Details: " + err.message);
             }
         }
 
         function copyCurrentRequestToClipboard() {
             const req = sessionRequests[activeRequestIndex];
             if (!req) {
-                alert("No se ha seleccionado ninguna petición.");
+                alert("No request selected.");
                 return;
             }
             copyRequestsToClipboard([req]);
@@ -3595,7 +3588,7 @@
 
         function copyAllRequestsToClipboard() {
             if (sessionRequests.length === 0) {
-                alert("No hay peticiones capturadas en la sesión.");
+                alert("No requests captured in this session.");
                 return;
             }
             copyRequestsToClipboard(sessionRequests);
