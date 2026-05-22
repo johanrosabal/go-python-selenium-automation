@@ -29,7 +29,7 @@ class NicoAcesClient:
         if search_response.status_code != 201 and search_response.status_code != 200:
             return None, search_response
 
-        # Assuming the search_id is returned in the body (adjust if it's in a JSON field)
-        search_id = search_response.body.strip()
+        # Convert search_id to string in case it is returned as an integer
+        search_id = str(search_response.body).strip()
         results_response = self.aces.get_policies(search_id)
         return search_id, results_response
