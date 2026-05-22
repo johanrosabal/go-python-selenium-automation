@@ -95,3 +95,13 @@ class TestNicoAces(BaseAPITest):
     def test_search_by_multiple_agent_codes_and_policy_state_and_insured_name(self):
         """Verify search filtering by multiple Agent Codes and Policy State and Insured Name."""
         self._run_full_aces_flow("ACES-004")
+
+    @test_case(id="ACES-005")
+    def test_search_by_single_agent_codes_and_policy_state(self):
+        """Verify search filtering by single Agent Codes and Policy State."""
+        self._run_full_aces_flow("ACES-005")
+
+    @test_case(id="ACES-006")
+    def test_search_by_single_agent_codes_and_policy_state(self):
+        """Verify search filtering by Invaid Single Agent Codes and Policy State."""
+        self._run_full_aces_flow("ACES-006")
