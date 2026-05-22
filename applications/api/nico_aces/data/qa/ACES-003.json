@@ -19,7 +19,7 @@
       },
       "expected_results": [
         {
-          "policyNumber": "01APG00001801X",
+          "policyNumber": "01APG00001801",
           "quoteNumber": 4265217,
           "insuredName": "A TX G POL",
           "dba": "",
