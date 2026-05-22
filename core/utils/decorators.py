@@ -29,11 +29,11 @@ def test_case(id: str, json_file: str = None, title: str = None, description: st
             test_instance = args[0]
             
             # Consume the dynamically loaded metadata pre-attached by BaseTest setup
-            metadata = getattr(func, '_test_metadata', {})
+            metadata = getattr(wrapper, '_test_metadata', getattr(func, '_test_metadata', {}))
             
             # Use the resolved values from BaseTest (Priority: JSON -> Args -> Default)
-            _title = getattr(func, '_test_title', title or func.__name__)
-            _desc = getattr(func, '_test_description', description or "")
+            _title = getattr(wrapper, '_test_title', getattr(func, '_test_title', title or func.__name__))
+            _desc = getattr(wrapper, '_test_description', getattr(func, '_test_description', description or ""))
 
             # Apply Allure Metadata Dynamically
             allure.dynamic.title(_title)

@@ -1570,6 +1570,7 @@
             }
 
             const request = {
+                testId: window._lastTestIdSeen,
                 testName: finalName,
                 method: method,
                 url: url,
@@ -2532,6 +2533,7 @@
                     testEl.appendChild(checkbox);
                     testEl.appendChild(label);
                     testEl.dataset.id = test.id;
+                    testEl.dataset.testId = test.test_id || '';
 
                     testEl.onclick = () => {
                         checkbox.checked = !checkbox.checked;
@@ -2926,6 +2928,54 @@
             // --- ROBUST STATUS DETECTION ---
             const cleanMsg = data.message.trim();
 
+            // Detect test start using custom logger output to set _lastTestIdSeen early
+            if (cleanMsg.includes('STARTING API TEST:') || cleanMsg.includes('STARTING TEST:')) {
+                const match = cleanMsg.match(/STARTING (?:API )?TEST:\s*([A-Za-z0-9-]+)/);
+                if (match) {
+                    const metaId = match[1].trim();
+                    const testNode = document.querySelector(`.test-item[data-test-id="${metaId}"]`);
+                    if (testNode) {
+                        const pytestId = testNode.dataset.id;
+                        window._lastTestIdSeen = pytestId;
+                        
+                        // Also update current executing info if needed
+                        const rawName = pytestId.split('::').pop();
+                        window._currentExecutingTestName = rawName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                        window._currentExecutingTestId = metaId;
+
+                        // UI Update: Highlight running test
+                        testNode.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        document.querySelectorAll('.test-item').forEach(n => n.classList.remove('active'));
+                        testNode.classList.add('active');
+                        
+                        // Add Inspector Scenario for Web mode
+                        if (currentMode === 'web') {
+                            if (sessionRequests.length === 0 || sessionRequests[sessionRequests.length - 1].testName !== window._currentExecutingTestName) {
+                                createNewRequestEntry('UI', '', 'web');
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Detect Pytest traceback header to map assertion failure to the correct test request
+            const tbMatch = cleanMsg.match(/^_{5,}\s*([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)\s*_{5,}$/);
+            if (tbMatch) {
+                const methodName = tbMatch[2];
+                let matchIdx = -1;
+                for (let i = sessionRequests.length - 1; i >= 0; i--) {
+                    if (sessionRequests[i].testId && sessionRequests[i].testId.endsWith('::' + methodName)) {
+                        matchIdx = i;
+                        break;
+                    }
+                }
+                window._currentTracebackTargetIndex = matchIdx;
+                if (matchIdx !== -1) {
+                    sessionRequests[matchIdx].status = "FAILED";
+                    renderRequestHistory();
+                }
+            }
+
             // 1. Detect Test Identity (Starting or in-progress)
             if (cleanMsg.includes('::') && !cleanMsg.includes('collected')) {
                 const parts = cleanMsg.split(' ');
@@ -2997,6 +3047,8 @@
                 document.getElementById('exec-status').innerText = data.status;
                 document.getElementById('exec-status').style.color = data.status === 'PASSED' ? 'var(--accent-green)' :
                     'var(--accent-red)';
+                
+                window._currentTracebackTargetIndex = -1;
 
                 // Refresh gallery after execution ends to pick up everything
                 setTimeout(loadExistingMedia, 2000);
@@ -3064,8 +3116,11 @@
                                 errorMsg = lineText.replace(/^.*AssertionError:\s*/, 'AssertionError: ').trim();
                             }
                             
-                            if (activeRequestIndex !== -1) {
-                                const req = sessionRequests[activeRequestIndex];
+                            const targetIdx = (window._currentTracebackTargetIndex !== undefined)
+                                ? window._currentTracebackTargetIndex
+                                : -1;
+                            if (targetIdx !== -1) {
+                                const req = sessionRequests[targetIdx];
                                 if (!req.assertSummary && !req.assertError) {
                                     req.assertSummary = errorMsg;
                                     req.assertExpected = '';
@@ -3075,10 +3130,10 @@
                                     req._currentAssertSection = null;
                                     
                                     isCapturingAssert = true;
-                                    assertTargetIndex = activeRequestIndex;
+                                    assertTargetIndex = targetIdx;
                                     
                                     renderRequestHistory();
-                                    selectHistoryItem(activeRequestIndex);
+                                    selectHistoryItem(targetIdx);
                                 }
                             }
                         } else if (isCapturingAssert) {
