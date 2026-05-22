@@ -17,7 +17,21 @@
           "N26300"
         ]
       },
-      "expected_results": []
+      "expected_results": [
+        {
+          "policyNumber": "01APG00001801",
+          "quoteNumber": 4265217,
+          "insuredName": "A TX G POL",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2017-04-25T00:01:00",
+          "source": "ACES",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "TX"
+        }
+      ]
     }
   }
 }
