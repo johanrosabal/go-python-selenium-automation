@@ -120,3 +120,13 @@ class TestNicoAces(BaseAPITest):
     def test_search_by_insured_name(self):
         """Verify search filtering by insured name."""
         self._run_full_aces_flow("ACES-009")
+
+    @test_case(id="ACES-010")
+    def test_search_by_phone_number(self):
+        """Verify search filtering by phone number."""
+        self._run_full_aces_flow("ACES-010")
+
+    @test_case(id="ACES-011")
+    def test_search_by_quote_number(self):
+        """Verify search filtering by quote number."""
+        self._run_full_aces_flow("ACES-011")
