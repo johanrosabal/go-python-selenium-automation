@@ -1,17 +1,17 @@
 {
   "tests": {
-    "id": "SEARCH-007",
+    "id": "ACES-011",
     "title": "Search by Quote Number",
     "description": "Search by quote number",
-    "feature": "Policy Search",
-    "story": "Search Policies",
+    "feature": "ACES Policy Search",
+    "story": "Search ACES Policies",
     "severity": "NORMAL",
     "tag": [
-      "p2"
+      "regression"
     ],
     "data": {
       "payload": {
-        "companyNumber": 1,
+        "company": 2,
         "quoteNumber": 15749598
       },
       "expected_results": [

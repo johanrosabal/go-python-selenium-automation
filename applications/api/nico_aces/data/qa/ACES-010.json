@@ -1,0 +1,34 @@
+{
+  "tests": {
+    "id": "ACES-010",
+    "title": "Search by Phone Number",
+    "description": "Search by phone number",
+    "feature": "ACES Policy Search",
+    "story": "Search ACES Policies",
+    "severity": "NORMAL",
+    "tag": [
+      "regression"
+    ],
+    "data": {
+      "payload": {
+        "company": 2,
+        "phoneNumber": "5205288888"
+      },
+      "expected_results": [
+        {
+          "policyNumber": "01APG07869401",
+          "quoteNumber": 6898655,
+          "insuredName": "STACEY HILL",
+          "dba": "",
+          "firstName": "STACEY",
+          "lastName": "HILL",
+          "effectiveDate": "2017-08-04T11:47:36",
+          "source": "ACES",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "AZ"
+        }
+      ]
+    }
+  }
+}

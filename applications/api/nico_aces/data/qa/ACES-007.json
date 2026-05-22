@@ -1,0 +1,48 @@
+{
+  "tests": {
+    "id": "ACES-007",
+    "title": "Search by First Name + Last Name",
+    "description": "Search by insured first and last name",
+    "feature": "ACES Policy Search",
+    "story": "Search ACES Policies",
+    "severity": "NORMAL",
+    "tag": [
+      "regression"
+    ],
+    "data": {
+      "payload": {
+        "company": 2,
+        "firstName": "David",
+        "lastName": "Smith"
+      },
+      "expected_results": [
+        {
+          "policyNumber": "70APT048588",
+          "quoteNumber": 5655660,
+          "insuredName": "DAVID SMITH",
+          "dba": "DBA: CDL NOW",
+          "firstName": "DAVID",
+          "lastName": "SMITH",
+          "effectiveDate": "2024-12-15T00:01:00",
+          "source": "ACES",
+          "agencyCode": null,
+          "agencyName": null,
+          "policyState": "UT"
+        },
+        {
+          "policyNumber": "70TRT035700",
+          "quoteNumber": 5657039,
+          "insuredName": "DAVID SMITH",
+          "dba": "DBA: CDL NOW",
+          "firstName": "DAVID",
+          "lastName": "SMITH",
+          "effectiveDate": "2025-01-01T00:01:00",
+          "source": "ACES",
+          "agencyCode": null,
+          "agencyName": null,
+          "policyState": "UT"
+        }
+      ]
+    }
+  }
+}

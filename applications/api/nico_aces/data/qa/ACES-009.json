@@ -1,0 +1,34 @@
+{
+  "tests": {
+    "id": "ACES-009",
+    "title": "Search by Policy Number",
+    "description": "Search by policy number",
+    "feature": "ACES Policy Search",
+    "story": "Search ACES Policies",
+    "severity": "NORMAL",
+    "tag": [
+      "regression"
+    ],
+    "data": {
+      "payload": {
+        "company": 2,
+        "insuredName": "MICHAEL J BARRY"
+      },
+      "expected_results": [
+        {
+          "policyNumber": null,
+          "quoteNumber": 626755,
+          "insuredName": "MICHAEL J BARRY",
+          "dba": "DBA: BARRY & SON TRANSPORT",
+          "firstName": "MICHAEL",
+          "lastName": "BARRY",
+          "effectiveDate": "2014-05-23T00:00:00",
+          "source": "NICO-Rate",
+          "agencyCode": null,
+          "agencyName": null,
+          "policyState": "MD"
+        }
+      ]
+    }
+  }
+}
