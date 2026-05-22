@@ -48,17 +48,20 @@ def main():
         document.body.style.overflow = 'visible';
         document.body.style.height = 'auto';
 
-        // Build a mock request for generation
         const mockReq = {
             testName: "SEARCH-001 - Policy Search Example",
             method: "POST",
             url: "https://wapi-search-cus-test.azurewebsites.net/api/policy-search",
-            status: "200 OK",
+            status: "Assert Failed",
             time: "0.45s",
             reqHeaders: "{'Content-Type': 'application/json', 'X-Legacy': 'True'}",
             reqBody: '{"policyNumber": "NICO998877"}',
             resHeaders: `{"Date": "Thu, 21 May 2026 14:57:47 GMT", "Content-Type": "application/json; charset=utf-8", "Content-Length": "70", "Connection": "keep-alive", "access-control-allow-credentials": "true", "access-control-expose-headers": "Location", "Cache-Control": "no-cache", "etag": "W/\\"46-72q5oVUmp94Lb+3KeNKLCz+xhMw\\"", "expires": "-1", "location": "https://json-placeholder.typicode.com/posts/101", "nel": "{\\"report_to\\":\\"heroku-nel\\",\\"response_headers\\":[\\"Via\\"],\\"max_age\\":3600,\\"success_fraction\\":0.01,\\"failure_fraction\\":0.1}", "pragma": "no-cache", "report-to": "{\\"group\\":\\"heroku-nel\\",\\"endpoints\\":[{\\"url\\":\\"https://nel.heroku.com/reports?s=hozQKH0cWcSOQ1j7zVlpWlnKs%2FawNgAAHC%2FY%2FvVBMa%2Fc%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1779375467\\"}],\\"max_age\\":3600}", "reporting-endpoints": "heroku-nel=\\"https://nel.heroku.com/reports?s=hozQKH0cWcSOQ1j7zVlpWlnKs%2FawNgAAHC%2FY%2FvVBMa%2Fc%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1779375467\\"", "Server": "cloudflare", "vary": "Origin, X-HTTP-Method-Override, Accept-Encoding", "via": "2.0 heroku-router", "x-content-type-options": "nosniff", "x-powered-by": "Express", "x-ratelimit-limit": "1000", "x-ratelimit-remaining": "999", "x-ratelimit-reset": "1779375495", "cf-cache-status": "DYNAMIC", "CF-RAY": "9ff46f802f30c8db-SJO", "alt-svc": "h3=\\":443\\"; ma=86400"}`,
-            resBody: '[{"id": 1, "status": "Active"}]'
+            resBody: '[{"id": 1, "status": "Active"}]',
+            assertSummary: "Failed: Expected result not found in API response.",
+            assertExpected: "{'policyNumber': '01APG00001801x', 'quoteNumber': 4265217, 'insuredName': 'A TX G POL', 'dba': '', 'firstName': '', 'lastName': '', 'effectiveDate': '2017-04-25T00:01:00', 'source': 'ACES', 'agencyCode': 'N26300', 'agencyName': 'Berkshire Hathaway Homestate Companies', 'policyState': 'TX'}",
+            assertClosest: "{'policyNumber': '01APG00001801', 'quoteNumber': 4265217, 'insuredName': 'A TX G POL', 'dba': '', 'firstName': '', 'lastName': '', 'effectiveDate': '2017-04-25T00:01:00', 'source': 'ACES', 'agencyCode': 'N26300', 'agencyName': 'Berkshire Hathaway Homestate Companies', 'policyState': 'TX'}",
+            assertMismatched: "{'policyNumber': {'expected': '01APG00001801x', 'actual': '01APG00001801'}}"
         };
 
         // Create a wrapper div that is absolute positioned offscreen/below fold
@@ -166,12 +169,16 @@ def main():
                  testName: "SEARCH-001 - Policy Search Example",
                  method: "POST",
                  url: "https://wapi-search-cus-test.azurewebsites.net/api/policy-search",
-                 status: "200 OK",
+                 status: "Assert Failed",
                  time: "0.45s",
                  reqHeaders: "{'Content-Type': 'application/json', 'X-Legacy': 'True'}",
                  reqBody: '{"policyNumber": "NICO998877"}',
                  resHeaders: "{'Content-Type': 'application/json', 'X-Legacy': 'True'}",
-                 resBody: '[{"id": 1, "status": "Active"}]'
+                 resBody: '[{"id": 1, "status": "Active"}]',
+                 assertSummary: "Failed: Expected result not found in API response.",
+                 assertExpected: "{'policyNumber': '01APG00001801x', 'quoteNumber': 4265217, 'insuredName': 'A TX G POL', 'dba': '', 'firstName': '', 'lastName': '', 'effectiveDate': '2017-04-25T00:01:00', 'source': 'ACES', 'agencyCode': 'N26300', 'agencyName': 'Berkshire Hathaway Homestate Companies', 'policyState': 'TX'}",
+                 assertClosest: "{'policyNumber': '01APG00001801', 'quoteNumber': 4265217, 'insuredName': 'A TX G POL', 'dba': '', 'firstName': '', 'lastName': '', 'effectiveDate': '2017-04-25T00:01:00', 'source': 'ACES', 'agencyCode': 'N26300', 'agencyName': 'Berkshire Hathaway Homestate Companies', 'policyState': 'TX'}",
+                 assertMismatched: "{'policyNumber': {'expected': '01APG00001801x', 'actual': '01APG00001801'}}"
              }];
              activeRequestIndex = 0;
              exportRequestToPDF();

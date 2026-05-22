@@ -3048,7 +3048,7 @@
                     }
 
                     // 1.5 Detect Assertion Failure (API)
-                    const lines = htmlMessage.split('\\n');
+                    const lines = htmlMessage.split('\n');
                     let handledAssert = false;
                     
                     lines.forEach(rawLine => {
@@ -3419,6 +3419,49 @@
             const methodClass = `method-${req.method.toLowerCase()}`;
             const curlCmd = generateCurlCommand(req, 'bash');
 
+            let assertHTML = "";
+            if (req.assertSummary || req.assertError) {
+                let assertExpectedHTML = "";
+                if (req.assertExpected) {
+                    assertExpectedHTML = `
+                        <div class="section-title">Expected</div>
+                        <pre class="code-box" style="background: #fafafa;">${req.assertExpected.trim()}</pre>
+                    `;
+                }
+                let assertClosestHTML = "";
+                if (req.assertClosest) {
+                    assertClosestHTML = `
+                        <div class="section-title">Closest Actual Match Found</div>
+                        <pre class="code-box" style="background: #fafafa;">${req.assertClosest.trim()}</pre>
+                    `;
+                }
+                let assertMismatchedHTML = "";
+                if (req.assertMismatched) {
+                    assertMismatchedHTML = `
+                        <div class="section-title">Mismatched Fields</div>
+                        <pre class="code-box" style="background: #fafafa; color: #b91c1c;">${req.assertMismatched.trim()}</pre>
+                    `;
+                }
+                let assertActualHTML = "";
+                if (req.assertActual) {
+                    assertActualHTML = `
+                        <div class="section-title">Actual Results Returned</div>
+                        <pre class="code-box" style="background: #fafafa;">${req.assertActual.trim()}</pre>
+                    `;
+                }
+
+                assertHTML = `
+                    <div class="assert-card" style="margin-top: 20px; padding: 12px; background: #fff5f5; border: 1px solid #fee2e2; border-radius: 6px; border-left: 4px solid #ef4444; page-break-inside: avoid; text-align: left;">
+                        <div style="font-size: 10px; color: #b91c1c; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">❌ ASSERTION FAILURE</div>
+                        <pre class="code-box" style="background: #fafafa; border-color: #fee2e2; color: #b91c1c;">${req.assertSummary || req.assertError}</pre>
+                        ${assertExpectedHTML}
+                        ${assertClosestHTML}
+                        ${assertMismatchedHTML}
+                        ${assertActualHTML}
+                    </div>
+                `;
+            }
+
             return `
                 <div class="evidence-card">
                     <div class="evidence-header">
@@ -3468,6 +3511,8 @@
 
                     <div class="section-title">Response Body</div>
                     <pre class="code-box">${resBodyStr || '(Empty Response)'}</pre>
+
+                    ${assertHTML}
 
                     <div class="section-title">Reproduction cURL Command</div>
                     <pre class="code-box curl-box">${curlCmd}</pre>

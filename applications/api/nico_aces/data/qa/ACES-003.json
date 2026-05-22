@@ -1,8 +1,8 @@
 {
   "tests": {
     "id": "ACES-003",
-    "title": "Search by Agent Code and Policy Number",
-    "description": "Verify ACES search filtering by agent code and policy number",
+    "title": "Search by Single Agent Code and Policy Number",
+    "description": "Verify ACES search filtering by single agent code and policy number",
     "feature": "ACES Policy Search",
     "story": "Search ACES Policies",
     "severity": "NORMAL",
@@ -19,7 +19,7 @@
       },
       "expected_results": [
         {
-          "policyNumber": "01APG00001801",
+          "policyNumber": "01APG00001801X",
           "quoteNumber": 4265217,
           "insuredName": "A TX G POL",
           "dba": "",

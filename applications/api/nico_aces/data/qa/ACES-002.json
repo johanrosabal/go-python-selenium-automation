@@ -11,10 +11,24 @@
     ],
     "data": {
       "payload": {
-        "insuredName": "Smith",
+        "insuredName": "TN_NEGATIVE_TEST3",
         "company": 2
       },
-      "expected_results": []
+      "expected_results": [
+        {
+          "policyNumber": "74TRT030590",
+          "quoteNumber": 5350757,
+          "insuredName": "TN_NEGATIVE_TEST3",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2022-12-01T00:01:00",
+          "source": "ACES",
+          "agencyCode": "N15987",
+          "agencyName": "Casper Agency",
+          "policyState": "TN"
+        }
+      ]
     }
   }
 }

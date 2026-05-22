@@ -1,0 +1,52 @@
+{
+  "tests": {
+    "id": "ACES-003",
+    "title": "Search by Multiple Agent Code and Policy State and Insured Name",
+    "description": "Verify ACES search filtering by multiple agent code and policy state and insured name",
+    "feature": "ACES Policy Search",
+    "story": "Search ACES Policies",
+    "severity": "NORMAL",
+    "tag": [
+      "regression"
+    ],
+    "data": {
+      "payload": {
+        "company": 2,
+        "policyState": "TN",
+        "insuredName": "ZZZ",
+        "agencyCode": [
+          "N26300",
+          "N15987"
+        ]
+      },
+      "expected_results": [
+        {
+          "policyNumber": "02TRT03016301",
+          "quoteNumber": 5324613,
+          "insuredName": "ZZZ",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2022-07-01T00:01:00",
+          "source": "ACES",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "TN"
+        },
+        {
+          "policyNumber": "02TRT03042101",
+          "quoteNumber": 5341422,
+          "insuredName": "ZZZ",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2023-01-01T00:01:00",
+          "source": "ACES",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "TN"
+        }
+      ]
+    }
+  }
+}
