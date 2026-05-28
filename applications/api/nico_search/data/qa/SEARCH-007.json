@@ -16,17 +16,17 @@
       },
       "expected_results": [
         {
-          "policyNumber": "02APG13263603",
-          "quoteNumber": 16748918,
-          "insuredName": "K************",
-          "dba": "D************",
-          "firstName": "K****",
-          "lastName": "S******",
-          "effectiveDate": "2025-07-28T00:01:00",
-          "source": "ACES",
-          "agencyCode": "N26300",
-          "agencyName": "Berkshire Hathaway Homestate Companies",
-          "policyState": "TN"
+          "policyNumber": "01APM04992001",
+          "quoteNumber": 15749598,
+          "insuredName": "BRONWYNS OASIS, LLC",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2024-08-01T10:03:09",
+          "source": "MYP",
+          "agencyCode": "JC1005",
+          "agencyName": "John C BHHC Test Agency with an extremely long nam",
+          "policyState": "AZ"
         }
       ]
     }

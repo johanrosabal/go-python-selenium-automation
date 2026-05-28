@@ -1,0 +1,36 @@
+{
+  "tests": {
+    "id": "NIFIS-001",
+    "title": "Complete Nifis Search Flow",
+    "description": "Verify Nifis policy search and results retrieval",
+    "feature": "Nifis Policy Search",
+    "story": "Search Nifis Policies",
+    "severity": "CRITICAL",
+    "tag": [
+      "smoke",
+      "p1"
+    ],
+    "data": {
+      "payload": {
+        "policyNumber": "string",
+        "insuredName": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "phoneNumber": "string",
+        "quoteNumber": 0,
+        "vin": "string",
+        "policyState": "string",
+        "effectiveDate": "2026-05-28T17:49:53.255Z",
+        "companyIndicator": 0,
+        "agencyCode": [
+          "string"
+        ],
+        "address1": "string",
+        "city": "string",
+        "state": "string",
+        "zip": "string"
+      },
+      "expected_results": []
+    }
+  }
+}

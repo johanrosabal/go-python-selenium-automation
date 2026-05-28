@@ -1,0 +1,37 @@
+{
+  "tests": {
+    "id": "RATE-001",
+    "title": "Complete Rate Search Flow",
+    "description": "Verify Rate policy search and results retrieval",
+    "feature": "Rate Policy Search",
+    "story": "Search Rate Policies",
+    "severity": "CRITICAL",
+    "tag": [
+      "smoke",
+      "p1"
+    ],
+    "data": {
+      "payload": {
+        "policyNumber": "string",
+        "insuredName": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "phoneNumber": "string",
+        "emailAddress": "string",
+        "vin": "string",
+        "policyState": "string",
+        "agencyCode": [
+          "string"
+        ],
+        "address1": "string",
+        "city": "string",
+        "state": "string",
+        "zip": "string",
+        "effectiveDate": "2026-05-28T17:51:31.585Z",
+        "quoteNumber": 0,
+        "companyNumber": 0
+      },
+      "expected_results": []
+    }
+  }
+}

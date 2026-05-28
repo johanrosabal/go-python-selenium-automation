@@ -1,0 +1,33 @@
+{
+  "tests": {
+    "id": "GLS-001",
+    "title": "Complete Gls Search Flow",
+    "description": "Verify Gls policy search and results retrieval",
+    "feature": "Gls Policy Search",
+    "story": "Search Gls Policies",
+    "severity": "CRITICAL",
+    "tag": [
+      "smoke",
+      "p1"
+    ],
+    "data": {
+      "payload": {
+        "CompanyNumber": 0,
+        "AgencyCode": [
+          "string"
+        ],
+        "PolicyNumber": "string",
+        "PolicyState": "string",
+        "InsuredName": "string",
+        "PhoneNumber": "string",
+        "QuoteNumber": 0,
+        "Address": "string",
+        "City": "string",
+        "State": "string",
+        "Zip": "string",
+        "EffectiveDate": "2026-05-28T17:48:48.953Z"
+      },
+      "expected_results": []
+    }
+  }
+}
