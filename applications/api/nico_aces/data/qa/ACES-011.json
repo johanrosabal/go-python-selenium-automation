@@ -1,8 +1,8 @@
 {
   "tests": {
     "id": "ACES-011",
-    "title": "Search by Quote Number",
-    "description": "Search by quote number",
+    "title": "Search by Phone Number Company 2",
+    "description": "Search by phone number Company 2",
     "feature": "ACES Policy Search",
     "story": "Search ACES Policies",
     "severity": "NORMAL",
@@ -12,20 +12,20 @@
     "data": {
       "payload": {
         "company": 2,
-        "quoteNumber": 15749598
+        "phoneNumber": "3214569780"
       },
       "expected_results": [
         {
-          "policyNumber": "01APM04992001",
-          "quoteNumber": 15749598,
-          "insuredName": "BRONWYNS OASIS, LLC",
+          "policyNumber": "70APT039355",
+          "quoteNumber": 5259818,
+          "insuredName": "TEST SCENARIO1",
           "dba": "",
-          "firstName": "",
-          "lastName": "",
-          "effectiveDate": "2024-08-01T10:03:09",
+          "firstName": "TEST",
+          "lastName": "SCENARIO1",
+          "effectiveDate": "2022-04-04T00:01:00",
           "source": "ACES",
-          "agencyCode": "N26300",
-          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "agencyCode": "N00033",
+          "agencyName": "Agency C",
           "policyState": "AZ"
         }
       ]

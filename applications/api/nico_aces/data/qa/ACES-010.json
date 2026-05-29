@@ -1,8 +1,8 @@
 {
   "tests": {
     "id": "ACES-010",
-    "title": "Search by Phone Number",
-    "description": "Search by phone number",
+    "title": "Search by Phone Number Company 1",
+    "description": "Search by phone number Company 1",
     "feature": "ACES Policy Search",
     "story": "Search ACES Policies",
     "severity": "NORMAL",
@@ -11,7 +11,7 @@
     ],
     "data": {
       "payload": {
-        "company": 2,
+        "company": 1,
         "phoneNumber": "5205288888"
       },
       "expected_results": [

@@ -1,8 +1,8 @@
 {
   "tests": {
     "id": "ACES-007",
-    "title": "Search by First Name + Last Name",
-    "description": "Search by insured first and last name",
+    "title": "Search by Policy Number Company 2",
+    "description": "Search by policy number Commpany 2",
     "feature": "ACES Policy Search",
     "story": "Search ACES Policies",
     "severity": "NORMAL",
@@ -12,8 +12,7 @@
     "data": {
       "payload": {
         "company": 2,
-        "firstName": "David",
-        "lastName": "Smith"
+        "policyNumber": "70APT048588"
       },
       "expected_results": [
         {
@@ -24,19 +23,6 @@
           "firstName": "DAVID",
           "lastName": "SMITH",
           "effectiveDate": "2024-12-15T00:01:00",
-          "source": "ACES",
-          "agencyCode": "N26999",
-          "agencyName": "TEST NICO General Agency for QA",
-          "policyState": "UT"
-        },
-        {
-          "policyNumber": "70TRT035700",
-          "quoteNumber": 5657039,
-          "insuredName": "DAVID SMITH",
-          "dba": "DBA: CDL NOW",
-          "firstName": "DAVID",
-          "lastName": "SMITH",
-          "effectiveDate": "2025-01-01T00:01:00",
           "source": "ACES",
           "agencyCode": "N26999",
           "agencyName": "TEST NICO General Agency for QA",

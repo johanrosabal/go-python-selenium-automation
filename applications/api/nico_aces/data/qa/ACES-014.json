@@ -1,0 +1,37 @@
+{
+  "tests": {
+    "id": "ACES-014",
+    "title": "Search by Single Agent Code and Policy Number Company 1",
+    "description": "Verify ACES search filtering by single agent code and policy number Company 1",
+    "feature": "ACES Policy Search",
+    "story": "Search ACES Policies",
+    "severity": "NORMAL",
+    "tag": [
+      "regression"
+    ],
+    "data": {
+      "payload": {
+        "company": 1,
+        "policyNumber": "01APG00001801",
+        "agencyCode": [
+          "N26300"
+        ]
+      },
+      "expected_results": [
+        {
+          "policyNumber": "01APG00001801",
+          "quoteNumber": 4265217,
+          "insuredName": "A TX G POL",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2017-04-25T00:01:00",
+          "source": "ACES",
+          "agencyCode": "H45300",
+          "agencyName": "GEICO Insurance Agency, Inc.",
+          "policyState": "TX"
+        }
+      ]
+    }
+  }
+}

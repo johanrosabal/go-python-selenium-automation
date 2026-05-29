@@ -1,8 +1,8 @@
 {
   "tests": {
     "id": "ACES-009",
-    "title": "Search by Policy Number",
-    "description": "Search by policy number",
+    "title": "Search by Quote Number Company 2",
+    "description": "Search by quote number Company 2",
     "feature": "ACES Policy Search",
     "story": "Search ACES Policies",
     "severity": "NORMAL",
@@ -11,21 +11,21 @@
     ],
     "data": {
       "payload": {
-        "company": 1,
-        "insuredName": "STACEY HILL"
+        "company": 2,
+        "quoteNumber": 15749598
       },
       "expected_results": [
         {
-          "policyNumber": "01APG07869401",
-          "quoteNumber": 6898655,
-          "insuredName": "STACEY HILL",
+          "policyNumber": "01APM04992001",
+          "quoteNumber": 15749598,
+          "insuredName": "BRONWYNS OASIS, LLC",
           "dba": "",
-          "firstName": "STACEY",
-          "lastName": "HILL",
-          "effectiveDate": "2017-08-04T11:47:36",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2024-08-01T10:03:09",
           "source": "ACES",
-          "agencyCode": "H45300",
-          "agencyName": "GEICO Insurance Agency, Inc.",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
           "policyState": "AZ"
         }
       ]

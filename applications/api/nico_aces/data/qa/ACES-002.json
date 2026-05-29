@@ -1,7 +1,7 @@
 {
   "tests": {
     "id": "ACES-002",
-    "title": "Search by Insured Name and Company",
+    "title": "Search by Insured Name and Company 2",
     "description": "Verify ACES search filtering by name and company number",
     "feature": "ACES Policy Search",
     "story": "Search ACES Policies",
@@ -11,8 +11,8 @@
     ],
     "data": {
       "payload": {
-        "insuredName": "TN_NEGATIVE_TEST3",
-        "company": 2
+        "company": 2,
+        "insuredName": "TN_NEGATIVE_TEST3"
       },
       "expected_results": [
         {

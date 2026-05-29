@@ -1,8 +1,8 @@
 {
   "tests": {
     "id": "ACES-006",
-    "title": "Search by Invalid Single Agent Code and Policy State",
-    "description": "Verify ACES search filtering by invalid single agent code and policy state",
+    "title": "Search by Policy Number Company 1",
+    "description": "Search by policy number Company 1",
     "feature": "ACES Policy Search",
     "story": "Search ACES Policies",
     "severity": "NORMAL",
@@ -11,13 +11,24 @@
     ],
     "data": {
       "payload": {
-        "company": 2,
-        "policyState": "TN",
-        "agencyCode": [
-          "N00000"
-        ]
+        "company": 1,
+        "policyNumber": "01APG07869401"
       },
-      "expected_results": []
+      "expected_results": [
+        {
+          "policyNumber": "01APG07869401",
+          "quoteNumber": 6898655,
+          "insuredName": "STACEY HILL",
+          "dba": "",
+          "firstName": "STACEY",
+          "lastName": "HILL",
+          "effectiveDate": "2017-08-04T11:47:36",
+          "source": "ACES",
+          "agencyCode": "H45300",
+          "agencyName": "GEICO Insurance Agency, Inc.",
+          "policyState": "AZ"
+        }
+      ]
     }
   }
 }

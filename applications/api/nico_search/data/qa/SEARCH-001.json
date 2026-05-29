@@ -1,7 +1,7 @@
 {
   "tests": {
     "id": "SEARCH-001",
-    "title": "Complete Search Flow (POST + GET Results)",
+    "title": "Complete Search Default values",
     "description": "Complete policy search flow test data — all fields populated",
     "feature": "Policy Search",
     "story": "Search Policies",

@@ -1,0 +1,34 @@
+{
+  "tests": {
+    "id": "ACES-011",
+    "title": "Search by VIN Company 1",
+    "description": "Search by VIN Company 1",
+    "feature": "ACES Policy Search",
+    "story": "Search ACES Policies",
+    "severity": "NORMAL",
+    "tag": [
+      "regression"
+    ],
+    "data": {
+      "payload": {
+        "company": 1,
+        "vin": "1FTRF12287KD63901"
+      },
+      "expected_results": [
+        {
+          "policyNumber": "01APG10329705",
+          "quoteNumber": 16764628,
+          "insuredName": "J*************",
+          "dba": "",
+          "firstName": "J*****",
+          "lastName": "G******",
+          "effectiveDate": "2025-07-17T00:01:00",
+          "source": "ACES",
+          "agencyCode": "H45300",
+          "agencyName": "GEICO Insurance Agency, INC",
+          "policyState": "AZ"
+        }
+      ]
+    }
+  }
+}

@@ -1,8 +1,8 @@
 {
   "tests": {
     "id": "ACES-004",
-    "title": "Search by Multiple Agent Code and Policy State and Insured Name",
-    "description": "Verify ACES search filtering by multiple agent code and policy state and insured name",
+    "title": "Search by First Name + Last Name Company 2",
+    "description": "Search by First Name and Last Name Company 2",
     "feature": "ACES Policy Search",
     "story": "Search ACES Policies",
     "severity": "NORMAL",
@@ -12,39 +12,35 @@
     "data": {
       "payload": {
         "company": 2,
-        "policyState": "TN",
-        "insuredName": "ZZZ",
-        "agencyCode": [
-          "N26300",
-          "N15987"
-        ]
+        "firstName": "David",
+        "lastName": "Smith"
       },
       "expected_results": [
         {
-          "policyNumber": "02TRT03016301",
-          "quoteNumber": 5324613,
-          "insuredName": "ZZZ",
-          "dba": "",
-          "firstName": "",
-          "lastName": "",
-          "effectiveDate": "2022-07-01T00:01:00",
+          "policyNumber": "70APT048588",
+          "quoteNumber": 5655660,
+          "insuredName": "DAVID SMITH",
+          "dba": "DBA: CDL NOW",
+          "firstName": "DAVID",
+          "lastName": "SMITH",
+          "effectiveDate": "2024-12-15T00:01:00",
           "source": "ACES",
-          "agencyCode": "N26300",
-          "agencyName": "Berkshire Hathaway Homestate Companies",
-          "policyState": "TN"
+          "agencyCode": "N26999",
+          "agencyName": "TEST NICO General Agency for QA",
+          "policyState": "UT"
         },
         {
-          "policyNumber": "02TRT03042101",
-          "quoteNumber": 5341422,
-          "insuredName": "ZZZ",
-          "dba": "",
-          "firstName": "",
-          "lastName": "",
-          "effectiveDate": "2023-01-01T00:01:00",
+          "policyNumber": "70TRT035700",
+          "quoteNumber": 5657039,
+          "insuredName": "DAVID SMITH",
+          "dba": "DBA: CDL NOW",
+          "firstName": "DAVID",
+          "lastName": "SMITH",
+          "effectiveDate": "2025-01-01T00:01:00",
           "source": "ACES",
-          "agencyCode": "N26300",
-          "agencyName": "Berkshire Hathaway Homestate Companies",
-          "policyState": "TN"
+          "agencyCode": "N26999",
+          "agencyName": "TEST NICO General Agency for QA",
+          "policyState": "UT"
         }
       ]
     }

@@ -1,8 +1,8 @@
 {
   "tests": {
     "id": "ACES-003",
-    "title": "Search by Single Agent Code and Policy Number",
-    "description": "Verify ACES search filtering by single agent code and policy number",
+    "title": "Search by Insured Name and Company 1",
+    "description": "Search by Insured Name and Company 1",
     "feature": "ACES Policy Search",
     "story": "Search ACES Policies",
     "severity": "NORMAL",
@@ -11,25 +11,22 @@
     ],
     "data": {
       "payload": {
-        "company": 2,
-        "policyNumber": "01APG00001801",
-        "agencyCode": [
-          "N26300"
-        ]
+        "company": 1,
+        "insuredName": "STACEY HILL"
       },
       "expected_results": [
         {
-          "policyNumber": "01APG00001801",
-          "quoteNumber": 4265217,
-          "insuredName": "A TX G POL",
+          "policyNumber": "01APG07869401",
+          "quoteNumber": 6898655,
+          "insuredName": "STACEY HILL",
           "dba": "",
-          "firstName": "",
-          "lastName": "",
-          "effectiveDate": "2017-04-25T00:01:00",
+          "firstName": "STACEY",
+          "lastName": "HILL",
+          "effectiveDate": "2017-08-04T11:47:36",
           "source": "ACES",
-          "agencyCode": "N26300",
-          "agencyName": "Berkshire Hathaway Homestate Companies",
-          "policyState": "TX"
+          "agencyCode": "H45300",
+          "agencyName": "GEICO Insurance Agency, Inc.",
+          "policyState": "AZ"
         }
       ]
     }

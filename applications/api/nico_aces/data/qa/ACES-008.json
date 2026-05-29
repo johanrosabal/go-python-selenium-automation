@@ -1,8 +1,8 @@
 {
   "tests": {
     "id": "ACES-008",
-    "title": "Search by Policy Number",
-    "description": "Search by policy number",
+    "title": "Search by Quote Number Company 1",
+    "description": "Search by quote number Company 1",
     "feature": "ACES Policy Search",
     "story": "Search ACES Policies",
     "severity": "NORMAL",
@@ -11,22 +11,22 @@
     ],
     "data": {
       "payload": {
-        "company": 2,
-        "policyNumber": "70APT048588"
+        "company": 1,
+        "quoteNumber": 6898655
       },
       "expected_results": [
         {
-          "policyNumber": "70APT048588",
-          "quoteNumber": 5655660,
-          "insuredName": "DAVID SMITH",
-          "dba": "DBA: CDL NOW",
-          "firstName": "DAVID",
-          "lastName": "SMITH",
-          "effectiveDate": "2024-12-15T00:01:00",
+          "policyNumber": "01APG07869401",
+          "quoteNumber": 6898655,
+          "insuredName": "STACEY HILL",
+          "dba": "",
+          "firstName": "STACEY",
+          "lastName": "HILL",
+          "effectiveDate": "2017-08-04T11:47:36",
           "source": "ACES",
-          "agencyCode": "N26999",
-          "agencyName": "TEST NICO General Agency for QA",
-          "policyState": "UT"
+          "agencyCode": "H45300",
+          "agencyName": "GEICO Insurance Agency, Inc.",
+          "policyState": "AZ"
         }
       ]
     }

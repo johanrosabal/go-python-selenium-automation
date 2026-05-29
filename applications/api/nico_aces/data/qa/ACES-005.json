@@ -1,8 +1,8 @@
 {
   "tests": {
     "id": "ACES-005",
-    "title": "Search by Single Agent Code and Policy State",
-    "description": "Verify ACES search filtering by single agent code and policy state",
+    "title": "Search by First Name + Last Name Company 2",
+    "description": "Search by First Name and Last Name Company 2",
     "feature": "ACES Policy Search",
     "story": "Search ACES Policies",
     "severity": "NORMAL",
@@ -11,26 +11,23 @@
     ],
     "data": {
       "payload": {
-        "company": 2,
-        "policyState": "TN",
-        "agencyCode": [
-          "N15987",
-          "N00000"
-        ]
+        "company": 1,
+        "firstName": "STACEY",
+        "lastName": "HILL"
       },
       "expected_results": [
         {
-          "policyNumber": "74TRT030590",
-          "quoteNumber": 5350757,
-          "insuredName": "TN_NEGATIVE_TEST3",
+          "policyNumber": "01APG07869401",
+          "quoteNumber": 6898655,
+          "insuredName": "STACEY HILL",
           "dba": "",
-          "firstName": "",
-          "lastName": "",
-          "effectiveDate": "2022-12-01T00:01:00",
+          "firstName": "STACEY",
+          "lastName": "HILL",
+          "effectiveDate": "2017-08-04T11:47:36",
           "source": "ACES",
-          "agencyCode": "N15987",
-          "agencyName": "Casper Agency",
-          "policyState": "TN"
+          "agencyCode": "H45300",
+          "agencyName": "GEICO Insurance Agency, Inc.",
+          "policyState": "AZ"
         }
       ]
     }
