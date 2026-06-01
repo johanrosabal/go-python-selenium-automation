@@ -1,8 +1,8 @@
 {
   "tests": {
     "id": "ACES-005",
-    "title": "Search by First Name + Last Name Company 2",
-    "description": "Search by First Name and Last Name Company 2",
+    "title": "Search by First Name + Last Name Company 1",
+    "description": "Search by First Name and Last Name Company 1",
     "feature": "ACES Policy Search",
     "story": "Search ACES Policies",
     "severity": "NORMAL",
