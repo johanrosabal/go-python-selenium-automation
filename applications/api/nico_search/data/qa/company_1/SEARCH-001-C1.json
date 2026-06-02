@@ -1,7 +1,7 @@
 {
   "tests": {
     "id": "SEARCH-001-C1",
-    "title": "Search by First Name + Last Name",
+    "title": "Search by First Name + Last Name Company 1",
     "description": "Search by insured first and last name",
     "feature": "Policy Search",
     "story": "Search Policies",

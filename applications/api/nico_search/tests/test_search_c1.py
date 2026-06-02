@@ -81,31 +81,31 @@ class TestNicoSearchCompany1(BaseAPITest):
     # =========================================================================
 
     @test_case(id="SEARCH-001-C1")
-    def test_complete_search_flow(self):
+    def test_search_by_first_name_last_name_company_1(self):
         self._run_full_search_flow("SEARCH-001-C1")
 
     @test_case(id="SEARCH-002-C1")
-    def test_search_by_first_last_name(self):
+    def test_search_by_insured_full_name_company_1(self):
         self._run_full_search_flow("SEARCH-002-C1")
 
     @test_case(id="SEARCH-003-C1")
-    def test_search_by_policy_number(self):
+    def test_search_by_policy_number_and_company_1(self):
         self._run_full_search_flow("SEARCH-003-C1")
 
     @test_case(id="SEARCH-004-C1")
-    def test_search_by_insured_name(self):
+    def test_search_by_quote_number_and_company_1(self):
         self._run_full_search_flow("SEARCH-004-C1")
 
     @test_case(id="SEARCH-005-C1")
-    def test_search_by_phone_number(self):
+    def test_search_by_phone_number_and_company_1(self):
         self._run_full_search_flow("SEARCH-005-C1")
 
     @test_case(id="SEARCH-006-C1")
-    def test_search_by_vin(self):
+    def test_search_by_vin_number_company_1(self):
         self._run_full_search_flow("SEARCH-006-C1")
 
     @test_case(id="SEARCH-007-C1")
-    def test_search_by_quote_number(self):
+    def test_search_by_effective_date_company_1(self):
         self._run_full_search_flow("SEARCH-007-C1")
 
     @test_case(id="SEARCH-008-C1")
@@ -113,13 +113,13 @@ class TestNicoSearchCompany1(BaseAPITest):
         self._run_full_search_flow("SEARCH-008-C1")
 
     @test_case(id="SEARCH-009-C1")
-    def test_search_by_policy_state(self):
+    def test_search_by_insured_email_address_company_1_nicorate(self):
         self._run_full_search_flow("SEARCH-009-C1")
 
     @test_case(id="SEARCH-010-C1")
-    def test_search_by_address(self):
+    def test_search_by_full_address_company_1(self):
         self._run_full_search_flow("SEARCH-010-C1")
 
     @test_case(id="SEARCH-011-C1")
-    def test_search_by_effective_date(self):
+    def test_combined_agency_code_policy_state_company_1(self):
         self._run_full_search_flow("SEARCH-011-C1")
