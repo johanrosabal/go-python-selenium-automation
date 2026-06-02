@@ -37,7 +37,7 @@ class JSONLoader:
     def load_environment_data(app_path: str, env: str, test_id: str) -> dict:
         """
         Loads a JSON file specific to a test ID and the active environment.
-        Looks in 'data/{env}/{test_id}.json'
+        Looks recursively in 'data/{env}/' for the test_id.json file.
         
         Args:
             app_path (str): The absolute path to the application directory.
@@ -48,12 +48,22 @@ class JSONLoader:
             dict: The parsed JSON content, or None if the file doesn't exist.
         """
         filename = test_id if test_id.endswith(".json") else f"{test_id}.json"
-        full_path = os.path.join(app_path, "data", env, filename)
+        env_dir = os.path.join(app_path, "data", env)
         
-        if not os.path.exists(full_path):
+        if not os.path.exists(env_dir):
             return None
             
-        with open(full_path, 'r', encoding='utf-8') as f:
+        # Search recursively for the filename
+        target_path = None
+        for root, _, files in os.walk(env_dir):
+            if filename in files:
+                target_path = os.path.join(root, filename)
+                break
+                
+        if not target_path:
+            return None
+            
+        with open(target_path, 'r', encoding='utf-8') as f:
             return json.load(f)
 
     @staticmethod

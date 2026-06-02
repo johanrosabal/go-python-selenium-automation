@@ -80,9 +80,9 @@ class TestNicoSearchCompany1(BaseAPITest):
     # CATEGORY 1: Single-Field Searches
     # =========================================================================
 
-    @test_case(id="SEARCH-001-C")
+    @test_case(id="SEARCH-001-C1")
     def test_complete_search_flow(self):
-        self._run_full_search_flow("SEARCH-001-C")
+        self._run_full_search_flow("SEARCH-001-C1")
 
     @test_case(id="SEARCH-002-C1")
     def test_search_by_first_last_name(self):

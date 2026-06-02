@@ -80,46 +80,46 @@ class TestNicoSearchCompany2(BaseAPITest):
     # CATEGORY 1: Single-Field Searches
     # =========================================================================
 
-    @test_case(id="SEARCH-001-C")
+    @test_case(id="/SEARCH-001-C2")
     def test_complete_search_flow(self):
-        self._run_full_search_flow("SEARCH-001-C")
+        self._run_full_search_flow("SEARCH-001-C2")
 
-    @test_case(id="SEARCH-002-C1")
+    @test_case(id="SEARCH-002-C2")
     def test_search_by_first_last_name(self):
-        self._run_full_search_flow("SEARCH-002-C1")
+        self._run_full_search_flow("SEARCH-002-C2")
 
-    @test_case(id="SEARCH-003-C1")
+    @test_case(id="SEARCH-003-C2")
     def test_search_by_policy_number(self):
-        self._run_full_search_flow("SEARCH-003-C1")
+        self._run_full_search_flow("SEARCH-003-C2")
 
-    @test_case(id="SEARCH-004-C1")
+    @test_case(id="SEARCH-004-C2")
     def test_search_by_insured_name(self):
-        self._run_full_search_flow("SEARCH-004-C1")
+        self._run_full_search_flow("SEARCH-004-C2")
 
-    @test_case(id="SEARCH-005-C1")
+    @test_case(id="SEARCH-005-C2")
     def test_search_by_phone_number(self):
-        self._run_full_search_flow("SEARCH-005-C1")
+        self._run_full_search_flow("SEARCH-005-C2")
 
-    @test_case(id="SEARCH-006-C1")
+    @test_case(id="SEARCH-006-C2")
     def test_search_by_vin(self):
-        self._run_full_search_flow("SEARCH-006-C1")
+        self._run_full_search_flow("SEARCH-006-C2")
 
-    @test_case(id="SEARCH-007-C1")
+    @test_case(id="SEARCH-007-C2")
     def test_search_by_quote_number(self):
-        self._run_full_search_flow("SEARCH-007-C1")
+        self._run_full_search_flow("SEARCH-007-C2")
 
-    @test_case(id="SEARCH-008-C1")
+    @test_case(id="SEARCH-008-C2")
     def test_search_by_agency_code(self):
-        self._run_full_search_flow("SEARCH-008-C1")
+        self._run_full_search_flow("SEARCH-008-C2")
 
-    @test_case(id="SEARCH-009-C1")
+    @test_case(id="SEARCH-009-C2")
     def test_search_by_policy_state(self):
-        self._run_full_search_flow("SEARCH-009-C1")
+        self._run_full_search_flow("SEARCH-009-C2")
 
-    @test_case(id="SEARCH-010-C1")
+    @test_case(id="SEARCH-010-C2")
     def test_search_by_address(self):
-        self._run_full_search_flow("SEARCH-010-C1")
+        self._run_full_search_flow("SEARCH-010-C2")
 
-    @test_case(id="SEARCH-011-C1")
+    @test_case(id="SEARCH-011-C2")
     def test_search_by_effective_date(self):
-        self._run_full_search_flow("SEARCH-011-C1")
+        self._run_full_search_flow("SEARCH-011-C2")
