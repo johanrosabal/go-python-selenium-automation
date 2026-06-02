@@ -1,0 +1,37 @@
+{
+  "tests": {
+    "id": "SEARCH-008",
+    "title": "Search by Agency Code",
+    "description": "Search by agency code",
+    "feature": "Policy Search",
+    "story": "Search Policies",
+    "severity": "NORMAL",
+    "tag": [
+      "p2"
+    ],
+    "data": {
+      "payload": {
+        "companyNumber": 2,
+        "policyNumber": "73APT03885301",
+        "agencyCode": [
+          "N45300"
+        ]
+      },
+      "expected_results": [
+        {
+          "policyNumber": "73APT03885301",
+          "quoteNumber": 5234284,
+          "insuredName": "JASON DUP TEST",
+          "dba": "DBA: ON THE GO AUTO REPAIR",
+          "firstName": "JASON",
+          "lastName": "DUP TEST",
+          "effectiveDate": "2021-12-09T00:01:00",
+          "source": "MYP",
+          "agencyCode": "N45300",
+          "agencyName": "GEICO Insurance Agency, Inc.",
+          "policyState": "AZ"
+        }
+      ]
+    }
+  }
+}

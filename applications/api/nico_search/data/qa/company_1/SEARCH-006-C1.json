@@ -1,8 +1,8 @@
 {
   "tests": {
-    "id": "SEARCH-011",
-    "title": "Search by Effective Date",
-    "description": "Search by effective date",
+    "id": "SEARCH-006-C1",
+    "title": "Search by VIN Number company 1",
+    "description": "Search by VIN number and company 1 (Require VIN for Company 1)",
     "feature": "Policy Search",
     "story": "Search Policies",
     "severity": "NORMAL",
@@ -11,8 +11,8 @@
     ],
     "data": {
       "payload": {
-        "companyNumber": 2,
-        "effectiveDate": "2026-01-01T00:00:00.000Z"
+        "companyNumber": 1,
+        "vin": ""
       },
       "expected_results": []
     }

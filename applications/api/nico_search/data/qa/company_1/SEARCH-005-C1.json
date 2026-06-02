@@ -1,0 +1,34 @@
+{
+  "tests": {
+    "id": "SEARCH-005-C1",
+    "title": "Search by Phone Number and company 1",
+    "description": "Search by phone number and company 1",
+    "feature": "Policy Search",
+    "story": "Search Policies",
+    "severity": "NORMAL",
+    "tag": [
+      "p2"
+    ],
+    "data": {
+      "payload": {
+        "companyNumber": 1,
+        "phoneNumber": "6125455256"
+      },
+      "expected_results": [
+        {
+          "policyNumber": "01TRT03249402",
+          "quoteNumber": 5491996,
+          "insuredName": "BHHC GEICO",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2024-03-21T00:01:00",
+          "source": "MYP",
+          "agencyCode": "H45300",
+          "agencyName": "GEICO Insurance Agency, INC",
+          "policyState": "AZ"
+        }
+      ]
+    }
+  }
+}

@@ -1,8 +1,8 @@
 {
   "tests": {
-    "id": "SEARCH-009",
-    "title": "Search by Policy State",
-    "description": "Search by policy state",
+    "id": "SEARCH-007-C1",
+    "title": "Search by Effective Date Company 1",
+    "description": "Search by effective date Company 1",
     "feature": "Policy Search",
     "story": "Search Policies",
     "severity": "NORMAL",
@@ -11,8 +11,8 @@
     ],
     "data": {
       "payload": {
-        "companyNumber": 2,
-        "policyState": "TX"
+        "companyNumber": 1,
+        "effectiveDate": "2026-01-01T00:00:00.000Z"
       },
       "expected_results": []
     }

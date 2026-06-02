@@ -1,0 +1,99 @@
+{
+  "tests": {
+    "id": "SEARCH-002-C1",
+    "title": "Search by Insured Full Name Company 1",
+    "description": "Combined search: Insured full name company 1",
+    "feature": "Policy Search",
+    "story": "Search Policies",
+    "severity": "NORMAL",
+    "tag": [
+      "p2"
+    ],
+    "data": {
+      "payload": {
+        "companyNumber": 1,
+        "insuredName": "AZ TRUCKERS GL"
+      },
+      "expected_results": [
+        {
+          "policyNumber": "01TRT02645001",
+          "quoteNumber": 4866046,
+          "insuredName": "AZ TRUCKERS GL",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2021-04-12T00:01:00",
+          "source": "MYP",
+          "agencyCode": "H02931",
+          "agencyName": "Retail Agency Everything",
+          "policyState": "AZ"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 5249391,
+          "insuredName": "AZ TRUCKERS GL",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2021-04-12T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "AZ"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 4866067,
+          "insuredName": "AZ TRUCKERS GL",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2021-04-12T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "AZ"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 4526728,
+          "insuredName": "AZ Truckers GL Test",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2019-05-31T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "AZ"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 4682077,
+          "insuredName": "AZ Truckers GL Test",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2020-01-01T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "AZ"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 4539352,
+          "insuredName": "AZ Truckers GL Test",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2019-05-31T01:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "",
+          "agencyName": "National Indemnity Company UW Dept.",
+          "policyState": "AZ"
+        }
+      ]
+    }
+  }
+}

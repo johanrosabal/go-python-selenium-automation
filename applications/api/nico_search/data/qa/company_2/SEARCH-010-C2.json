@@ -1,8 +1,8 @@
 {
   "tests": {
-    "id": "SEARCH-013",
-    "title": "Search by Company Number",
-    "description": "Search by company number",
+    "id": "SEARCH-010",
+    "title": "Search by Full Address Company 2",
+    "description": "Search by full address (address + city + state + zip)",
     "feature": "Policy Search",
     "story": "Search Policies",
     "severity": "NORMAL",
@@ -12,7 +12,10 @@
     "data": {
       "payload": {
         "companyNumber": 2,
-        "policyNumber": ""
+        "address": "",
+        "city": "",
+        "state": "",
+        "zip": ""
       },
       "expected_results": []
     }

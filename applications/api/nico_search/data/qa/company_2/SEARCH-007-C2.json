@@ -1,8 +1,8 @@
 {
   "tests": {
-    "id": "SEARCH-010",
-    "title": "Search by Full Address",
-    "description": "Search by full address (address + city + state + zip)",
+    "id": "SEARCH-007-C2",
+    "title": "Search by Effective Date Company 2",
+    "description": "Search by effective date Company 2",
     "feature": "Policy Search",
     "story": "Search Policies",
     "severity": "NORMAL",
@@ -12,10 +12,7 @@
     "data": {
       "payload": {
         "companyNumber": 2,
-        "address": "123 Main St",
-        "city": "Austin",
-        "state": "TX",
-        "zip": "78701"
+        "effectiveDate": "2026-01-01T00:00:00.000Z"
       },
       "expected_results": []
     }

@@ -78,47 +78,38 @@ class TestNicoAces(BaseAPITest):
 
     @test_case(id="ACES-001")
     def test_complete_aces_search_flow_default(self):
-        """Complete ACES Search Flow Default"""
         self._run_full_aces_flow("ACES-001")
 
     @test_case(id="ACES-002")
     def test_search_by_insured_name_and_company_2(self):
-        """Search by Insured Name and Company 2"""
         self._run_full_aces_flow("ACES-002")
 
     @test_case(id="ACES-003")
     def test_search_by_insured_name_and_company_1(self):
-        """Search by Insured Name and Company 1"""
         self._run_full_aces_flow("ACES-003")
 
     @test_case(id="ACES-004")
     def test_search_by_first_name_and_last_name_company_2(self):
-        """Search by First Name + Last Name Company 2"""
         self._run_full_aces_flow("ACES-004")
 
     @test_case(id="ACES-005")
     def test_search_by_first_name_and_last_name_company_2_alt(self):
-        """Search by First Name + Last Name Company 2"""
         self._run_full_aces_flow("ACES-005")
 
     @test_case(id="ACES-006")
     def test_search_by_policy_number_company_1(self):
-        """Search by Policy Number Company 1"""
         self._run_full_aces_flow("ACES-006")
 
     @test_case(id="ACES-007")
     def test_search_by_policy_number_company_2(self):
-        """Search by Policy Number Company 2"""
         self._run_full_aces_flow("ACES-007")
 
     @test_case(id="ACES-008")
     def test_search_by_quote_number_company_1(self):
-        """Search by Quote Number Company 1"""
         self._run_full_aces_flow("ACES-008")
 
     @test_case(id="ACES-009")
     def test_search_by_quote_number_company_2(self):
-        """Search by Quote Number Company 2"""
         self._run_full_aces_flow("ACES-009")
 
     @test_case(id="ACES-010")
@@ -128,37 +119,24 @@ class TestNicoAces(BaseAPITest):
 
     @test_case(id="ACES-011")
     def test_search_by_phone_number_company_2(self):
-        """Search by Phone Number Company 2"""
         self._run_full_aces_flow("ACES-011")
 
     @test_case(id="ACES-012")
     def test_search_by_vin_company_1(self):
-        """Search by VIN Company 1"""
         self._run_full_aces_flow("ACES-012")
 
     @test_case(id="ACES-013")
     def test_search_by_vin_company_2(self):
-        """Search by VIN Company 2"""
         self._run_full_aces_flow("ACES-013")
 
     @test_case(id="ACES-014")
     def test_search_by_single_agent_code_and_policy_number_company_1(self):
-        """Search by Single Agent Code and Policy Number Company 1"""
         self._run_full_aces_flow("ACES-014")
 
     @test_case(id="ACES-015")
     def test_search_by_single_agent_code_and_policy_number_company_2(self):
-        """Search by Single Agent Code and Policy Number Company 2"""
         self._run_full_aces_flow("ACES-015")
 
     @test_case(id="ACES-016")
-    def test_search_by_policy_state_company_1_agency_code_n45300(self):
-        """Search by Policy State Company 1 Agency Code N45300"""
+    def test_search_by_quote_number_without_policy_number_company_1(self):
         self._run_full_aces_flow("ACES-016")
-
-    @test_case(id="ACES-017")
-    def test_search_by_policy_state_company_1_agency_code_n45300_alt(self):
-        """Search by Policy State Company 1 Agency Code N45300"""
-        self._run_full_aces_flow("ACES-017")
-
-

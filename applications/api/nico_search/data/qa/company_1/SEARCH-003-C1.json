@@ -1,0 +1,35 @@
+{
+  "tests": {
+    "id": "SEARCH-003-C1",
+    "title": "Search by Policy Number and Company 1",
+    "description": "Search by policy number and company 1",
+    "feature": "Policy Search",
+    "story": "Search Policies",
+    "severity": "CRITICAL",
+    "tag": [
+      "smoke",
+      "p1"
+    ],
+    "data": {
+      "payload": {
+        "companyNumber": 1,
+        "policyNumber": "01TRT03224501"
+      },
+      "expected_results": [
+        {
+          "policyNumber": "01TRT03224501",
+          "quoteNumber": 5433534,
+          "insuredName": "GL MINIMUM FORM 2023 JAN",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2023-02-12T12:38:00",
+          "source": "MYP",
+          "agencyCode": "H02931",
+          "agencyName": "Retail Agency Everything",
+          "policyState": "AZ"
+        }
+      ]
+    }
+  }
+}

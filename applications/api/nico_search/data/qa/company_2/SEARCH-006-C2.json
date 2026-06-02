@@ -1,6 +1,6 @@
 {
   "tests": {
-    "id": "SEARCH-006",
+    "id": "SEARCH-006-C2",
     "title": "Search by VIN Number",
     "description": "Search by VIN number",
     "feature": "Policy Search",

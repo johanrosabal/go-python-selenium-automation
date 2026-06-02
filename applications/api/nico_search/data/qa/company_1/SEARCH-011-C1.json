@@ -1,7 +1,7 @@
 {
   "tests": {
     "id": "SEARCH-015",
-    "title": "Combined: Agency Code + Policy State",
+    "title": "Combined: Agency Code + Policy State Company 1",
     "description": "Combined search: Agency code + Policy state",
     "feature": "Policy Search",
     "story": "Combined Search",
@@ -12,11 +12,11 @@
     ],
     "data": {
       "payload": {
-        "companyNumber": 2,
+        "companyNumber": 1,
         "agencyCode": [
-          "AGT-001"
+          "N26300"
         ],
-        "policyState": "TX"
+        "policyState": "NE"
       },
       "expected_results": []
     }

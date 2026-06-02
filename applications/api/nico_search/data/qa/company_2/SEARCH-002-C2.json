@@ -1,13 +1,14 @@
 {
   "tests": {
-    "id": "SEARCH-004",
-    "title": "Search by Insured Full Name",
-    "description": "Search by insured full name (insuredName field)",
+    "id": "SEARCH-002-C2",
+    "title": "Search by Insured Full Name Company 2",
+    "description": "Combined search: Insured full name company 2",
     "feature": "Policy Search",
     "story": "Search Policies",
     "severity": "NORMAL",
     "tag": [
-      "p2"
+      "p2",
+      "combined"
     ],
     "data": {
       "payload": {

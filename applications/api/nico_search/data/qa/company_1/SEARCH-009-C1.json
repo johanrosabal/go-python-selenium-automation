@@ -1,0 +1,86 @@
+{
+  "tests": {
+    "id": "SEARCH-009-C1",
+    "title": "Search by Insured Email Address Company 1 (NicoRate)",
+    "description": "Search by insured email address Company 1",
+    "feature": "Policy Search",
+    "story": "Search Policies",
+    "severity": "NORMAL",
+    "tag": [
+      "p2"
+    ],
+    "data": {
+      "payload": {
+        "companyNumber": 1,
+        "insuredEmailAddress": "rl@nationalindemnity.com"
+      },
+      "expected_results": [
+        {
+          "policyNumber": null,
+          "quoteNumber": 5001465,
+          "insuredName": "Mister Plow",
+          "dba": "",
+          "firstName": "Mister",
+          "lastName": "Plow",
+          "effectiveDate": "2021-06-21T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "TX"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 5044394,
+          "insuredName": "Nationwide Insurance",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2021-07-21T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "TX"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 5015602,
+          "insuredName": "POLTRANS INC",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2021-07-01T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "FL"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 4998891,
+          "insuredName": "Test Car Carrier",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2021-06-18T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "TX"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 4998741,
+          "insuredName": "Test CLUE Report Order",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2021-06-18T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "IL"
+        }
+      ]
+    }
+  }
+}

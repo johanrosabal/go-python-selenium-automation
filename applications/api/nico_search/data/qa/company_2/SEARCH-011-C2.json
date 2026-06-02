@@ -1,8 +1,8 @@
 {
   "tests": {
-    "id": "SEARCH-014",
-    "title": "Combined: Name + Policy State",
-    "description": "Combined search: First name + Last name + Policy state",
+    "id": "SEARCH-015",
+    "title": "Combined: Agency Code + Policy State Company 2",
+    "description": "Combined search: Agency code + Policy state",
     "feature": "Policy Search",
     "story": "Combined Search",
     "severity": "NORMAL",
@@ -13,10 +13,10 @@
     "data": {
       "payload": {
         "companyNumber": 2,
-        "policyNumber": "",
-        "insuredName": "",
-        "firstName": "John",
-        "lastName": "Doe"
+        "agencyCode": [
+          "N26999"
+        ],
+        "policyState": "NE"
       },
       "expected_results": []
     }

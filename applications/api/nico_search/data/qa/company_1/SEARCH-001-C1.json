@@ -1,0 +1,75 @@
+{
+  "tests": {
+    "id": "SEARCH-001-C1",
+    "title": "Search by First Name + Last Name",
+    "description": "Search by insured first and last name",
+    "feature": "Policy Search",
+    "story": "Search Policies",
+    "severity": "CRITICAL",
+    "tag": [
+      "smoke",
+      "p1"
+    ],
+    "data": {
+      "payload": {
+        "companyNumber": 1,
+        "firstName": "David",
+        "lastName": "Smith"
+      },
+      "expected_results": [
+        {
+          "policyNumber": "70APT048588",
+          "quoteNumber": 5655660,
+          "insuredName": "DAVID SMITH",
+          "dba": "DBA: CDL NOW",
+          "firstName": "DAVID",
+          "lastName": "SMITH",
+          "effectiveDate": "2024-12-15T00:01:00",
+          "source": "MYP",
+          "agencyCode": "",
+          "agencyName": "Adding Producing Agency Test 4-16",
+          "policyState": "UT"
+        },
+        {
+          "policyNumber": "70TRT035700",
+          "quoteNumber": 5657039,
+          "insuredName": "DAVID SMITH",
+          "dba": "DBA: CDL NOW",
+          "firstName": "DAVID",
+          "lastName": "SMITH",
+          "effectiveDate": "2025-01-01T00:01:00",
+          "source": "MYP",
+          "agencyCode": "123456",
+          "agencyName": "TEST LONG NAME AGNECY PRODUCER OF TEST",
+          "policyState": "UT"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 4523648,
+          "insuredName": "David Smith",
+          "dba": "",
+          "firstName": "David",
+          "lastName": "Smith",
+          "effectiveDate": "2016-02-28T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "",
+          "agencyName": "Allard Insurance Agency Inc",
+          "policyState": "NY"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 4523693,
+          "insuredName": "David Smith",
+          "dba": "",
+          "firstName": "David",
+          "lastName": "Smith",
+          "effectiveDate": "2016-02-28T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "",
+          "agencyName": "Allard Insurance Agency Inc",
+          "policyState": "NY"
+        }
+      ]
+    }
+  }
+}

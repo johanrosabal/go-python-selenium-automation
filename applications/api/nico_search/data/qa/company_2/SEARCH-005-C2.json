@@ -1,8 +1,8 @@
 {
   "tests": {
-    "id": "SEARCH-005",
-    "title": "Search by Phone Number",
-    "description": "Search by phone number",
+    "id": "SEARCH-005-C2",
+    "title": "Search by Phone Number and company 2",
+    "description": "Search by phone number and company 2",
     "feature": "Policy Search",
     "story": "Search Policies",
     "severity": "NORMAL",

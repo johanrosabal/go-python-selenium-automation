@@ -1,8 +1,8 @@
 {
   "tests": {
-    "id": "SEARCH-012",
-    "title": "Search by Insured Email Address",
-    "description": "Search by insured email address",
+    "id": "SEARCH-010",
+    "title": "Search by Full Address Company 1",
+    "description": "Search by full address (address + city + state + zip)",
     "feature": "Policy Search",
     "story": "Search Policies",
     "severity": "NORMAL",
@@ -12,7 +12,10 @@
     "data": {
       "payload": {
         "companyNumber": 2,
-        "insuredEmailAddress": "john.doe@example.com"
+        "address": "",
+        "city": "",
+        "state": "",
+        "zip": ""
       },
       "expected_results": []
     }
