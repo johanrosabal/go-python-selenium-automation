@@ -22,39 +22,48 @@ class HomePage(BasePage):
 
     def type_search_text(self, query: str):
         self.element(self.INP_SEARCH).clear().type(query)
+        return self
 
     def click_search_button(self):
         self.element(self.BTN_SEARCH).click()
+        return self
 
     def click_policy_number_tab(self):
         self.element(self.TAB_POLICY_NUMBER).click()
+        return self
 
     def click_insured_name_tab(self):
         self.element(self.TAB_INSURED_NAME).click()
+        return self
 
     def click_submission_number_tab(self):
         self.element(self.TAB_SUBMISSION_NUMBER).click()
+        return self
 
     def click_advanced_search_link(self):
         self.element(self.LINK_ADVANCED_SEARCH).click()
+        return self
 
     @allure.step("Entering Policy Number: {policy_number}")
     def search_for_policy_number(self, policy_number: str):
         self.element(self.TAB_POLICY_NUMBER).click()
         self.element(self.INP_SEARCH).clear().type(policy_number)
         self.element(self.BTN_SEARCH).click()
+        return self
 
     @allure.step("Entering Insured Name: {insured_name}")
     def search_for_insured_name(self, insured_name: str):
         self.element(self.TAB_INSURED_NAME).click()
         self.element(self.INP_SEARCH).clear().type(insured_name)
         self.element(self.BTN_SEARCH).click()
+        return self
 
     @allure.step("Entering Submission Number: {submission_number}")
     def search_for_submission_number(self, submission_number: str):
         self.element(self.TAB_SUBMISSION_NUMBER).click()
         self.element(self.INP_SEARCH).clear().type(submission_number)
         self.element(self.BTN_SEARCH).click()
+        return self
 
     @allure.step("Getting error message")
     def get_error_message(self):
@@ -89,12 +98,17 @@ class HomePage(BasePage):
         # 3. Aseguramos que la tabla ya tenga filas dibujadas en el DOM
         locator = (By.XPATH, self.TABLE_RESULTS)
         self.element(locator).table_wait_not_empty(timeout=timeout)
+        return self
 
     @allure.step("Getting the first Policy Number from search results")
-    def get_first_policy_number(self) -> str:
+    def get_first_policy_number(self, index=1) -> str:
         """
         Uses the framework's TableActions to dynamically find the 'Policy Number'
         column index by header text, and then returns the value from the first row.
         """
         locator = (By.XPATH, self.TABLE_RESULTS)
-        return self.element(locator).get_cell_text(row=1, col="Policy Number")
+        return (
+            self.element(locator)
+            .screenshot("Results Policy Number")
+            .get_cell_text(row=1, col="Policy Number")
+        )
