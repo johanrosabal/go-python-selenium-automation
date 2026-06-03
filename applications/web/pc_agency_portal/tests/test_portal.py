@@ -27,3 +27,4 @@ class TestPortal(BaseTest):
 
         # TODO: Add assertions to verify the search results once the result page is implemented
         self.logger.info(f"Successfully performed search for policy: {policy_number}")
+        self.pause(1)

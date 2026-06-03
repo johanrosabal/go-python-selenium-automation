@@ -39,7 +39,8 @@ class LoginPage(BasePage):
             "Credentials submitted. Waiting for manual Okta MFA intervention."
         )
 
-        mfa_code = ask_for_mfa_code()
+        default_okta = self.config.get("credentials.okta.code") or ""
+        mfa_code = ask_for_mfa_code(default_code=default_okta)
 
         if mfa_code:
             self.logger.info(f"Received MFA code from user. Injecting: {mfa_code}")

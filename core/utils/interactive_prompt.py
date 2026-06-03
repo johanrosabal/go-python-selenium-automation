@@ -1,11 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
 
-def ask_for_mfa_code() -> str:
+def ask_for_mfa_code(default_code: str = "") -> str:
     """
     Displays an interactive OS-level modal using Tkinter to ask the user
     for the Okta MFA code. Blocks execution until a choice is made.
     
+    Args:
+        default_code (str): An optional default code to pre-fill the input field.
+        
     Returns:
         str: The entered MFA code, or None if the user chose to skip.
     """
@@ -31,6 +34,8 @@ def ask_for_mfa_code() -> str:
     ttk.Label(root, text="Ingresa el código de Okta:", font=("Arial", 11)).pack(pady=10)
     
     code_entry = ttk.Entry(root, font=("Arial", 12), width=20)
+    if default_code:
+        code_entry.insert(0, default_code)
     code_entry.pack(pady=5)
     code_entry.focus()
     

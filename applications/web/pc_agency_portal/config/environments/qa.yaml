@@ -7,3 +7,5 @@ credentials:
   microsoft:
     email: "jmrosabal@nationalindemnity.com"
     password: "***"
+  okta:
+    code: "123456"
