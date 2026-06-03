@@ -69,9 +69,24 @@ class HomePage(BasePage):
         locator = (By.XPATH, self.TABLE_RESULTS)
         return self.element(locator).is_visible()
 
-    @allure.step("Waiting for spinner to disappear")
-    def wait_for_spinner_to_disappear(self, timeout=10):
+    @allure.step("Waiting for search results to load")
+    def wait_for_search_results(self, timeout=15):
+        """
+        Waits for the loading spinner to appear and disappear, 
+        and then ensures the results table is populated.
+        """
+        # 1. Esperamos a que el spinner aparezca (evita condición de carrera)
+        try:
+            self.element(self.SPINNER).wait_visible(timeout=3)
+        except Exception:
+            self.logger.info("El spinner fue tan rápido que no se detectó, o ya terminó.")
+            
+        # 2. Esperamos a que el spinner termine y desaparezca
         self.element(self.SPINNER).wait_disappear(timeout=timeout)
+        
+        # 3. Aseguramos que la tabla ya tenga filas dibujadas en el DOM
+        locator = (By.XPATH, self.TABLE_RESULTS)
+        self.element(locator).table_wait_not_empty(timeout=timeout)
 
     @allure.step("Getting the first Policy Number from search results")
     def get_first_policy_number(self) -> str:
