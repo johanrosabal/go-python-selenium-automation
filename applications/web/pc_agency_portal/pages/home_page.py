@@ -16,6 +16,9 @@ class HomePage(BasePage):
 
     LINK_ADVANCED_SEARCH = (By.XPATH, "//a[contains(text(),'Advanced Search')]")
 
+    ERROR_MSG = (By.XPATH, "//div[contains(@class,'policy-filter-error')]")
+    TABLE_RESULTS = "//table[contains(@class,'results')]"
+
     def type_search_text(self, query: str):
         self.element(self.INP_SEARCH).clear().type(query)
 
@@ -51,3 +54,25 @@ class HomePage(BasePage):
         self.element(self.TAB_SUBMISSION_NUMBER).click()
         self.element(self.INP_SEARCH).clear().type(submission_number)
         self.element(self.BTN_SEARCH).click()
+
+    @allure.step("Getting error message")
+    def get_error_message(self):
+        return self.element(self.ERROR_MSG).get_text()
+
+    @allure.step("Getting table header from column {column_number}")
+    def get_table_header_label(self, column_number: int):
+        locator = (By.XPATH, f"{self.TABLE_RESULTS}/thead/tr/th[{column_number}]")
+        return self.element(locator).get_text()
+
+    def is_table_displayed(self):
+        locator = (By.XPATH, self.TABLE_RESULTS)
+        return self.element(locator).is_visible()
+
+    @allure.step("Getting the first Policy Number from search results")
+    def get_first_policy_number(self) -> str:
+        """
+        Uses the framework's TableActions to dynamically find the 'Policy Number' 
+        column index by header text, and then returns the value from the first row.
+        """
+        locator = (By.XPATH, self.TABLE_RESULTS)
+        return self.element(locator).get_cell_text(row=1, col="Policy Number")

@@ -7,7 +7,7 @@ class TestPortal(BaseTest):
         Scenario: Search for a policy using the Policy Number tab.
         """
         self.logger.info("Starting policy number search scenario")
-        policy_number = "123456789"  # Mock policy number
+        policy_number = "01APT04875901"  # Mock policy number
 
         # Fetch credentials from ConfigManager
         email = self.config.get("credentials.microsoft.email") or ""
@@ -25,6 +25,13 @@ class TestPortal(BaseTest):
         # Perform the search
         self.app.home_page.search_for_policy_number(policy_number)
 
-        # TODO: Add assertions to verify the search results once the result page is implemented
-        self.logger.info(f"Successfully performed search for policy: {policy_number}")
-        self.pause(1)
+        # Verify the search results
+        actual_policy_number = self.app.home_page.get_first_policy_number()
+        
+        self.assertEqual(
+            policy_number, 
+            actual_policy_number, 
+            f"Expected Policy Number in results to be '{policy_number}', but got '{actual_policy_number}'"
+        )
+        
+        self.logger.info(f"Successfully verified search result for policy: {actual_policy_number}")
