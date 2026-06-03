@@ -172,7 +172,9 @@ class BaseTest(BaseApp):
             BaseApp.set_driver(driver_instance)
             
             # Initialize App Orchestrator dynamically based on the app context
-            if app_name == 'go_hotel':
+            if hasattr(self, 'app_class') and self.app_class:
+                self.app = self.app_class()
+            elif app_name == 'go_hotel':
                 from applications.web.go_hotel.app.go_hotel_app import GoHotelApp
                 self.app = GoHotelApp()
             else:

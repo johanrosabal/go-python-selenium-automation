@@ -1,0 +1,7 @@
+# QA Environment configuration for pc_agency_portal
+base_url: "https://testportal.bhhomestate.com"
+
+credentials:
+  microsoft:
+    email: "jmrosabal@nationalindemnity.com"
+    password: "***"
