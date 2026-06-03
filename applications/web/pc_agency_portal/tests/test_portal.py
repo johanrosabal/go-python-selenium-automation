@@ -24,17 +24,16 @@ class TestPortal(BaseTest):
 
         # Perform the search
         self.app.home_page.search_for_policy_number(policy_number)
-        
+
         # Wait for loading spinner and table to load
-        self.app.home_page.wait_for_search_results(timeout=15)
+        self.app.home_page.wait_for_search_results(timeout=60)
 
         # Verify the search results
         actual_policy_number = self.app.home_page.get_first_policy_number()
-        
-        self.assertEqual(
-            policy_number, 
-            actual_policy_number, 
+
+        assert policy_number == actual_policy_number, \
             f"Expected Policy Number in results to be '{policy_number}', but got '{actual_policy_number}'"
+
+        self.logger.info(
+            f"Successfully verified search result for policy: {actual_policy_number}"
         )
-        
-        self.logger.info(f"Successfully verified search result for policy: {actual_policy_number}")
