@@ -8,4 +8,5 @@ class BaseTest(GenericBaseTest):
     Base test for PC Agency Portal tests.
     Inherits setup/teardown and driver management from the core GenericBaseTest.
     """
+    app: PcAgencyPortalApp
     pass
