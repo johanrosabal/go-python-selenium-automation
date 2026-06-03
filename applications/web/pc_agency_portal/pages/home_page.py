@@ -18,6 +18,7 @@ class HomePage(BasePage):
 
     ERROR_MSG = (By.XPATH, "//div[contains(@class,'policy-filter-error')]")
     TABLE_RESULTS = "//table[contains(@class,'results')]"
+    SPINNER = (By.XPATH, "//div[contains(@class,'spinner-policy-search')]")
 
     def type_search_text(self, query: str):
         self.element(self.INP_SEARCH).clear().type(query)
@@ -68,10 +69,14 @@ class HomePage(BasePage):
         locator = (By.XPATH, self.TABLE_RESULTS)
         return self.element(locator).is_visible()
 
+    @allure.step("Waiting for spinner to disappear")
+    def wait_for_spinner_to_disappear(self, timeout=10):
+        self.element(self.SPINNER).wait_disappear(timeout=timeout)
+
     @allure.step("Getting the first Policy Number from search results")
     def get_first_policy_number(self) -> str:
         """
-        Uses the framework's TableActions to dynamically find the 'Policy Number' 
+        Uses the framework's TableActions to dynamically find the 'Policy Number'
         column index by header text, and then returns the value from the first row.
         """
         locator = (By.XPATH, self.TABLE_RESULTS)

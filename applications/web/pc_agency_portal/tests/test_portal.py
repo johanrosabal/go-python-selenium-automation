@@ -24,6 +24,9 @@ class TestPortal(BaseTest):
 
         # Perform the search
         self.app.home_page.search_for_policy_number(policy_number)
+        
+        # Wait for loading spinner to disappear
+        self.app.home_page.wait_for_spinner_to_disappear(timeout=15)
 
         # Verify the search results
         actual_policy_number = self.app.home_page.get_first_policy_number()
