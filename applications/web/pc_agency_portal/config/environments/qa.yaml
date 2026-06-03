@@ -1,5 +1,7 @@
 # QA Environment configuration for pc_agency_portal
-base_url: "https://testportal.bhhomestate.com"
+web:
+  base_url: "https://testportal.bhhomestate.com"
+  timeout: 10
 
 credentials:
   microsoft:
