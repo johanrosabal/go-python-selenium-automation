@@ -20,6 +20,11 @@ class HomePage(BasePage):
     TABLE_RESULTS = "//table[contains(@class,'results')]"
     SPINNER = (By.XPATH, "//div[contains(@class,'spinner-policy-search')]")
 
+    def open_policy_lookup(self):
+        """Navigates directly to the Policy Lookup endpoint"""
+        self.open_relative("/policy-search")
+        return self
+
     def type_search_text(self, query: str):
         self.element(self.INP_SEARCH).clear().type(query)
         return self
@@ -49,6 +54,7 @@ class HomePage(BasePage):
         self.element(self.TAB_POLICY_NUMBER).click()
         self.element(self.INP_SEARCH).clear().type(policy_number)
         self.element(self.BTN_SEARCH).click()
+        self.screenshot("Search by Policy Number")
         return self
 
     @allure.step("Entering Insured Name: {insured_name}")
@@ -56,6 +62,7 @@ class HomePage(BasePage):
         self.element(self.TAB_INSURED_NAME).click()
         self.element(self.INP_SEARCH).clear().type(insured_name)
         self.element(self.BTN_SEARCH).click()
+        self.screenshot("Search by Policy Number")
         return self
 
     @allure.step("Entering Submission Number: {submission_number}")
@@ -63,6 +70,7 @@ class HomePage(BasePage):
         self.element(self.TAB_SUBMISSION_NUMBER).click()
         self.element(self.INP_SEARCH).clear().type(submission_number)
         self.element(self.BTN_SEARCH).click()
+        self.screenshot("Search by Policy Number")
         return self
 
     @allure.step("Getting error message")

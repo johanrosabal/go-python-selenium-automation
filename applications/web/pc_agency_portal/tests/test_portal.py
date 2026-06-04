@@ -1,26 +1,20 @@
 from applications.web.pc_agency_portal.tests.base_test import BaseTest
+from applications.web.pc_agency_portal.tests.fixtures.login_fixtures import (
+    login_to_portal,
+)
+from core.utils.decorators import test_case
+import pytest
 
 
-class TestPortal(BaseTest):
-    def test_search_by_policy_number(self):
+class TestHomePage(BaseTest):
+
+    @test_case(id="PC-PORTAL-001")
+    def test_search_by_policy_number(self, login_to_portal):
         """
         Scenario: Search for a policy using the Policy Number tab.
         """
         self.logger.info("Starting policy number search scenario")
-        policy_number = "01APT04875901"  # Mock policy number
-
-        # Fetch credentials from ConfigManager
-        email = self.config.get("credentials.microsoft.email") or ""
-        password = self.config.get("credentials.microsoft.password") or ""
-
-        # Open the portal (this will redirect to Microsoft Login)
-        self.app.login_page.open()
-
-        # Perform Microsoft Login and handle Okta MFA via UI prompt
-        self.app.login_page.login_microsoft(email, password)
-
-        # Wait for Home Page to load after successful login (you might need to adjust this explicit wait later)
-        self.logger.info("Waiting for Home Page to become active after login...")
+        policy_number = self._current_test_data.get("policy_number")
 
         # Perform the search
         self.app.home_page.search_for_policy_number(policy_number)

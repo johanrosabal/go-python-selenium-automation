@@ -1,0 +1,17 @@
+{
+  "tests": {
+    "id": "PC-PORTAL-001",
+    "title": "Search for a policy using the Policy Number tab",
+    "description": "Validates that searching by a specific policy number correctly fetches and displays the expected policy.",
+    "feature": "Policy Search",
+    "story": "Search by Policy Number",
+    "severity": "critical",
+    "tag": [
+      "smoke",
+      "p1"
+    ],
+    "data": {
+      "policy_number": "01APT04875901"
+    }
+  }
+}
