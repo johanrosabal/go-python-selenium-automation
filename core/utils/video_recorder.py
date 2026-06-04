@@ -47,7 +47,13 @@ class VideoRecorder:
 
     def _record(self):
         """Internal recording loop with improved resolution and codec handling."""
-        with mss.mss() as sct:
+        import warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=DeprecationWarning)
+            # mss initialization might throw a DeprecationWarning depending on the version
+            sct_instance = mss.mss()
+            
+        with sct_instance as sct:
             # Default to index 0 (All monitors) for maximum coverage
             monitor_index = ConfigManager.get("video.monitor_index") or 0
             if monitor_index >= len(sct.monitors):
