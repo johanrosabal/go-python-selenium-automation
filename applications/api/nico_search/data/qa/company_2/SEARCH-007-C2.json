@@ -2,7 +2,7 @@
   "tests": {
     "id": "SEARCH-007-C2",
     "title": "Search by Effective Date Company 2",
-    "description": "Search by effective date Company 2",
+    "description": "Search by effective date Company 2 [73TRT036256]",
     "feature": "Policy Search",
     "story": "Search Policies",
     "severity": "NORMAL",
@@ -12,7 +12,7 @@
     "data": {
       "payload": {
         "companyNumber": 2,
-        "effectiveDate": "2025-02-01T00:00:00.000Z"
+        "effectiveDate": "2026-08-14T00:01:00.000Z"
       },
       "expected_results": []
     }

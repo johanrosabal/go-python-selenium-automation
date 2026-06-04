@@ -1,8 +1,8 @@
 {
   "tests": {
-    "id": "SEARCH-010",
+    "id": "SEARCH-010-C1",
     "title": "Search by Full Address Company 1",
-    "description": "Search by full address (address + city + state + zip) use 02APG13263603 as policy reference [ACES]",
+    "description": "Search by full address (address + city + state + zip) use 01APG00001801 as policy reference [ACES]",
     "feature": "Policy Search",
     "story": "Search Policies",
     "severity": "NORMAL",
@@ -12,12 +12,130 @@
     "data": {
       "payload": {
         "companyNumber": 1,
-        "address": "3333 Farnam Street",
-        "city": "Omaha",
-        "state": "NE",
-        "zip": "68131"
+        "address": "888 8TH ST",
+        "city": "BROWNWOOD",
+        "state": "TX",
+        "zip": "76801"
       },
-      "expected_results": []
+      "expected_results": [
+        {
+          "policyNumber": "01APG00001801",
+          "quoteNumber": 4265217,
+          "insuredName": "A TX G POL",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2017-04-25T00:01:00",
+          "source": "MYP",
+          "agencyCode": "H45300",
+          "agencyName": "GEICO Insurance Agency, Inc.",
+          "policyState": "TX"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 4290054,
+          "insuredName": "A TX G POL",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2017-04-25T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "TX"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 4379450,
+          "insuredName": "A TX G POL",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2017-04-25T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "TX"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 4366559,
+          "insuredName": "A TX G POL",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2017-04-25T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "TX"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 4298149,
+          "insuredName": "A TX G POL",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2017-04-25T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "TX"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 4887587,
+          "insuredName": "A TX G POL",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2018-04-25T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "TX"
+        },
+        {
+          "policyNumber": "01TRT02962001",
+          "quoteNumber": 5289451,
+          "insuredName": "A TX G POL",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2018-04-25T00:01:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "TX"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 4921825,
+          "insuredName": "A TX G POL",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2018-04-25T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "TX"
+        },
+        {
+          "policyNumber": null,
+          "quoteNumber": 4939591,
+          "insuredName": "PD Damage1",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2020-09-01T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "TX"
+        }
+      ]
     }
   }
 }
