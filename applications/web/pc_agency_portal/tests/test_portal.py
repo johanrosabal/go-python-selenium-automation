@@ -31,9 +31,12 @@ class TestPortal(BaseTest):
         # Verify the search results
         actual_policy_number = self.app.home_page.get_first_policy_number()
 
-        assert policy_number == actual_policy_number, \
-            f"Expected Policy Number in results to be '{policy_number}', but got '{actual_policy_number}'"
+        assert (
+            policy_number == actual_policy_number
+        ), f"Expected Policy Number in results to be '{policy_number}', but got '{actual_policy_number}'"
 
         self.logger.info(
             f"Successfully verified search result for policy: {actual_policy_number}"
         )
+
+        self.pause(5)

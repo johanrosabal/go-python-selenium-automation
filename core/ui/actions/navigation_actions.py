@@ -40,12 +40,13 @@ class NavigationActions(BaseAction):
             self._handle_exception(e, "go", (url, base_url))
 
     @allure.step("Navigating to URL: {url}")
-    def open(self, url: str):
+    def open(self, url: str, wait_for_load: bool = True):
         """
         Directly navigates to the provided URL.
 
         Args:
             url (str): The target URL.
+            wait_for_load (bool): Whether to wait for the document to fully load.
 
         Returns:
             NavigationActions: The current instance for method chaining.
@@ -53,9 +54,13 @@ class NavigationActions(BaseAction):
         try:
             self.logger.debug(f"Go to: {url}")
             self.driver.get(url)
+            if wait_for_load:
+                self._get_wait().until(
+                    lambda d: d.execute_script("return document.readyState") == "complete"
+                )
             return self
         except Exception as e:
-            self._handle_exception(e, "go_to_url")
+            self._handle_exception(e, "open")
 
     def get_current_url(self) -> str:
         """
