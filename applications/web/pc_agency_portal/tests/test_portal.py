@@ -121,7 +121,7 @@ class TestHomePage(BaseTest):
 
         # Wait for Error Message Validation
         error_message = self.app.home_page.get_error_message()
-        expected_message = self.test_data.get("expected_result").get("error_message")
+        expected_message = self.test_data.get("expected_result", {}).get("error_message")
 
         assert (
             error_message == expected_message
