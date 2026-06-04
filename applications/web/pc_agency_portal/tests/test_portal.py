@@ -9,6 +9,7 @@ import pytest
 class TestHomePage(BaseTest):
     persistent_session = True
 
+    @test_case(id="PC-PORTAL-000")
     def test_00_login(self, login_to_portal):
         """
         Pre-condition: Authenticate into the portal once.
