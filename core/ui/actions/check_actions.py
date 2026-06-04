@@ -10,7 +10,7 @@ class CheckActions(BaseAction):
     a specific toggle state, handling the current state check automatically.
     """
     @allure.step("Setting checkbox state to {state}")
-    def check(self, state: bool = True):
+    def check(self, state: bool = True) -> "CheckActions":
         """
         Sets the checkbox to the desired state.
 

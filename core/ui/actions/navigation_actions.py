@@ -10,7 +10,7 @@ class NavigationActions(BaseAction):
     page refreshing, and URL-based synchronization.
     """
 
-    def go(self, url: str, base_url: str = None):
+    def go(self, url: str, base_url: str = None) -> "NavigationActions":
         """
         Navigates to a concatenated URL and waits for the page to load completely.
 
@@ -40,7 +40,7 @@ class NavigationActions(BaseAction):
             self._handle_exception(e, "go", (url, base_url))
 
     @allure.step("Navigating to URL: {url}")
-    def open(self, url: str, wait_for_load: bool = True):
+    def open(self, url: str, wait_for_load: bool = True) -> "NavigationActions":
         """
         Directly navigates to the provided URL.
 
@@ -76,7 +76,7 @@ class NavigationActions(BaseAction):
         except Exception as e:
             self._handle_exception(e, "get_current_url")
 
-    def back(self):
+    def back(self) -> "NavigationActions":
         """
         Navigates one step back in the browser's history.
 
@@ -86,7 +86,7 @@ class NavigationActions(BaseAction):
         self.driver.back()
         return self
 
-    def forward(self):
+    def forward(self) -> "NavigationActions":
         """
         Navigates one step forward in the browser's history.
 
@@ -96,7 +96,7 @@ class NavigationActions(BaseAction):
         self.driver.forward()
         return self
 
-    def refresh(self):
+    def refresh(self) -> "NavigationActions":
         """
         Refreshes the current page.
 
@@ -106,7 +106,7 @@ class NavigationActions(BaseAction):
         self.driver.refresh()
         return self
 
-    def wait_url_contains(self, partial_url: str):
+    def wait_url_contains(self, partial_url: str) -> "NavigationActions":
         """
         Waits until the current browser URL contains the specified text.
 

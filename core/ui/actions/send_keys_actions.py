@@ -21,7 +21,7 @@ class SendKeysActions(BaseAction):
         super().__init__(driver)
         self._encrypt = False
 
-    def encrypted(self):
+    def encrypted(self) -> "SendKeysActions":
         """
         Enables base64 encryption for text in logs.
 
@@ -32,7 +32,7 @@ class SendKeysActions(BaseAction):
         return self
 
     @allure.step("Typing text into element (Clear: {clear})")
-    def type(self, text: str, clear: bool = False):
+    def type(self, text: str, clear: bool = False) -> "SendKeysActions":
         """
         Sets and sends the provided text to the element.
 
@@ -62,7 +62,7 @@ class SendKeysActions(BaseAction):
             self._handle_exception(e, "type")
 
     @allure.step("Typing text via JavaScript (Clear: {clear})")
-    def type_js(self, text: str, clear: bool = False):
+    def type_js(self, text: str, clear: bool = False) -> "SendKeysActions":
         """
         Sets the element value using JavaScript and triggers events.
 
@@ -88,7 +88,7 @@ class SendKeysActions(BaseAction):
             self._handle_exception(e, "type_js")
 
     @allure.step("Typing text character by character")
-    def type_by_character(self, text: str):
+    def type_by_character(self, text: str) -> "SendKeysActions":
         """
         Sends text to the element character by character to simulate human typing.
 
@@ -131,7 +131,7 @@ class SendKeysActions(BaseAction):
             self._handle_exception(e, "get_value")
 
     @allure.step("Clearing text (Use JS: {use_js})")
-    def clear(self, use_js: bool = False):
+    def clear(self, use_js: bool = False) -> "SendKeysActions":
         """
         Clears the text from the element.
 
@@ -153,7 +153,7 @@ class SendKeysActions(BaseAction):
         except Exception as e:
             self._handle_exception(e, "clear")
 
-    def clear_js(self):
+    def clear_js(self) -> "SendKeysActions":
         """
         Clears input field and triggers necessary JavaScript events.
 
@@ -174,7 +174,7 @@ class SendKeysActions(BaseAction):
             self._handle_exception(e, "clear_js")
 
     @allure.step("Performing physical clear (CONTROL+A + BACKSPACE)")
-    def physical_clear(self):
+    def physical_clear(self) -> "SendKeysActions":
         """
         Simulates physical clearing of an input field using keyboard shortcuts.
         Useful for React/Angular components that don't respond to standard clear().
@@ -192,28 +192,28 @@ class SendKeysActions(BaseAction):
         except Exception as e:
             self._handle_exception(e, "physical_clear")
 
-    def press_enter(self):
+    def press_enter(self) -> "SendKeysActions":
         """Presses the ENTER key."""
         return self._press_key(Keys.ENTER, "ENTER")
 
-    def press_tab(self):
+    def press_tab(self) -> "SendKeysActions":
         """Presses the TAB key."""
         return self._press_key(Keys.TAB, "TAB")
 
-    def press_escape(self):
+    def press_escape(self) -> "SendKeysActions":
         """Presses the ESCAPE key."""
         return self._press_key(Keys.ESCAPE, "ESCAPE")
 
-    def press_backspace(self):
+    def press_backspace(self) -> "SendKeysActions":
         """Presses the BACKSPACE key."""
         return self._press_key(Keys.BACKSPACE, "BACKSPACE")
 
-    def press_return(self):
+    def press_return(self) -> "SendKeysActions":
         """Presses the RETURN key."""
         return self._press_key(Keys.RETURN, "RETURN")
 
     @allure.step("Pressing key on element")
-    def press(self, key: Keys, key_name: str = "KEY"):
+    def press(self, key: Keys, key_name: str = "KEY") -> "SendKeysActions":
         """
         Sends a keyboard key stroke to the element.
 
@@ -226,7 +226,7 @@ class SendKeysActions(BaseAction):
         """
         return self._press_key(key, key_name)
 
-    def _press_key(self, key, key_name):
+    def _press_key(self, key, key_name) -> "SendKeysActions":
         """Internal helper to press a key on the element."""
         try:
             self._find_element()

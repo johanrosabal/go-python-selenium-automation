@@ -82,7 +82,7 @@ class UIElement(BaseAction):
 
     # --- Click Actions ---
 
-    def click(self):
+    def click(self) -> "UIElement":
         """
         Performs a standard click on the element.
 
@@ -93,7 +93,7 @@ class UIElement(BaseAction):
         self._click.at(self._get_current_timeout()).click()
         return self
 
-    def double_click(self):
+    def double_click(self) -> "UIElement":
         """
         Performs a double-click on the element.
 
@@ -104,7 +104,7 @@ class UIElement(BaseAction):
         self._click.at(self._get_current_timeout()).double_click()
         return self
 
-    def right_click(self):
+    def right_click(self) -> "UIElement":
         """
         Performs a right-click on the element.
 
@@ -115,7 +115,7 @@ class UIElement(BaseAction):
         self._click.at(self._get_current_timeout()).right_click()
         return self
 
-    def hover(self):
+    def hover(self) -> "UIElement":
         """
         Moves the mouse pointer over the element (Hover).
 
@@ -126,7 +126,7 @@ class UIElement(BaseAction):
         self._click.at(self._get_current_timeout()).hover()
         return self
 
-    def js_click(self):
+    def js_click(self) -> "UIElement":
         """
         Clicks the element using JavaScript.
 
@@ -137,7 +137,7 @@ class UIElement(BaseAction):
         self._click.at(self._get_current_timeout()).js_click()
         return self
 
-    def click_and_hold(self):
+    def click_and_hold(self) -> "UIElement":
         """
         Clicks and holds the element.
 
@@ -148,7 +148,7 @@ class UIElement(BaseAction):
         self._click.at(self._get_current_timeout()).click_and_hold()
         return self
 
-    def release_mouse(self):
+    def release_mouse(self) -> "UIElement":
         """
         Releases the mouse button if it was being held.
 
@@ -159,13 +159,13 @@ class UIElement(BaseAction):
         self._click.at(self._get_current_timeout()).release_mouse()
         return self
 
-    def release(self):
+    def release(self) -> "UIElement":
         """
         Alias for release_mouse().
         """
         return self.release_mouse()
 
-    def drag_and_drop(self, target_locator: tuple):
+    def drag_and_drop(self, target_locator: tuple) -> "UIElement":
         """
         Drags this element and drops it onto a target locator.
 
@@ -181,7 +181,7 @@ class UIElement(BaseAction):
 
     # --- SendKeys Actions ---
 
-    def type(self, text: str, clear: bool = True):
+    def type(self, text: str, clear: bool = True) -> "UIElement":
         """
         Enters text into the field.
 
@@ -196,7 +196,7 @@ class UIElement(BaseAction):
         self._send_keys.at(self._get_current_timeout()).type(text, clear)
         return self
 
-    def type_encrypted(self, text: str, clear: bool = True):
+    def type_encrypted(self, text: str, clear: bool = True) -> "UIElement":
         """
         Enters text and masks it in logs using base64.
 
@@ -211,7 +211,7 @@ class UIElement(BaseAction):
         self._send_keys.at(self._get_current_timeout()).encrypted().set_text(text, clear=clear)
         return self
 
-    def type_js(self, text: str, clear: bool = False):
+    def type_js(self, text: str, clear: bool = False) -> "UIElement":
         """
         Sets element value via JavaScript (bypasses some event blockers).
 
@@ -226,7 +226,7 @@ class UIElement(BaseAction):
         self._send_keys.at(self._get_current_timeout()).set_text_js(text, clear=clear)
         return self
 
-    def type_by_character(self, text: str):
+    def type_by_character(self, text: str) -> "UIElement":
         """
         Types text character by character to simulate human typing.
 
@@ -240,7 +240,7 @@ class UIElement(BaseAction):
         self._send_keys.at(self._get_current_timeout()).type_by_character(text)
         return self
 
-    def clear(self, use_js: bool = False):
+    def clear(self, use_js: bool = False) -> "UIElement":
         """
         Clears the input field.
 
@@ -254,7 +254,7 @@ class UIElement(BaseAction):
         self._send_keys.at(self._get_current_timeout()).clear(use_js=use_js)
         return self
 
-    def physical_clear(self):
+    def physical_clear(self) -> "UIElement":
         """
         Clears the input using keyboard shortcuts (CTRL+A + BACKSPACE).
 
@@ -265,7 +265,7 @@ class UIElement(BaseAction):
         self._send_keys.at(self._get_current_timeout()).physical_clear()
         return self
 
-    def press(self, key: str):
+    def press(self, key: str) -> "UIElement":
         """
         Sends a specific keyboard key stroke.
 
@@ -284,7 +284,7 @@ class UIElement(BaseAction):
         self._send_keys.at(self._get_current_timeout()).press(key_val, key)
         return self
 
-    def press_enter(self):
+    def press_enter(self) -> "UIElement":
         """
         Presses the ENTER key.
 
@@ -295,7 +295,7 @@ class UIElement(BaseAction):
         self._send_keys.at(self._get_current_timeout()).press_enter()
         return self
 
-    def press_tab(self):
+    def press_tab(self) -> "UIElement":
         """
         Presses the TAB key.
 
@@ -306,7 +306,7 @@ class UIElement(BaseAction):
         self._send_keys.at(self._get_current_timeout()).press_tab()
         return self
 
-    def press_escape(self):
+    def press_escape(self) -> "UIElement":
         """
         Presses the ESCAPE key.
 
@@ -317,7 +317,7 @@ class UIElement(BaseAction):
         self._send_keys.at(self._get_current_timeout()).press_escape()
         return self
 
-    def press_backspace(self):
+    def press_backspace(self) -> "UIElement":
         """
         Presses the BACKSPACE key.
 
@@ -328,7 +328,7 @@ class UIElement(BaseAction):
         self._send_keys.at(self._get_current_timeout()).press_backspace()
         return self
 
-    def press_return(self):
+    def press_return(self) -> "UIElement":
         """
         Presses the RETURN key.
 
@@ -341,7 +341,7 @@ class UIElement(BaseAction):
 
     # --- Scroll Actions ---
 
-    def scroll_to(self, offset: int = 0):
+    def scroll_to(self, offset: int = 0) -> "UIElement":
         """
         Scrolls the viewport to this element.
 
@@ -355,7 +355,7 @@ class UIElement(BaseAction):
         self._scroll.at(self._get_current_timeout()).scroll_to(offset)
         return self
 
-    def scroll_to_center(self):
+    def scroll_to_center(self) -> "UIElement":
         """
         Scrolls to this element and aligns it to the center of viewport.
 
@@ -366,7 +366,7 @@ class UIElement(BaseAction):
         self._scroll.at(self._get_current_timeout()).scroll_to_center()
         return self
 
-    def scroll_to_top(self):
+    def scroll_to_top(self) -> "UIElement":
         """
         Scrolls to the top of the page.
 
@@ -377,7 +377,7 @@ class UIElement(BaseAction):
         self._scroll.at(self._get_current_timeout()).scroll_to_top()
         return self
 
-    def scroll_to_bottom(self):
+    def scroll_to_bottom(self) -> "UIElement":
         """
         Scrolls to the bottom of the page.
 
@@ -390,7 +390,7 @@ class UIElement(BaseAction):
 
     # --- Select Actions ---
 
-    def select_by_text(self, text: str):
+    def select_by_text(self, text: str) -> "UIElement":
         """
         Selects a dropdown option by visible text.
 
@@ -404,7 +404,7 @@ class UIElement(BaseAction):
         self._dropdown.at(self._get_current_timeout()).select_by_text(text)
         return self
 
-    def select_by_partial_text(self, text: str):
+    def select_by_partial_text(self, text: str) -> "UIElement":
         """
         Selects a dropdown option containing the provided partial text.
 
@@ -418,7 +418,7 @@ class UIElement(BaseAction):
         self._dropdown.at(self._get_current_timeout()).select_by_partial_text(text)
         return self
 
-    def select_by_value(self, value: str):
+    def select_by_value(self, value: str) -> "UIElement":
         """
         Selects a dropdown option by its 'value' attribute.
 
@@ -432,7 +432,7 @@ class UIElement(BaseAction):
         self._dropdown.at(self._get_current_timeout()).select_by_value(value)
         return self
 
-    def select_by_index(self, index: int):
+    def select_by_index(self, index: int) -> "UIElement":
         """
         Selects a dropdown option by its index.
 
@@ -446,7 +446,7 @@ class UIElement(BaseAction):
         self._dropdown.at(self._get_current_timeout()).select_by_index(index)
         return self
 
-    def deselect_all(self):
+    def deselect_all(self) -> "UIElement":
         """
         Deselects all options from a multi-select dropdown.
 
@@ -467,7 +467,7 @@ class UIElement(BaseAction):
         self._log_action("Getting options from")
         return self._dropdown.at(self._get_current_timeout()).get_dropdown_options()
 
-    def check(self, state: bool = True):
+    def check(self, state: bool = True) -> "UIElement":
         """
         Sets the state of a checkbox.
 
@@ -492,7 +492,7 @@ class UIElement(BaseAction):
 
     # --- Radio Actions ---
 
-    def select_radio(self):
+    def select_radio(self) -> "UIElement":
         """
         Selects a radio button.
 
@@ -547,7 +547,7 @@ class UIElement(BaseAction):
         self._log_action("Getting headers of")
         return self._table.at(self._get_current_timeout()).get_table_headers()
 
-    def click_table_header(self, text: str = None, index: int = None):
+    def click_table_header(self, text: str = None, index: int = None) -> "UIElement":
         """
         Clicks a table header for sorting or selection.
 
@@ -571,7 +571,7 @@ class UIElement(BaseAction):
         self._log_action("Getting full data of")
         return self._table.at(self._get_current_timeout()).get_table_data()
 
-    def table_check_all(self, column: Union[int, str] = 1):
+    def table_check_all(self, column: Union[int, str] = 1) -> "UIElement":
         """
         Checks 'select all' check in a table.
 
@@ -585,7 +585,7 @@ class UIElement(BaseAction):
         self._table.at(self._get_current_timeout()).table_check_all(column)
         return self
 
-    def table_check_row(self, index: int, column: Union[int, str] = 1):
+    def table_check_row(self, index: int, column: Union[int, str] = 1) -> "UIElement":
         """
         Checks a specific row in a table.
 
@@ -600,7 +600,7 @@ class UIElement(BaseAction):
         self._table.at(self._get_current_timeout()).table_check_row(index, column)
         return self
 
-    def table_click_button(self, row: int, col: Union[int, str], text: str = None):
+    def table_click_button(self, row: int, col: Union[int, str], text: str = None) -> "UIElement":
         """
         Clicks a button inside a specific cell.
 
@@ -616,7 +616,7 @@ class UIElement(BaseAction):
         self._table.at(self._get_current_timeout()).table_click_button(row, col, text)
         return self
 
-    def table_click_link(self, row: int, col: Union[int, str], text: str = None):
+    def table_click_link(self, row: int, col: Union[int, str], text: str = None) -> "UIElement":
         """
         Clicks a link inside a specific cell.
 
@@ -632,7 +632,7 @@ class UIElement(BaseAction):
         self._table.at(self._get_current_timeout()).table_click_link(row, col, text)
         return self
 
-    def table_wait_for_rows(self, expected_count: int, timeout: int = None):
+    def table_wait_for_rows(self, expected_count: int, timeout: int = None) -> "UIElement":
         """
         Waits until table has exact row count.
 
@@ -647,7 +647,7 @@ class UIElement(BaseAction):
         self._table.at(self._get_current_timeout()).table_wait_for_rows(expected_count, timeout)
         return self
 
-    def table_wait_not_empty(self, timeout: int = None):
+    def table_wait_not_empty(self, timeout: int = None) -> "UIElement":
         """
         Waits until table is not empty.
 
@@ -663,7 +663,7 @@ class UIElement(BaseAction):
 
     # --- Upload Actions ---
 
-    def upload_file(self, file_path: str):
+    def upload_file(self, file_path: str) -> "UIElement":
         """
         Uploads a file.
 
@@ -679,7 +679,7 @@ class UIElement(BaseAction):
 
     # --- Elements/State Actions ---
 
-    def wait_visible(self, timeout: int = None):
+    def wait_visible(self, timeout: int = None) -> "UIElement":
         """
         Explicitly waits for the element to become visible on the page.
 
@@ -693,7 +693,7 @@ class UIElement(BaseAction):
         self._elements.wait_visible(timeout)
         return self
 
-    def wait_present(self):
+    def wait_present(self) -> "UIElement":
         """
         Waits until element is present in the DOM.
 
@@ -704,7 +704,7 @@ class UIElement(BaseAction):
         self._elements.at(self._get_current_timeout()).wait_present()
         return self
 
-    def wait_clickable(self):
+    def wait_clickable(self) -> "UIElement":
         """
         Explicitly waits for the element to be clickable (visible and enabled).
 
@@ -715,7 +715,7 @@ class UIElement(BaseAction):
         self._elements.at(self._get_current_timeout()).wait_clickable()
         return self
 
-    def wait_disappear(self, timeout: int = None):
+    def wait_disappear(self, timeout: int = None) -> "UIElement":
         """
         Explicitly waits for the element to disappear from the viewport or DOM.
 
@@ -768,7 +768,7 @@ class UIElement(BaseAction):
         """
         return self._elements.at(self._get_current_timeout()).get_css_value(property_name)
 
-    def set_css_value(self, property_name: str, value: str):
+    def set_css_value(self, property_name: str, value: str) -> "UIElement":
         """
         Sets a CSS property via JS.
 
@@ -833,7 +833,7 @@ class UIElement(BaseAction):
         """
         return self._get_text.at(self._get_current_timeout()).value()
 
-    def wait_text_contains(self, text: str):
+    def wait_text_contains(self, text: str) -> "UIElement":
         """
         Waits until the element text contains a partial string.
 
@@ -859,7 +859,7 @@ class UIElement(BaseAction):
         """
         return self._get_text.at(self._get_current_timeout()).contains(text)
 
-    def wait_until_text_is(self, text: str):
+    def wait_until_text_is(self, text: str) -> "UIElement":
         """
         Waits until the element text matches exactly the expected string.
 
@@ -956,7 +956,7 @@ class UIElement(BaseAction):
 
     # --- Screenshot Actions ---
 
-    def screenshot(self, name: str = "element_screenshot"):
+    def screenshot(self, name: str = "element_screenshot") -> "UIElement":
         """
         Captures a screenshot of this specific element.
 

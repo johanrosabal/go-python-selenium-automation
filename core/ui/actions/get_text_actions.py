@@ -84,7 +84,7 @@ class GetTextActions(BaseAction):
         return expected_text in val if val else False
 
     @allure.step("Waiting until element text is exactly '{expected_text}'")
-    def wait_until_is(self, expected_text: str):
+    def wait_until_is(self, expected_text: str) -> "GetTextActions":
         """
         Waits until the element text matches the expected text exactly.
 

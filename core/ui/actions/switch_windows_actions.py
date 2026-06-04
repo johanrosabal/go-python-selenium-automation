@@ -40,13 +40,13 @@ class SwitchWindowsActions(BaseAction):
         return self._original_handle
 
     @allure.step("Switching to tab index {index}")
-    def to_tab(self, index: int):
+    def to_tab(self, index: int) -> "SwitchWindowsActions":
         """
         Alias for tab().
         """
         return self.tab(index)
 
-    def tab(self, index: int):
+    def tab(self, index: int) -> "SwitchWindowsActions":
         """
         Switches focus to a window or tab by its index in the window handles list.
 
@@ -74,13 +74,13 @@ class SwitchWindowsActions(BaseAction):
 
     @allure.step("Finding and switching to a new window")
     @allure.step("Finding and switching to a new window")
-    def switch_to_new(self):
+    def switch_to_new(self) -> "SwitchWindowsActions":
         """
         Alias for find_new().
         """
         return self.find_new()
 
-    def find_new(self):
+    def find_new(self) -> "SwitchWindowsActions":
         """
         Switches focus to the first window handle that is not the 'original' one.
         Useful when an action opens a single new window.
@@ -102,7 +102,7 @@ class SwitchWindowsActions(BaseAction):
         return self
 
     @allure.step("Opening a new blank tab")
-    def open_new(self):
+    def open_new(self) -> "SwitchWindowsActions":
         """
         Opens a new blank tab and automatically switches focus to it.
 
@@ -122,13 +122,13 @@ class SwitchWindowsActions(BaseAction):
 
     @allure.step("Closing current tab and returning focus")
     @allure.step("Closing current tab and returning focus")
-    def close_current(self):
+    def close_current(self) -> "SwitchWindowsActions":
         """
         Alias for close().
         """
         return self.close()
 
-    def close(self):
+    def close(self) -> "SwitchWindowsActions":
         """
         Closes the currently focused window and switches focus back to the original one.
 
@@ -151,7 +151,7 @@ class SwitchWindowsActions(BaseAction):
         else:
             self.logger.error("Unable to close window. WebDriver is None.")
         return self
-    def switch_to_main(self):
+    def switch_to_main(self) -> "SwitchWindowsActions":
         """
         Switches focus to the first window handle (main tab).
 
@@ -161,7 +161,7 @@ class SwitchWindowsActions(BaseAction):
         return self.tab(0)
 
     @allure.step("Setting page zoom to {percentage}%")
-    def set_zoom_level(self, percentage: int):
+    def set_zoom_level(self, percentage: int) -> "SwitchWindowsActions":
         """
         Adjusts the zoom level of the current web page using JavaScript.
 

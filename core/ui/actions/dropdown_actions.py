@@ -20,7 +20,7 @@ class DropdownActions(BaseAction):
         super().__init__(driver)
 
     @allure.step("Selecting option '{text}' from dropdown")
-    def select_by_text(self, text: str):
+    def select_by_text(self, text: str) -> "DropdownActions":
         """
         Selects an option by its exact visible text.
 
@@ -40,7 +40,7 @@ class DropdownActions(BaseAction):
             self._handle_exception(e, "select_by_text")
 
     @allure.step("Selecting value '{value}' from dropdown")
-    def select_by_value(self, value: str):
+    def select_by_value(self, value: str) -> "DropdownActions":
         """
         Selects an option by its 'value' attribute.
 
@@ -60,7 +60,7 @@ class DropdownActions(BaseAction):
             self._handle_exception(e, "select_by_value")
 
     @allure.step("Selecting index {index} from dropdown")
-    def select_by_index(self, index: int):
+    def select_by_index(self, index: int) -> "DropdownActions":
         """
         Selects an option by its index.
 
@@ -80,7 +80,7 @@ class DropdownActions(BaseAction):
             self._handle_exception(e, "select_by_index")
 
     @allure.step("Selecting option containing text '{text}' from dropdown")
-    def select_by_partial_text(self, text: str):
+    def select_by_partial_text(self, text: str) -> "DropdownActions":
         """
         Selects an option that contains the specified partial text.
 
@@ -103,7 +103,7 @@ class DropdownActions(BaseAction):
             self._handle_exception(e, "select_by_partial_text")
 
     @allure.step("Deselecting all options from dropdown")
-    def deselect_all(self):
+    def deselect_all(self) -> "DropdownActions":
         """
         Deselects all options (only works for multi-select dropdowns).
 

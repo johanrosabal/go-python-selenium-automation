@@ -10,7 +10,7 @@ class RadioActions(BaseAction):
     is selected, handling the current state check automatically.
     """
     @allure.step("Selecting radio button")
-    def select_radio(self):
+    def select_radio(self) -> "RadioActions":
         """
         Selects the radio button if not already selected.
 

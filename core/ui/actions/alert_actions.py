@@ -13,7 +13,7 @@ class AlertActions(BaseAction):
     def __init__(self, driver: WebDriver):
         super().__init__(driver)
 
-    def wait_presence(self, timeout: int = 10):
+    def wait_presence(self, timeout: int = 10) -> "AlertActions":
         """
         Explicitly waits for an alert to be present.
         
@@ -27,7 +27,7 @@ class AlertActions(BaseAction):
         return self
 
     @allure.step("Accepting browser alert")
-    def accept(self):
+    def accept(self) -> "AlertActions":
         """
         Accepts the current alert (Clicks OK).
         """
@@ -40,7 +40,7 @@ class AlertActions(BaseAction):
             self._handle_exception(e, "accept")
 
     @allure.step("Dismissing browser alert")
-    def dismiss(self):
+    def dismiss(self) -> "AlertActions":
         """
         Dismisses the current alert (Clicks Cancel).
         """
@@ -68,7 +68,7 @@ class AlertActions(BaseAction):
             self._handle_exception(e, "get_text")
 
     @allure.step("Typing '{text}' into prompt")
-    def type(self, text: str):
+    def type(self, text: str) -> "AlertActions":
         """
         Sends text input to a JavaScript prompt.
         

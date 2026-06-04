@@ -20,7 +20,7 @@ class ScrollActions(BaseAction):
         super().__init__(driver)
 
     @allure.step("Scrolling to element with offset {pixels}")
-    def to_element(self, pixels: int = 0):
+    def to_element(self, pixels: int = 0) -> "ScrollActions":
         """
         Scrolls the page until the specified element is centered in the viewport.
 
@@ -55,7 +55,7 @@ class ScrollActions(BaseAction):
             self._handle_exception(e, "to_element")
 
     @allure.step("Scrolling element to viewport center")
-    def to_center(self):
+    def to_center(self) -> "ScrollActions":
         """
         Scrolls the specified element to the exact center of the page.
 
@@ -80,7 +80,7 @@ class ScrollActions(BaseAction):
             self._handle_exception(e, "to_center")
 
     @allure.step("Scrolling to element (Offset: {offset})")
-    def scroll_to(self, offset: int = 0):
+    def scroll_to(self, offset: int = 0) -> "ScrollActions":
         """
         Scrolls the page until the specified element is in the viewport.
 
@@ -101,7 +101,7 @@ class ScrollActions(BaseAction):
             self._handle_exception(e, "scroll_to")
 
     @allure.step("Scrolling element to center")
-    def scroll_to_center(self):
+    def scroll_to_center(self) -> "ScrollActions":
         """
         Scrolls the page until the element is centered in the viewport.
 
@@ -117,7 +117,7 @@ class ScrollActions(BaseAction):
             self._handle_exception(e, "scroll_to_center")
 
     @allure.step("Scrolling to bottom of the page")
-    def to_bottom(self):
+    def to_bottom(self) -> "ScrollActions":
         """
         Scrolls to the absolute bottom of the document via JavaScript.
 
@@ -131,7 +131,7 @@ class ScrollActions(BaseAction):
             self._handle_exception(e, "to_bottom")
 
     @allure.step("Scrolling to top of the page")
-    def to_top(self):
+    def to_top(self) -> "ScrollActions":
         """
         Scrolls to the absolute top of the document via JavaScript.
 

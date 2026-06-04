@@ -89,7 +89,7 @@ class TableActions(BaseAction):
             self._handle_exception(e, "get_table_headers")
 
     @allure.step("Clicking table header")
-    def click_header(self, text: str = None, index: int = None):
+    def click_header(self, text: str = None, index: int = None) -> "TableActions":
         """
         Clicks a table header by text content or 1-based index.
 
@@ -161,7 +161,7 @@ class TableActions(BaseAction):
             self._handle_exception(e, "get_all_data")
 
     @allure.step("Checking all rows in table (Column {column})")
-    def table_check_all(self, column: Union[int, str] = 1):
+    def table_check_all(self, column: Union[int, str] = 1) -> "TableActions":
         """
         Interacts with the 'Select All' checkbox.
 
@@ -186,7 +186,7 @@ class TableActions(BaseAction):
             self._handle_exception(e, "table_check_all")
 
     @allure.step("Checking row {index} (Column {column})")
-    def table_check_row(self, index: int, column: Union[int, str] = 1):
+    def table_check_row(self, index: int, column: Union[int, str] = 1) -> "TableActions":
         """
         Clicks the checkbox for a specific row and column.
 
@@ -211,7 +211,7 @@ class TableActions(BaseAction):
             self._handle_exception(e, "table_check_row")
 
     @allure.step("Clicking button in row {row}, col {col} (Filter: {text})")
-    def table_click_button(self, row: int, col: Union[int, str], text: str = None):
+    def table_click_button(self, row: int, col: Union[int, str], text: str = None) -> "TableActions":
         """
         Clicks a button inside a specific table cell.
 
@@ -241,7 +241,7 @@ class TableActions(BaseAction):
             self._handle_exception(e, "table_click_button")
 
     @allure.step("Clicking link in row {row}, col {col} (Filter: {text})")
-    def table_click_link(self, row: int, col: Union[int, str], text: str = None):
+    def table_click_link(self, row: int, col: Union[int, str], text: str = None) -> "TableActions":
         """
         Clicks a link (<a>) inside a specific table cell.
 
@@ -269,7 +269,7 @@ class TableActions(BaseAction):
             self._handle_exception(e, "table_click_link")
 
     @allure.step("Waiting for table to have {expected_count} rows")
-    def table_wait_for_rows(self, expected_count: int, timeout: int = None):
+    def table_wait_for_rows(self, expected_count: int, timeout: int = None) -> "TableActions":
         """
         Wait until the number of rows in the table matches the expected count.
 
@@ -289,7 +289,7 @@ class TableActions(BaseAction):
             self._handle_exception(e, "table_wait_for_rows")
 
     @allure.step("Waiting for table to not be empty")
-    def table_wait_not_empty(self, timeout: int = None):
+    def table_wait_not_empty(self, timeout: int = None) -> "TableActions":
         """
         Wait until the table contains at least one data row.
 

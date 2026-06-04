@@ -12,7 +12,7 @@ class UploadActions(BaseAction):
     """
     
     @allure.step("Uploading file '{file_path}'")
-    def upload_file(self, file_path: str):
+    def upload_file(self, file_path: str) -> "UploadActions":
         """
         Uploads a file by sending its absolute path to the file input element.
 

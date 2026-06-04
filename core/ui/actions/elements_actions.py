@@ -157,7 +157,7 @@ class ElementsActions(BaseAction):
             self._handle_exception(e, "wait_clickable")
 
     @allure.step("Setting CSS property {property_name} to '{value}'")
-    def set_css_value(self, property_name: str, value: str):
+    def set_css_value(self, property_name: str, value: str) -> "ElementsActions":
         """
         Sets a CSS property for the element via direct JavaScript execution.
 
@@ -173,7 +173,7 @@ class ElementsActions(BaseAction):
         return self
 
     @allure.step("Waiting for page to load completely")
-    def wait_for_page_load(self, timeout: int = 30):
+    def wait_for_page_load(self, timeout: int = 30) -> "ElementsActions":
         """
         Waits until the document state is 'complete' via JavaScript.
 
@@ -193,7 +193,7 @@ class ElementsActions(BaseAction):
         return self
 
     @allure.step("Waiting for JavaScript events/async tasks to complete")
-    def wait_for_js_completion(self, timeout: int = 20):
+    def wait_for_js_completion(self, timeout: int = 20) -> "ElementsActions":
         """
         Waits for generic asynchronous JavaScript or jQuery activity to complete.
 
@@ -212,7 +212,7 @@ class ElementsActions(BaseAction):
         return self
 
     @allure.step("Waiting for element to be visible")
-    def wait_visible(self, timeout: int = None):
+    def wait_visible(self, timeout: int = None) -> "ElementsActions":
         """
         Wait until the element is visible on the page.
 
@@ -231,7 +231,7 @@ class ElementsActions(BaseAction):
             self._handle_exception(e, "wait_visible")
 
     @allure.step("Waiting for element to disappear")
-    def wait_disappear(self, timeout: int = None):
+    def wait_disappear(self, timeout: int = None) -> "ElementsActions":
         """
         Wait until the element explicitly disappears from the viewport or DOM.
 

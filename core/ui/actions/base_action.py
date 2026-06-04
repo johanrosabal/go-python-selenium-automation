@@ -28,7 +28,7 @@ class BaseAction:
         self._element = None
         self.logger = setup_logger(self.__class__.__name__)
 
-    def at(self, timeout: int):
+    def at(self, timeout: int) -> "BaseAction":
         """
         Fluently sets a temporary timeout for the immediate next operation.
 
@@ -45,7 +45,7 @@ class BaseAction:
         self._current_wait = WebDriverWait(self.driver, timeout)
         return self
 
-    def set_locator(self, locator: tuple):
+    def set_locator(self, locator: tuple) -> "BaseAction":
         """
         Sets the locator and clears any previously found element.
 
@@ -59,7 +59,7 @@ class BaseAction:
         self._element = None
         return self
 
-    def _find_element(self, condition=None):
+    def _find_element(self, condition=None) -> "BaseAction":
         """
         Internal helper to find and cache the element using the set locator.
         Includes Auto-healing logic if the primary locator fails.
@@ -161,7 +161,7 @@ class BaseAction:
         
         raise exception
 
-    def pause(self, seconds: int = 1):
+    def pause(self, seconds: int = 1) -> "BaseAction":
         """
         Pauses execution for a specified duration.
 

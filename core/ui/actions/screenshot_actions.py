@@ -13,7 +13,7 @@ class ScreenshotActions(BaseAction):
     def __init__(self, driver):
         super().__init__(driver)
         self.last_filepath = None
-    def capture(self, name: str = "screenshot"):
+    def capture(self, name: str = "screenshot") -> "ScreenshotActions":
         """
         Captures a screenshot of the current browser viewport.
 
@@ -54,7 +54,7 @@ class ScreenshotActions(BaseAction):
         except Exception as e:
             self._handle_exception(e, "capture")
 
-    def full_page(self, name: str = "full_page_screenshot"):
+    def full_page(self, name: str = "full_page_screenshot") -> "ScreenshotActions":
         """
         Captures a screenshot of the entire scrollable page height.
 
@@ -109,7 +109,7 @@ class ScreenshotActions(BaseAction):
         except Exception as e:
             self._handle_exception(e, "full_page")
 
-    def screenshot(self, name: str = "element_screenshot"):
+    def screenshot(self, name: str = "element_screenshot") -> "ScreenshotActions":
         """
         Captures a screenshot of the specified UI element.
 

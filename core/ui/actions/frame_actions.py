@@ -9,7 +9,7 @@ class FrameActions(BaseAction):
     Handles switching contexts between the main document and various frames 
     using explicit waits for frame availability.
     """
-    def switch_to(self, locator: tuple):
+    def switch_to(self, locator: tuple) -> "FrameActions":
         """
         Switches the driver focus to a specified frame.
 
@@ -30,7 +30,7 @@ class FrameActions(BaseAction):
         except Exception as e:
             self._handle_exception(e, "switch_to_frame", locator)
 
-    def switch_to_parent(self):
+    def switch_to_parent(self) -> "FrameActions":
         """
         Switches focus to the parent frame of the current frame.
 
@@ -43,7 +43,7 @@ class FrameActions(BaseAction):
         except Exception as e:
             self._handle_exception(e, "switch_to_parent")
 
-    def switch_to_default(self):
+    def switch_to_default(self) -> "FrameActions":
         """
         Switches the driver focus back to the main document (default content).
 

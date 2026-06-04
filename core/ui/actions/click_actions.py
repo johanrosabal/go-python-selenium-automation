@@ -22,7 +22,7 @@ class ClickActions(BaseAction):
         super().__init__(driver)
 
     @allure.step("Clicking on element")
-    def single_click(self):
+    def single_click(self) -> "ClickActions":
         """
         Performs a standard click on an element.
 
@@ -43,7 +43,7 @@ class ClickActions(BaseAction):
             self._handle_exception(e, "element")
 
     @allure.step("Double clicking on element")
-    def double_click(self):
+    def double_click(self) -> "ClickActions":
         """
         Performs a double-click on an element using ActionChains.
 
@@ -60,7 +60,7 @@ class ClickActions(BaseAction):
             self._handle_exception(e, "double_click")
 
     @allure.step("Right clicking on element")
-    def right_click(self):
+    def right_click(self) -> "ClickActions":
         """
         Performs a right-click (context click) on an element using ActionChains.
 
@@ -77,7 +77,7 @@ class ClickActions(BaseAction):
             self._handle_exception(e, "right_click")
 
     @allure.step("Clicking on element")
-    def click(self):
+    def click(self) -> "ClickActions":
         """
         Performs a standard click on an element.
 
@@ -93,7 +93,7 @@ class ClickActions(BaseAction):
             self._handle_exception(e, "click")
 
     @allure.step("Moving mouse pointer to element")
-    def hover(self):
+    def hover(self) -> "ClickActions":
         """
         Moves the mouse pointer over the center of an element.
 
@@ -111,7 +111,7 @@ class ClickActions(BaseAction):
             self._handle_exception(e, "hover")
 
     @allure.step("Clicking and holding on element")
-    def click_and_hold(self):
+    def click_and_hold(self) -> "ClickActions":
         """
         Clicks and holds the left mouse button on an element.
 
@@ -128,7 +128,7 @@ class ClickActions(BaseAction):
             self._handle_exception(e, "click_and_hold")
 
     @allure.step("Releasing mouse button")
-    def release_mouse(self):
+    def release_mouse(self) -> "ClickActions":
         """
         Releases the held mouse button over an element.
 
@@ -146,7 +146,7 @@ class ClickActions(BaseAction):
             self._handle_exception(e, "release_mouse")
 
     @allure.step("Dragging element to target")
-    def drag_and_drop(self, target_locator: tuple):
+    def drag_and_drop(self, target_locator: tuple) -> "ClickActions":
         """
         Performs a full drag and drop operation onto a destination element.
 
