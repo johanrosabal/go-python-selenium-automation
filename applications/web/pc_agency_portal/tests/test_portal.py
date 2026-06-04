@@ -9,8 +9,15 @@ import pytest
 class TestHomePage(BaseTest):
     persistent_session = True
 
+    def test_00_login(self, login_to_portal):
+        """
+        Pre-condition: Authenticate into the portal once.
+        All subsequent tests will reuse this session.
+        """
+        self.logger.info("Login pre-condition completed successfully.")
+
     @test_case(id="PC-PORTAL-001")
-    def test_search_by_policy_number(self, login_to_portal):
+    def test_search_by_policy_number(self):
         """
         Scenario: Search for a policy using the Policy Number tab.
         """
@@ -40,7 +47,7 @@ class TestHomePage(BaseTest):
         self.pause(5)
 
     @test_case(id="PC-PORTAL-002")
-    def test_search_by_insured_name(self, login_to_portal):
+    def test_search_by_insured_name(self):
         """
         Scenario: Search for a policy using the Insured Name tab.
         """
@@ -69,7 +76,7 @@ class TestHomePage(BaseTest):
         self.pause(5)
 
     @test_case(id="PC-PORTAL-003")
-    def test_search_by_submission_number(self, login_to_portal):
+    def test_search_by_submission_number(self):
         """
         Scenario: Search for a policy using the Submission Number tab.
         """
