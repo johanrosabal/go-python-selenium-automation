@@ -21,6 +21,11 @@ class HomePage(BasePage):
     SPINNER = (By.XPATH, "//div[contains(@class,'spinner-policy-search')]")
     PROFILE_INFO = (By.XPATH, "//div[contains(@class, 'profile-info')]")
 
+    def open_home_page(self):
+        """Navigates directly to the Policy Lookup endpoint"""
+        self.open_relative("/")
+        return self
+
     def open_policy_lookup(self):
         """Navigates directly to the Policy Lookup endpoint"""
         self.open_relative("/policy-search")

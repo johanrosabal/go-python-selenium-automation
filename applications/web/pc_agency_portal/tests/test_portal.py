@@ -1,5 +1,5 @@
 from applications.web.pc_agency_portal.tests.base_test import BaseTest
-from applications.web.pc_agency_portal.tests.fixtures.login_fixtures import (
+from applications.web.pc_agency_portal.fixtures.login_fixtures import (
     login_to_portal,
 )
 from core.utils.decorators import test_case
@@ -15,6 +15,9 @@ class TestHomePage(BaseTest):
         """
         self.logger.info("Starting policy number search scenario")
         policy_number = self._current_test_data.get("policy_number")
+
+        # Ensure we are on the Home Page
+        self.app.home_page.open_home_page()
 
         # Perform the search
         self.app.home_page.search_for_policy_number(policy_number)
@@ -43,6 +46,9 @@ class TestHomePage(BaseTest):
         self.logger.info("Starting insured name search scenario")
         insured_name = self._current_test_data.get("insured_name")
 
+        # Ensure we are on the Home Page
+        self.app.home_page.open_home_page()
+
         # Perform the search
         self.app.home_page.search_for_insured_name(insured_name)
 
@@ -68,6 +74,9 @@ class TestHomePage(BaseTest):
         """
         self.logger.info("Starting submission number search scenario")
         submission_number = self._current_test_data.get("submission_number")
+
+        # Ensure we are on the Home Page
+        self.app.home_page.open_home_page()
 
         # Perform the search
         self.app.home_page.search_for_submission_number(submission_number)
