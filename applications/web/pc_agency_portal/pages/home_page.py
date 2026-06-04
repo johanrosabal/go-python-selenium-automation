@@ -81,6 +81,7 @@ class HomePage(BasePage):
 
     @allure.step("Getting error message")
     def get_error_message(self):
+        self.screenshot.full_page("Search Error Message")
         return self.element(self.ERROR_MSG).get_text()
 
     @allure.step("Getting table header from column {column_number}")
