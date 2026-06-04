@@ -12,9 +12,24 @@
     "data": {
       "payload": {
         "companyNumber": 1,
+        "policyState": "IA",
         "effectiveDate": "2026-10-01T12:23:48.000Z"
       },
-      "expected_results": []
+      "expected_results": [
+        {
+          "policyNumber": null,
+          "quoteNumber": 4843545,
+          "insuredName": "Tony Testerino",
+          "dba": "Test",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "6202-12-15T00:00:00",
+          "source": "Legacy Auto Rater",
+          "agencyCode": "N26300",
+          "agencyName": "Berkshire Hathaway Homestate Companies",
+          "policyState": "IA"
+        }
+      ]
     }
   }
 }

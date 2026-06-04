@@ -2,7 +2,7 @@
   "tests": {
     "id": "SEARCH-007-C2",
     "title": "Search by Effective Date Company 2",
-    "description": "Search by effective date Company 2 [73TRT036256]",
+    "description": "Search by effective date Company 2 [70APT04663604]",
     "feature": "Policy Search",
     "story": "Search Policies",
     "severity": "NORMAL",
@@ -12,9 +12,50 @@
     "data": {
       "payload": {
         "companyNumber": 2,
+        "policyState": "NH",
         "effectiveDate": "2026-08-14T00:01:00.000Z"
       },
-      "expected_results": []
+      "expected_results": [
+        {
+          "policyNumber": "70APT04663604",
+          "quoteNumber": 5593155,
+          "insuredName": "ALPHA NETWORKS",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2027-03-20T00:01:00",
+          "source": "MYP",
+          "agencyCode": "N26999",
+          "agencyName": "TEST NICO General Agency for QA",
+          "policyState": "NH"
+        },
+        {
+          "policyNumber": "70APT04663605",
+          "quoteNumber": 5593159,
+          "insuredName": "ALPHA NETWORKS",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2028-03-20T00:01:00",
+          "source": "NICO-Rate",
+          "agencyCode": "N26999",
+          "agencyName": "ANOTHER NEW PRODUCER",
+          "policyState": "NH"
+        },
+        {
+          "policyNumber": "70APT04663104",
+          "quoteNumber": 5593141,
+          "insuredName": "ALPHA NETWORKS (COPY)",
+          "dba": "",
+          "firstName": "",
+          "lastName": "",
+          "effectiveDate": "2027-03-20T00:01:00",
+          "source": "NICO-Rate",
+          "agencyCode": "N26999",
+          "agencyName": "ANOTHER NEW PRODUCER",
+          "policyState": "NH"
+        }
+      ]
     }
   }
 }
