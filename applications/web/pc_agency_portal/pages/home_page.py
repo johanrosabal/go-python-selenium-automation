@@ -100,6 +100,14 @@ class HomePage(BasePage):
         """
         return self.element(self.PROFILE_INFO).at(3).is_visible()
 
+    @allure.step("Waiting for login process to finish")
+    def wait_for_login_success(self, timeout=60):
+        """
+        Explicitly waits for the Profile Info widget to appear, indicating successful login.
+        """
+        self.element(self.PROFILE_INFO).wait_visible(timeout)
+        return self
+
     @allure.step("Waiting for search results to load")
     def wait_for_search_results(self, timeout=15):
         """

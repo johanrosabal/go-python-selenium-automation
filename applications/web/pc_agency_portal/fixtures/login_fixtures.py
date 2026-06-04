@@ -27,5 +27,7 @@ def login_to_portal(request):
     # Perform Microsoft Login and handle Okta MFA via UI prompt
     app.login_page.login_microsoft(email, password)
 
-    # Log that we are done with the login phase
+    # Wait for the login process (redirections, etc) to finish and Home Page to load
     test_instance.logger.info("Waiting for Home Page to become active after login...")
+    app.home_page.wait_for_login_success(timeout=60)
+    test_instance.logger.info("Login successful. Proceeding with tests.")
