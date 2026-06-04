@@ -18,7 +18,7 @@ class TestHomePage(BaseTest):
         self.logger.info("Login pre-condition completed successfully.")
 
     @test_case(id="PC-PORTAL-001")
-    def test_search_by_policy_number(self):
+    def test_home_page_search_by_policy_number(self):
         """
         Scenario: Search for a policy using the Policy Number tab.
         """
@@ -48,7 +48,7 @@ class TestHomePage(BaseTest):
         self.pause(5)
 
     @test_case(id="PC-PORTAL-002")
-    def test_search_by_insured_name(self):
+    def test_home_page_search_by_insured_name(self):
         """
         Scenario: Search for a policy using the Insured Name tab.
         """
@@ -77,7 +77,7 @@ class TestHomePage(BaseTest):
         self.pause(5)
 
     @test_case(id="PC-PORTAL-003")
-    def test_search_by_submission_number(self):
+    def test_home_page_search_by_submission_number(self):
         """
         Scenario: Search for a policy using the Submission Number tab.
         """
@@ -106,7 +106,7 @@ class TestHomePage(BaseTest):
         self.pause(5)
 
     @test_case(id="PC-PORTAL-004")
-    def test_verify_empty_search_validation(self):
+    def test_home_page_verify_empty_search_validation(self):
         """
         Scenario: Verify empty search validation message.
         """
@@ -136,7 +136,7 @@ class TestHomePage(BaseTest):
         self.pause(5)
 
     @test_case(id="PC-PORTAL-005")
-    def test_verify_policy_number_3_chars_validation(self):
+    def test_home_page_verify_policy_number_3_chars_validation(self):
         """
         Scenario: Verify Policy Number 3 Characters Validation
         """
@@ -147,11 +147,15 @@ class TestHomePage(BaseTest):
         self.app.home_page.open_home_page()
 
         # Perform the search
-        self.app.home_page.click_policy_number_tab().type_search_text(search).click_search_button()
+        self.app.home_page.click_policy_number_tab().type_search_text(
+            search
+        ).click_search_button()
 
         # Wait for Error Message Validation
         error_message = self.app.home_page.get_error_message()
-        expected_message = self.test_data.get("expected_result", {}).get("error_message")
+        expected_message = self.test_data.get("expected_result", {}).get(
+            "error_message"
+        )
 
         assert (
             error_message == expected_message
@@ -164,7 +168,7 @@ class TestHomePage(BaseTest):
         self.pause(2)
 
     @test_case(id="PC-PORTAL-006")
-    def test_verify_submission_number_3_chars_validation(self):
+    def test_home_page_verify_submission_number_3_chars_validation(self):
         """
         Scenario: Verify Submission Number 3 Characters Validation
         """
@@ -175,11 +179,15 @@ class TestHomePage(BaseTest):
         self.app.home_page.open_home_page()
 
         # Perform the search
-        self.app.home_page.click_submission_number_tab().type_search_text(search).click_search_button()
+        self.app.home_page.click_submission_number_tab().type_search_text(
+            search
+        ).click_search_button()
 
         # Wait for Error Message Validation
         error_message = self.app.home_page.get_error_message()
-        expected_message = self.test_data.get("expected_result", {}).get("error_message")
+        expected_message = self.test_data.get("expected_result", {}).get(
+            "error_message"
+        )
 
         assert (
             error_message == expected_message
@@ -192,22 +200,28 @@ class TestHomePage(BaseTest):
         self.pause(2)
 
     @test_case(id="PC-PORTAL-007")
-    def test_verify_submission_accept_only_numeric_values_validation(self):
+    def test_home_page_verify_submission_accept_only_numeric_values_validation(self):
         """
         Scenario: Verify Submission Number Accept only Numeric Values Validation
         """
-        self.logger.info("Starting Submission Accept only Numeric Values Validation scenario")
+        self.logger.info(
+            "Starting Submission Accept only Numeric Values Validation scenario"
+        )
         search = self.test_data.get("search") or ""
 
         # Ensure we are on the Home Page
         self.app.home_page.open_home_page()
 
         # Perform the search
-        self.app.home_page.click_submission_number_tab().type_search_text(search).click_search_button()
+        self.app.home_page.click_submission_number_tab().type_search_text(
+            search
+        ).click_search_button()
 
         # Wait for Error Message Validation
         error_message = self.app.home_page.get_error_message()
-        expected_message = self.test_data.get("expected_result", {}).get("error_message")
+        expected_message = self.test_data.get("expected_result", {}).get(
+            "error_message"
+        )
 
         assert (
             error_message == expected_message
