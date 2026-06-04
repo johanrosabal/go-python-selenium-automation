@@ -11,10 +11,10 @@
       "p1"
     ],
     "data": {
-      "search": ""
-    },
-    "expected_result": {
-      "error_message": "Please enter search criteria"
+      "search": "",
+      "expected_result": {
+        "error_message": "Please enter search criteria"
+      }
     }
   }
 }
