@@ -28,6 +28,14 @@ class BaseTest(BaseApp):
     app: BaseApp = None
     recorder: VideoRecorder = None
     
+    @property
+    def test_data(self) -> dict:
+        """
+        Public accessor for the current test's JSON data.
+        Eliminates the need to access the private _current_test_data attribute.
+        """
+        return getattr(self, '_current_test_data', {})
+    
     @pytest.fixture(scope="class", autouse=True)
     def _class_driver_cleanup(self):
         """Internal fixture to ensure context-level driver cleanup."""

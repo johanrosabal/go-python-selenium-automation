@@ -21,42 +21,42 @@ class HomePage(BasePage):
     SPINNER = (By.XPATH, "//div[contains(@class,'spinner-policy-search')]")
     PROFILE_INFO = (By.XPATH, "//div[contains(@class, 'profile-info')]")
 
-    def open_home_page(self):
+    def open_home_page(self) -> "HomePage":
         """Navigates directly to the Policy Lookup endpoint"""
         self.open_relative("/")
         return self
 
-    def open_policy_lookup(self):
+    def open_policy_lookup(self) -> "HomePage":
         """Navigates directly to the Policy Lookup endpoint"""
         self.open_relative("/policy-search")
         return self
 
-    def type_search_text(self, query: str):
+    def type_search_text(self, query: str) -> "HomePage":
         self.element(self.INP_SEARCH).clear().type(query)
         return self
 
-    def click_search_button(self):
+    def click_search_button(self) -> "HomePage":
         self.element(self.BTN_SEARCH).click()
         return self
 
-    def click_policy_number_tab(self):
+    def click_policy_number_tab(self) -> "HomePage":
         self.element(self.TAB_POLICY_NUMBER).click()
         return self
 
-    def click_insured_name_tab(self):
+    def click_insured_name_tab(self) -> "HomePage":
         self.element(self.TAB_INSURED_NAME).click()
         return self
 
-    def click_submission_number_tab(self):
+    def click_submission_number_tab(self) -> "HomePage":
         self.element(self.TAB_SUBMISSION_NUMBER).click()
         return self
 
-    def click_advanced_search_link(self):
+    def click_advanced_search_link(self) -> "HomePage":
         self.element(self.LINK_ADVANCED_SEARCH).click()
         return self
 
     @allure.step("Entering Policy Number: {policy_number}")
-    def search_for_policy_number(self, policy_number: str):
+    def search_for_policy_number(self, policy_number: str) -> "HomePage":
         self.element(self.TAB_POLICY_NUMBER).click()
         self.element(self.INP_SEARCH).clear().type(policy_number)
         self.element(self.BTN_SEARCH).click()
@@ -64,7 +64,7 @@ class HomePage(BasePage):
         return self
 
     @allure.step("Entering Insured Name: {insured_name}")
-    def search_for_insured_name(self, insured_name: str):
+    def search_for_insured_name(self, insured_name: str) -> "HomePage":
         self.element(self.TAB_INSURED_NAME).click()
         self.element(self.INP_SEARCH).clear().type(insured_name)
         self.element(self.BTN_SEARCH).click()
@@ -72,7 +72,7 @@ class HomePage(BasePage):
         return self
 
     @allure.step("Entering Submission Number: {submission_number}")
-    def search_for_submission_number(self, submission_number: str):
+    def search_for_submission_number(self, submission_number: str) -> "HomePage":
         self.element(self.TAB_SUBMISSION_NUMBER).click()
         self.element(self.INP_SEARCH).clear().type(submission_number)
         self.element(self.BTN_SEARCH).click()
@@ -101,7 +101,7 @@ class HomePage(BasePage):
         return self.element(self.PROFILE_INFO).at(3).is_visible()
 
     @allure.step("Waiting for login process to finish")
-    def wait_for_login_success(self, timeout=60):
+    def wait_for_login_success(self, timeout=60) -> "HomePage":
         """
         Explicitly waits for the Profile Info widget to appear, indicating successful login.
         """
@@ -109,7 +109,7 @@ class HomePage(BasePage):
         return self
 
     @allure.step("Waiting for search results to load")
-    def wait_for_search_results(self, timeout=15):
+    def wait_for_search_results(self, timeout=15) -> "HomePage":
         """
         Waits for the loading spinner to appear and disappear,
         and then ensures the results table is populated.
