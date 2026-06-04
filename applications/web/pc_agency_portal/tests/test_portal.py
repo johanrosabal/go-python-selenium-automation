@@ -111,7 +111,7 @@ class TestHomePage(BaseTest):
         Scenario: Verify empty search validation message.
         """
         self.logger.info("Starting empty search validation scenario")
-        search = self.test_data.get("search")
+        search = self.test_data.get("search") or ""
 
         # Ensure we are on the Home Page
         self.app.home_page.open_home_page()
@@ -121,7 +121,9 @@ class TestHomePage(BaseTest):
 
         # Wait for Error Message Validation
         error_message = self.app.home_page.get_error_message()
-        expected_message = self.test_data.get("expected_result", {}).get("error_message")
+        expected_message = self.test_data.get("expected_result", {}).get(
+            "error_message"
+        )
 
         assert (
             error_message == expected_message
