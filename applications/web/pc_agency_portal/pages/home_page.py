@@ -98,7 +98,7 @@ class HomePage(BasePage):
         Returns True if the profile info widget is visible, meaning the user is authenticated.
         Uses a short timeout to prevent long waits when the user is NOT logged in.
         """
-        return self.element(self.PROFILE_INFO).is_visible(timeout=3)
+        return self.element(self.PROFILE_INFO).at(3).is_visible()
 
     @allure.step("Waiting for search results to load")
     def wait_for_search_results(self, timeout=15):
