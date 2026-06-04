@@ -1,7 +1,7 @@
 {
   "tests": {
     "id": "SEARCH-015",
-    "title": "Combined: Agency Code + Policy State Company 1",
+    "title": "Combined: Agency Code + Policy State Company 1 Example 1",
     "description": "Combined search: Agency code + Policy state",
     "feature": "Policy Search",
     "story": "Combined Search",
@@ -13,12 +13,26 @@
     "data": {
       "payload": {
         "companyNumber": 1,
+        "policyNumber": "02APG13263603",
         "agencyCode": [
-          "N26300"
-        ],
-        "policyState": "NE"
+          "H45300"
+        ]
       },
-      "expected_results": []
+      "expected_results": [
+        {
+          "policyNumber": "02APG13263603",
+          "quoteNumber": 16748918,
+          "insuredName": "K************",
+          "dba": "D************",
+          "firstName": "K****",
+          "lastName": "S******",
+          "effectiveDate": "2025-07-28T00:01:00",
+          "source": "MYP",
+          "agencyCode": "H45300",
+          "agencyName": "GEICO Insurance Agency, INC",
+          "policyState": "TN"
+        }
+      ]
     }
   }
 }

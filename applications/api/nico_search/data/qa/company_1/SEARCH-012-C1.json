@@ -1,7 +1,7 @@
 {
   "tests": {
     "id": "SEARCH-015",
-    "title": "Combined: Agency Code + Policy State Company 2 Example 1",
+    "title": "Combined: Agency Code + Policy State Company 1 Example 2",
     "description": "Combined search: Agency code + Policy state",
     "feature": "Policy Search",
     "story": "Combined Search",
@@ -12,25 +12,25 @@
     ],
     "data": {
       "payload": {
-        "companyNumber": 2,
+        "companyNumber": 1,
+        "policyNumber": "02APT04025001",
         "agencyCode": [
-          "N00000"
-        ],
-        "policyNumber": "73TRT029400"
+          "H00001"
+        ]
       },
       "expected_results": [
         {
-          "policyNumber": "73TRT029400",
-          "quoteNumber": 5273811,
-          "insuredName": "FIGA 2 - NICO TRUCKER'S POLICY",
+          "policyNumber": "02APT04025001",
+          "quoteNumber": 0,
+          "insuredName": "1) BHHIC (02) negative",
           "dba": "",
           "firstName": "",
           "lastName": "",
-          "effectiveDate": "2022-07-01T00:01:00",
+          "effectiveDate": "2022-08-21T00:00:00",
           "source": "MYP",
-          "agencyCode": "N00000",
-          "agencyName": "National Indemnity Company",
-          "policyState": "FL"
+          "agencyCode": "H00001",
+          "agencyName": "1 BHHC",
+          "policyState": "TN"
         }
       ]
     }

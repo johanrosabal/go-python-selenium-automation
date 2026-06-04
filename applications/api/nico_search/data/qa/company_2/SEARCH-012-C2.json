@@ -1,0 +1,38 @@
+{
+  "tests": {
+    "id": "SEARCH-015",
+    "title": "Combined: Agency Code + Policy State Company 2 Example 2",
+    "description": "Combined search: Agency code + Policy state",
+    "feature": "Policy Search",
+    "story": "Combined Search",
+    "severity": "NORMAL",
+    "tag": [
+      "p2",
+      "combined"
+    ],
+    "data": {
+      "payload": {
+        "companyNumber": 2,
+        "agencyCode": [
+          "N22223"
+        ],
+        "policyNumber": "74APS127464"
+      },
+      "expected_results": [
+        {
+          "policyNumber": "74APS127464",
+          "quoteNumber": 16636232,
+          "insuredName": "J*********",
+          "dba": "",
+          "firstName": "J***",
+          "lastName": "P****",
+          "effectiveDate": "2025-07-15T00:01:00",
+          "source": "MYP",
+          "agencyCode": "N22223",
+          "agencyName": "Northern States Agency, Inc.",
+          "policyState": "TN"
+        }
+      ]
+    }
+  }
+}
