@@ -19,6 +19,7 @@ class HomePage(BasePage):
     ERROR_MSG = (By.XPATH, "//div[contains(@class,'policy-filter-error')]")
     TABLE_RESULTS = "//table[contains(@class,'results')]"
     SPINNER = (By.XPATH, "//div[contains(@class,'spinner-policy-search')]")
+    PROFILE_INFO = (By.XPATH, "//div[contains(@class, 'profile-info')]")
 
     def open_policy_lookup(self):
         """Navigates directly to the Policy Lookup endpoint"""
@@ -86,6 +87,14 @@ class HomePage(BasePage):
         locator = (By.XPATH, self.TABLE_RESULTS)
         return self.element(locator).is_visible()
 
+    @allure.step("Checking if user is already logged in")
+    def is_logged_in(self) -> bool:
+        """
+        Returns True if the profile info widget is visible, meaning the user is authenticated.
+        Uses a short timeout to prevent long waits when the user is NOT logged in.
+        """
+        return self.element(self.PROFILE_INFO).is_visible(timeout=3)
+
     @allure.step("Waiting for search results to load")
     def wait_for_search_results(self, timeout=15):
         """
@@ -109,7 +118,7 @@ class HomePage(BasePage):
         return self
 
     @allure.step("Getting the first Policy Number from search results")
-    def get_first_policy_number(self, index=1) -> str:
+    def get_policy_number(self, index=1) -> str:
         """
         Uses the framework's TableActions to dynamically find the 'Policy Number'
         column index by header text, and then returns the value from the first row.
@@ -118,5 +127,29 @@ class HomePage(BasePage):
         return (
             self.element(locator)
             .screenshot("Results Policy Number")
-            .get_cell_text(row=1, col="Policy Number")
+            .get_cell_text(row=index, col="Policy Number")
+        )
+
+    @allure.step("Getting the first Insured Name from search results")
+    def get_insured_name(self, index=1) -> str:
+        """
+        Dynamically finds the 'Insured Name' column and returns the value.
+        """
+        locator = (By.XPATH, self.TABLE_RESULTS)
+        return (
+            self.element(locator)
+            .screenshot("Results Insured Name")
+            .get_cell_text(row=index, col="Insured Name")
+        )
+
+    @allure.step("Getting the first Submission Number from search results")
+    def get_submission_number(self, index=1) -> str:
+        """
+        Dynamically finds the 'Submission Number' column and returns the value.
+        """
+        locator = (By.XPATH, self.TABLE_RESULTS)
+        return (
+            self.element(locator)
+            .screenshot("Results Submission Number")
+            .get_cell_text(row=index, col="Submission Number")
         )

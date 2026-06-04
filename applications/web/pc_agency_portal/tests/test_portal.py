@@ -23,7 +23,7 @@ class TestHomePage(BaseTest):
         self.app.home_page.wait_for_search_results(timeout=60)
 
         # Verify the search results
-        actual_policy_number = self.app.home_page.get_first_policy_number()
+        actual_policy_number = self.app.home_page.get_policy_number()
 
         assert (
             policy_number == actual_policy_number
@@ -33,4 +33,56 @@ class TestHomePage(BaseTest):
             f"Successfully verified search result for policy: {actual_policy_number}"
         )
 
+        self.pause(5)
+
+    @test_case(id="PC-PORTAL-002")
+    def test_search_by_insured_name(self, login_to_portal):
+        """
+        Scenario: Search for a policy using the Insured Name tab.
+        """
+        self.logger.info("Starting insured name search scenario")
+        insured_name = self._current_test_data.get("insured_name")
+
+        # Perform the search
+        self.app.home_page.search_for_insured_name(insured_name)
+
+        # Wait for loading spinner and table to load
+        self.app.home_page.wait_for_search_results(timeout=60)
+
+        # Verify the search results
+        actual_insured_name = self.app.home_page.get_insured_name()
+
+        assert (
+            insured_name == actual_insured_name
+        ), f"Expected Insured Name in results to be '{insured_name}', but got '{actual_insured_name}'"
+
+        self.logger.info(
+            f"Successfully verified search result for Insured Name: {actual_insured_name}"
+        )
+        self.pause(5)
+
+    @test_case(id="PC-PORTAL-003")
+    def test_search_by_submission_number(self, login_to_portal):
+        """
+        Scenario: Search for a policy using the Submission Number tab.
+        """
+        self.logger.info("Starting submission number search scenario")
+        submission_number = self._current_test_data.get("submission_number")
+
+        # Perform the search
+        self.app.home_page.search_for_submission_number(submission_number)
+
+        # Wait for loading spinner and table to load
+        self.app.home_page.wait_for_search_results(timeout=60)
+
+        # Verify the search results
+        actual_submission_number = self.app.home_page.get_submission_number()
+
+        assert (
+            submission_number == actual_submission_number
+        ), f"Expected Submission Number in results to be '{submission_number}', but got '{actual_submission_number}'"
+
+        self.logger.info(
+            f"Successfully verified search result for Submission Number: {actual_submission_number}"
+        )
         self.pause(5)
