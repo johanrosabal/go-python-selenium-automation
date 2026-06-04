@@ -42,6 +42,19 @@ class BasePage(BaseApp, metaclass=SingletonMeta):
         screenshot (ScreenshotActions): Handler for screen capture.
         frame (FrameActions): Handler for IFrame context switching.
     """
+    # Explicit Type Hints for IDE Autocomplete (Pylance / PyCharm)
+    click: ClickActions
+    send_keys: SendKeysActions
+    scroll: ScrollActions
+    select: DropdownActions
+    elements: ElementsActions
+    navigation: NavigationActions
+    window: SwitchWindowsActions
+    radio: RadioActions
+    screenshot: ScreenshotActions
+    frame: FrameActions
+    alert: AlertActions
+
     def __init__(self, driver: WebDriver = None):
         """
         Initializes the Page Object and its delegated action components.
