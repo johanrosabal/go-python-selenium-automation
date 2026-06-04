@@ -7,6 +7,7 @@ import pytest
 
 
 class TestHomePage(BaseTest):
+    persistent_session = True
 
     @test_case(id="PC-PORTAL-001")
     def test_search_by_policy_number(self, login_to_portal):
