@@ -54,7 +54,7 @@ class HomePage(BasePage):
         self.element(self.TAB_POLICY_NUMBER).click()
         self.element(self.INP_SEARCH).clear().type(policy_number)
         self.element(self.BTN_SEARCH).click()
-        self.screenshot.capture("Search by Policy Number")
+        self.screenshot.full_page("Search by Policy Number")
         return self
 
     @allure.step("Entering Insured Name: {insured_name}")
@@ -62,7 +62,7 @@ class HomePage(BasePage):
         self.element(self.TAB_INSURED_NAME).click()
         self.element(self.INP_SEARCH).clear().type(insured_name)
         self.element(self.BTN_SEARCH).click()
-        self.screenshot.capture("Search by Insured Name")
+        self.screenshot.full_page("Search by Insured Name")
         return self
 
     @allure.step("Entering Submission Number: {submission_number}")
@@ -70,7 +70,7 @@ class HomePage(BasePage):
         self.element(self.TAB_SUBMISSION_NUMBER).click()
         self.element(self.INP_SEARCH).clear().type(submission_number)
         self.element(self.BTN_SEARCH).click()
-        self.screenshot.capture("Search by Submission Number")
+        self.screenshot.full_page("Search by Submission Number")
         return self
 
     @allure.step("Getting error message")
