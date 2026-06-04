@@ -2,7 +2,7 @@
   "tests": {
     "id": "SEARCH-010",
     "title": "Search by Full Address Company 2",
-    "description": "Search by full address (address + city + state + zip)",
+    "description": "Search by full address (address + city + state + zip), Use 74APR440674 as policy reference [ACES]",
     "feature": "Policy Search",
     "story": "Search Policies",
     "severity": "NORMAL",
@@ -12,10 +12,10 @@
     "data": {
       "payload": {
         "companyNumber": 2,
-        "address": "",
-        "city": "",
-        "state": "",
-        "zip": ""
+        "address": "2145 Ford Parkway",
+        "city": "St. Paul",
+        "state": "MN",
+        "zip": "55116"
       },
       "expected_results": []
     }

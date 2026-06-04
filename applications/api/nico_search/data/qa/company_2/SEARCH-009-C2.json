@@ -12,7 +12,7 @@
     "data": {
       "payload": {
         "companyNumber": 2,
-        "insuredEmailAddress": "@test.com"
+        "insuredEmailAddress": "test@example.com"
       },
       "expected_results": [
         {

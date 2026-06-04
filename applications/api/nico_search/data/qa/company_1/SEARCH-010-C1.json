@@ -2,7 +2,7 @@
   "tests": {
     "id": "SEARCH-010",
     "title": "Search by Full Address Company 1",
-    "description": "Search by full address (address + city + state + zip)",
+    "description": "Search by full address (address + city + state + zip) use 02APG13263603 as policy reference [ACES]",
     "feature": "Policy Search",
     "story": "Search Policies",
     "severity": "NORMAL",
@@ -11,11 +11,11 @@
     ],
     "data": {
       "payload": {
-        "companyNumber": 2,
-        "address": "",
-        "city": "",
-        "state": "",
-        "zip": ""
+        "companyNumber": 1,
+        "address": "3333 Farnam Street",
+        "city": "Omaha",
+        "state": "NE",
+        "zip": "68131"
       },
       "expected_results": []
     }
