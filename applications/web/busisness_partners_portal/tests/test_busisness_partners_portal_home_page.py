@@ -10,12 +10,28 @@ class TestHomePage(BaseTest):
     persistent_session = True
 
     @test_case(id="PC-PORTAL-000")
-    def test_00_login(self, login_to_portal):
+    def test_00_login_and_select_agency(self, login_to_portal):
         """
-        Pre-condition: Authenticate into the portal once.
+        Pre-condition: Authenticate into the portal once and select the target agency.
         All subsequent tests will reuse this session.
         """
         self.logger.info("Login pre-condition completed successfully.")
+        
+        expected_agency = self.test_data.get("agency")
+        self.logger.info(f"Selecting target agency: {expected_agency}")
+
+        # 1. Open agency dropdown and select the item
+        self.app.agency_code_page.click_select_agency_code().select_item(expected_agency)
+
+        # 2. Get actual selected agency code from the UI before submitting (avoiding page transition issues)
+        actual_agency = self.app.agency_code_page.get_selected_agency_code()
+
+        # 3. Assert they match
+        assert expected_agency in actual_agency, f"Expected selected agency to contain '{expected_agency}', but got '{actual_agency}'"
+
+        # 4. Submit and proceed to the portal
+        self.app.agency_code_page.click_submit_agency_code()
+        self.logger.info("Agency selected and submitted successfully.")
 
     # ------------------------------- Tests for Home Page -----------------------------------------
 
