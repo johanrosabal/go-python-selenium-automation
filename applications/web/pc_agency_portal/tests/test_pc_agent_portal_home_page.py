@@ -16,18 +16,20 @@ class TestHomePage(BaseTest):
         All subsequent tests will reuse this session.
         """
         self.logger.info("Login pre-condition completed successfully.")
-        
+
         expected_agency = self.test_data.get("agency") or ""
         self.logger.info(f"Selecting target agency: {expected_agency}")
 
         # 1. Open agency dropdown and select the item
-        self.app.agency_code_page.click_select_agency_code().select_item(expected_agency)
+        self.app.agency_code_page.select_an_agency(expected_agency)
 
         # 2. Get actual selected agency code from the UI before submitting (avoiding page transition issues)
         actual_agency = self.app.agency_code_page.get_selected_agency_code()
 
         # 3. Assert they match
-        assert expected_agency in actual_agency, f"Expected selected agency to contain '{expected_agency}', but got '{actual_agency}'"
+        assert (
+            expected_agency in actual_agency
+        ), f"Expected selected agency to contain '{expected_agency}', but got '{actual_agency}'"
 
         # 4. Submit and proceed to the portal
         self.app.agency_code_page.click_submit_agency_code()

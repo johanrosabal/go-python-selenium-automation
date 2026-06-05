@@ -12,7 +12,7 @@ class AgencyCodePage(BasePage):
         By.XPATH,
         "//div[@class='portal-dropdown-button-text']/span[1]",
     )
-    BTN_SEARCH = (By.XPATH, "//button[text()='Search']")
+    BTN_SUBMIT = (By.XPATH, "//button[text()='Submit']")
     BTN_SIGN_OUT = (By.XPATH, "//div[contains(text(), 'Sign Out')]")
 
     def click_select_agency_code(self) -> "AgencyCodePage":
@@ -46,7 +46,7 @@ class AgencyCodePage(BasePage):
         """
         Clicks the search/submit button for the selected agency code.
         """
-        self.element(self.BTN_SEARCH).click()
+        self.element(self.BTN_SUBMIT).click()
         return self
 
     def select_an_agency(self, agency: str) -> "AgencyCodePage":
