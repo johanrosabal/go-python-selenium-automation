@@ -167,7 +167,7 @@ class TestHomePage(BaseTest):
             f"Successfully verified error message for policy search: {error_message}"
         )
 
-        self.pause(2)
+        self.pause(5)
 
     @test_case(id="PC-PORTAL-006")
     def test_home_page_verify_submission_number_3_chars_validation(self):
@@ -199,7 +199,7 @@ class TestHomePage(BaseTest):
             f"Successfully verified error message for submission search: {error_message}"
         )
 
-        self.pause(2)
+        self.pause(5)
 
     @test_case(id="PC-PORTAL-007")
     def test_home_page_verify_submission_accept_only_numeric_values_validation(self):
@@ -233,7 +233,7 @@ class TestHomePage(BaseTest):
             f"Successfully verified error message for non-numeric submission search: {error_message}"
         )
 
-        self.pause(2)
+        self.pause(5)
 
     # ------------------------------- Tests for Policy Lookup ------------------------------------
 
@@ -385,7 +385,7 @@ class TestHomePage(BaseTest):
             f"Successfully verified error message for policy search: {error_message}"
         )
 
-        self.pause(2)
+        self.pause(5)
 
     @test_case(id="PC-PORTAL-006")
     def test_policy_lookup_verify_submission_number_3_chars_validation(self):
@@ -417,7 +417,7 @@ class TestHomePage(BaseTest):
             f"Successfully verified error message for submission search: {error_message}"
         )
 
-        self.pause(2)
+        self.pause(5)
 
     @test_case(id="PC-PORTAL-007")
     def test_policy_lookup_verify_submission_accept_only_numeric_values_validation(
@@ -453,4 +453,4 @@ class TestHomePage(BaseTest):
             f"Successfully verified error message for non-numeric submission search: {error_message}"
         )
 
-        self.pause(2)
+        self.pause(5)
