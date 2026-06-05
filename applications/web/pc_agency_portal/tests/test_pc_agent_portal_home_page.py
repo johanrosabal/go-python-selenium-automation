@@ -237,7 +237,7 @@ class TestHomePage(BaseTest):
 
     # ------------------------------- Tests for Policy Lookup ------------------------------------
 
-    @test_case(id="PC-PORTAL-001")
+    @test_case(id="PC-PORTAL-011")
     def test_policy_lookup_search_by_policy_number(self):
         """
         Scenario: Search for a policy using the Policy Number tab.
@@ -267,7 +267,7 @@ class TestHomePage(BaseTest):
 
         self.pause(5)
 
-    @test_case(id="PC-PORTAL-002")
+    @test_case(id="PC-PORTAL-012")
     def test_policy_lookup_search_by_insured_name(self):
         """
         Scenario: Search for a policy using the Insured Name tab.
@@ -296,7 +296,7 @@ class TestHomePage(BaseTest):
         )
         self.pause(5)
 
-    @test_case(id="PC-PORTAL-003")
+    @test_case(id="PC-PORTAL-013")
     def test_policy_lookup_search_by_submission_number(self):
         """
         Scenario: Search for a policy using the Submission Number tab.
@@ -325,7 +325,7 @@ class TestHomePage(BaseTest):
         )
         self.pause(5)
 
-    @test_case(id="PC-PORTAL-004")
+    @test_case(id="PC-PORTAL-014")
     def test_policy_lookup_verify_empty_search_validation(self):
         """
         Scenario: Verify empty search validation message.
@@ -355,7 +355,7 @@ class TestHomePage(BaseTest):
 
         self.pause(5)
 
-    @test_case(id="PC-PORTAL-005")
+    @test_case(id="PC-PORTAL-015")
     def test_policy_lookup_verify_policy_number_3_chars_validation(self):
         """
         Scenario: Verify Policy Number 3 Characters Validation
@@ -387,7 +387,7 @@ class TestHomePage(BaseTest):
 
         self.pause(5)
 
-    @test_case(id="PC-PORTAL-006")
+    @test_case(id="PC-PORTAL-016")
     def test_policy_lookup_verify_submission_number_3_chars_validation(self):
         """
         Scenario: Verify Submission Number 3 Characters Validation
@@ -419,7 +419,7 @@ class TestHomePage(BaseTest):
 
         self.pause(5)
 
-    @test_case(id="PC-PORTAL-007")
+    @test_case(id="PC-PORTAL-017")
     def test_policy_lookup_verify_submission_accept_only_numeric_values_validation(
         self,
     ):
