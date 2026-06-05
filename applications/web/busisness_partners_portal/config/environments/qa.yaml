@@ -1,13 +1,12 @@
 # QA Environment configuration for busisness_partners_portal
 web:
-  base_url: "https://testportal.bhhomestate.com"
+  base_url: "https://testbusinesspartners.nationalindemnity.com"
   timeout: 10
-  default_agency: "Berkshire Hathaway Homestate CompaniesOmahaNE"
 
 credentials:
   microsoft:
-    email: "am1yb3NhYmFsQG5hdGlvbmFsaW5kZW1uaXR5LmNvbQ=="
-    password: "Kioq"
+    email: "cGl0YW1haWxib3grbmljby5ob0BnbWFpbC5jb20="
+    password: "QmVya3NoaXJlOTk="
   okta:
-    bypass: false
+    bypass: true
     code: ""

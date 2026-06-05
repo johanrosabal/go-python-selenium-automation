@@ -1,10 +1,10 @@
 {
   "tests": {
     "id": "PC-PORTAL-007",
-    "title": "Verify Submmission Accept only Numeric Values Validation",
-    "description": "Verify that the Submmission Number field search only accept numeric values.",
+    "title": "Verify Quote Accept only Numeric Values Validation",
+    "description": "Verify that the Quote Number field search only accept numeric values.",
     "feature": "Policy Search",
-    "story": "Submmission Accept only Numeric Values Validation",
+    "story": "Quote Accept only Numeric Values Validation",
     "severity": "high",
     "tag": [
       "validation",
@@ -13,7 +13,7 @@
     "data": {
       "search": "1abc",
       "expected_result": {
-        "error_message": "Submission Number values should only have numbers"
+        "error_message": "Quote Number values should only have numbers"
       }
     }
   }

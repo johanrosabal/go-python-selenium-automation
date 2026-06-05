@@ -1,5 +1,5 @@
 from core.ui.common.base_app import BaseApp
-from applications.web.busisness_partners_portal.pages.home_page import HomePage
+from applications.web.busisness_partners_portal.pages.policy_quote_lookup import PolicyQuoteLookup
 from applications.web.busisness_partners_portal.pages.login_page import LoginPage
 from applications.web.busisness_partners_portal.pages.agency_code_page import AgencyCodePage
 
@@ -11,10 +11,10 @@ class BusisnessPartnersPortalApp(BaseApp):
     """
 
     @property
-    def home_page(self) -> HomePage:
-        if not hasattr(self, "_home_page") or self._home_page is None:
-            self._home_page = HomePage()
-        return self._home_page
+    def policy_quote_lookup(self) -> PolicyQuoteLookup:
+        if not hasattr(self, "_policy_quote_lookup") or self._policy_quote_lookup is None:
+            self._policy_quote_lookup = PolicyQuoteLookup()
+        return self._policy_quote_lookup
 
     @property
     def login_page(self) -> LoginPage:

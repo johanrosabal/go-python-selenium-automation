@@ -60,7 +60,7 @@ def login_to_portal(request):
             test_instance.logger.info("On Agency Code page. Skipping auto-selection because this is the explicit agency selection test case.")
         else:
             # Auto-select agency for other tests to proceed to the Home Page
-            agency = test_instance.test_data.get("agency") or test_instance.config.get("web.default_agency") or "Berkshire Hathaway Homestate CompaniesOmahaNE"
+            agency = test_instance.test_data.get("agency") or "Berkshire Hathaway Homestate CompaniesOmahaNE"
             test_instance.logger.info(f"Auto-selecting agency code: {agency}")
             app.agency_code_page.select_an_agency(agency)
             

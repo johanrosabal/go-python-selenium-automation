@@ -1,10 +1,10 @@
 {
   "tests": {
     "id": "PC-PORTAL-016",
-    "title": "Verify Submmission Number 3 Characters Validation (Policy Lookup)",
-    "description": "Verify that the Submmission Number field search with 3 character validation message is displayed in Policy Lookup.",
+    "title": "Verify Quote Number 3 Characters Validation (Policy Lookup)",
+    "description": "Verify that the Quote Number field search with 3 character validation message is displayed in Policy Lookup.",
     "feature": "Policy Lookup",
-    "story": "Submmission Number 3 Characters Validation",
+    "story": "Quote Number 3 Characters Validation",
     "severity": "high",
     "tag": [
       "validation",
@@ -13,7 +13,7 @@
     "data": {
       "search": "12",
       "expected_result": {
-        "error_message": "Submission Number values should be at least 3 digits in length"
+        "error_message": "Quote Number values should be at least 3 digits in length"
       }
     }
   }
