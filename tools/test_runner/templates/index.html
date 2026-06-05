@@ -1258,6 +1258,9 @@
                     <button class="run-btn" id="run-btn" disabled onclick="runSelectedTest()">
                         <span id="run-icon">▶</span> RUN
                     </button>
+                    <button class="run-btn" id="stop-btn" style="display: none; background: linear-gradient(135deg, var(--accent-red), #e03131); box-shadow: 0 4px 15px rgba(255, 85, 85, 0.2); color: #fff;" onclick="stopSelectedTest()">
+                        ⏹ STOP
+                    </button>
                 </div>
             </div>
 
@@ -2636,6 +2639,10 @@
             statusLabel.innerText = "Running...";
             statusLabel.style.color = "var(--text-muted)";
 
+            // Show STOP button, hide RUN button
+            document.getElementById('run-btn').style.display = 'none';
+            document.getElementById('stop-btn').style.display = 'inline-flex';
+
             try {
                 const response = await fetch('/api/run', {
                     method: 'POST',
@@ -2672,9 +2679,33 @@
                 appendLog({ type: 'error', message: `Runner Error: ${error.message}` }, term);
             } finally {
                 flushCaptureBuffer(); // Final flush
+                // Hide STOP button, show RUN button
+                document.getElementById('run-btn').style.display = 'inline-flex';
+                document.getElementById('stop-btn').style.display = 'none';
                 runBtn.disabled = false;
                 runIcon.className = '';
                 runIcon.innerText = '▶';
+            }
+        }
+
+        async function stopSelectedTest() {
+            const stopBtn = document.getElementById('stop-btn');
+            stopBtn.disabled = true;
+            stopBtn.innerHTML = '<span class="spinner" style="border-top-color:#fff; margin-right:8px;"></span> STOPPING...';
+            try {
+                const res = await fetch('/api/stop', { method: 'POST' });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    const term = document.getElementById('terminal');
+                    appendLog({ type: 'log', message: "\n[STOP] Test execution stopped by user." }, term);
+                } else {
+                    alert("Failed to stop test: " + data.message);
+                }
+            } catch (error) {
+                alert("Error sending stop request: " + error.message);
+            } finally {
+                stopBtn.disabled = false;
+                stopBtn.innerHTML = '⏹ STOP';
             }
         }
         // end of runSelectedTest

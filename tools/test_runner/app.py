@@ -11,6 +11,7 @@ from flask import Flask, render_template, request, Response, jsonify, send_from_
 import sys
 
 app = Flask(__name__)
+active_process = None
 
 # Absolute path to the root of the automation framework
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
@@ -227,21 +228,60 @@ def run_test():
     video = data.get("video", False)
     
     def generate_output():
+        global active_process
         env_vars = os.environ.copy()
         env_vars.update({"BROWSER": browser, "ENV": env_name, "HEADLESS": "true" if headless else "false", "VIDEO_ENABLED": "true" if video else "false", "PYTHONPATH": PROJECT_ROOT, "PYTHONIOENCODING": "utf-8"})
         cmd = ["pytest", "-v", "--no-header", "--show-capture=no", "--alluredir=reports/allure-results", "--clean-alluredir", "-o", "log_cli=true", "-o", "log_cli_level=INFO"]
         if isinstance(test_ids, list): cmd.extend(test_ids)
         else: cmd.append(test_ids)
         
-        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=PROJECT_ROOT, env=env_vars, text=True, encoding="utf-8", bufsize=1)
-        yield f"data: {json.dumps({'type': 'start', 'message': f'Running pytest...'})}\n\n"
-        for line in iter(process.stdout.readline, ""):
-            if line: yield f"data: {json.dumps({'type': 'log', 'message': line.strip()})}\n\n"
-        process.stdout.close()
-        return_code = process.wait()
-        yield f"data: {json.dumps({'type': 'end', 'status': 'DONE', 'code': return_code})}\n\n"
+        process = None
+        try:
+            process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=PROJECT_ROOT, env=env_vars, text=True, encoding="utf-8", bufsize=1)
+            active_process = process
+            yield f"data: {json.dumps({'type': 'start', 'message': 'Running pytest...'})}\n\n"
+            for line in iter(process.stdout.readline, ""):
+                if line: yield f"data: {json.dumps({'type': 'log', 'message': line.strip()})}\n\n"
+            
+            process.stdout.close()
+            return_code = process.wait()
+            yield f"data: {json.dumps({'type': 'end', 'status': 'DONE', 'code': return_code})}\n\n"
+        except GeneratorExit:
+            if process and process.poll() is None:
+                if os.name == 'nt':
+                    subprocess.run(['taskkill', '/F', '/T', '/PID', str(process.pid)], capture_output=True)
+                else:
+                    process.terminate()
+                    process.wait()
+        finally:
+            if active_process == process:
+                active_process = None
 
     return Response(generate_output(), mimetype="text/event-stream")
+
+@app.route("/api/stop", methods=["POST"])
+def stop_test():
+    global active_process
+    if active_process and active_process.poll() is None:
+        try:
+            if os.name == 'nt':
+                # Forcefully kill the process tree on Windows to clean up pytest and webdriver/browsers
+                subprocess.run(['taskkill', '/F', '/T', '/PID', str(active_process.pid)], capture_output=True)
+            else:
+                active_process.terminate()
+            active_process.wait(timeout=3)
+            active_process = None
+            return jsonify({"status": "success", "message": "Test execution stopped successfully."})
+        except subprocess.TimeoutExpired:
+            if os.name == 'nt':
+                pass
+            else:
+                active_process.kill()
+            active_process = None
+            return jsonify({"status": "success", "message": "Test execution force killed."})
+        except Exception as e:
+            return jsonify({"status": "error", "message": str(e)}), 500
+    return jsonify({"status": "error", "message": "No active test execution found."}), 400
 
 # --- PAGE INSPECTOR ASSISTANT ---
 
