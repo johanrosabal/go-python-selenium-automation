@@ -2,6 +2,7 @@
 web:
   base_url: "https://testportal.bhhomestate.com"
   timeout: 10
+  default_agency: "Berkshire Hathaway Homestate CompaniesOmahaNE"
 
 credentials:
   microsoft:

@@ -22,6 +22,12 @@ class AgencyCodePage(BasePage):
         self.element(self.SELECT_SEARCH).click()
         return self
 
+    def is_visible(self) -> bool:
+        """
+        Checks if the agency code dropdown is currently visible.
+        """
+        return self.element(self.SELECT_SEARCH).is_visible()
+
     def select_item(self, option: str) -> "AgencyCodePage":
         """
         Selects a specific agency code option from the dropdown list.

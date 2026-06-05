@@ -31,7 +31,43 @@ def login_to_portal(request):
     # Perform Microsoft Login and handle Okta MFA via UI prompt
     app.login_page.login_microsoft(email, password)
 
-    # Wait for the login process (redirections, etc) to finish and Home Page to load
-    test_instance.logger.info("Waiting for Home Page to become active after login...")
-    app.home_page.wait_for_login_success(timeout=60)
-    test_instance.logger.info("Login successful. Proceeding with tests.")
+    # Wait for the login process (redirections, etc) to finish and load either the Agency Code page or the Home Page
+    test_instance.logger.info("Waiting for either Agency Code page or Home Page to become active after login...")
+    import time
+    timeout = 60
+    start_time = time.time()
+    on_agency_page = False
+    on_home_page = False
+    
+    while time.time() - start_time < timeout:
+        if app.agency_code_page.is_visible():
+            on_agency_page = True
+            test_instance.logger.info("Redirected to Agency Code Page.")
+            break
+        if app.home_page.is_logged_in():
+            on_home_page = True
+            test_instance.logger.info("Redirected directly to Home Page.")
+            break
+        time.sleep(1)
+        
+    if not on_agency_page and not on_home_page:
+        raise TimeoutError("Timed out waiting for either Agency Code page or Home Page to load.")
+
+    # Determine if this is the explicit agency selection test case
+    is_select_agency_test = "select_agency" in request.node.name
+
+    if on_agency_page:
+        if is_select_agency_test:
+            test_instance.logger.info("On Agency Code page. Skipping auto-selection because this is the explicit agency selection test case.")
+        else:
+            # Auto-select agency for other tests to proceed to the Home Page
+            agency = test_instance.test_data.get("agency") or test_instance.config.get("web.default_agency") or "Berkshire Hathaway Homestate CompaniesOmahaNE"
+            test_instance.logger.info(f"Auto-selecting agency code: {agency}")
+            app.agency_code_page.select_an_agency(agency)
+            
+            # Wait for the Home Page to load
+            test_instance.logger.info("Waiting for Home Page to become active after agency selection...")
+            app.home_page.wait_for_login_success(timeout=30)
+            test_instance.logger.info("Login and agency selection successful. Proceeding with tests.")
+    else:
+        test_instance.logger.info("Login successful (already on Home Page). Proceeding with tests.")
