@@ -1,0 +1,20 @@
+{
+  "tests": {
+    "id": "PC-PORTAL-004",
+    "title": "Verify empty search validation message",
+    "description": "Verify that the empty search validation message is displayed when the search field is empty.",
+    "feature": "Policy Search",
+    "story": "Empty Search Validation",
+    "severity": "high",
+    "tag": [
+      "validation",
+      "p1"
+    ],
+    "data": {
+      "search": "",
+      "expected_result": {
+        "error_message": "Please enter search criteria"
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "tests": {
+    "id": "PC-PORTAL-005",
+    "title": "Verify Policy Number 3 Characters Validation",
+    "description": "Verify that the Policy Number field search with 3 character validation message is displayed.",
+    "feature": "Policy Search",
+    "story": "Policy Number 3 Characters Validation",
+    "severity": "high",
+    "tag": [
+      "validation",
+      "p1"
+    ],
+    "data": {
+      "search": "ab",
+      "expected_result": {
+        "error_message": "Policy Number values should be at least 3 characters in length"
+      }
+    }
+  }
+}

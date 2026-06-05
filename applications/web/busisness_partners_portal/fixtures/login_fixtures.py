@@ -1,6 +1,7 @@
 import pytest
-from applications.web.pc_agency_portal.app.pc_agency_portal_app import PcAgencyPortalApp
+from applications.web.busisness_partners_portal.app.busisness_partners_portal_app import BusisnessPartnersPortalApp
 from core.utils.base64_utils import decode_base64
+
 
 @pytest.fixture
 def login_to_portal(request):
@@ -9,10 +10,10 @@ def login_to_portal(request):
     It accesses the test instance (self) to use the app and config.
     """
     test_instance = request.instance
-    
+
     # Explicit Type Hinting so your IDE knows exactly what 'app' is
-    app: PcAgencyPortalApp = test_instance.app
-    
+    app: BusisnessPartnersPortalApp = test_instance.app
+
     # Fetch credentials from ConfigManager
     encoded_email = test_instance.config.get("credentials.microsoft.email") or ""
     email = decode_base64(encoded_email)

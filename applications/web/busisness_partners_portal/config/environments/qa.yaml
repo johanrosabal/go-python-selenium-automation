@@ -1,4 +1,4 @@
-# QA Environment configuration for pc_agency_portal
+# QA Environment configuration for busisness_partners_portal
 web:
   base_url: "https://testportal.bhhomestate.com"
   timeout: 10
@@ -6,7 +6,7 @@ web:
 credentials:
   microsoft:
     email: "am1yb3NhYmFsQG5hdGlvbmFsaW5kZW1uaXR5LmNvbQ=="
-    password: "QmVya3NoaXJlOTk="
+    password: "Kioq"
   okta:
-    bypass: true
+    bypass: false
     code: ""

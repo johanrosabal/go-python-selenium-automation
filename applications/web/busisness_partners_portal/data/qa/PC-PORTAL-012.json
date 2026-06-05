@@ -1,0 +1,17 @@
+{
+  "tests": {
+    "id": "PC-PORTAL-012",
+    "title": "Search for a policy using the Insured Name tab (Policy Lookup)",
+    "description": "Validates that searching by a specific Insured Name correctly fetches and displays the expected policy in Policy Lookup.",
+    "feature": "Policy Lookup",
+    "story": "Search by Insured Name",
+    "severity": "critical",
+    "tag": [
+      "smoke",
+      "p1"
+    ],
+    "data": {
+      "insured_name": "DAVID SMITH"
+    }
+  }
+}
