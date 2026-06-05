@@ -5,7 +5,7 @@ web:
 
 credentials:
   microsoft:
-    email: "am1yb3NhYmFsQG5hdGlvbmFsaW5kZW1uaXR5LmNvbQ=="
+    email: "cGl0YW1haWxib3grYmhoYy5ob0BnbWFpbC5jb20="
     password: "QmVya3NoaXJlOTk="
   okta:
     bypass: true
