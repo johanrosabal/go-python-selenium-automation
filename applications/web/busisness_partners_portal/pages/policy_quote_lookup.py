@@ -27,6 +27,8 @@ class PolicyQuoteLookup(BasePage):
         "//button[contains(@class,'btn-username')]/span[2]/span[1]",
     )
 
+    BUTTON_ACCEPT_COOKIES = (By.XPATH, "//button[contains(@class,'cm-accept')]")
+
     def open_home_page(self) -> "PolicyQuoteLookup":
         """Navigates directly to the Policy Lookup endpoint"""
         self.open_relative("/")
@@ -59,6 +61,11 @@ class PolicyQuoteLookup(BasePage):
 
     def click_advanced_search_link(self) -> "PolicyQuoteLookup":
         self.element(self.LINK_ADVANCED_SEARCH).click()
+        return self
+
+    def click_accept_cookies(self) -> "PolicyQuoteLookup":
+        self.element(self.BUTTON_ACCEPT_COOKIES).click()
+        self.element(self.BUTTON_ACCEPT_COOKIES).wait_disappear(timeout=5)
         return self
 
     @allure.step("Entering Policy Number: {policy_number}")

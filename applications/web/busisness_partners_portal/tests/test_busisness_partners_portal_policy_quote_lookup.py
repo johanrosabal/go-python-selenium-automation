@@ -16,6 +16,7 @@ class TestPolicyQuoteLookup(BaseTest):
         All subsequent tests will reuse this session.
         """
         self.logger.info("Login pre-condition completed successfully.")
+        self.app.policy_quote_lookup.click_accept_cookies()
 
     # ------------------------------- Tests for Policy Quote Lookup ------------------------------
 
