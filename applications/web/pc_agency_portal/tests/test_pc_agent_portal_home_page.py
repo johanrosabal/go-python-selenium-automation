@@ -17,7 +17,7 @@ class TestHomePage(BaseTest):
         """
         self.logger.info("Login pre-condition completed successfully.")
         
-        expected_agency = self.test_data.get("agency")
+        expected_agency = self.test_data.get("agency") or ""
         self.logger.info(f"Selecting target agency: {expected_agency}")
 
         # 1. Open agency dropdown and select the item
