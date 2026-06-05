@@ -33,6 +33,7 @@ class TestHomePage(BaseTest):
 
         # 4. Submit and proceed to the portal
         self.app.agency_code_page.click_submit_agency_code()
+        self.app.home_page.wait_for_login_success()
         self.logger.info("Agency selected and submitted successfully.")
 
     # ------------------------------- Tests for Home Page -----------------------------------------
