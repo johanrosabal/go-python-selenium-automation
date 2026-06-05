@@ -21,7 +21,7 @@ class PolicyQuoteLookup(BasePage):
 
     ERROR_MSG = (By.XPATH, "//div[contains(@class,'policy-filter-error')]")
     TABLE_RESULTS = "//table[contains(@role,'table')]"
-    SPINNER = (By.XPATH, "//div[contains(text()'Loading Data...')]")
+    SPINNER = (By.XPATH, "//div[contains(text(), 'Loading Data...')]")
     PROFILE_INFO = (
         By.XPATH,
         "//button[contains(@class,'btn-username')]/span[2]/span[1]",
