@@ -1444,6 +1444,31 @@
                                 <div class="inspector-code" id="code-curl" style="white-space: pre-wrap; word-break: break-all; font-family: monospace; font-size: 0.75rem; line-height: 1.5; padding: 12px; background: rgba(0, 0, 0, 0.2); border-radius: 6px; border: 1px solid var(--border);"></div>
                             </div>
                             <div id="ins-logs" class="inspector-pane hidden">
+                                <!-- Assertion Failure Container for UI Mode -->
+                                <div id="ui-assert-error-container" style="display: none; margin-bottom: 15px; padding: 12px; background: rgba(255, 85, 85, 0.05); border: 1px solid rgba(255, 85, 85, 0.2); border-radius: 6px; border-left: 4px solid var(--accent-red);">
+                                    <div style="font-size: 0.75rem; color: var(--accent-red); font-weight: 800; margin-bottom: 8px;">❌ ASSERTION FAILURE</div>
+                                    <div class="inspector-code" id="ui-code-assert-error" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,85,85,0.1); color: #ffb3b3; white-space: pre-wrap; max-height: 150px; overflow-y: auto;"></div>
+                                    
+                                    <div id="ui-assert-expected-container" style="display: none; margin-top: 15px;">
+                                        <div style="font-size: 0.7rem; color: var(--text-main); font-weight: 800; margin-bottom: 4px;">EXPECTED:</div>
+                                        <div class="inspector-code" id="ui-code-assert-expected" style="background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: var(--text-main); white-space: pre-wrap;"></div>
+                                    </div>
+                                    
+                                    <div id="ui-assert-closest-container" style="display: none; margin-top: 15px;">
+                                        <div style="font-size: 0.7rem; color: var(--text-main); font-weight: 800; margin-bottom: 4px;">CLOSEST ACTUAL MATCH FOUND:</div>
+                                        <div class="inspector-code" id="ui-code-assert-closest" style="background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: var(--text-main); white-space: pre-wrap;"></div>
+                                    </div>
+                                    
+                                    <div id="ui-assert-mismatched-container" style="display: none; margin-top: 15px;">
+                                        <div style="font-size: 0.7rem; color: var(--text-main); font-weight: 800; margin-bottom: 4px;">MISMATCHED FIELDS:</div>
+                                        <div class="inspector-code" id="ui-code-assert-mismatched" style="background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: var(--text-main); white-space: pre-wrap;"></div>
+                                    </div>
+                                    
+                                    <div id="ui-assert-actual-container" style="display: none; margin-top: 15px;">
+                                        <div style="font-size: 0.7rem; color: var(--text-main); font-weight: 800; margin-bottom: 4px;">ACTUAL RESULTS RETURNED:</div>
+                                        <div class="inspector-code" id="ui-code-assert-actual" style="background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: var(--text-main); white-space: pre-wrap;"></div>
+                                    </div>
+                                </div>
                                 <div style="margin-bottom: 8px; font-size: 0.7rem; color: var(--text-muted); font-weight: 800;">SCENARIO LOGS:</div>
                                 <div class="terminal" id="scenario-logs" style="height: 400px; border: 1px solid var(--border); border-radius: 6px;"></div>
                             </div>
@@ -1965,6 +1990,47 @@
                 } else assertActualContainer.style.display = 'none';
             } else {
                 assertContainer.style.display = 'none';
+            }
+
+            // Update UI/Web assertion container if it exists
+            const uiAssertContainer = document.getElementById('ui-assert-error-container');
+            const uiAssertCodeEl = document.getElementById('ui-code-assert-error');
+            const uiAssertExpectedContainer = document.getElementById('ui-assert-expected-container');
+            const uiAssertExpectedCode = document.getElementById('ui-code-assert-expected');
+            const uiAssertClosestContainer = document.getElementById('ui-assert-closest-container');
+            const uiAssertClosestCode = document.getElementById('ui-code-assert-closest');
+            const uiAssertMismatchedContainer = document.getElementById('ui-assert-mismatched-container');
+            const uiAssertMismatchedCode = document.getElementById('ui-code-assert-mismatched');
+            const uiAssertActualContainer = document.getElementById('ui-assert-actual-container');
+            const uiAssertActualCode = document.getElementById('ui-code-assert-actual');
+
+            if (uiAssertContainer) {
+                if (req.assertSummary || req.assertError) {
+                    uiAssertContainer.style.display = 'block';
+                    uiAssertCodeEl.innerText = req.assertSummary || req.assertError;
+                    
+                    if (req.assertExpected) {
+                        uiAssertExpectedContainer.style.display = 'block';
+                        uiAssertExpectedCode.innerText = req.assertExpected.trim();
+                    } else uiAssertExpectedContainer.style.display = 'none';
+                    
+                    if (req.assertClosest) {
+                        uiAssertClosestContainer.style.display = 'block';
+                        uiAssertClosestCode.innerText = req.assertClosest.trim();
+                    } else uiAssertClosestContainer.style.display = 'none';
+                    
+                    if (req.assertMismatched) {
+                        uiAssertMismatchedContainer.style.display = 'block';
+                        uiAssertMismatchedCode.innerText = req.assertMismatched.trim();
+                    } else uiAssertMismatchedContainer.style.display = 'none';
+                    
+                    if (req.assertActual) {
+                        uiAssertActualContainer.style.display = 'block';
+                        uiAssertActualCode.innerText = req.assertActual.trim();
+                    } else uiAssertActualContainer.style.display = 'none';
+                } else {
+                    uiAssertContainer.style.display = 'none';
+                }
             }
             
             // Hide both by default
@@ -3006,6 +3072,11 @@
                 }
             }
 
+            // Reset traceback target index if we see a summary section boundary
+            if (cleanMsg.match(/^={5,}/) || cleanMsg.includes('short test summary info')) {
+                window._currentTracebackTargetIndex = -1;
+            }
+
             // Detect Pytest traceback header to map assertion failure to the correct test request
             const tbMatch = cleanMsg.match(/^_{5,}\s*([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)\s*_{5,}$/);
             if (tbMatch) {
@@ -3128,6 +3199,72 @@
                 htmlMessage = htmlMessage.replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)));
                 htmlMessage = htmlMessage.replace(/\\x([0-9a-fA-F]{2})/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)));
 
+                // 1.5 Detect Assertion Failure (runs for both API and Web/UI modes)
+                const lines = htmlMessage.split('\n');
+                
+                lines.forEach(rawLine => {
+                    const lineText = rawLine.trim();
+                    if (!lineText) return; // Skip empty lines
+                    
+                    if (lineText.includes('AssertionError:') || /E\s+AssertionError:/.test(lineText) || /E\s+Failed:/.test(lineText)) {
+                        let errorMsg = lineText.replace(/^.*E\s+AssertionError:\s*/, 'AssertionError: ').trim();
+                        if (errorMsg.includes('Failed:')) {
+                            errorMsg = lineText.replace(/^.*E\s+Failed:\s*/, 'Failed: ').trim();
+                        } else if (!errorMsg.startsWith('AssertionError:')) {
+                            errorMsg = lineText.replace(/^.*AssertionError:\s*/, 'AssertionError: ').trim();
+                        }
+                        
+                        const targetIdx = (window._currentTracebackTargetIndex !== undefined)
+                            ? window._currentTracebackTargetIndex
+                            : -1;
+                        if (targetIdx !== -1) {
+                            const req = sessionRequests[targetIdx];
+                            if (!req.assertSummary && !req.assertError) {
+                                req.assertSummary = errorMsg;
+                                req.assertExpected = '';
+                                req.assertClosest = '';
+                                req.assertMismatched = '';
+                                req.assertActual = '';
+                                req._currentAssertSection = null;
+                                
+                                isCapturingAssert = true;
+                                assertTargetIndex = targetIdx;
+                                
+                                renderRequestHistory();
+                                selectHistoryItem(targetIdx);
+                            }
+                        }
+                    } else if (isCapturingAssert) {
+                        const req = sessionRequests[assertTargetIndex];
+                        if (req && /^E(\s|$)/.test(lineText)) {
+                            const content = lineText.replace(/^E\s*/, '');
+                            if (content.startsWith('EXPECTED:')) {
+                                req._currentAssertSection = 'expected';
+                            } else if (content.startsWith('CLOSEST ACTUAL MATCH FOUND:')) {
+                                req._currentAssertSection = 'closest';
+                            } else if (content.startsWith('MISMATCHED FIELDS:')) {
+                                req._currentAssertSection = 'mismatched';
+                            } else if (content.startsWith('ACTUAL RESULTS RETURNED')) {
+                                req._currentAssertSection = 'actual';
+                            } else if (content.trim() !== '') {
+                                if (req._currentAssertSection === 'expected') req.assertExpected += content + '\n';
+                                else if (req._currentAssertSection === 'closest') req.assertClosest += content + '\n';
+                                else if (req._currentAssertSection === 'mismatched') req.assertMismatched += content + '\n';
+                                else if (req._currentAssertSection === 'actual') req.assertActual += content + '\n';
+                                else {
+                                    req.assertSummary += '\n' + content;
+                                }
+                            }
+                            
+                            if (activeRequestIndex === assertTargetIndex) {
+                                renderResponseBody(req);
+                            }
+                        } else if (!/^E(\s|$)/.test(lineText)) {
+                            isCapturingAssert = false;
+                        }
+                    }
+                });
+
                 // JSON Pretty Print and Inspector Update for API responses
                 if (currentMode === 'api') {
                     // 0. Detect Current Test Name
@@ -3146,72 +3283,6 @@
                         const url = htmlMessage.split('request to:')[1].trim();
                         createNewRequestEntry(method, url);
                     }
-
-                    // 1.5 Detect Assertion Failure (API)
-                    const lines = htmlMessage.split('\n');
-                    let handledAssert = false;
-                    
-                    lines.forEach(rawLine => {
-                        const lineText = rawLine.trim();
-                        if (!lineText) return; // Skip empty lines
-                        
-                        if (lineText.includes('AssertionError:') || /E\s+AssertionError:/.test(lineText) || /E\s+Failed:/.test(lineText)) {
-                            handledAssert = true;
-                            let errorMsg = lineText.replace(/^.*E\s+AssertionError:\s*/, 'AssertionError: ').trim();
-                            if (errorMsg.includes('Failed:')) {
-                                errorMsg = lineText.replace(/^.*E\s+Failed:\s*/, 'Failed: ').trim();
-                            } else if (!errorMsg.startsWith('AssertionError:')) {
-                                errorMsg = lineText.replace(/^.*AssertionError:\s*/, 'AssertionError: ').trim();
-                            }
-                            
-                            const targetIdx = (window._currentTracebackTargetIndex !== undefined)
-                                ? window._currentTracebackTargetIndex
-                                : -1;
-                            if (targetIdx !== -1) {
-                                const req = sessionRequests[targetIdx];
-                                if (!req.assertSummary && !req.assertError) {
-                                    req.assertSummary = errorMsg;
-                                    req.assertExpected = '';
-                                    req.assertClosest = '';
-                                    req.assertMismatched = '';
-                                    req.assertActual = '';
-                                    req._currentAssertSection = null;
-                                    
-                                    isCapturingAssert = true;
-                                    assertTargetIndex = targetIdx;
-                                    
-                                    renderRequestHistory();
-                                    selectHistoryItem(targetIdx);
-                                }
-                            }
-                        } else if (isCapturingAssert) {
-                            handledAssert = true;
-                            const req = sessionRequests[assertTargetIndex];
-                            if (req && /^E(\s|$)/.test(lineText)) {
-                                const content = lineText.replace(/^E\s*/, '');
-                                if (content.startsWith('EXPECTED:')) {
-                                    req._currentAssertSection = 'expected';
-                                } else if (content.startsWith('CLOSEST ACTUAL MATCH FOUND:')) {
-                                    req._currentAssertSection = 'closest';
-                                } else if (content.startsWith('MISMATCHED FIELDS:')) {
-                                    req._currentAssertSection = 'mismatched';
-                                } else if (content.startsWith('ACTUAL RESULTS RETURNED')) {
-                                    req._currentAssertSection = 'actual';
-                                } else if (content.trim() !== '') {
-                                    if (req._currentAssertSection === 'expected') req.assertExpected += content + '\n';
-                                    else if (req._currentAssertSection === 'closest') req.assertClosest += content + '\n';
-                                    else if (req._currentAssertSection === 'mismatched') req.assertMismatched += content + '\n';
-                                    else if (req._currentAssertSection === 'actual') req.assertActual += content + '\n';
-                                }
-                                
-                                if (activeRequestIndex === assertTargetIndex) {
-                                    renderResponseBody(req);
-                                }
-                            } else if (!/^E(\s|$)/.test(lineText)) {
-                                isCapturingAssert = false;
-                            }
-                        }
-                    });
 
                     // 2. Multi-line Capture Logic (Robust)
                     const hasTimestamp = /^\d{4}-\d{2}-\d{2}/.test(cleanMsg);
@@ -3296,7 +3367,10 @@
                 
                 // Track Time and Logs for UI mode
                 if (currentMode === 'web' && sessionRequests.length > 0) {
-                    const reqIdx = sessionRequests.length - 1;
+                    let reqIdx = sessionRequests.length - 1;
+                    if (window._currentTracebackTargetIndex !== undefined && window._currentTracebackTargetIndex !== -1) {
+                        reqIdx = window._currentTracebackTargetIndex;
+                    }
                     const req = sessionRequests[reqIdx];
                     
                     if (htmlMessage.includes('passed in')) {
@@ -3718,6 +3792,49 @@
                                 (req.status.startsWith('4') || req.status.startsWith('5') || req.status === 'FAILED') ? 'status-error' : 'status-warning';
 
             if (req.mode === 'web') {
+                let assertHTML = "";
+                if (req.assertSummary || req.assertError) {
+                    let assertExpectedHTML = "";
+                    if (req.assertExpected) {
+                        assertExpectedHTML = `
+                            <div class="section-title">Expected</div>
+                            <pre class="code-box" style="background: #fafafa;">${req.assertExpected.trim()}</pre>
+                        `;
+                    }
+                    let assertClosestHTML = "";
+                    if (req.assertClosest) {
+                        assertClosestHTML = `
+                            <div class="section-title">Closest Actual Match Found</div>
+                            <pre class="code-box" style="background: #fafafa;">${req.assertClosest.trim()}</pre>
+                        `;
+                    }
+                    let assertMismatchedHTML = "";
+                    if (req.assertMismatched) {
+                        assertMismatchedHTML = `
+                            <div class="section-title">Mismatched Fields</div>
+                            <pre class="code-box" style="background: #fafafa; color: #b91c1c;">${req.assertMismatched.trim()}</pre>
+                        `;
+                    }
+                    let assertActualHTML = "";
+                    if (req.assertActual) {
+                        assertActualHTML = `
+                            <div class="section-title">Actual Results Returned</div>
+                            <pre class="code-box" style="background: #fafafa;">${req.assertActual.trim()}</pre>
+                        `;
+                    }
+
+                    assertHTML = `
+                        <div class="assert-card" style="margin-top: 20px; padding: 12px; background: #fff5f5; border: 1px solid #fee2e2; border-radius: 6px; border-left: 4px solid #ef4444; page-break-inside: avoid; text-align: left;">
+                            <div style="font-size: 10px; color: #b91c1c; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">❌ ASSERTION FAILURE</div>
+                            <pre class="code-box" style="background: #fafafa; border-color: #fee2e2; color: #b91c1c;">${req.assertSummary || req.assertError}</pre>
+                            ${assertExpectedHTML}
+                            ${assertClosestHTML}
+                            ${assertMismatchedHTML}
+                            ${assertActualHTML}
+                        </div>
+                    `;
+                }
+
                 return `
                     <div class="evidence-card">
                         <div class="evidence-header">
@@ -3734,6 +3851,8 @@
                         
                         <div class="section-title">Scenario Execution Logs</div>
                         <pre class="code-box" style="white-space: pre-wrap; font-family: monospace;">${(req.logBuffer || 'No logs captured').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+                        
+                        ${assertHTML}
                     </div>
                 `;
             }
