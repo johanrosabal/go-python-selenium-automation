@@ -1350,6 +1350,7 @@
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div style="display: flex; align-items: center; gap: 12px;">
                                     <div id="inspector-method-badge" class="method-badge method-get">GET</div>
+                                    <div id="inspector-test-id-badge" class="test-id-badge" style="display: none;"></div>
                                     <div id="inspector-status-badge" class="status-badge status-warning">PENDING</div>
                                     <div id="inspector-assert-badge" class="status-badge status-error" style="display: none;">Assert Failed</div>
                                 </div>
@@ -1604,8 +1605,23 @@
                 finalName = (currentTestName && currentTestName !== "Unknown Test") ? currentTestName : (window._currentExecutingTestName || 'Unknown Test');
             }
 
+            let testCaseId = window._currentExecutingTestId || "";
+            if (!testCaseId && window._lastTestIdSeen) {
+                const testNode = document.querySelector(`.test-item[data-id="${window._lastTestIdSeen}"]`);
+                if (testNode && testNode.dataset.testId) {
+                    testCaseId = testNode.dataset.testId;
+                }
+            }
+            if (!testCaseId && finalName) {
+                const match = finalName.match(/(TC\d+|PC-[A-Z0-9-]+)/i);
+                if (match) {
+                    testCaseId = match[0].toUpperCase();
+                }
+            }
+
             const request = {
                 testId: window._lastTestIdSeen,
+                testCaseId: testCaseId,
                 testName: finalName,
                 method: method,
                 url: url,
@@ -1779,7 +1795,8 @@
                 item.innerHTML = `
                     <div class="history-item-top">
                         <span class="history-method method-${req.method.toLowerCase()}" ${req.mode === 'web' ? 'style="display:none;"' : ''}>${req.method}</span>
-                        ${req.mode === 'web' ? '<span class="history-method" style="background:var(--accent-purple); color:#000;">UI</span>' : ''}
+                        ${req.mode === 'web' ? '<span class="history-method" style="background:var(--accent-purple); color:#000; margin-right:4px;">UI</span>' : ''}
+                        ${req.testCaseId ? `<span class="test-id-badge" style="font-size: 9px; padding: 1px 4px; border-radius: 3px; margin-right:4px; text-transform:none;">${req.testCaseId}</span>` : ''}
                         <span class="history-status ${statusClass}" style="font-size: 10px; padding: 1px 4px; border-radius: 3px;">${req.status}</span>
                         ${assertBadgeHTML}
                     </div>
@@ -1820,6 +1837,16 @@
             const urlEl = document.getElementById('inspector-url');
             const statusBadge = document.getElementById('inspector-status-badge');
             const timeEl = document.getElementById('inspector-time');
+            
+            const testIdBadge = document.getElementById('inspector-test-id-badge');
+            if (testIdBadge) {
+                if (req.testCaseId) {
+                    testIdBadge.innerText = req.testCaseId;
+                    testIdBadge.style.display = 'inline-block';
+                } else {
+                    testIdBadge.style.display = 'none';
+                }
+            }
             
             if (req.mode === 'web') {
                 badge.innerText = 'UI';
@@ -3089,20 +3116,23 @@
         }
 
         function matchAllureToRequest(allureRes, req) {
-            if (!req.testId) return false;
-            
-            // 1. Match by TMS ID / Link name (e.g. PC-PORTAL-011)
+            // 1. Match by TMS ID / Link name (e.g. PC-PORTAL-011) against stored testCaseId
             const tmsLink = allureRes.links && allureRes.links.find(l => l.type === 'tms');
-            if (tmsLink && req.testId === tmsLink.name) {
+            if (tmsLink && req.testCaseId && req.testCaseId === tmsLink.name) {
+                return true;
+            }
+            if (tmsLink && req.testId && req.testId === tmsLink.name) {
                 return true;
             }
             
             // 2. Match by method name
-            const reqMethodMatch = req.testId.match(/::([^:]+)$/);
-            if (reqMethodMatch) {
-                const methodName = reqMethodMatch[1];
-                if (allureRes.fullName && allureRes.fullName.endsWith('#' + methodName)) {
-                    return true;
+            if (req.testId) {
+                const reqMethodMatch = req.testId.match(/::([^:]+)$/);
+                if (reqMethodMatch) {
+                    const methodName = reqMethodMatch[1];
+                    if (allureRes.fullName && allureRes.fullName.endsWith('#' + methodName)) {
+                        return true;
+                    }
                 }
             }
             
@@ -3582,7 +3612,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid #ebecf0; padding-bottom: 12px; margin-bottom: 16px;">
                             <div>
                                 <div style="font-size: 11px; text-transform: uppercase; font-weight: bold; color: #5e6c84; letter-spacing: 0.5px;">Test Case ${index + 1} of ${total}</div>
-                                <h3 style="margin: 4px 0 0 0; font-size: 16px; color: #172b4d; font-weight: 600;">${req.testId ? `[${req.testId}] ` : ''}${req.testName || 'Captured Test'}</h3>
+                                <h3 style="margin: 4px 0 0 0; font-size: 16px; color: #172b4d; font-weight: 600;">${req.testCaseId ? `[${req.testCaseId}] ` : (req.testId ? `[${req.testId}] ` : '')}${req.testName || 'Captured Test'}</h3>
                             </div>
                             <div style="display: flex; gap: 8px; align-items: center;">
                                 <span style="background-color: ${req.mode === 'web' ? '#eae6ff' : '#deebff'}; color: ${req.mode === 'web' ? '#403294' : '#0747a6'}; font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 4px; text-transform: uppercase;">
@@ -3722,7 +3752,7 @@
 
                 text += `================================================================================\n`;
                 text += `TEST CASE ${index + 1} OF ${total}\n`;
-                text += `Title: ${req.testId ? `[${req.testId}] ` : ''}${req.testName || 'Captured Test'}\n`;
+                text += `Title: ${req.testCaseId ? `[${req.testCaseId}] ` : (req.testId ? `[${req.testId}] ` : '')}${req.testName || 'Captured Test'}\n`;
                 text += `Mode: ${req.mode === 'web' ? 'UI' : 'API'}\n`;
                 text += `Status: ${statusText}\n`;
                 text += `Duration: ${req.time || '0.00s'}\n`;
@@ -3954,7 +3984,7 @@
                         <div class="evidence-header">
                             <div>
                                 <span class="evidence-number">Test ${index + 1} of ${total}</span>
-                                <h2 class="test-title">${req.testName || 'UI Test Scenario'}</h2>
+                                <h2 class="test-title">${req.testCaseId ? `[${req.testCaseId}] ` : ''}${req.testName || 'UI Test Scenario'}</h2>
                             </div>
                             <div class="meta-badges">
                                 <span class="badge" style="background:var(--accent-purple); color:#000;">UI</span>
@@ -4072,7 +4102,7 @@
                     <div class="evidence-header">
                         <div>
                             <span class="evidence-number">Test ${index + 1} of ${total}</span>
-                            <h2 class="test-title">${req.testName || 'Captured Request'}</h2>
+                            <h2 class="test-title">${req.testCaseId ? `[${req.testCaseId}] ` : ''}${req.testName || 'Captured Request'}</h2>
                         </div>
                         <div class="meta-badges">
                             <span class="badge ${methodClass}">${req.method}</span>
