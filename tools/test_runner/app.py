@@ -29,7 +29,8 @@ def extract_metadata(file_path, test_method_name):
     """Extracts metadata (id, title, description) from a test method using AST."""
     metadata = {"id": None, "title": test_method_name, "description": ""}
     try:
-        abs_path = os.path.join(PROJECT_ROOT, file_path)
+        normalized_path = file_path.replace("/", os.sep).replace("\\", os.sep)
+        abs_path = os.path.join(PROJECT_ROOT, normalized_path)
         if not os.path.exists(abs_path): return metadata
         with open(abs_path, "r", encoding="utf-8") as f:
             tree = ast.parse(f.read())
@@ -118,7 +119,7 @@ def list_tests():
         for root, _, files in os.walk(full_path):
             for file in files:
                 if file.startswith("test_") and file.endswith(".py"):
-                    rel_path = os.path.relpath(os.path.join(root, file), PROJECT_ROOT)
+                    rel_path = os.path.relpath(os.path.join(root, file), PROJECT_ROOT).replace("\\", "/")
                     with open(os.path.join(root, file), "r", encoding="utf-8") as f:
                         tree = ast.parse(f.read())
                         classes = [node for node in tree.body if isinstance(node, ast.ClassDef)]

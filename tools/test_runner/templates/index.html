@@ -1794,11 +1794,14 @@
 
                 item.innerHTML = `
                     <div class="history-item-top">
-                        <span class="history-method method-${req.method.toLowerCase()}" ${req.mode === 'web' ? 'style="display:none;"' : ''}>${req.method}</span>
-                        ${req.mode === 'web' ? '<span class="history-method" style="background:var(--accent-purple); color:#000; margin-right:4px;">UI</span>' : ''}
-                        ${req.testCaseId ? `<span class="test-id-badge" style="font-size: 9px; padding: 1px 4px; border-radius: 3px; margin-right:4px; text-transform:none;">${req.testCaseId}</span>` : ''}
-                        <span class="history-status ${statusClass}" style="font-size: 10px; padding: 1px 4px; border-radius: 3px;">${req.status}</span>
-                        ${assertBadgeHTML}
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            ${req.mode === 'web' ? '<span class="history-method" style="background:var(--accent-purple); color:#000;">UI</span>' : `<span class="history-method method-${req.method.toLowerCase()}">${req.method}</span>`}
+                            ${req.testCaseId ? `<span class="test-id-badge" style="font-size: 9px; padding: 1px 4px; border-radius: 3px; text-transform:none;">${req.testCaseId}</span>` : ''}
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 4px;">
+                            <span class="history-status ${statusClass}" style="font-size: 10px; padding: 1px 4px; border-radius: 3px;">${req.status}</span>
+                            ${assertBadgeHTML}
+                        </div>
                     </div>
                     <div class="history-name">${req.testName}</div>
                     ${req.mode === 'api' ? `<div style="font-size: 9px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${req.url}</div>` : ''}
@@ -3178,29 +3181,36 @@
 
             // Detect test start using custom logger output to set _lastTestIdSeen early
             if (cleanMsg.includes('STARTING API TEST:') || cleanMsg.includes('STARTING TEST:')) {
-                const match = cleanMsg.match(/STARTING (?:API )?TEST:\s*([A-Za-z0-9-]+)/);
+                const match = cleanMsg.match(/STARTING (?:API )?TEST:\s*([A-Za-z0-9-]+)(?:\s*-\s*(.*))?/);
                 if (match) {
                     const metaId = match[1].trim();
+                    window._currentExecutingTestId = metaId;
+                    
+                    if (match[2]) {
+                        // Title case the name
+                        window._currentExecutingTestName = match[2].trim().replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    }
+
                     const testNode = document.querySelector(`.test-item[data-test-id="${metaId}"]`);
                     if (testNode) {
                         const pytestId = testNode.dataset.id;
                         window._lastTestIdSeen = pytestId;
                         
-                        // Also update current executing info if needed
-                        const rawName = pytestId.split('::').pop();
-                        window._currentExecutingTestName = rawName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                        window._currentExecutingTestId = metaId;
+                        if (!window._currentExecutingTestName) {
+                            const rawName = pytestId.split('::').pop();
+                            window._currentExecutingTestName = rawName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                        }
 
                         // UI Update: Highlight running test
                         testNode.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                         document.querySelectorAll('.test-item').forEach(n => n.classList.remove('active'));
                         testNode.classList.add('active');
-                        
-                        // Add Inspector Scenario for Web mode
-                        if (currentMode === 'web') {
-                            if (sessionRequests.length === 0 || sessionRequests[sessionRequests.length - 1].testName !== window._currentExecutingTestName) {
-                                createNewRequestEntry('UI', '', 'web');
-                            }
+                    }
+                    
+                    // Add Inspector Scenario for Web mode
+                    if (currentMode === 'web') {
+                        if (sessionRequests.length === 0 || sessionRequests[sessionRequests.length - 1].testName !== window._currentExecutingTestName) {
+                            createNewRequestEntry('UI', '', 'web');
                         }
                     }
                 }
@@ -3235,31 +3245,39 @@
                 if (!['FAILED', 'PASSED', 'SKIPPED', 'ERROR', 'xfailed', 'xpassed'].includes(firstWord)) {
                     const parts = cleanMsg.split(' ');
                     const testId = parts[0].trim();
-                window._lastTestIdSeen = testId;
+                    window._lastTestIdSeen = testId;
 
-                // Track ID if mentioned (e.g. TC001)
-                const idMatch = cleanMsg.match(/TC\d+/i);
-                window._currentExecutingTestId = idMatch ? idMatch[0].toUpperCase() : "";
-                
-                // Format name for media gallery: test_my_flow -> Test My Flow
-                const rawName = testId.split('::').pop();
-                window._currentExecutingTestName = rawName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-
-                // UI Update: Highlight running test
-                const testNode = document.querySelector(`.test-item[data-id="${testId}"]`);
-                if (testNode) {
-                    testNode.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    document.querySelectorAll('.test-item').forEach(n => n.classList.remove('active'));
-                    testNode.classList.add('active');
-                }
-                
-                // Add Inspector Scenario for Web mode
-                if (currentMode === 'web') {
-                    // Start new scenario entry if it's the beginning of a new test
-                    if (sessionRequests.length === 0 || sessionRequests[sessionRequests.length - 1].testName !== window._currentExecutingTestName) {
-                        createNewRequestEntry('UI', '', 'web');
+                    // Track ID if mentioned (e.g. TC001 or PC-PORTAL-001)
+                    const idMatch = cleanMsg.match(/(TC\d+|PC-[A-Z0-9-]+)/i);
+                    if (idMatch) {
+                        window._currentExecutingTestId = idMatch[0].toUpperCase();
+                    } else {
+                        // Fallback lookup from tree DOM
+                        const testNode = document.querySelector(`.test-item[data-id="${testId}"]`);
+                        if (testNode && testNode.dataset.testId) {
+                            window._currentExecutingTestId = testNode.dataset.testId;
+                        }
                     }
-                }
+                    
+                    // Format name for media gallery: test_my_flow -> Test My Flow
+                    const rawName = testId.split('::').pop();
+                    window._currentExecutingTestName = rawName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+
+                    // UI Update: Highlight running test
+                    const testNode = document.querySelector(`.test-item[data-id="${testId}"]`);
+                    if (testNode) {
+                        testNode.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        document.querySelectorAll('.test-item').forEach(n => n.classList.remove('active'));
+                        testNode.classList.add('active');
+                    }
+                    
+                    // Add Inspector Scenario for Web mode
+                    if (currentMode === 'web') {
+                        // Start new scenario entry if it's the beginning of a new test
+                        if (sessionRequests.length === 0 || sessionRequests[sessionRequests.length - 1].testName !== window._currentExecutingTestName) {
+                            createNewRequestEntry('UI', '', 'web');
+                        }
+                    }
                 }
             }
 
