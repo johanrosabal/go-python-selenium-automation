@@ -13,7 +13,7 @@
     "data": {
       "search": "1abc",
       "expected_result": {
-        "error_message": "Quote Number values should only have numbers"
+        "error_message": "Quote number should be 3 to 10 characters"
       }
     }
   }

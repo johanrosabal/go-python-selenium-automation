@@ -400,7 +400,7 @@ class TestPolicyQuoteLookup(BaseTest):
         self.app.policy_quote_lookup.open_policy_quote_lookup()
 
         # Perform the search
-        self.app.policy_quote_lookup.click_submission_number_tab().type_search_text(
+        self.app.policy_quote_lookup.click_quote_number_tab().type_search_text(
             search
         ).click_search_button()
 

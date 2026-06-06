@@ -13,7 +13,7 @@
     "data": {
       "search": "ab",
       "expected_result": {
-        "error_message": "Policy Number values should be at least 3 characters in length"
+        "error_message": "Policy number should be 3 to 14 characters"
       }
     }
   }
