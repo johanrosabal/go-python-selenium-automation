@@ -3088,6 +3088,58 @@
             }
         }
 
+        function matchAllureToRequest(allureRes, req) {
+            if (!req.testId) return false;
+            
+            // 1. Match by TMS ID / Link name (e.g. PC-PORTAL-011)
+            const tmsLink = allureRes.links && allureRes.links.find(l => l.type === 'tms');
+            if (tmsLink && req.testId === tmsLink.name) {
+                return true;
+            }
+            
+            // 2. Match by method name
+            const reqMethodMatch = req.testId.match(/::([^:]+)$/);
+            if (reqMethodMatch) {
+                const methodName = reqMethodMatch[1];
+                if (allureRes.fullName && allureRes.fullName.endsWith('#' + methodName)) {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+
+        function fetchAndMergeAllureResults() {
+            return fetch('/api/allure-results')
+                .then(res => res.json())
+                .then(resData => {
+                    if (resData.status === 'success' && resData.results) {
+                        resData.results.forEach(allureRes => {
+                            sessionRequests.forEach((req, idx) => {
+                                if (matchAllureToRequest(allureRes, req)) {
+                                    if (allureRes.status === 'failed' || allureRes.status === 'broken') {
+                                        req.status = 'FAILED';
+                                        if (!req.assertSummary) {
+                                            req.assertSummary = allureRes.statusDetails.message || 'Error occurred';
+                                        }
+                                        if (!req.assertError) {
+                                            req.assertError = allureRes.statusDetails.trace || '';
+                                        }
+                                    } else if (allureRes.status === 'passed') {
+                                        req.status = 'PASSED';
+                                    }
+                                }
+                            });
+                        });
+                        renderRequestHistory();
+                        if (activeRequestIndex !== -1) {
+                            selectHistoryItem(activeRequestIndex);
+                        }
+                    }
+                })
+                .catch(err => console.error("Failed to fetch allure results:", err));
+        }
+
         function appendLog(data, terminal) {
             const span = document.createElement('span');
 
@@ -3130,7 +3182,7 @@
             }
 
             // Detect Pytest traceback header to map assertion failure to the correct test request
-            const tbMatch = cleanMsg.match(/^_{5,}\s*([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)\s*_{5,}$/);
+            const tbMatch = cleanMsg.match(/^_{1,}\s*([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)\s*_{1,}$/);
             if (tbMatch) {
                 const methodName = tbMatch[2];
                 let matchIdx = -1;
@@ -3149,8 +3201,10 @@
 
             // 1. Detect Test Identity (Starting or in-progress)
             if (cleanMsg.includes('::') && !cleanMsg.includes('collected')) {
-                const parts = cleanMsg.split(' ');
-                const testId = parts[0].trim();
+                const firstWord = cleanMsg.split(/\s+/)[0];
+                if (!['FAILED', 'PASSED', 'SKIPPED', 'ERROR', 'xfailed', 'xpassed'].includes(firstWord)) {
+                    const parts = cleanMsg.split(' ');
+                    const testId = parts[0].trim();
                 window._lastTestIdSeen = testId;
 
                 // Track ID if mentioned (e.g. TC001)
@@ -3175,6 +3229,7 @@
                     if (sessionRequests.length === 0 || sessionRequests[sessionRequests.length - 1].testName !== window._currentExecutingTestName) {
                         createNewRequestEntry('UI', '', 'web');
                     }
+                }
                 }
             }
 
@@ -3210,6 +3265,9 @@
                         testNode.classList.add(status.toLowerCase());
                     }
                 }
+
+                // Fetch allure results to update immediately
+                fetchAndMergeAllureResults();
             }
 
             if (data.type === 'end') {
@@ -3220,6 +3278,9 @@
                     'var(--accent-red)';
                 
                 window._currentTracebackTargetIndex = -1;
+
+                // Fetch and merge allure results to display precise failures
+                fetchAndMergeAllureResults();
 
                 // Refresh gallery after execution ends to pick up everything
                 setTimeout(loadExistingMedia, 2000);

@@ -199,6 +199,21 @@ def list_reports():
     media.sort(key=lambda x: os.path.getmtime(os.path.join(PROJECT_ROOT, x["path"])), reverse=True)
     return jsonify({"status": "success", "media": media})
 
+@app.route("/api/allure-results")
+def get_allure_results():
+    results = []
+    allure_dir = os.path.join(REPORTS_DIR, "allure-results")
+    if os.path.exists(allure_dir):
+        for f in os.listdir(allure_dir):
+            if f.endswith("-result.json"):
+                try:
+                    with open(os.path.join(allure_dir, f), "r", encoding="utf-8") as file:
+                        data = json.load(file)
+                        results.append(data)
+                except Exception:
+                    pass
+    return jsonify({"status": "success", "results": results})
+
 @app.route("/api/report/generate", methods=["POST"])
 def generate_report():
     try:
