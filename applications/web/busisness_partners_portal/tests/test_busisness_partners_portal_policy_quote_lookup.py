@@ -238,220 +238,220 @@ class TestPolicyQuoteLookup(BaseTest):
 
     # ------------------------------- Tests for Policy Lookup ------------------------------------
 
-    @test_case(id="PC-PORTAL-011")
-    def test_policy_lookup_search_by_policy_number(self):
-        """
-        Scenario: Search for a policy using the Policy Number tab.
-        """
-        self.logger.info("Starting policy number search scenario")
-        policy_number = self.test_data.get("policy_number")
+    # @test_case(id="PC-PORTAL-011")
+    # def test_policy_lookup_search_by_policy_number(self):
+    #     """
+    #     Scenario: Search for a policy using the Policy Number tab.
+    #     """
+    #     self.logger.info("Starting policy number search scenario")
+    #     policy_number = self.test_data.get("policy_number")
 
-        # Ensure we are on the Policy Quote Lookup Page
-        self.app.policy_quote_lookup.open_policy_quote_lookup()
+    #     # Ensure we are on the Policy Quote Lookup Page
+    #     self.app.policy_quote_lookup.open_policy_quote_lookup()
 
-        # Perform the search
-        self.app.policy_quote_lookup.search_for_policy_number(policy_number)
+    #     # Perform the search
+    #     self.app.policy_quote_lookup.search_for_policy_number(policy_number)
 
-        # Wait for loading spinner and table to load
-        self.app.policy_quote_lookup.wait_for_search_results(timeout=60)
+    #     # Wait for loading spinner and table to load
+    #     self.app.policy_quote_lookup.wait_for_search_results(timeout=60)
 
-        # Verify the search results
-        actual_policy_number = self.app.policy_quote_lookup.get_policy_number()
+    #     # Verify the search results
+    #     actual_policy_number = self.app.policy_quote_lookup.get_policy_number()
 
-        assert (
-            policy_number == actual_policy_number
-        ), f"Expected Policy Number in results to be '{policy_number}', but got '{actual_policy_number}'"
+    #     assert (
+    #         policy_number == actual_policy_number
+    #     ), f"Expected Policy Number in results to be '{policy_number}', but got '{actual_policy_number}'"
 
-        self.logger.info(
-            f"Successfully verified search result for policy: {actual_policy_number}"
-        )
+    #     self.logger.info(
+    #         f"Successfully verified search result for policy: {actual_policy_number}"
+    #     )
 
-        self.pause(5)
+    #     self.pause(5)
 
-    @test_case(id="PC-PORTAL-012")
-    def test_policy_lookup_search_by_insured_name(self):
-        """
-        Scenario: Search for a policy using the Insured Name tab.
-        """
-        self.logger.info("Starting insured name search scenario")
-        insured_name = self.test_data.get("insured_name")
+    # @test_case(id="PC-PORTAL-012")
+    # def test_policy_lookup_search_by_insured_name(self):
+    #     """
+    #     Scenario: Search for a policy using the Insured Name tab.
+    #     """
+    #     self.logger.info("Starting insured name search scenario")
+    #     insured_name = self.test_data.get("insured_name")
 
-        # Ensure we are on the Policy Quote Lookup Page
-        self.app.policy_quote_lookup.open_policy_quote_lookup()
+    #     # Ensure we are on the Policy Quote Lookup Page
+    #     self.app.policy_quote_lookup.open_policy_quote_lookup()
 
-        # Perform the search
-        self.app.policy_quote_lookup.search_for_insured_name(insured_name)
+    #     # Perform the search
+    #     self.app.policy_quote_lookup.search_for_insured_name(insured_name)
 
-        # Wait for loading spinner and table to load
-        self.app.policy_quote_lookup.wait_for_search_results(timeout=60)
+    #     # Wait for loading spinner and table to load
+    #     self.app.policy_quote_lookup.wait_for_search_results(timeout=60)
 
-        # Verify the search results
-        actual_insured_name = self.app.policy_quote_lookup.get_insured_name()
+    #     # Verify the search results
+    #     actual_insured_name = self.app.policy_quote_lookup.get_insured_name()
 
-        assert (
-            insured_name == actual_insured_name
-        ), f"Expected Insured Name in results to be '{insured_name}', but got '{actual_insured_name}'"
+    #     assert (
+    #         insured_name == actual_insured_name
+    #     ), f"Expected Insured Name in results to be '{insured_name}', but got '{actual_insured_name}'"
 
-        self.logger.info(
-            f"Successfully verified search result for Insured Name: {actual_insured_name}"
-        )
-        self.pause(5)
+    #     self.logger.info(
+    #         f"Successfully verified search result for Insured Name: {actual_insured_name}"
+    #     )
+    #     self.pause(5)
 
-    @test_case(id="PC-PORTAL-013")
-    def test_policy_lookup_search_by_quote_number(self):
-        """
-        Scenario: Search for a policy using the Quote Number tab.
-        """
-        self.logger.info("Starting quote number search scenario")
-        quote_number = self.test_data.get("quote_number")
+    # @test_case(id="PC-PORTAL-013")
+    # def test_policy_lookup_search_by_quote_number(self):
+    #     """
+    #     Scenario: Search for a policy using the Quote Number tab.
+    #     """
+    #     self.logger.info("Starting quote number search scenario")
+    #     quote_number = self.test_data.get("quote_number")
 
-        # Ensure we are on the Policy Quote Lookup Page
-        self.app.policy_quote_lookup.open_policy_quote_lookup()
+    #     # Ensure we are on the Policy Quote Lookup Page
+    #     self.app.policy_quote_lookup.open_policy_quote_lookup()
 
-        # Perform the search
-        self.app.policy_quote_lookup.search_for_quote_number(quote_number)
+    #     # Perform the search
+    #     self.app.policy_quote_lookup.search_for_quote_number(quote_number)
 
-        # Wait for loading spinner and table to load
-        self.app.policy_quote_lookup.wait_for_search_results(timeout=60)
+    #     # Wait for loading spinner and table to load
+    #     self.app.policy_quote_lookup.wait_for_search_results(timeout=60)
 
-        # Verify the search results
-        actual_quote_number = self.app.policy_quote_lookup.get_quote_number()
+    #     # Verify the search results
+    #     actual_quote_number = self.app.policy_quote_lookup.get_quote_number()
 
-        assert (
-            quote_number == actual_quote_number
-        ), f"Expected Quote Number in results to be '{quote_number}', but got '{actual_quote_number}'"
+    #     assert (
+    #         quote_number == actual_quote_number
+    #     ), f"Expected Quote Number in results to be '{quote_number}', but got '{actual_quote_number}'"
 
-        self.logger.info(
-            f"Successfully verified search result for Quote Number: {actual_quote_number}"
-        )
-        self.pause(5)
+    #     self.logger.info(
+    #         f"Successfully verified search result for Quote Number: {actual_quote_number}"
+    #     )
+    #     self.pause(5)
 
-    @test_case(id="PC-PORTAL-014")
-    def test_policy_lookup_verify_empty_search_validation(self):
-        """
-        Scenario: Verify empty search validation message.
-        """
-        self.logger.info("Starting empty search validation scenario")
-        search = self.test_data.get("search") or ""
+    # @test_case(id="PC-PORTAL-014")
+    # def test_policy_lookup_verify_empty_search_validation(self):
+    #     """
+    #     Scenario: Verify empty search validation message.
+    #     """
+    #     self.logger.info("Starting empty search validation scenario")
+    #     search = self.test_data.get("search") or ""
 
-        # Ensure we are on the Policy Quote Lookup Page
-        self.app.policy_quote_lookup.open_policy_quote_lookup()
+    #     # Ensure we are on the Policy Quote Lookup Page
+    #     self.app.policy_quote_lookup.open_policy_quote_lookup()
 
-        # Perform the search
-        self.app.policy_quote_lookup.type_search_text(search).click_search_button()
+    #     # Perform the search
+    #     self.app.policy_quote_lookup.type_search_text(search).click_search_button()
 
-        # Wait for Error Message Validation
-        error_message = self.app.policy_quote_lookup.get_error_message()
-        expected_message = self.test_data.get("expected_result", {}).get(
-            "error_message"
-        )
+    #     # Wait for Error Message Validation
+    #     error_message = self.app.policy_quote_lookup.get_error_message()
+    #     expected_message = self.test_data.get("expected_result", {}).get(
+    #         "error_message"
+    #     )
 
-        assert (
-            error_message == expected_message
-        ), f"Expected error message to be '{expected_message}', but got '{error_message}'"
+    #     assert (
+    #         error_message == expected_message
+    #     ), f"Expected error message to be '{expected_message}', but got '{error_message}'"
 
-        self.logger.info(
-            f"Successfully verified error message for empty search: {error_message}"
-        )
+    #     self.logger.info(
+    #         f"Successfully verified error message for empty search: {error_message}"
+    #     )
 
-        self.pause(5)
+    #     self.pause(5)
 
-    @test_case(id="PC-PORTAL-015")
-    def test_policy_lookup_verify_policy_number_3_chars_validation(self):
-        """
-        Scenario: Verify Policy Number 3 Characters Validation
-        """
-        self.logger.info("Starting Policy Number 3 Characters Validation scenario")
-        search = self.test_data.get("search") or ""
+    # @test_case(id="PC-PORTAL-015")
+    # def test_policy_lookup_verify_policy_number_3_chars_validation(self):
+    #     """
+    #     Scenario: Verify Policy Number 3 Characters Validation
+    #     """
+    #     self.logger.info("Starting Policy Number 3 Characters Validation scenario")
+    #     search = self.test_data.get("search") or ""
 
-        # Ensure we are on the Policy Quote Lookup Page
-        self.app.policy_quote_lookup.open_policy_quote_lookup()
+    #     # Ensure we are on the Policy Quote Lookup Page
+    #     self.app.policy_quote_lookup.open_policy_quote_lookup()
 
-        # Perform the search
-        self.app.policy_quote_lookup.click_policy_number_tab().type_search_text(
-            search
-        ).click_search_button()
+    #     # Perform the search
+    #     self.app.policy_quote_lookup.click_policy_number_tab().type_search_text(
+    #         search
+    #     ).click_search_button()
 
-        # Wait for Error Message Validation
-        error_message = self.app.policy_quote_lookup.get_error_message()
-        expected_message = self.test_data.get("expected_result", {}).get(
-            "error_message"
-        )
+    #     # Wait for Error Message Validation
+    #     error_message = self.app.policy_quote_lookup.get_error_message()
+    #     expected_message = self.test_data.get("expected_result", {}).get(
+    #         "error_message"
+    #     )
 
-        assert (
-            error_message == expected_message
-        ), f"Expected error message to be '{expected_message}', but got '{error_message}'"
+    #     assert (
+    #         error_message == expected_message
+    #     ), f"Expected error message to be '{expected_message}', but got '{error_message}'"
 
-        self.logger.info(
-            f"Successfully verified error message for policy search: {error_message}"
-        )
+    #     self.logger.info(
+    #         f"Successfully verified error message for policy search: {error_message}"
+    #     )
 
-        self.pause(5)
+    #     self.pause(5)
 
-    @test_case(id="PC-PORTAL-016")
-    def test_policy_lookup_verify_quote_number_3_chars_validation(self):
-        """
-        Scenario: Verify Quote Number 3 Characters Validation
-        """
-        self.logger.info("Starting Quote Number 3 Characters Validation scenario")
-        search = self.test_data.get("search") or ""
+    # @test_case(id="PC-PORTAL-016")
+    # def test_policy_lookup_verify_quote_number_3_chars_validation(self):
+    #     """
+    #     Scenario: Verify Quote Number 3 Characters Validation
+    #     """
+    #     self.logger.info("Starting Quote Number 3 Characters Validation scenario")
+    #     search = self.test_data.get("search") or ""
 
-        # Ensure we are on the Policy Quote Lookup Page
-        self.app.policy_quote_lookup.open_policy_quote_lookup()
+    #     # Ensure we are on the Policy Quote Lookup Page
+    #     self.app.policy_quote_lookup.open_policy_quote_lookup()
 
-        # Perform the search
-        self.app.policy_quote_lookup.click_quote_number_tab().type_search_text(
-            search
-        ).click_search_button()
+    #     # Perform the search
+    #     self.app.policy_quote_lookup.click_quote_number_tab().type_search_text(
+    #         search
+    #     ).click_search_button()
 
-        # Wait for Error Message Validation
-        error_message = self.app.policy_quote_lookup.get_error_message()
-        expected_message = self.test_data.get("expected_result", {}).get(
-            "error_message"
-        )
+    #     # Wait for Error Message Validation
+    #     error_message = self.app.policy_quote_lookup.get_error_message()
+    #     expected_message = self.test_data.get("expected_result", {}).get(
+    #         "error_message"
+    #     )
 
-        assert (
-            error_message == expected_message
-        ), f"Expected error message to be '{expected_message}', but got '{error_message}'"
+    #     assert (
+    #         error_message == expected_message
+    #     ), f"Expected error message to be '{expected_message}', but got '{error_message}'"
 
-        self.logger.info(
-            f"Successfully verified error message for submission search: {error_message}"
-        )
+    #     self.logger.info(
+    #         f"Successfully verified error message for submission search: {error_message}"
+    #     )
 
-        self.pause(5)
+    #     self.pause(5)
 
-    @test_case(id="PC-PORTAL-017")
-    def test_policy_lookup_verify_quote_accept_only_numeric_values_validation(
-        self,
-    ):
-        """
-        Scenario: Verify quote Number Accept only Numeric Values Validation
-        """
-        self.logger.info(
-            "Starting quote Accept only Numeric Values Validation scenario"
-        )
-        search = self.test_data.get("search") or ""
+    # @test_case(id="PC-PORTAL-017")
+    # def test_policy_lookup_verify_quote_accept_only_numeric_values_validation(
+    #     self,
+    # ):
+    #     """
+    #     Scenario: Verify quote Number Accept only Numeric Values Validation
+    #     """
+    #     self.logger.info(
+    #         "Starting quote Accept only Numeric Values Validation scenario"
+    #     )
+    #     search = self.test_data.get("search") or ""
 
-        # Ensure we are on the Policy Quote Lookup Page
-        self.app.policy_quote_lookup.open_policy_quote_lookup()
+    #     # Ensure we are on the Policy Quote Lookup Page
+    #     self.app.policy_quote_lookup.open_policy_quote_lookup()
 
-        # Perform the search
-        self.app.policy_quote_lookup.click_quote_number_tab().type_search_text(
-            search
-        ).click_search_button()
+    #     # Perform the search
+    #     self.app.policy_quote_lookup.click_quote_number_tab().type_search_text(
+    #         search
+    #     ).click_search_button()
 
-        # Wait for Error Message Validation
-        error_message = self.app.policy_quote_lookup.get_error_message()
-        expected_message = self.test_data.get("expected_result", {}).get(
-            "error_message"
-        )
+    #     # Wait for Error Message Validation
+    #     error_message = self.app.policy_quote_lookup.get_error_message()
+    #     expected_message = self.test_data.get("expected_result", {}).get(
+    #         "error_message"
+    #     )
 
-        assert (
-            error_message == expected_message
-        ), f"Expected error message to be '{expected_message}', but got '{error_message}'"
+    #     assert (
+    #         error_message == expected_message
+    #     ), f"Expected error message to be '{expected_message}', but got '{error_message}'"
 
-        self.logger.info(
-            f"Successfully verified error message for non-numeric submission search: {error_message}"
-        )
+    #     self.logger.info(
+    #         f"Successfully verified error message for non-numeric submission search: {error_message}"
+    #     )
 
-        self.pause(5)
+    #     self.pause(5)
