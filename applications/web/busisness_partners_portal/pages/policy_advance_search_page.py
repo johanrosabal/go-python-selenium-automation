@@ -52,45 +52,35 @@ class PolicyAdvanceSearchPage(BasePage):
 
     @allure.step("Entering Policy Number: {policy_number}")
     def type_policy_number(self, policy_number: str) -> "PolicyAdvanceSearchPage":
-        self.element(self.INP_POLICY_NUMBER).wait_visible().click().clear().type(
-            policy_number
-        )
+        self.element(self.INP_POLICY_NUMBER).wait_visible().type_js(policy_number, clear=True)
         return self
 
     @allure.step("Entering Insured Name: {insured_name}")
     def type_insured_name(self, insured_name: str) -> "PolicyAdvanceSearchPage":
-        self.element(self.INP_INSURED_NAME).wait_visible().click().clear().type(
-            insured_name
-        )
+        self.element(self.INP_INSURED_NAME).wait_visible().type_js(insured_name, clear=True)
         return self
 
     @allure.step("Entering Quote Number: {quote_number}")
     def type_quote_number(self, quote_number: str) -> "PolicyAdvanceSearchPage":
-        self.element(self.INP_QUOTE_NUMBER).wait_visible().click().clear().type(
-            quote_number
-        )
+        self.element(self.INP_QUOTE_NUMBER).wait_visible().type_js(quote_number, clear=True)
         return self
 
     @allure.step("Entering Effective Date: {effective_date}")
     def type_effective_date(self, effective_date: str) -> "PolicyAdvanceSearchPage":
-        self.element(self.INP_EFFECTIVE_DATE).wait_visible().click().clear().type(
-            effective_date
-        )
+        self.element(self.INP_EFFECTIVE_DATE).wait_visible().type_js(effective_date, clear=True)
         return self
 
     @allure.step("Entering Insured Phone Number: {phone_number}")
     def type_insured_phone_number(self, phone_number: str) -> "PolicyAdvanceSearchPage":
-        self.element(self.INP_INSURED_PHONE_NUMBER).wait_visible().click().clear().type(
-            phone_number
-        )
+        self.element(self.INP_INSURED_PHONE_NUMBER).wait_visible().type_js(phone_number, clear=True)
         return self
 
     @allure.step("Entering VIN: {vin}")
     def type_vin(self, vin: str) -> "PolicyAdvanceSearchPage":
-        self.element(self.INP_VIN).wait_visible().click().clear().type(vin)
+        self.element(self.INP_VIN).wait_visible().type_js(vin, clear=True)
         return self
 
-    @allure.step("Entering Policy State: {vin}")
+    @allure.step("Entering Policy State: {option}")
     def select_policy_state(self, option: str) -> "PolicyAdvanceSearchPage":
         ITEM_OPTION = (By.XPATH, f"//mat-option/span[contains(text(),'{option}')]")
         self.element(self.TXT_POLICY_STATE).wait_visible().click()
@@ -101,7 +91,7 @@ class PolicyAdvanceSearchPage(BasePage):
     def type_insured_email_address(self, email: str) -> "PolicyAdvanceSearchPage":
         self.element(
             self.INP_INSURED_EMAIL_ADDRESS
-        ).wait_visible().click().clear().type(email)
+        ).wait_visible().type_js(email, clear=True)
         return self
 
     @allure.step("Clicking Search button")
