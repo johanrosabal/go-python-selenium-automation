@@ -208,7 +208,7 @@ class UIElement(BaseAction):
             UIElement: Self instance for method chaining.
         """
         self._log_action("Typing encrypted text into")
-        self._send_keys.at(self._get_current_timeout()).encrypted().set_text(text, clear=clear)
+        self._send_keys.at(self._get_current_timeout()).encrypted().type(text, clear=clear)
         return self
 
     def type_js(self, text: str, clear: bool = False) -> "UIElement":
@@ -223,7 +223,7 @@ class UIElement(BaseAction):
             UIElement: Self instance for method chaining.
         """
         self._log_action(f"Setting text '{text}' via JS in")
-        self._send_keys.at(self._get_current_timeout()).set_text_js(text, clear=clear)
+        self._send_keys.at(self._get_current_timeout()).type_js(text, clear=clear)
         return self
 
     def type_by_character(self, text: str) -> "UIElement":
