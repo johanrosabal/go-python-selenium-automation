@@ -40,7 +40,7 @@ class PolicyQuoteLookup(BasePage):
         return self
 
     def type_search_text(self, query: str) -> "PolicyQuoteLookup":
-        self.element(self.INP_SEARCH).clear().type(query)
+        self.element(self.INP_SEARCH).wait_visible().clear().type(query)
         return self
 
     def click_search_button(self) -> "PolicyQuoteLookup":
@@ -70,25 +70,25 @@ class PolicyQuoteLookup(BasePage):
 
     @allure.step("Entering Policy Number: {policy_number}")
     def search_for_policy_number(self, policy_number: str) -> "PolicyQuoteLookup":
-        self.element(self.TAB_POLICY_NUMBER).click()
-        self.element(self.INP_SEARCH).clear().type(policy_number)
-        self.element(self.BTN_SEARCH).click()
+        self.click_policy_number_tab()
+        self.type_search_text(policy_number)
+        self.click_search_button()
         self.screenshot.full_page("Search by Policy Number")
         return self
 
     @allure.step("Entering Insured Name: {insured_name}")
     def search_for_insured_name(self, insured_name: str) -> "PolicyQuoteLookup":
-        self.element(self.TAB_INSURED_NAME).click()
-        self.element(self.INP_SEARCH).clear().type(insured_name)
-        self.element(self.BTN_SEARCH).click()
+        self.click_insured_name_tab()
+        self.type_search_text(insured_name)
+        self.click_search_button()
         self.screenshot.full_page("Search by Insured Name")
         return self
 
-    @allure.step("Entering Submission Number: {submission_number}")
-    def search_for_quote_number(self, submission_number: str) -> "PolicyQuoteLookup":
-        self.element(self.TAB_QUOTE_NUMBER).click()
-        self.element(self.INP_SEARCH).clear().type(submission_number)
-        self.element(self.BTN_SEARCH).click()
+    @allure.step("Entering Quote Number: {quote_number}")
+    def search_for_quote_number(self, quote_number: str) -> "PolicyQuoteLookup":
+        self.click_quote_number_tab()
+        self.type_search_text(quote_number)
+        self.click_search_button()
         self.screenshot.full_page("Search by Submission Number")
         return self
 
