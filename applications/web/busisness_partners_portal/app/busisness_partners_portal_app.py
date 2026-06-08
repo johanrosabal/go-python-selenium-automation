@@ -1,6 +1,7 @@
 from core.ui.common.base_app import BaseApp
 from applications.web.busisness_partners_portal.pages.policy_quote_lookup import PolicyQuoteLookup
 from applications.web.busisness_partners_portal.pages.login_page import LoginPage
+from applications.web.busisness_partners_portal.pages.policy_advance_search_page import PolicyAdvanceSearchPage
 
 
 class BusisnessPartnersPortalApp(BaseApp):
@@ -20,3 +21,9 @@ class BusisnessPartnersPortalApp(BaseApp):
         if not hasattr(self, "_login_page") or self._login_page is None:
             self._login_page = LoginPage()
         return self._login_page
+
+    @property
+    def policy_advance_search_page(self) -> PolicyAdvanceSearchPage:
+        if not hasattr(self, "_policy_advance_search_page") or self._policy_advance_search_page is None:
+            self._policy_advance_search_page = PolicyAdvanceSearchPage()
+        return self._policy_advance_search_page
