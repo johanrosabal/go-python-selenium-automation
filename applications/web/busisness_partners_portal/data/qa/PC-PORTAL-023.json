@@ -1,0 +1,18 @@
+{
+  "tests": {
+    "id": "PC-PORTAL-023",
+    "title": "Advanced Search verify Clear button functionality",
+    "description": "Validates that typing into fields and clicking the Clear button clears all input values.",
+    "feature": "Policy Search",
+    "story": "Advanced Search Clear Functionality",
+    "severity": "normal",
+    "tag": [
+      "regression"
+    ],
+    "data": {
+      "policy_number": "70APT039270",
+      "insured_name": "STACEY HILL",
+      "quote_number": "5234284"
+    }
+  }
+}

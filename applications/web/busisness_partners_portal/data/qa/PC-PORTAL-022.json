@@ -1,0 +1,17 @@
+{
+  "tests": {
+    "id": "PC-PORTAL-022",
+    "title": "Advanced Search for a policy using the Quote Number",
+    "description": "Validates that searching by a specific Quote Number in the Advanced Search section correctly fetches and displays the expected policy.",
+    "feature": "Policy Search",
+    "story": "Advanced Search by Quote Number",
+    "severity": "critical",
+    "tag": [
+      "smoke",
+      "p1"
+    ],
+    "data": {
+      "quote_number": "5234284"
+    }
+  }
+}
