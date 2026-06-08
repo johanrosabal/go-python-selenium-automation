@@ -13,7 +13,7 @@
     "data": {
       "search": "12",
       "expected_result": {
-        "error_message": "Quote number should be 3 to 10 characters"
+        "error_message": "Quote number should only have numeric values"
       }
     }
   }
