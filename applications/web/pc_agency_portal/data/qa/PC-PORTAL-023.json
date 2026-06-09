@@ -1,0 +1,19 @@
+{
+  "tests": {
+    "id": "PC-PORTAL-023",
+    "title": "Advanced Search Clear function",
+    "description": "Validates that filling multiple fields on the Advanced Search page and clicking the Clear button resets all fields to empty.",
+    "feature": "Policy Search",
+    "story": "Advanced Search Clear",
+    "severity": "normal",
+    "tag": [
+      "regression"
+    ],
+    "data": {
+      "agency": "01-150-1",
+      "policy_number": "01APT04875901",
+      "insured_name": "BRENDY AK TEST 1",
+      "submission_number": "5699645"
+    }
+  }
+}

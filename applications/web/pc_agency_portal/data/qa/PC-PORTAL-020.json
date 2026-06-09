@@ -1,17 +1,18 @@
 {
   "tests": {
     "id": "PC-PORTAL-020",
-    "title": "Search for a policy using the Submission Number tab",
-    "description": "Validates that searching by a specific Submission Number correctly fetches and displays the expected policy.",
+    "title": "Advanced Search by Policy Number",
+    "description": "Validates that searching by a specific Policy Number in the Advanced Search page correctly fetches and displays the expected policy.",
     "feature": "Policy Search",
-    "story": "Search by Submission Number",
+    "story": "Advanced Search by Policy Number",
     "severity": "critical",
     "tag": [
       "smoke",
       "p1"
     ],
     "data": {
-      "submission_number": "5699645"
+      "agency": "01-150-1",
+      "policy_number": "01APT04875901"
     }
   }
 }

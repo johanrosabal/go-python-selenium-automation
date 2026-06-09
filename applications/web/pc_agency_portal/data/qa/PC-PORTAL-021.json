@@ -1,0 +1,18 @@
+{
+  "tests": {
+    "id": "PC-PORTAL-021",
+    "title": "Advanced Search by Insured Name",
+    "description": "Validates that searching by a specific Insured Name in the Advanced Search page correctly fetches and displays the expected policy.",
+    "feature": "Policy Search",
+    "story": "Advanced Search by Insured Name",
+    "severity": "critical",
+    "tag": [
+      "smoke",
+      "p1"
+    ],
+    "data": {
+      "agency": "01-150-1",
+      "insured_name": "BRENDY AK TEST 1"
+    }
+  }
+}
