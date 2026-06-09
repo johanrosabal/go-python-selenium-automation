@@ -1445,6 +1445,10 @@
                                 <div class="inspector-code" id="code-curl" style="white-space: pre-wrap; word-break: break-all; font-family: monospace; font-size: 0.75rem; line-height: 1.5; padding: 12px; background: rgba(0, 0, 0, 0.2); border-radius: 6px; border: 1px solid var(--border);"></div>
                             </div>
                             <div id="ins-logs" class="inspector-pane hidden">
+                                <!-- Description & Test Data for UI Mode -->
+                                <div id="ui-description-container" style="display: none; margin-bottom: 15px; padding: 12px; background: rgba(139, 233, 253, 0.05); border: 1px solid var(--border); border-radius: 6px;"></div>
+                                <div id="ui-test-data-container" style="display: none; margin-bottom: 15px;"></div>
+
                                 <!-- Assertion Failure Container for UI Mode -->
                                 <div id="ui-assert-error-container" style="display: none; margin-bottom: 15px; padding: 12px; background: rgba(255, 85, 85, 0.05); border: 1px solid rgba(255, 85, 85, 0.2); border-radius: 6px; border-left: 4px solid var(--accent-red);">
                                     <div id="ui-assert-header" style="font-size: 0.75rem; color: var(--accent-red); font-weight: 800; margin-bottom: 8px;">❌ ASSERTION FAILURE</div>
@@ -1872,7 +1876,7 @@
                 badge.className = 'method-badge';
                 badge.style.background = 'var(--accent-purple)';
                 badge.style.color = '#000';
-                urlEl.innerText = 'UI Test Scenario';
+                urlEl.innerText = req.testName || 'UI Test Scenario';
                 
                 // Hide API tabs
                 document.querySelectorAll('.inspector-tab').forEach(t => {
@@ -1881,6 +1885,54 @@
                 });
                 switchInspectorTab('logs');
                 
+                // Populate description in GUI
+                const uiDescContainer = document.getElementById('ui-description-container');
+                if (uiDescContainer) {
+                    if (req.description) {
+                        uiDescContainer.innerHTML = `
+                            <div style="font-size: 0.7rem; color: var(--accent-blue); font-weight: 800; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Description</div>
+                            <div style="font-size: 0.8rem; color: var(--text-main); white-space: pre-line; line-height: 1.4;">${req.description.trim()}</div>
+                        `;
+                        uiDescContainer.style.display = 'block';
+                    } else {
+                        uiDescContainer.style.display = 'none';
+                    }
+                }
+
+                // Populate test data in GUI
+                const uiTestDataContainer = document.getElementById('ui-test-data-container');
+                if (uiTestDataContainer) {
+                    if (req.testData && Object.keys(req.testData).length > 0) {
+                        let tableHTML = `
+                            <div style="font-size: 0.7rem; color: var(--accent-green); font-weight: 800; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Datos Usados (Test Data)</div>
+                            <table class="header-table">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: left; padding: 4px 8px; font-size: 11px; width: 30%;">Field</th>
+                                        <th style="text-align: left; padding: 4px 8px; font-size: 11px;">Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        `;
+                        for (const [k, v] of Object.entries(req.testData)) {
+                            tableHTML += `
+                                <tr>
+                                    <td style="padding: 4px 8px; font-weight: 600;">${k}</td>
+                                    <td style="padding: 4px 8px; font-family: monospace; color: var(--accent-blue);">${typeof v === 'object' ? JSON.stringify(v) : v}</td>
+                                </tr>
+                            `;
+                        }
+                        tableHTML += `
+                                </tbody>
+                            </table>
+                        `;
+                        uiTestDataContainer.innerHTML = tableHTML;
+                        uiTestDataContainer.style.display = 'block';
+                    } else {
+                        uiTestDataContainer.style.display = 'none';
+                    }
+                }
+
                 // Set Logs
                 const logTerm = document.getElementById('scenario-logs');
                 logTerm.innerText = req.logBuffer || "No logs captured yet.";
@@ -3991,7 +4043,13 @@
                         obj[key] = val;
                     }
                 }
+                return Object.keys(obj).length > 0 ? obj : null;
+            } catch(err) {
+                return null;
+            }
+        }
 
+        function buildRequestEvidenceHTML(req, index, total) {
             const statusClass = (req.status.startsWith('2') || req.status === 'OK' || req.status === 'PASSED') ? 'status-success' :
                                 (req.status.startsWith('4') || req.status === '5') ? 'status-error' : 'status-warning';
 
