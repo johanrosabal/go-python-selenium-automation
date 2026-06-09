@@ -4376,7 +4376,8 @@
                         justify-content: space-between;
                         align-items: flex-start;
                         margin-bottom: 12px;
-                        page-break-inside: avoid;
+                        page-break-inside: avoid !important;
+                        break-inside: avoid !important;
                     }
                     .evidence-number {
                         font-size: 10px;
@@ -4395,6 +4396,8 @@
                         display: flex;
                         gap: 6px;
                         align-items: center;
+                        page-break-inside: avoid !important;
+                        break-inside: avoid !important;
                     }
                     .badge {
                         padding: 3px 8px;
@@ -4508,7 +4511,7 @@
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: requests.length > 5 ? 1 : 2, useCORS: true, logging: false },
                 jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
-                pagebreak:    { mode: ['css', 'legacy'] }
+                pagebreak:    { mode: ['css', 'legacy'], avoid: ['.evidence-header', '.assert-card', '.headers-table', '.url-bar', '.section-title', '.meta-badges'] }
             };
             
             // Show a feedback overlay to the user
