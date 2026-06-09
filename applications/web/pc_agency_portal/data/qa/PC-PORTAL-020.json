@@ -1,0 +1,17 @@
+{
+  "tests": {
+    "id": "PC-PORTAL-003",
+    "title": "Search for a policy using the Submission Number tab",
+    "description": "Validates that searching by a specific Submission Number correctly fetches and displays the expected policy.",
+    "feature": "Policy Search",
+    "story": "Search by Submission Number",
+    "severity": "critical",
+    "tag": [
+      "smoke",
+      "p1"
+    ],
+    "data": {
+      "submission_number": "5699645"
+    }
+  }
+}
