@@ -1,6 +1,6 @@
 {
   "tests": {
-    "id": "PC-PORTAL-002",
+    "id": "PC-PORTAL-018",
     "title": "Search for a policy using the Insured Name tab Example 2",
     "description": "Validates that searching by a specific Insured Name correctly fetches and displays the expected policy.",
     "feature": "Policy Search",
