@@ -44,6 +44,7 @@ def extract_metadata(file_path, test_method_name):
             tree = ast.parse(f.read())
         for node in ast.walk(tree):
             if isinstance(node, ast.FunctionDef) and node.name == test_method_name:
+                metadata["description"] = ast.get_docstring(node) or ""
                 for decorator in node.decorator_list:
                     if isinstance(decorator, ast.Call) and getattr(decorator.func, 'id', '') == 'test_case':
                         for kw in decorator.keywords:
@@ -117,6 +118,28 @@ def list_apps():
             
     return jsonify({"status": "success", "apps": apps})
 
+def get_test_data(file_path, test_id):
+    """
+    Looks for the <test_id>.json file under applications/<mode>/<app>/data/<env>/
+    and returns the contents of the 'data' key as a dict.
+    """
+    if not test_id:
+        return None
+    try:
+        parts = file_path.replace("\\", "/").split("/")
+        if len(parts) >= 3:
+            app_type = parts[1] # web or api
+            app_name = parts[2] # busisness_partners_portal or other
+            env = request.args.get("env", "qa")
+            data_file = os.path.join(PROJECT_ROOT, "applications", app_type, app_name, "data", env, f"{test_id}.json")
+            if os.path.exists(data_file):
+                with open(data_file, "r", encoding="utf-8") as f:
+                    data_json = json.load(f)
+                    return data_json.get("tests", {}).get("data", {})
+    except Exception:
+        pass
+    return None
+
 @app.route("/api/tests")
 def list_tests():
     app_path = request.args.get("app_path", "applications/web/demo/tests")
@@ -137,6 +160,7 @@ def list_tests():
                             methods = [n.name for n in cls.body if isinstance(n, ast.FunctionDef) and n.name.startswith("test_")]
                             for m in methods:
                                 meta = extract_metadata(rel_path, m)
+                                test_data = get_test_data(rel_path, meta.get("id"))
                                 file_tests.append({
                                     "id": f"{rel_path}::{cls.name}::{m}",
                                     "name": m,
@@ -144,7 +168,8 @@ def list_tests():
                                     "file": rel_path,
                                     "test_id": meta.get("id"),
                                     "title": meta.get("title"),
-                                    "description": meta.get("description")
+                                    "description": meta.get("description"),
+                                    "test_data": test_data
                                 })
                         
                         if file_tests:
