@@ -532,32 +532,3 @@ class TestHomePage(BaseTest):
         )
 
         self.pause(5)
-
-    @test_case(id="PC-PORTAL-020")
-    def test_policy_lookup_search_by_submission_number_example_2(self):
-        """
-        Scenario: Search for a policy using the Submission Number tab.
-        """
-        self.logger.info("Starting submission number search scenario")
-        submission_number = self.test_data.get("submission_number")
-
-        # Ensure we are on the Home Page
-        self.app.home_page.open_policy_lookup()
-
-        # Perform the search
-        self.app.home_page.search_for_submission_number(submission_number)
-
-        # Wait for loading spinner and table to load
-        self.app.home_page.wait_for_search_results(timeout=60)
-
-        # Verify the search results
-        actual_submission_number = self.app.home_page.get_submission_number()
-
-        assert (
-            submission_number == actual_submission_number
-        ), f"Expected Submission Number in results to be '{submission_number}', but got '{actual_submission_number}'"
-
-        self.logger.info(
-            f"Successfully verified search result for Submission Number: {actual_submission_number}"
-        )
-        self.pause(5)
