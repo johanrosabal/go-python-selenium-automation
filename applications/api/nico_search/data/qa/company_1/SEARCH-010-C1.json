@@ -12,10 +12,10 @@
     "data": {
       "payload": {
         "companyNumber": 1,
-        "address": "888 8TH ST",
-        "city": "BROWNWOOD",
-        "state": "TX",
-        "zip": "76801"
+        "address": "930 PENNSYLVANIA AVE",
+        "city": "AURORA",
+        "state": "IL",
+        "zip": "60506"
       },
       "expected_results": [
         {
