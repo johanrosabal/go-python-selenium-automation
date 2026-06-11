@@ -145,7 +145,7 @@ class PolicyLookupAdvancePage(BasePage):
 
     @allure.step("Clicking Clear button")
     def click_clear_button(self) -> "PolicyLookupAdvancePage":
-        self.element(self.BTN_CLEAR).click()
+        self.element(self.BTN_CLEAR).click().pause(3)
         return self
 
     @allure.step("Waiting for search results to load")
