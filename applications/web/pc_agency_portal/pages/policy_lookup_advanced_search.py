@@ -150,15 +150,25 @@ class PolicyLookupAdvancePage(BasePage):
 
     @allure.step("Waiting for search results to load")
     def wait_for_search_results(self, timeout=15) -> "PolicyLookupAdvancePage":
+        # 1. Pausa corta inicial para permitir que el navegador comience a procesar el clic y el DOM empiece a cambiar
+        self.pause(0.5)
+
+        # 2. Esperamos a que el spinner aparezca (evita condición de carrera)
         try:
-            self.element(self.SPINNER).wait_visible(timeout=5)
+            self.element(self.SPINNER).wait_visible(timeout=3)
+            # 3. Si apareció, esperamos a que termine y desaparezca
+            self.element(self.SPINNER).wait_disappear(timeout=timeout)
         except Exception:
             self.logger.info(
-                "El spinner fue tan rápido que no se detectó o ya terminó."
+                "El spinner no apareció dentro del tiempo límite o ya terminó."
             )
-        self.element(self.SPINNER).wait_disappear(timeout=timeout)
+
+        # 4. Aseguramos que la tabla ya tenga filas dibujadas en el DOM
         locator = (By.XPATH, self.TABLE_RESULTS)
         self.element(locator).table_wait_not_empty(timeout=timeout)
+
+        # 5. Pausa de seguridad adicional para permitir que React termine de pintar las celdas en el DOM
+        self.pause(1)
         return self
 
     def is_table_displayed(self) -> bool:
